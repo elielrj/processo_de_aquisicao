@@ -2,24 +2,35 @@
 
 	echo "<h1>{$titulo}</h1>";
 
-    echo form_open('processo/criar', 
+    echo form_open('usuario/criar', 
         array('class' => 'form-group')
     );
 
-        echo form_label('Objeto do processo');
+        echo form_label('Email');
         echo form_input(
             array(
-                'name' => 'objeto', 
+                'name' => 'email', 
                 'class' => 'form-control', 
                 'maxlength' => 150)
         );
 
             echo "</br>";
 
-        echo form_label('Nup/Nud');
+        echo form_label('CPF');
         echo form_input(
             array(
-                'name' => 'nupNud', 
+                'name' => 'cpf', 
+                'class' => 'form-control', 
+                'maxlength' => 20
+            )
+        );
+
+            echo "</br>";
+
+        echo form_label('Senha');
+        echo form_input(
+            array(
+                'name' => 'senha', 
                 'class' => 'form-control', 
                 'maxlength' => 20
             )
