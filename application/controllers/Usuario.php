@@ -9,7 +9,13 @@ class Usuario extends CI_Controller {
 
 	public function index()
 	{
-		$this->listar();
+		if(!isset($this->session->email)){
+
+			$this->load->view('login.php');
+
+		}else{
+			$this->listar();
+		}
 	}
 
 
@@ -57,7 +63,8 @@ class Usuario extends CI_Controller {
 			null,
 			$data['email'],
 			$data['cpf'],
-			md5($data['senha'])
+			md5($data['senha']),
+			true
 		);
 
 		$this->Usuario_Model->criar($usuario);
@@ -86,7 +93,8 @@ class Usuario extends CI_Controller {
 			null,
 			$data['email'],
 			$data['cpf'],
-			md5($data['senha'])
+			md5($data['senha']),
+			true
 		);
 
 		$this->Usuario_Model->update($usuario);
@@ -99,5 +107,96 @@ class Usuario extends CI_Controller {
 		$this->Usuario_Model->delete($id);
                 
 		redirect('usuario');          
+	}
+
+	public function logar(){
+
+		if($this->verificarEmail()){
+		
+			if($this->verificarSenha()){
+
+				$this->criarSessao();
+				
+				redirect('processo');
+			}
+
+		}
+
+		redirect(base_url());
+	}
+
+	public function verificarEmail(){
+
+		$email = $this->input->post('email');
+
+		$where = array('email' => $email);
+
+		
+		$resultado = $this->Usuario_Model->verificarEmail($where); 
+
+
+		if(isset($resultado[0])){
+
+			$this->session->set_userdata('email_valido',true);
+
+		}else{
+			$this->session->set_userdata('email_valido',false);
+		}
+
+		return isset($resultado[0]);
+
+	}
+
+	public function verificarSenha(){
+
+		$senha = md5($this->input->post('senha'));
+
+		$where = array('senha' => $senha);
+
+		$resultado = $this->Usuario_Model->verificarSenha($where);
+
+		if(isset($resultado[0])){
+
+			$this->session->set_userdata('senha_valida',true);
+
+		}else{
+			$this->session->set_userdata('senha_valida',false);
+		}
+
+		return isset($resultado[0]);
+	}
+
+	public function criarSessao(){
+
+		$email = $this->input->post('email');            
+		
+		$usuario = $this->Usuario_Model->retriveEmail($email);
+	
+		$data = array(
+			'id' => $usuario[0]['id'],
+			'email' => $usuario[0]['email'],
+			'status' => $usuario[0]['status'],
+			'cpf' => $usuario[0]['cpf']
+		); 
+
+		$this->Sessao_Model->criar($data);          
+	}
+
+	public function retriveEmail($email){
+            
+		$resultado = 
+		$this->db->get_where(
+			self::$TABELA_DB,
+			array('email'=> $email)
+		);   
+		
+		return $this->Usuario_Model->montarObjetoUsuario($resultado->result());
+	}
+
+	public function sair()
+	{
+		$this->Sessao_Model->remover();
+
+		redirect(base_url());
 	}
 }

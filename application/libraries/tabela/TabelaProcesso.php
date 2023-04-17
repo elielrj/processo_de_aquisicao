@@ -28,6 +28,7 @@
                     <td>Data do Processo</td>
                     <td>Chave de Acesso</td>
                     <td>Usuário</td>
+                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
@@ -41,10 +42,11 @@
                     $this->processoOrdem() .
                     $this->processoId($processo['id']) .
                     $this->processoObjeto($processo['objeto']) .
-                    $this->processoNupNud($processo['nupNud']) .
-                    $this->processoDataDoProcesso($processo['dataDoProcesso']) .
-                    $this->processoChaveDeAcesso($processo['chaveDeAcesso']) .
-                    $this->processoUsuario($processo['usuarioId']) .
+                    $this->processoNupNud($processo['nup_nud']) .
+                    $this->processoDataDoProcesso($processo['data_do_processo']) .
+                    $this->processoChaveDeAcesso($processo['chave_de_acesso']) .
+                    $this->processoUsuario($processo['usuario_id']) .
+                    $this->processoStatus($processo['status']) .
                     $this->processoAlterar($processo['id']) .
                     $this->processoExcluir($processo['id']) .
                                 
@@ -66,24 +68,29 @@
             return "<td>{$objeto}</td>";
         }
 
-        private function processoNupNud($nupNud)
+        private function processoNupNud($nup_nud)
         {
-            return "<td>{$nupNud}</td>";
+            return "<td>{$nup_nud}</td>";
         }
 
-        private function processoDataDoProcesso($dataDoProcesso)
+        private function processoDataDoProcesso($data_do_processo)
         {
-            return "<td>{$this->formatarData($dataDoProcesso)}</td>";
+            return "<td>{$this->formatarData($data_do_processo)}</td>";
         }
 
-        private function processoChaveDeAcesso($chaveDeAcesso)
+        private function processoChaveDeAcesso($chave_de_acesso)
         {
-            return "<td>{$chaveDeAcesso}</td>";
+            return "<td>{$chave_de_acesso}</td>";
         }
 
-        private function processoUsuario($usuarioId)
+        private function processoUsuario($usuario_id)
         {
-            return "<td>{$usuarioId}</td>";
+            return "<td>{$usuario_id}</td>";
+        }
+
+        private function processoStatus($status)
+        {
+            return "<td>{$status}</td>";
         }
 
         private function processoAlterar($id)

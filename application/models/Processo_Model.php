@@ -42,7 +42,7 @@
                 self::$TABELA_DB,
                 array(
                     'objeto' => $processo['objeto'],
-                    'nupNud' => $processo['nupNud'],
+                    'nup_nud' => $processo['nup_nud'],
                 ), 
                 array('id'=> $processo['id'])
             );
@@ -62,10 +62,11 @@
                 $processo = $this->processo(
                     $linha->id,
                     $linha->objeto,
-                    $linha->nupNud,
-                    $linha->dataDoProcesso,
-                    $linha->chaveDeAcesso,
-                    $linha->usuarioId                    
+                    $linha->nup_nud,
+                    $linha->data_do_processo,
+                    $linha->chave_de_acesso,
+                    $linha->usuario_id,                    
+                    $linha->status                    
                 );
 
                 array_push($listaDeProcessos, $processo);
@@ -76,20 +77,22 @@
         public function processo(
             $id,
             $objeto,
-            $nupNud,
-            $dataDoProcesso,
-            $chaveDeAcesso,
-            $usuarioId
+            $nup_nud,
+            $data_do_processo,
+            $chave_de_acesso,
+            $usuario_id,
+            $status
             ){       
             
         
             return array(
                 'id' => $id,
                 'objeto' => $objeto,
-                'nupNud' => $nupNud,
-                'dataDoProcesso' => $dataDoProcesso,
-                'chaveDeAcesso' => $chaveDeAcesso,
-                'usuarioId' => $usuarioId                
+                'nup_nud' => $nup_nud,
+                'data_do_processo' => $data_do_processo,
+                'chave_de_acesso' => $chave_de_acesso,
+                'usuario_id' => $usuario_id,                
+                'status' => $status                
             );
         }
 
@@ -97,4 +100,19 @@
             return $this->db->count_all_results(self::$TABELA_DB);
         }
 
+       /* public function selectProcesso(){            
+
+            $select = [];
+
+            foreach($this->retrive(null,null) as $value){
+                
+                if(isset($value)){
+                    $processo = array($value['id'] => $value['objeto'] . "(" . $value['nup_nud'] . ")");
+
+                $select += $processo;
+                }
+            }
+
+            return $select;
+        }*/
     }

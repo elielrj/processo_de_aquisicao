@@ -4,7 +4,7 @@
 	echo "<h1>{$titulo}</h1>";
 
     echo form_open(
-        'processo/atualizar', 
+        'arquivo/atualizar', 
         array('class' => 'form-group')
     );
 
@@ -16,66 +16,54 @@
             )
         );
 
-        echo form_label('Objeto do Processo');
+        echo form_label('nome');
         echo form_input(
             array(
                 'name' => 'objeto', 
                 'class' => 'form-control', 
                 'maxlength' => 150, 
-                'value' => $tabela[0]['objeto']
+                'value' => $tabela[0]['nome']
             )
         );
 
             echo "</br>";
 
-        echo form_label('Nup/Nud');
+        //echo form_label('CPF');
 
         echo form_input(
             array(
-                'name' => 'nup_nud', 
+                'name' => 'cpf', 
                 'class' => 'form-control', 
                 'maxlength' => 20, 
-                'value' => $tabela[0]['nup_nud']
+                'value' => $tabela[0]['cpf'],
+                'type' => 'hidden'
             )
         );
 
             echo "</br>";
         
-        echo form_label('Data do Processo');
+        echo form_label('Nome do Arquivo');
         echo form_input(
             array(
-                'name' => 'data_do_processo', 
+                'name' => 'nomeDoArquivo', 
                 'class' => 'form-control', 
-                'value' => $tabela[0]['data_do_processo'],
-                'disabled' => 'disabled'
+                'maxlength' => 20, 
+                'value' => $tabela[0]['nomeDoArquivo'],
+                'type' => 'hidden'
             )
         );
 
             echo "</br>";
 
-        echo form_label('Chave de Acesso');
-        echo form_input(
+        echo form_dropdown(
+            'processoId',
+            $select,
+            $selected,
             array(
-                'name' => 'chave_de_acesso', 
                 'class' => 'form-control', 
-                'value' => $tabela[0]['chave_de_acesso'],
-                'disabled' => 'disabled'
+                'id' => 'processoId' 
             )
         );
-
-            echo "</br>";
-
-        echo form_label('Usuário do Processo');
-        echo form_input(
-            array(
-                'name' => 'usuario_id', 
-                'class' => 'form-control', 
-                'maxlength' => 100, 
-                'value' => $tabela[0]['usuario_id'],
-                'disabled' => 'disabled'
-            )
-        );
-
             echo "</br>";
         
         echo form_submit(
@@ -84,7 +72,7 @@
                 'class' => 'btn btn-primary btn-lg btn-block'
             )
         );
-        echo "<a href=" . base_url('index.php/processo') . 
+        echo "<a href=" . base_url('index.php/arquivo') . 
                 " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
     
     echo form_close();  

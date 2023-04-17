@@ -58,7 +58,14 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database','Botao','Tabela','upload');
+$autoload['libraries'] = array(
+    'database',
+    'session',
+    'Botao',
+    'Tabela',
+    'upload',
+    'opcao',
+);
 
 /*
 | -------------------------------------------------------------------
@@ -135,4 +142,6 @@ $autoload['language'] = array();
 $autoload['model'] = array(
     'Processo_Model',
     'Usuario_Model',
+    'Arquivo_Model',
+    'Sessao_Model',
 );

@@ -9,7 +9,13 @@ class Processo extends CI_Controller {
 
 	public function index()
 	{
-		$this->listar();
+		if(!isset($this->session->email)){
+
+			$this->load->view('login.php');
+
+		}else{
+			$this->listar();
+		}
 	}
 
 
@@ -56,10 +62,11 @@ class Processo extends CI_Controller {
 		$processo = $this->Processo_Model->processo(
 			null,
 			$data['objeto'],
-			$data['nupNud'],
+			$data['nup_nud'],
 			$agora->format('Y-m-d H:m:s'),
 			uniqid(),
-			1
+			1,
+			true
 		);
 
 		$this->Processo_Model->criar($processo);
@@ -87,7 +94,8 @@ class Processo extends CI_Controller {
 		$processo = $this->Processo_Model->processo(
 			$data['id'],
 			$data['objeto'],
-			$data['nupNud'],
+			$data['nup_nud'],
+			null,
 			null,
 			null,
 			null
@@ -104,4 +112,6 @@ class Processo extends CI_Controller {
                 
 		redirect('processo');          
 	}
+
+	
 }

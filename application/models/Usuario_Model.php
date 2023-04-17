@@ -60,7 +60,8 @@
                     $linha->id,
                     $linha->email,
                     $linha->cpf,
-                    $linha->senha                    
+                    $linha->senha,                    
+                    $linha->status                    
                 );
 
                 array_push($listaDeUsuarios, $usuario);
@@ -72,7 +73,8 @@
             $id,
             $email,
             $cpf,
-            $senha
+            $senha,
+            $status
             ){       
             
         
@@ -80,12 +82,38 @@
                 'id' => $id,
                 'email' => $email,
                 'cpf' => $cpf,
-                'senha' => $senha              
+                'senha' => $senha,              
+                'status' => $status              
             );
         }
 
         public function quantidade(){
             return $this->db->count_all_results(self::$TABELA_DB);
+        }
+
+        public function verificarEmail($where){
+
+            $resultado = $this->db->get_where('usuario',$where);
+
+            return $resultado->result();
+        }
+
+        public function verificarSenha($where){
+            
+            $resultado = $this->db->get_where('usuario',$where);   
+            
+            return $resultado->result();
+        }
+
+        public function retriveEmail($email){
+            
+            $resultado = 
+            $this->db->get_where(
+                self::$TABELA_DB,
+                array('email'=> $email)
+            );   
+            
+            return $this->montarObjetoUsuario($resultado->result());
         }
 
     }
