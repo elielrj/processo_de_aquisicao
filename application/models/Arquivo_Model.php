@@ -62,7 +62,8 @@
                     $linha->path,
                     $linha->nome_do_arquivo,
                     $linha->data_do_upload,
-                    $linha->processo_id,                    
+                    $linha->processo_id,
+                    $linha->usuario_id,                    
                     $linha->status                    
                 );
 
@@ -78,6 +79,7 @@
             $nome_do_arquivo,
             $data_do_upload,
             $processo_id,
+            $usuario_id,
             $status
         ){              
             return array(
@@ -86,7 +88,8 @@
                 'path' => $path,
                 'nome_do_arquivo' => $nome_do_arquivo,
                 'data_do_upload' => $data_do_upload,
-                'processo_id' => $processo_id,                
+                'processo_id' => $processo_id,
+                'usuario_id' => $usuario_id,                
                 'status' => $status                
             );
         }

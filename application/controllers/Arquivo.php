@@ -60,17 +60,17 @@ class Arquivo extends CI_Controller {
 
 	public function criar(){
 
-		$data = $this->input->post();
+		$data_post = $this->input->post();
 
-		var_dump($data);
+		//var_dump($data_post);
 
 		echo "</br>";
 
 		//var_dump($data['arquivo']);
-		var_dump($_FILES['arquivo']);
+		//var_dump($_FILES['arquivo']);
 
 		if(isset($_FILES['arquivo'])){
-			echo "Arquivo enviado!";
+			//echo "Arquivo enviado!";
 		}
 
 		//var_dump($data['arquivo']['type']);
@@ -105,29 +105,30 @@ class Arquivo extends CI_Controller {
 			$timezone = new DateTimeZone('America/Sao_Paulo');
 			$agora = new DateTime('now', $timezone);
 
-			$pasta = 'arquivos/'
-			$nomeDoArquivo = $data['arquivo']['name'];
+			$pasta = 'arquivos/';
+			$nomeDoArquivo = $_FILES['arquivo']['name'];
 			$novoNomeDoArquivo = uniqid();
-			
-			$extensao = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+			$extensao = strtolower(pathinfo($nomeDoArquivo,PATHINFO_EXTENSION));
 
-			$arquivo = $this->Arquivo_Model->arquivo(
-				null,//id
-				'arquivo',//nome
-				$data['upload_data']['tmp_name'],//path
-				$path,//nome_do_arquivo
-				$agora->format('Y-m-d H:m:s'),//datetime
-				$data['processo_id'], //processo
-				$this->session->id, //user id
-				true //status
-			);
+			$arquivado = move_uploaded_file($_FILES['arquivo']['tmp_name'],$pasta . $novoNomeDoArquivo . '.' . $extensao);
 
-			//$this->Arquivo_Model->criar($arquivo);
+			if($arquivado){
+				$arquivo = $this->Arquivo_Model->arquivo(
+					null,//id
+					$nomeDoArquivo,//nome
+					$pasta . $novoNomeDoArquivo . '.' . $extensao,//path
+					$novoNomeDoArquivo,//nome_do_arquivo
+					$agora->format('Y-m-d H:m:s'),//datetime
+					$data_post['processo_id'], //processo
+					$this->session->id, //user id
+					true //status
+				);
 
-			//$this->upload();
+				$this->Arquivo_Model->criar($arquivo);
 
-			//redirect('arquivo');
-			var_dump($data);
+				redirect('arquivo');
+
+			}
 		}
 		
 	}
