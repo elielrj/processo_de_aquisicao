@@ -63,7 +63,7 @@
                     $linha->nome_do_arquivo,
                     $linha->data_do_upload,
                     $linha->processo_id,                    
-                    $linha->status,                    
+                    $linha->status                    
                 );
 
                 array_push($listaDeArquivos, $arquivo);
