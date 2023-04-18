@@ -28,6 +28,7 @@
                     <td>Nome do Arquivo</td>
                     <td>Data do Upload</td>
                     <td>Processo</td>
+                    <td>Usuario</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
@@ -40,11 +41,12 @@
                 
                     $this->arquivoOrdem() .
                     $this->arquivoId($arquivo['id']) .
-                    $this->arquivoNome($arquivo['email']) .
+                    $this->arquivoNome($arquivo['nome']) .
                     $this->arquivoPath($arquivo['path']) .
-                    $this->arquivoNomeDoArquivo($arquivo['nomeDoArquivo']) .
-                    $this->arquivoDataDoUpload($arquivo['dataDoUpload']) .
-                    $this->arquivoProcessoId($arquivo['processoId']) .
+                    $this->arquivoNomeDoArquivo($arquivo['nome_do_arquivo']) .
+                    $this->arquivoDataDoUpload($arquivo['data_do_upload']) .
+                    $this->arquivoProcessoId($arquivo['processo_id']) .
+                    $this->arquivoUsuarioId($arquivo['usuario_id']) .
                     $this->arquivoAlterar($arquivo['id']) .
                     $this->arquivoExcluir($arquivo['id']) .
                                 
@@ -71,19 +73,24 @@
             return "<td>{$path}</td>";
         }
 
-        private function arquivoNomeDoArquivo($nomeDoArquivo)
+        private function arquivoNomeDoArquivo($nome_do_arquivo)
         {
-            return "<td>{$nomeDoArquivo}</td>";
+            return "<td>{$nome_do_arquivo}</td>";
         }
 
-        private function arquivoDataDoUpload($dataDoUpload)
+        private function arquivoDataDoUpload($data_do_upload)
         {
-            return "<td>{$dataDoUpload}</td>";
+            return "<td>{$data_do_upload}</td>";
         }
 
-        private function arquivoProcessoId($processoId)
+        private function arquivoProcessoId($processo_id)
         {
-            return "<td>{$processoId}</td>";
+            return "<td>{$processo_id}</td>";
+        }
+
+        private function arquivoUsuarioId($usuario_id)
+        {
+            return "<td>{$usuario_id}</td>";
         }
 
         private function arquivoAlterar($id)
