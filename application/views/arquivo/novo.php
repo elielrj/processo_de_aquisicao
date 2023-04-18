@@ -2,7 +2,7 @@
 
 	echo "<h1>{$titulo}</h1>";
 
-    echo form_open('arquivo/criar', 
+    echo form_open_multipart('arquivo/criar', 
         array('class' => 'form-group')
     );
 
@@ -17,7 +17,7 @@
             echo "</br>";
 
         echo form_dropdown(
-            'processoId',
+            'processo_id',
             $processos,
             '',
             array(
@@ -28,18 +28,24 @@
 
             echo "</br>";
 
-            require 'upload_form.php';
-
-        /*
-        echo form_open_multipart();
         echo form_input(
-            array(
-                'name' => 'arquivo',
-                
-                'type' => 'file'
-            )
+        array(
+            'name' => 'arquivo', 
+            'class' => '', 
+            'type' => 'file')
         );
-        echo form_close(); */
+        
+/*
+        echo 
+            "<form method='POST' enctype='multipart/fomr-data' action=''>
+                <p>
+                    <label for=''>Selecione o arquivo</label>
+                    <input name='arquivo' type='file'>
+                </p>
+                <button name='upload' type='submit'>Enviar arquivo</button>
+            </form>";*/
+
+        echo "</br>";
         
         echo form_submit(
             'enviar','Enviar', 
