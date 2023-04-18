@@ -18,7 +18,7 @@
 
         echo form_dropdown(
             'processo_id',
-            $processos,
+            $processos[0],
             '',
             array(
                 'class' => 'form-control', 

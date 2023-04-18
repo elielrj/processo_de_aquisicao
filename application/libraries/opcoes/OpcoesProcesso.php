@@ -19,7 +19,7 @@
 
         private function selectCabecalho()
         {
-            return "<option>Selecione uma Processo</option>";
+            return "<option value=''>Selecione uma Processo</option>";
         }
 
         private function selectLinha($value)

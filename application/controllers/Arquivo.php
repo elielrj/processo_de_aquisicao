@@ -44,15 +44,10 @@ class Arquivo extends CI_Controller {
 
 	public function novo(){
 
-		$processos = $this->Processo_Model->retrive(null,null);
-
-		
-
 		$dados = array(
 			'titulo' => 'Novo arquivo',
 			'pagina' => 'arquivo/novo.php',
-			'processos' => $this->options($processos),
-	
+			'processos' => $this->options()
 		);
 
 		$this->load->view('index', $dados); 
@@ -60,75 +55,45 @@ class Arquivo extends CI_Controller {
 
 	public function criar(){
 
+		
+		
 		$data_post = $this->input->post();
 
-		//var_dump($data_post);
+		$arquivo = $_FILES['arquivo'];
 
-		echo "</br>";
+		if(isset($arquivo) && isset($data_post)){		
+			
 
-		//var_dump($data['arquivo']);
-		//var_dump($_FILES['arquivo']);
-
-		if(isset($_FILES['arquivo'])){
-			//echo "Arquivo enviado!";
-		}
-
-		//var_dump($data['arquivo']['type']);
-		//var_dump($data['arquivo']['tmp_name']);
-		//var_dump($data['arquivo']['error']);
-		//var_dump($data['arquivo']['size']);
-
-		$config['upload_path']          = './arquivos/';
-		$config['allowed_types']        = 'pdf';
-		$config['max_size']             = 10485760;
-		$config['overwrite']             = uniqid();
-		$config['file_ext_tolower'] = true;
-		$config['max_filename'] = 250;
-
-		$this->load->initialize($config);
-
-		$error = array('error' => '');
-		$data = [];
-
-
-		if ( ! $this->upload->do_upload('userfile'))
-		{
-				$error = array('error' => $this->upload->display_errors());
-		}
-		else
-		{
-				$data = array('upload_data' => $this->upload->data());
-		}
-
-		if($error['error'] != '')
-		{
-			$timezone = new DateTimeZone('America/Sao_Paulo');
-			$agora = new DateTime('now', $timezone);
-
-			$pasta = 'arquivos/';
+			$tmp_name = $_FILES['arquivo']['tmp_name'];
 			$nomeDoArquivo = $_FILES['arquivo']['name'];
 			$novoNomeDoArquivo = uniqid();
 			$extensao = strtolower(pathinfo($nomeDoArquivo,PATHINFO_EXTENSION));
+			$path = 'arquivos/' . $novoNomeDoArquivo . '.' . $extensao;
+			
 
-			$arquivado = move_uploaded_file($_FILES['arquivo']['tmp_name'],$pasta . $novoNomeDoArquivo . '.' . $extensao);
+			$arquivado = move_uploaded_file($tmp_name,$path);
 
 			if($arquivado){
+
+				$timezone = new DateTimeZone('America/Sao_Paulo');
+				$agora = new DateTime('now', $timezone);
+
 				$arquivo = $this->Arquivo_Model->arquivo(
-					null,//id
-					$nomeDoArquivo,//nome
-					$pasta . $novoNomeDoArquivo . '.' . $extensao,//path
-					$novoNomeDoArquivo,//nome_do_arquivo
-					$agora->format('Y-m-d H:m:s'),//datetime
-					$data_post['processo_id'], //processo
-					$this->session->id, //user id
-					true //status
+					null,
+					$nomeDoArquivo,
+					$path,
+					$novoNomeDoArquivo,
+					$agora->format('Y-m-d H:m:s'),
+					$data_post['processo_id'], 
+					$this->session->id,
+					true
 				);
 
 				$this->Arquivo_Model->criar($arquivo);
 
 				redirect('arquivo');
-
 			}
+
 		}
 		
 	}
@@ -140,7 +105,9 @@ class Arquivo extends CI_Controller {
 		$dados = array(
 			'titulo' => 'Alterar Arquivo',
 			'pagina' => 'arquivo/alterar.php',
-			'tabela' => $tabela
+			'tabela' => $tabela,
+			'processos' => $this->options()
+
 		);
 
 		$this->load->view('index',$dados);
@@ -149,15 +116,20 @@ class Arquivo extends CI_Controller {
 
 	public function atualizar(){
                     
-		$data = $this->input->post();		
+		$data = $this->input->post();	
+		
+    	$data_hora = new DateTime($data['data_do_upload']);
+
 
 		$arquivo = $this->Arquivo_Model->arquivo(
 			$data['id'],
 			$data['nome'],
 			$data['path'],
-			$data['nomeDoArquivo'],
-			$data['dataDoUpload'],
-			$data['processoId']
+			$data['nome_do_arquivo'],
+			$data_hora->format('Y-m-d H:m:s'),
+			$data['processo_id'],
+			$data['usuario_id'],
+			$data['status']
 		);
 
 		$this->Arquivo_Model->update($arquivo);
@@ -172,33 +144,51 @@ class Arquivo extends CI_Controller {
 		redirect('arquivo');          
 	}
 
-	public function options($processos){
+	public function options(){
 
-		return empty($processos) ? '' : ($this->opcao->processo($processos));         
-	}
+		$processos = $this->Processo_Model->retrive(null,null);
 
-	public function upload(){
+		if(! empty($processos)){
 
-		$config['upload_path'] = 'arquivos/';
-		$config['allowed_types'] = 'pdf';
-		$config['max_size']     = (10 * 1024 * 1024);
-
-		$this->upload->initialize($config);
-
-		if(!$this->upload->do_upload('userfile')){
+			$options = [];
 			
-			$erro = array('error' => $this->upload->display_errors());
+			foreach($processos as $processo){
+				
+				$option = array($processo['id'] => $processo['objeto'] . '('. $processo['nup_nud'] . ')');
 
-			//todo
-			var_dump($erro);
-
-		}else{
-			$data = array('upload_data' => $this->upload->data());
-
-			//todo
-
-			var_dump($data);
-
+				array_push($options,$option);
+			}
 		}
+
+		return $options;        
 	}
+
+	private function upload(){
+/*
+		$config['upload_path'] = './arquivos/';
+		$config['allowed_types'] = 'pdf';
+		$config['max_size'] = (10 * 1024 * 1024);
+		$config['overwrite'] = uniqid();
+		$config['file_ext_tolower'] = true;
+		$config['max_filename'] = 250;
+
+		$this->load->initialize($config);
+		
+
+		if ( ! $this->upload->do_upload('userfile'))
+		{
+			return array('error' => $this->upload->display_errors());
+		}
+		else
+		{
+			return array('upload_data' => $this->upload->data());
+		}*/
+
+		
+		
+		
+
+		
+	}
+
 }
