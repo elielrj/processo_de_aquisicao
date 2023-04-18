@@ -64,7 +64,7 @@ $autoload['libraries'] = array(
     'Botao',
     'Tabela',
     'upload',
-    'opcao',
+    'Opcao',
 );
 
 /*

@@ -2,7 +2,7 @@
 
     include_once('opcoes/OpcoesProcesso.php');
     
-    class opcao{
+    class Opcao{
 
         public function processo($processos)
         {
