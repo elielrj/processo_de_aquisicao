@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+include_once('processo/listar.php');
 class Processo extends CI_Controller {
 
 	public function __construct(){
@@ -19,7 +19,7 @@ class Processo extends CI_Controller {
 	}
 
 
-	public function listar($indice = 1)
+	function listar($indice = 1)
 	{
 		$indice--;                
 
@@ -42,6 +42,29 @@ class Processo extends CI_Controller {
 		$this->load->view('index',$dados);
 	}
 
+	public function pregrao($indice = 1)
+	{
+		$indice--;                
+
+		$mostrar = 10;
+		$indiceInicial  = $indice * $mostrar;
+
+		$processos = $this->Processo_Model->retrive($indiceInicial,$mostrar);
+		
+		$quantidade = $this->Processo_Model->quantidade();
+
+		$botoes = empty($processos) ? '' : $this->botao->paginar('processo/listarPregoes',$indice,$quantidade,$mostrar);
+
+		$dados = array(
+			'titulo'=> 'Lista de processos',
+			'tabela'=> $this->tabela->processo($processos,$indiceInicial),
+			'pagina'=> 'processo/index.php',
+			'botoes'=> $botoes,
+		);
+		
+		$this->load->view('index',$dados);
+	}
+
 	public function novo(){
 
 		$dados = array(
@@ -52,7 +75,37 @@ class Processo extends CI_Controller {
 		$this->load->view('index', $dados); 
 	}
 
+	public function novoPregao(){
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Novo Processo de Pregão',
+				'pagina' => 'processo/novo_pregao.php',
+			]
+		);
+	}
 	public function criar(){
+
+		$data = $this->input->post();
+
+		$timezone = new DateTimeZone('America/Sao_Paulo');
+		$agora = new DateTime('now', $timezone);
+
+		$processo = $this->Processo_Model->processo(
+			null,
+			$data['objeto'],
+			$data['nup_nud'],
+			$agora->format('Y-m-d H:m:s'),
+			uniqid(),
+			1,
+			true
+		);
+
+		$this->Processo_Model->criar($processo);
+		redirect('processo');
+	}
+
+	public function criarPregao(){
 
 		$data = $this->input->post();
 

@@ -42,11 +42,15 @@
             echo "</br>";
         
         echo form_label('Data do Processo');
+
+        $timezone = new DateTimeZone('America/Sao_Paulo');
+        $data_hora = new DateTime($tabela[0]['data_do_processo'], $timezone);
+
         echo form_input(
             array(
                 'name' => 'data_do_processo', 
                 'class' => 'form-control', 
-                'value' => $tabela[0]['data_do_processo'],
+                'value' => $data_hora->format('d-m-Y H:m:s'),
                 'disabled' => 'disabled'
             )
         );
@@ -71,7 +75,7 @@
                 'name' => 'usuario_id', 
                 'class' => 'form-control', 
                 'maxlength' => 100, 
-                'value' => $tabela[0]['usuario_id'],
+                'value' => $tabela[0]['usuario_id']['email'],
                 'disabled' => 'disabled'
             )
         );

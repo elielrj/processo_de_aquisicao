@@ -13,10 +13,10 @@ status boolean not null
 
 create table if not exists processo(
 id int primary key auto_increment not null,
-objeto varchar(30) not null,
+objeto varchar(150) not null,
 nup_nud int not null,
 data_do_processo int not null,
-chave_de_acesso int not null,
+chave_de_acesso varchar(150) not null,git 
 usuario_id int not null,
 status boolean not null,
 foreign key (usuario_id) references usuario(id)

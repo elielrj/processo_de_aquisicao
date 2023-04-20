@@ -59,13 +59,16 @@
             $listaDeProcessos = array();
 
             foreach($result as $linha){
+
+               
+
                 $processo = $this->processo(
                     $linha->id,
                     $linha->objeto,
                     $linha->nup_nud,
                     $linha->data_do_processo,
                     $linha->chave_de_acesso,
-                    $linha->usuario_id,                    
+                    $this->Usuario_Model->retriveId($linha->usuario_id)[0],                    
                     $linha->status                    
                 );
 

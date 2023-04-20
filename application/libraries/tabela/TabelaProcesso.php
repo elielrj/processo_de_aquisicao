@@ -85,12 +85,12 @@
 
         private function processoUsuario($usuario_id)
         {
-            return "<td>{$usuario_id}</td>";
+            return "<td>{$usuario_id['email']}</td>";
         }
 
         private function processoStatus($status)
         {
-            return "<td>{$status}</td>";
+            return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
         }
 
         private function processoAlterar($id)
