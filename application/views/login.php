@@ -46,7 +46,7 @@
                                     
                                         
                                     
-                                        <form class="user" id="form" action="index.php/usuario/logar" method="POST" >
+                                        <form class="user" id="form" action="index.php/Usuario_Controller/logar" method="POST" >
                                         
 
                                             <?php

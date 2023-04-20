@@ -1,6 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-    class Processo_Model extends CI_Model {
+    include('application/models/bo/Processo.php');    
+    include('I_Crud_DAO.php');
+    
+class ProcessoDAO extends CI_Model implements I_Crud_DAO
+    {
         
         public static $TABELA_DB = 'processo';
         
@@ -59,13 +63,16 @@
             $listaDeProcessos = array();
 
             foreach($result as $linha){
+
+                $usuario = $this->UsuarioDAO->retriveId($linha->usuario_id);
+
                 $processo = $this->processo(
                     $linha->id,
                     $linha->objeto,
                     $linha->nup_nud,
                     $linha->data_do_processo,
                     $linha->chave_de_acesso,
-                    $linha->usuario_id,                    
+                    $usuario,                    
                     $linha->status                    
                 );
 

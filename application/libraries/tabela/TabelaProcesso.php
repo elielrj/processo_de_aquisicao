@@ -83,14 +83,14 @@
             return "<td>{$chave_de_acesso}</td>";
         }
 
-        private function processoUsuario($usuario_id)
+        private function processoUsuario($usuario)
         {
-            return "<td>{$usuario_id}</td>";
+            return "<td>{$usuario->email}</td>";
         }
 
         private function processoStatus($status)
         {
-            return "<td>{$status}</td>";
+            return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
         }
 
         private function processoAlterar($id)

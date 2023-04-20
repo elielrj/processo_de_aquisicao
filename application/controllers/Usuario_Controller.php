@@ -1,11 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Usuario extends CI_Controller {
+class Usuario_Controller extends CI_Controller {
 
-	public function __construct(){
-		parent::__construct();
-	}
+
 
 	public function index()
 	{
@@ -26,9 +24,9 @@ class Usuario extends CI_Controller {
 		$mostrar = 10;
 		$indiceInicial  = $indice * $mostrar;
 
-		$usuarios = $this->Usuario_Model->retrive($indiceInicial,$mostrar);
+		$usuarios = $this->UsuarioDAO->retrive($indiceInicial,$mostrar);
 		
-		$quantidade = $this->Usuario_Model->quantidade();
+		$quantidade = $this->UsuarioDAO->quantidade();
 
 		$botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar',$indice,$quantidade,$mostrar);
 
@@ -59,7 +57,7 @@ class Usuario extends CI_Controller {
 		$timezone = new DateTimeZone('America/Sao_Paulo');
 		$agora = new DateTime('now', $timezone);
 
-		$usuario = $this->Usuario_Model->usuario(
+		$usuario = $this->UsuarioDAO->usuario(
 			null,
 			$data['email'],
 			$data['cpf'],
@@ -67,13 +65,13 @@ class Usuario extends CI_Controller {
 			true
 		);
 
-		$this->Usuario_Model->criar($usuario);
+		$this->UsuarioDAO->create($usuario);
 		redirect('usuario');
 	}
 
 	public function alterar($id){        
 
-		$tabela = $this->Usuario_Model->retriveId($id);
+		$tabela = $this->UsuarioDAO->retriveId($id);
 		
 		$dados = array(
 			'titulo' => 'Alterar Usuário',
@@ -89,7 +87,7 @@ class Usuario extends CI_Controller {
                     
 		$data = $this->input->post();		
 
-		$usuario = $this->Usuario_Model->usuario(
+		$usuario = $this->UsuarioDAO->usuario(
 			null,
 			$data['email'],
 			$data['cpf'],
@@ -97,14 +95,14 @@ class Usuario extends CI_Controller {
 			true
 		);
 
-		$this->Usuario_Model->update($usuario);
+		$this->UsuarioDAO->update($usuario);
 
 		redirect('usuario');            
 	}
 
 	public function deletar($id){
 
-		$this->Usuario_Model->delete($id);
+		$this->UsuarioDAO->delete($id);
                 
 		redirect('usuario');          
 	}
@@ -117,7 +115,7 @@ class Usuario extends CI_Controller {
 
 				$this->criarSessao();
 				
-				redirect('processo');
+				redirect('Processo_Controller');
 			}
 
 		}
@@ -132,7 +130,7 @@ class Usuario extends CI_Controller {
 		$where = array('email' => $email);
 
 		
-		$resultado = $this->Usuario_Model->verificarEmail($where); 
+		$resultado = $this->UsuarioDAO->verificarEmail($where); 
 
 
 		if(isset($resultado[0])){
@@ -153,7 +151,7 @@ class Usuario extends CI_Controller {
 
 		$where = array('senha' => $senha);
 
-		$resultado = $this->Usuario_Model->verificarSenha($where);
+		$resultado = $this->UsuarioDAO->verificarSenha($where);
 
 		if(isset($resultado[0])){
 
@@ -170,13 +168,13 @@ class Usuario extends CI_Controller {
 
 		$email = $this->input->post('email');            
 		
-		$usuario = $this->Usuario_Model->retriveEmail($email);
+		$usuario = $this->UsuarioDAO->retriveEmail($email);
 	
 		$data = array(
-			'id' => $usuario[0]['id'],
-			'email' => $usuario[0]['email'],
-			'status' => $usuario[0]['status'],
-			'cpf' => $usuario[0]['cpf']
+			'id' => $usuario->id,
+			'email' => $usuario->email,
+			'status' => $usuario->status,
+			'cpf' => $usuario->cpf
 		); 
 
 		$this->Sessao_Model->criar($data);          
@@ -190,7 +188,7 @@ class Usuario extends CI_Controller {
 			array('email'=> $email)
 		);   
 		
-		return $this->Usuario_Model->montarObjetoUsuario($resultado->result());
+		return $this->UsuarioDAO->montarObjetoUsuario($resultado->result());
 	}
 
 	public function sair()
