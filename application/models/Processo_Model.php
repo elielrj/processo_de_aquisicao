@@ -1,6 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-    class Processo_Model extends CI_Model {
+    include('application/models/bo/Processo.php');    
+    include('I_Crud_DAO.php');
+    
+class ProcessoDAO extends CI_Model implements I_Crud_DAO
+    {
         
         public static $TABELA_DB = 'processo';
         

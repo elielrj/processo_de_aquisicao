@@ -83,7 +83,7 @@
             return "<td>{$chave_de_acesso}</td>";
         }
 
-        private function processoUsuario($usuario_id)
+        private function processoUsuario($usuario)
         {
             return "<td>{$usuario_id['email']}</td>";
         }

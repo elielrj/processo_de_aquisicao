@@ -141,7 +141,7 @@ $autoload['language'] = array();
 */
 $autoload['model'] = array(
     'Processo_Model',
-    'Usuario_Model',
     'Arquivo_Model',
+    'dao/UsuarioDAO',
     'Sessao_Model',
 );

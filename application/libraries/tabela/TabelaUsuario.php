@@ -37,12 +37,12 @@
                 "<tr class='text-center'>" .
                 
                     $this->usuarioOrdem() .
-                    $this->usuarioId($usuario['id']) .
-                    $this->usuarioEmail($usuario['email']) .
-                    $this->usuarioCpf($usuario['cpf']) .
-                    $this->usuarioSenha($usuario['senha']) .
-                    $this->usuarioAlterar($usuario['id']) .
-                    $this->usuarioExcluir($usuario['id']) .
+                    $this->usuarioId($usuario->id) .
+                    $this->usuarioEmail($usuario->email) .
+                    $this->usuarioCpf($usuario->cpf) .
+                    $this->usuarioSenha($usuario->senha) .
+                    $this->usuarioAlterar($usuario->id) .
+                    $this->usuarioExcluir($usuario->id) .
                                 
                 "</tr>";
         }
