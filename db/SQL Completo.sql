@@ -34,3 +34,5 @@ status boolean not null,
 foreign key (processo_id) references processo(id),
 foreign key (usuario_id) references usuario(id)
 );
+
+INSERT INTO `usuario`(`id`, `email`, `cpf`, `senha`, `status`) VALUES (1,'elielrj@gmail.com','09856260701',md5(952420),true);
