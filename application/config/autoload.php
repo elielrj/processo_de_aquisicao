@@ -140,8 +140,7 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array(
-    'Processo_Model',
-    'Arquivo_Model',
+    'dao/ProcessoDAO',
+    'dao/ArquivoDAO',
     'dao/UsuarioDAO',
-    'Sessao_Model',
 );
