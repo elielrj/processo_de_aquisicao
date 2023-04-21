@@ -92,9 +92,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Novo:</h6>
                         <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/pregao'); ?>">Pregão Tradicional</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/processo/pregao'); ?>">Pregão SRP</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/processo/pregao'); ?>">Dispensa de Licitação</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/processo/pregao'); ?>">Inexigibilidade</a>
                     </div>
                 </div>
             </li>
