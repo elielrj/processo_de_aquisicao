@@ -2,7 +2,7 @@
 
 	echo "<h1>{$titulo}</h1>";
 
-    echo form_open('processo/criar', 
+    echo form_open('ProcessoController/criar', 
         array('class' => 'form-group')
     );
 

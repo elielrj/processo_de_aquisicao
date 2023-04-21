@@ -4,7 +4,7 @@
 	<h1><?php echo $titulo ?></h1>
 
     <a class="btn btn-primary btn-sm" 
-        href="<?php echo base_url('index.php/usuario/novo')?>">
+        href="<?php echo base_url('index.php/UsuarioController/novo')?>">
         NOVO</a>
     
     </br>

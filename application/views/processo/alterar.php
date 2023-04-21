@@ -4,7 +4,7 @@
 	echo "<h1>{$titulo}</h1>";
 
     echo form_open(
-        'processo/atualizar', 
+        'ProcessoController/atualizar', 
         array('class' => 'form-group')
     );
 
@@ -12,7 +12,7 @@
             array(
                 'name' => 'id',
                 'type' => 'hidden', 
-                'value' => $tabela[0]['id']
+                'value' => $processo->id
             )
         );
 
@@ -22,7 +22,7 @@
                 'name' => 'objeto', 
                 'class' => 'form-control', 
                 'maxlength' => 150, 
-                'value' => $tabela[0]['objeto']
+                'value' => $processo->objeto
             )
         );
 
@@ -35,7 +35,7 @@
                 'name' => 'nup_nud', 
                 'class' => 'form-control', 
                 'maxlength' => 20, 
-                'value' => $tabela[0]['nup_nud']
+                'value' => $processo->nupNud
             )
         );
 
@@ -44,7 +44,7 @@
         echo form_label('Data do Processo');
 
         $timezone = new DateTimeZone('America/Sao_Paulo');
-        $data_hora = new DateTime($tabela[0]['data_do_processo'], $timezone);
+        $data_hora = new DateTime($processo->dataDoProcesso, $timezone);
 
         echo form_input(
             array(
@@ -62,7 +62,7 @@
             array(
                 'name' => 'chave_de_acesso', 
                 'class' => 'form-control', 
-                'value' => $tabela[0]['chave_de_acesso'],
+                'value' => $processo->chaveDeProcesso,
                 'disabled' => 'disabled'
             )
         );
@@ -75,7 +75,7 @@
                 'name' => 'usuario_id', 
                 'class' => 'form-control', 
                 'maxlength' => 100, 
-                'value' => $tabela[0]['usuario_id']['email'],
+                'value' => $processo->usuario->email,
                 'disabled' => 'disabled'
             )
         );

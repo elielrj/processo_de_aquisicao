@@ -9,8 +9,9 @@ class Usuario
     private $senha;
     private $status;
 
-    
-    public function __construct($id = null,$email = null,$cpf = null,$senha = null,$status = null){
+
+    public function __construct($id, $email, $cpf, $senha, $status)
+    {
         $this->id = $id;
         $this->email = $email;
         $this->cpf = $cpf;
@@ -18,11 +19,13 @@ class Usuario
         $this->status = $status;
     }
 
-    function __get($key){
+    function __get($key)
+    {
         return $this->$key;
     }
-    
-    function __set($key,$value){
+
+    function __set($key, $value)
+    {
         $this->$key = $value;
     }
 }

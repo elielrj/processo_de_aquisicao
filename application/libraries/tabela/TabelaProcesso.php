@@ -35,20 +35,21 @@
         }
 
         private function linhaDoProcesso($processo)
-        {
+    {
+       
             return
                 "<tr class='text-center'>" .
                 
                     $this->processoOrdem() .
-                    $this->processoId($processo['id']) .
-                    $this->processoObjeto($processo['objeto']) .
-                    $this->processoNupNud($processo['nup_nud']) .
-                    $this->processoDataDoProcesso($processo['data_do_processo']) .
-                    $this->processoChaveDeAcesso($processo['chave_de_acesso']) .
-                    $this->processoUsuario($processo['usuario_id']) .
-                    $this->processoStatus($processo['status']) .
-                    $this->processoAlterar($processo['id']) .
-                    $this->processoExcluir($processo['id']) .
+                    $this->processoId($processo->id) .
+                    $this->processoObjeto($processo->objeto) .
+                    $this->processoNupNud($processo->nupNud) .
+                    $this->processoDataDoProcesso($processo->dataDoProcesso) .
+                    $this->processoChaveDeAcesso($processo->chaveDeAcesso) .
+                    $this->processoUsuario($processo->usuario) .
+                    $this->processoStatus($processo->status) .
+                    $this->processoAlterar($processo->id) .
+                    $this->processoExcluir($processo->id) .
                                 
                 "</tr>";
         }
@@ -84,8 +85,9 @@
         }
 
         private function processoUsuario($usuario)
-        {
-            return "<td>{$usuario_id['email']}</td>";
+    {
+       
+            return "<td>{$usuario->email}</td>";
         }
 
         private function processoStatus($status)
@@ -95,14 +97,14 @@
 
         private function processoAlterar($id)
         {
-            $link = "index.php/processo/alterar/{$id}";
+            $link = "index.php/ProcessoController/alterar/{$id}";
             $value = "<a href='" . base_url($link) . "'>Alterar</a>";
             return "<td>{$value}</td>";
         }
 
         private function processoExcluir($id)
         {
-            $link = "index.php/processo/deletar/{$id}";
+            $link = "index.php/ProcessoController/deletar/{$id}";
 
             $value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
 

@@ -1,9 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/Arquivo.php');
-include('I_Crud_DAO.php');
 
-class ArquivoDAO extends CI_Model implements I_Crud_DAO
+class ArquivoDAO extends CI_Model 
 {
 
     public static $TABELA_DB = 'arquivo';
@@ -17,7 +16,16 @@ class ArquivoDAO extends CI_Model implements I_Crud_DAO
     {
         $this->db->insert(
             self::$TABELA_DB,
-            $arquivo
+            array(
+                'id' => $arquivo->id,
+                'nome' => $arquivo->nome,
+                'path' => $arquivo->path,
+                'nome_do_arquivo' => $arquivo->nomeDoArquivo,
+                'data_do_upload' => $arquivo->dataDoUpload,
+                'processo_id' => $arquivo->processo->id,
+                'usuario_id' => $arquivo->usuario->id,
+                'status' => $arquivo->status,
+            )
         );
     }
 
@@ -78,8 +86,17 @@ class ArquivoDAO extends CI_Model implements I_Crud_DAO
 
         $this->db->update(
             self::$TABELA_DB,
-            $arquivo,
-            array('id' => $arquivo['id'])
+            array(
+                'id' => $arquivo->id,
+                'nome' => $arquivo->nome,
+                'path' => $arquivo->path,
+                'nome_do_arquivo' => $arquivo->nomeDoArquivo,
+                'data_do_upload' => $arquivo->dataDoUpload,
+                'processo_id' => $arquivo->processo->id,
+                'usuario_id' => $arquivo->usuario->id,
+                'status' => $arquivo->status,
+            ),
+            array('id' => $arquivo->id)
         );
     }
 
@@ -96,3 +113,4 @@ class ArquivoDAO extends CI_Model implements I_Crud_DAO
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 }
+

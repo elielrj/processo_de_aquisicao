@@ -73,10 +73,9 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Pregão:</h6>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/arquivo_controller'); ?>">Arquivos</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/processo_controller'); ?>">Processos</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/usuario_controller'); ?>">Usuários</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/upload_controller'); ?>">Upload</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/ArquivoController'); ?>">Arquivos</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Processos</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController'); ?>">Usuários</a>
                     </div>
                 </div>
             </li>

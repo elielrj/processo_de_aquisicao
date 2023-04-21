@@ -64,7 +64,6 @@ $autoload['libraries'] = array(
     'Botao',
     'Tabela',
     'upload',
-    'Opcao',
 );
 
 /*
@@ -143,4 +142,5 @@ $autoload['model'] = array(
     'dao/ProcessoDAO',
     'dao/ArquivoDAO',
     'dao/UsuarioDAO',
+
 );

@@ -4,7 +4,7 @@
 	echo "<h1>{$titulo}</h1>";
 
     echo form_open(
-        'usuario/atualizar', 
+        'UsuarioController/atualizar', 
         array('class' => 'form-group')
     );
 
@@ -12,7 +12,7 @@
             array(
                 'name' => 'id',
                 'type' => 'hidden', 
-                'value' => $tabela[0]['id']
+                'value' => $usuario->id
             )
         );
 
@@ -22,7 +22,7 @@
                 'name' => 'objeto', 
                 'class' => 'form-control', 
                 'maxlength' => 150, 
-                'value' => $tabela[0]['email']
+                'value' => $usuario->email
             )
         );
 
@@ -35,7 +35,7 @@
                 'name' => 'cpf', 
                 'class' => 'form-control', 
                 'maxlength' => 20, 
-                'value' => $tabela[0]['cpf']
+                'value' => $usuario->cpf
             )
         );
 
@@ -47,7 +47,7 @@
                 'name' => 'senha', 
                 'class' => 'form-control', 
                 'maxlength' => 20, 
-                'value' => $tabela[0]['senha']
+                'value' => $usuario->senha
             )
         );
 

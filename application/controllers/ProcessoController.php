@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-include_once('processo/listar.php');
-class Processo extends CI_Controller {
+
+
+
+class ProcessoController extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
@@ -26,9 +28,9 @@ class Processo extends CI_Controller {
 		$mostrar = 10;
 		$indiceInicial  = $indice * $mostrar;
 
-		$processos = $this->Processo_Model->retrive($indiceInicial,$mostrar);
+		$processos = $this->ProcessoDAO->retrive($indiceInicial,$mostrar);
 		
-		$quantidade = $this->Processo_Model->quantidade();
+		$quantidade = $this->ProcessoDAO->count_rows();
 
 		$botoes = empty($processos) ? '' : $this->botao->paginar('processo/listar',$indice,$quantidade,$mostrar);
 
@@ -49,9 +51,9 @@ class Processo extends CI_Controller {
 		$mostrar = 10;
 		$indiceInicial  = $indice * $mostrar;
 
-		$processos = $this->Processo_Model->retrive($indiceInicial,$mostrar);
+		$processos = $this->ProcessoDAO->retrive($indiceInicial,$mostrar);
 		
-		$quantidade = $this->Processo_Model->quantidade();
+		$quantidade = $this->ProcessoDAO->count_rows();
 
 		$botoes = empty($processos) ? '' : $this->botao->paginar('processo/listarPregoes',$indice,$quantidade,$mostrar);
 
@@ -91,18 +93,18 @@ class Processo extends CI_Controller {
 		$timezone = new DateTimeZone('America/Sao_Paulo');
 		$agora = new DateTime('now', $timezone);
 
-		$processo = $this->Processo_Model->processo(
+		$processo = new Processo(
 			null,
 			$data['objeto'],
 			$data['nup_nud'],
 			$agora->format('Y-m-d H:m:s'),
 			uniqid(),
-			1,
+			$this->session->id,
 			true
 		);
 
-		$this->Processo_Model->criar($processo);
-		redirect('processo');
+		$this->ProcessoDAO->criar($processo);
+		redirect('ProcessoController');
 	}
 
 	public function criarPregao(){
@@ -112,28 +114,31 @@ class Processo extends CI_Controller {
 		$timezone = new DateTimeZone('America/Sao_Paulo');
 		$agora = new DateTime('now', $timezone);
 
-		$processo = $this->Processo_Model->processo(
+		$processo = new Processo(
 			null,
 			$data['objeto'],
 			$data['nup_nud'],
 			$agora->format('Y-m-d H:m:s'),
 			uniqid(),
-			1,
+			$this->session->id,
 			true
 		);
 
-		$this->Processo_Model->criar($processo);
-		redirect('processo');
+		$this->ProcessoDAO->criar($processo);
+		redirect('ProcessoController');
 	}
 
 	public function alterar($id){        
 
-		$tabela = $this->Processo_Model->retriveId($id);
+		$processo = $this->ProcessoDAO->retriveId($id);
+		$processos = $this->ProcessoDAO->retrive(null,null);
+		
 		
 		$dados = array(
 			'titulo' => 'Alterar Processo',
 			'pagina' => 'processo/alterar.php',
-			'tabela' => $tabela
+			'processo' => $processo,
+			'processos' => $this->Opcao->processo($processos),
 		);
 
 		$this->load->view('index',$dados);
@@ -144,27 +149,26 @@ class Processo extends CI_Controller {
                     
 		$data = $this->input->post();		
 
-		$processo = $this->Processo_Model->processo(
+		$processo = new Processo(
 			$data['id'],
 			$data['objeto'],
 			$data['nup_nud'],
 			null,
 			null,
-			null,
+			$this->session->id,
 			null
 		);
 
-		$this->Processo_Model->update($processo);
+		$this->ProcessoDAO->update($processo);
 
-		redirect('processo');            
+		redirect('ProcessoController');            
 	}
 
 	public function deletar($id){
 
-		$this->Processo_Model->delete($id);
+		$this->ProcessoDAO->delete($id);
                 
-		redirect('processo');          
+		redirect('ProcessoController');          
 	}
-
 	
 }

@@ -2,7 +2,7 @@
 
 	echo "<h1>{$titulo}</h1>";
 
-    echo form_open_multipart('arquivo/criar', 
+    echo form_open_multipart('ArquivoController/criar', 
         array('class' => 'form-group')
     );
 
@@ -18,7 +18,7 @@
 
         echo form_dropdown(
             'processo_id',
-            $processos[0],
+            $processos,
             '',
             array(
                 'class' => 'form-control', 
@@ -34,16 +34,6 @@
             'class' => '', 
             'type' => 'file')
         );
-        
-/*
-        echo 
-            "<form method='POST' enctype='multipart/fomr-data' action=''>
-                <p>
-                    <label for=''>Selecione o arquivo</label>
-                    <input name='arquivo' type='file'>
-                </p>
-                <button name='upload' type='submit'>Enviar arquivo</button>
-            </form>";*/
 
         echo "</br>";
         

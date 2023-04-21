@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Arquivo_Controller extends CI_Controller {
+class ArquivoController extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
@@ -26,9 +26,9 @@ class Arquivo_Controller extends CI_Controller {
 		$mostrar = 10;
 		$indiceInicial  = $indice * $mostrar;
 
-		$arquivos = $this->Arquivo_Model->retrive($indiceInicial,$mostrar);
+		$arquivos = $this->ArquivoDAO->retrive($indiceInicial,$mostrar);
 		
-		$quantidade = $this->Arquivo_Model->quantidade();
+		$quantidade = $this->ArquivoDAO->count_rows();
 
 		$botoes = empty($arquivos) ? '' : $this->botao->paginar('arquivo/listar',$indice,$quantidade,$mostrar);
 
@@ -47,7 +47,7 @@ class Arquivo_Controller extends CI_Controller {
 		$dados = array(
 			'titulo' => 'Novo arquivo',
 			'pagina' => 'arquivo/novo.php',
-			'processos' => $this->options()
+			'processos' => $this->ProcessoDAO->options()
 		);
 
 		$this->load->view('index', $dados); 
@@ -78,20 +78,20 @@ class Arquivo_Controller extends CI_Controller {
 				$timezone = new DateTimeZone('America/Sao_Paulo');
 				$agora = new DateTime('now', $timezone);
 
-				$arquivo = $this->Arquivo_Model->arquivo(
+				$arquivo = new Arquivo(
 					null,
 					$nomeDoArquivo,
 					$path,
 					$novoNomeDoArquivo,
 					$agora->format('Y-m-d H:m:s'),
-					$data_post['processo_id'], 
-					$this->session->id,
+					$this->ProcessoDAO->retriveId($data_post['processo_id']), 
+					$this->UsuarioDAO->retriveId($this->session->id),
 					true
 				);
 
-				$this->Arquivo_Model->criar($arquivo);
+				$this->ArquivoDAO->create($arquivo);
 
-				redirect('arquivo');
+				redirect('ArquivoController');
 			}
 
 		}
@@ -100,13 +100,13 @@ class Arquivo_Controller extends CI_Controller {
 
 	public function alterar($id){        
 
-		$tabela = $this->Arquivo_Model->retriveId($id);
+		$arquivo = $this->ArquivoDAO->retriveId($id);
 		
 		$dados = array(
 			'titulo' => 'Alterar Arquivo',
 			'pagina' => 'arquivo/alterar.php',
-			'tabela' => $tabela,
-			'processos' => $this->options()
+			'arquivo' => $arquivo,
+			'processos' => $this->ProcessoDAO->options()
 
 		);
 
@@ -121,40 +121,40 @@ class Arquivo_Controller extends CI_Controller {
     	$data_hora = new DateTime($data['data_do_upload']);
 
 
-		$arquivo = $this->Arquivo_Model->arquivo(
+		$arquivo = new Arquivo(
 			$data['id'],
 			$data['nome'],
 			$data['path'],
 			$data['nome_do_arquivo'],
 			$data_hora->format('Y-m-d H:m:s'),
-			$data['processo_id'],
-			$data['usuario_id'],
+			$this->ProcessoDAO->retriveId($data['processo_id']),
+			$this->UsuarioDAO->retriveId($data['usuario_id']),
 			$data['status']
 		);
 
-		$this->Arquivo_Model->update($arquivo);
+		$this->ArquivoDAO->update($arquivo);
 
-		redirect('arquivo');            
+		redirect('ArquivoController');            
 	}
 
 	public function deletar($id){
 
-		$this->Arquivo_Model->delete($id);
+		$this->ArquivoDAO->delete($id);
                 
-		redirect('arquivo');          
+		redirect('ArquivoController');          
 	}
-
+/*
 	public function options(){
 
-		$processos = $this->Processo_Model->retrive(null,null);
+		$processos = $this->ProcessoDAO->retrive(null,null);
 
 		if(! empty($processos)){
 
 			$options = [];
-			
-			foreach($processos as $processo){
-				
-				$option = array($processo['id'] => $processo['objeto'] . '('. $processo['nup_nud'] . ')');
+
+			foreach($processos as $indice => $processo){
+
+				$option = array($processo->id => $processo->objeto . '('. $processo->nupNud . ')');
 
 				array_push($options,$option);
 			}
@@ -164,7 +164,7 @@ class Arquivo_Controller extends CI_Controller {
 	}
 
 	private function upload(){
-/*
+
 		$config['upload_path'] = './arquivos/';
 		$config['allowed_types'] = 'pdf';
 		$config['max_size'] = (10 * 1024 * 1024);
@@ -191,4 +191,4 @@ class Arquivo_Controller extends CI_Controller {
 		
 	}
 
-}
+

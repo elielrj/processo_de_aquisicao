@@ -1,6 +1,6 @@
 <?php
 
-    interface I_Crud_DAO
+    interface ICrudDAO
     {
         public function create($object);
         public function retrive($index_initial,$show);

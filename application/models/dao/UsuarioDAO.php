@@ -1,9 +1,9 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
 
+include('ICrudDAO.php');
 include('application/models/bo/Usuario.php');
-include('I_Crud_DAO.php');
 
-class UsuarioDAO extends CI_Model implements I_Crud_DAO
+class UsuarioDAO extends CI_Model implements ICrudDAO
 {
 
     public static $TABELA_DB = 'usuario';
@@ -15,7 +15,16 @@ class UsuarioDAO extends CI_Model implements I_Crud_DAO
 
     public function create($usuario)
     {
-        $this->db->insert(self::$TABELA_DB, $usuario);
+        $this->db->insert(
+            self::$TABELA_DB, 
+            array(
+                'id' => $usuario->id,
+                'email' => $usuario->email,
+                'cpf' => $usuario->cpf,
+                'senha' => $usuario->senha,
+                'status' => $usuario->status,
+            )
+        );
     }
 
     public function retrive($indiceInicial, $mostrar)
@@ -69,7 +78,13 @@ class UsuarioDAO extends CI_Model implements I_Crud_DAO
 
         $this->db->update(
             self::$TABELA_DB,
-            $usuario,
+            array(
+                'id' => $usuario->id,
+                'email' => $usuario->email,
+                'cpf' => $usuario->cpf,
+                'senha' => $usuario->senha,
+                'status' => $usuario->status,
+            ),
             array('id' => $usuario->id)
         );
     }
@@ -123,3 +138,4 @@ class UsuarioDAO extends CI_Model implements I_Crud_DAO
     }
 
 }
+

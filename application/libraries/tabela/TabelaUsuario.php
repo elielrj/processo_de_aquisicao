@@ -74,14 +74,14 @@
 
         private function usuarioAlterar($id)
         {
-            $link = "index.php/usuario/alterar/{$id}";
+            $link = "index.php/UsuarioController/alterar/{$id}";
             $value = "<a href='" . base_url($link) . "'>Alterar</a>";
             return "<td>{$value}</td>";
         }
 
         private function usuarioExcluir($id)
         {
-            $link = "index.php/usuario/deletar/{$id}";
+            $link = "index.php/UsuarioController/deletar/{$id}";
 
             $value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
 

@@ -2,7 +2,7 @@
 
 	echo "<h1>{$titulo}</h1>";
 
-    echo form_open('usuario/criar', 
+    echo form_open('UsuarioController/criar', 
         array('class' => 'form-group')
     );
 
