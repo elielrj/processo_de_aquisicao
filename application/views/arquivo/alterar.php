@@ -9,7 +9,7 @@ echo "<h1>{$titulo}</h1>" . "</br>" .
 
     form_input(['name' => 'id', 'type' => 'hidden', 'value' => $arquivo->id]) . "</br>" .
 
-    form_label('Nome') . form_input(['name' => 'nome', 'class' => 'form-control', 'maxlength' => 150, 'value' => $arquivo->nome]) . "</br>" .
+    form_label('Nome do Documento') . form_input(['name' => 'nome_do_documento', 'class' => 'form-control', 'maxlength' => 150, 'value' => $arquivo->nomeDoDocumento]) . "</br>" .
 
     form_label('Path') . form_input(['name' => 'path', 'class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->path]) . "</br>" .
 

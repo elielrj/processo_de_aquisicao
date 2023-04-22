@@ -33,7 +33,7 @@ foreign key (departamento_id) references departamento(id)
 
 create table if not exists arquivo(
 id int primary key auto_increment not null,
-nome varchar(250) not null,
+nome_do_documento varchar(250) not null,
 path varchar(250) not null,
 nome_do_arquivo varchar(250) not null,
 data_do_upload datetime not null default current_timestamp,

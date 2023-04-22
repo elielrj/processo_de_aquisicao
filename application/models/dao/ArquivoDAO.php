@@ -18,7 +18,7 @@ class ArquivoDAO extends CI_Model
             self::$TABELA_DB,
             array(
                 'id' => $arquivo->id,
-                'nome' => $arquivo->nome,
+                'nome_do_documento' => $arquivo->nomeDoDocumento,
                 'path' => $arquivo->path,
                 'nome_do_arquivo' => $arquivo->nomeDoArquivo,
                 'data_do_upload' => $arquivo->dataDoUpload,
@@ -42,7 +42,7 @@ class ArquivoDAO extends CI_Model
         foreach ($resultado->result() as $linha) {
             $arquivo = new Arquivo(
                 $linha->id,
-                $linha->nome,
+                $linha->nome_do_documento,
                 $linha->path,
                 $linha->nome_do_arquivo,
                 $linha->data_do_upload,
@@ -68,7 +68,7 @@ class ArquivoDAO extends CI_Model
         foreach ($resultado->result() as $linha) {
             return new Arquivo(
                 $linha->id,
-                $linha->nome,
+                $linha->nome_do_documento,
                 $linha->path,
                 $linha->nome_do_arquivo,
                 $linha->data_do_upload,
@@ -85,7 +85,7 @@ class ArquivoDAO extends CI_Model
             self::$TABELA_DB,
             array(
                 'id' => $arquivo->id,
-                'nome' => $arquivo->nome,
+                'nome_do_documento' => $arquivo->nomeDoDocumento,
                 'path' => $arquivo->path,
                 'nome_do_arquivo' => $arquivo->nomeDoArquivo,
                 'data_do_upload' => $arquivo->dataDoUpload,

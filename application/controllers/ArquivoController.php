@@ -80,9 +80,9 @@ class ArquivoController extends CI_Controller
 
 				$arquivo = new Arquivo(
 					null,
-					$nomeDoArquivo,
+					$data_post['nome_do_documento'],
 					$path,
-					$novoNomeDoArquivo,
+					$nomeDoArquivo,
 					$agora->format('Y-m-d H:m:s'),
 					$this->ProcessoDAO->retriveId($data_post['processo_id']),
 					$data_post['status']
@@ -124,7 +124,7 @@ class ArquivoController extends CI_Controller
 
 		$arquivo = new Arquivo(
 			$data['id'],
-			$data['nome'],
+			$data['nome_do_documento'],
 			$data['path'],
 			$data['nome_do_arquivo'],
 			$data_hora->format('Y-m-d H:m:s'),
