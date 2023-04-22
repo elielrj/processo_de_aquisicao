@@ -1,152 +1,38 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
-
-
-echo "<h1>{$titulo}</h1>";
-
-echo form_open_multipart(
-    'ArquivoController/atualizar',
-    array('class' => 'form-group')
-);
-
-echo form_input(
-    array(
-        'name' => 'id',
-        'type' => 'hidden',
-        'value' => $arquivo->id
-    )
-);
-
-echo form_label('Nome');
-echo form_input(
-    array(
-        'name' => 'nome',
-        'class' => 'form-control',
-        'maxlength' => 150,
-        'value' => $arquivo->nome
-    )
-);
-
-echo "</br>";
-
-
-echo form_label('Path');
-echo form_input(
-    array(
-        'name' => 'path',
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => $arquivo->path
-    )
-);
-
-echo "</br>";
-
-echo form_label('Nome do Arquivo');
-echo form_input(
-    array(
-        'name' => 'nome_do_arquivo',
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => $arquivo->nomeDoArquivo
-    )
-);
-
-echo "</br>";
-
-echo form_label('Data de Upload');
-
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 $timezone = new DateTimeZone('America/Sao_Paulo');
 $data_hora = new DateTime($arquivo->dataDoUpload, $timezone);
 
-echo form_input(
-    array(
-        'name' => 'data_do_upload',
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => $data_hora->format('d-m-Y H:m:s')
-    )
-);
+echo "<h1>{$titulo}</h1>" . "</br>" .
 
-echo "</br>";
+    form_open_multipart('ArquivoController/atualizar', ['class' => 'form-group']) . "</br>" .
 
-echo form_label('Processo');
+    form_input(['name' => 'id', 'type' => 'hidden', 'value' => $arquivo->id]) . "</br>" .
 
-echo form_input(
-    array(
+    form_label('Nome') . form_input(['name' => 'nome', 'class' => 'form-control', 'maxlength' => 150, 'value' => $arquivo->nome]) . "</br>" .
 
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => $arquivo->processo->objeto . ' (' . $arquivo->processo->nupNud . ')',
-        'disabled' => 'disabled',
-    )
-);
+    form_label('Path') . form_input(['name' => 'path', 'class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->path]) . "</br>" .
 
-echo form_input(
-    array(
-        'name' => 'processo_id',
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => $arquivo->processo->id,
-        'type' => 'hidden',
-    )
-);
+    form_label('Nome do Arquivo') . form_input(['name' => 'nome_do_arquivo', 'class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->nomeDoArquivo]) . "</br>" .
 
-echo "</br>";
+    form_label('Data de Upload') . form_input(['name' => 'data_do_upload', 'class' => 'form-control', 'maxlength' => 20, 'value' => $data_hora->format('d-m-Y H:m:s')]) . "</br>" .
 
-echo form_label('Usuário');
-echo form_input(
-    array(
+    form_label('Processo') .
 
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => $arquivo->usuario->email,
-        'disabled' => 'disabled'
-    )
-);
+        // form_input(['class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->processo->objeto . ' (' . $arquivo->processo->nupNud . ')', 'disabled' => 'disabled']) . "</br>" .
+    form_dropdown('processo_id', $processos, $arquivo->processo->id, ['class' => 'form-control']) . "</br>" .
 
-echo form_input(
-    array(
-        'name' => 'usuario_id',
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => $arquivo->usuario->id,
-        'type' => 'hidden',
-    )
-);
+    // form_label('Usuário') . form_input(['class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->usuario->email, 'disabled' => 'disabled']) . "</br>" .
 
-echo "</br>";
+    //    form_input(['name' => 'usuario_id', 'class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->usuario->id, 'type' => 'hidden']) . "</br>" .
 
-echo form_label('Status');
-echo form_input(
-    array(
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => ($arquivo->status ? 'Ativo' : 'Inativo'),
-        'disabled' => 'disabled'
-    )
-);
+    // form_label('Status') . form_input(['class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->status ]) . "</br>" .
 
-echo form_input(
-    array(
-        'name' => 'status',
-        'class' => 'form-control',
-        'maxlength' => 20,
-        'value' => $arquivo->status,
-        'type' => 'hidden',
-    )
-);
+    form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $arquivo->status, ['class' => 'form-control']) . "</br>" .
 
-echo "</br>";
+    form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']) . "</br>" .
 
-echo form_submit(
-    'enviar',
-    'Enviar',
-    array(
-        'class' => 'btn btn-primary btn-lg btn-block'
-    )
-);
-echo "<a href=" . base_url('index.php/arquivo') .
-    " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
+    "<a href=" . base_url('index.php/ArquivoController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
 
-echo form_close();
+form_close();
 ?>

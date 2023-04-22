@@ -6,11 +6,9 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
     <?php echo $titulo ?>
 </h1>
 
-<a class="btn btn-primary btn-sm" href="<?php echo base_url('index.php/ArquivoController/novo') ?>">
-    NOVO</a>
+<a class="btn btn-primary btn-sm" href="<?php echo base_url('index.php/DepartamentoController/novo') ?>">NOVO</a>
 
-</br>
-</br>
+</br></br>
 
 <!-- tabela -->
 <table class=''>

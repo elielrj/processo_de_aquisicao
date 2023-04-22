@@ -1,33 +1,28 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Arquivo
+
+class Departamento
 {
     private $id;
     private $nome;
-    private $path;
-    private $nomeDoArquivo;
-    private $dataDoUpload;
-    private $processo;
+    private $sigla;
     private $status;
+    private $processos;
 
 
     public function __construct(
         $id,
         $nome,
-        $path,
-        $nomeDoArquivo,
-        $dataDoUpload,
-        $processo,
-        $status
+        $sigla,
+        $status,
+        $processos = null
     ) {
         $this->id = $id;
         $this->nome = $nome;
-        $this->path = $path;
-        $this->nomeDoArquivo = $nomeDoArquivo;
-        $this->dataDoUpload = $dataDoUpload;
-        $this->processo = $processo;
+        $this->sigla = $sigla;
         $this->status = $status;
+        $this->processos = $processos;
     }
 
     function __get($key)

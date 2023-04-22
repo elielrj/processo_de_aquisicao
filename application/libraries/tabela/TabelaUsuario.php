@@ -1,5 +1,5 @@
 <?php
-
+defined('BASEPATH') or exit('No direct script access allowed');
     class TabelaUsuario {
 
         private $ordem;
@@ -26,6 +26,8 @@
                     <td>Email</td>
                     <td>CPF</td>
                     <td>Senha</td>
+                    <td>Departamento</td>
+                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
@@ -41,6 +43,8 @@
                     $this->usuarioEmail($usuario->email) .
                     $this->usuarioCpf($usuario->cpf) .
                     $this->usuarioSenha($usuario->senha) .
+                    $this->usuarioDepartamento($usuario->departamento) .
+                    $this->usuarioStatus($usuario->status) .
                     $this->usuarioAlterar($usuario->id) .
                     $this->usuarioExcluir($usuario->id) .
                                 
@@ -70,6 +74,16 @@
         private function usuarioSenha($senha)
         {
             return "<td>{$senha}</td>";
+        }
+
+        private function usuarioDepartamento($departamento)
+        {
+            return "<td>{$departamento->nome}</td>";
+        }
+
+        private function usuarioStatus($status)
+        {
+            return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
         }
 
         private function usuarioAlterar($id)

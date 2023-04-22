@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
     class TabelaProcesso {
 
@@ -46,7 +47,7 @@
                     $this->processoNupNud($processo->nupNud) .
                     $this->processoDataDoProcesso($processo->dataDoProcesso) .
                     $this->processoChaveDeAcesso($processo->chaveDeAcesso) .
-                    $this->processoUsuario($processo->usuario) .
+                    $this->processoDepartamento($processo->departamento) .
                     $this->processoStatus($processo->status) .
                     $this->processoAlterar($processo->id) .
                     $this->processoExcluir($processo->id) .
@@ -84,10 +85,10 @@
             return "<td>{$chave_de_acesso}</td>";
         }
 
-        private function processoUsuario($usuario)
+        private function processoDepartamento($departamento)
     {
        
-            return "<td>{$usuario->email}</td>";
+            return "<td>{$departamento->nome}</td>";
         }
 
         private function processoStatus($status)

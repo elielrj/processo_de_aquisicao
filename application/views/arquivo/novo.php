@@ -1,49 +1,24 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); 
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
-	echo "<h1>{$titulo}</h1>";
+echo "<h1>{$titulo}</h1>";
 
-    echo form_open_multipart('ArquivoController/criar', 
-        array('class' => 'form-group')
-    );
+echo form_open_multipart('ArquivoController/criar', ['class' => 'form-group']) .
 
-        echo form_label('Nome');
-        echo form_input(
-            array(
-                'name' => 'nome', 
-                'class' => 'form-control', 
-                'maxlength' => 150)
-        );
+    form_input(['name' => 'id', 'type' => 'hidden']) . "</br>" .
 
-            echo "</br>";
+    form_label('Nome') . form_input(['name' => 'nome', 'class' => 'form-control', 'maxlength' => 150]) . "</br>" .
 
-        echo form_dropdown(
-            'processo_id',
-            $processos,
-            '',
-            array(
-                'class' => 'form-control', 
-                'id' => 'processo_id' 
-            )
-        );
+    form_dropdown('processo_id', $processos, '', ['class' => 'form-control', 'id' => 'processo_id']) . "</br>" .
 
-            echo "</br>";
+    form_input(['name' => 'arquivo', 'class' => 'form-label form-control', 'type' => 'file']) . "</br>" .
 
-        echo form_input(
-        array(
-            'name' => 'arquivo', 
-            'class' => '', 
-            'type' => 'file')
-        );
+    form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']) . "</br>" .
 
-        echo "</br>";
-        
-        echo form_submit(
-            'enviar','Enviar', 
-            array('class' => 'btn btn-primary btn-lg btn-block')
-        );
-        echo "<a href=" . base_url('index.php/arquivo') . 
-                " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
-    
-    echo form_close();  
-    
+    form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']) .
+
+    "<a href=" . base_url('index.php/ArquivoController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>" .
+
+    form_close();
+
 ?>

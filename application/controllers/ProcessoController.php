@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-
-
 class ProcessoController extends CI_Controller {
 
 	public function __construct(){
@@ -32,7 +30,7 @@ class ProcessoController extends CI_Controller {
 		
 		$quantidade = $this->ProcessoDAO->count_rows();
 
-		$botoes = empty($processos) ? '' : $this->botao->paginar('processo/listar',$indice,$quantidade,$mostrar);
+		$botoes = empty($processos) ? '' : $this->botao->paginar('ProcessoController/listar',$indice,$quantidade,$mostrar);
 
 		$dados = array(
 			'titulo'=> 'Lista de processos',
@@ -42,103 +40,51 @@ class ProcessoController extends CI_Controller {
 		);
 		
 		$this->load->view('index',$dados);
-	}
-
-	public function pregrao($indice = 1)
-	{
-		$indice--;                
-
-		$mostrar = 10;
-		$indiceInicial  = $indice * $mostrar;
-
-		$processos = $this->ProcessoDAO->retrive($indiceInicial,$mostrar);
 		
-		$quantidade = $this->ProcessoDAO->count_rows();
-
-		$botoes = empty($processos) ? '' : $this->botao->paginar('processo/listarPregoes',$indice,$quantidade,$mostrar);
-
-		$dados = array(
-			'titulo'=> 'Lista de processos',
-			'tabela'=> $this->tabela->processo($processos,$indiceInicial),
-			'pagina'=> 'processo/index.php',
-			'botoes'=> $botoes,
-		);
-		
-		$this->load->view('index',$dados);
 	}
 
 	public function novo(){
 
+		$usuarioAtual = $this->UsuarioDAO->retriveId($this->session->id);
+
 		$dados = array(
 			'titulo' => 'Novo Processo',
 			'pagina' => 'processo/novo.php',
+			'departamentos' => $this->DepartamentoDAO->options(),
+			'departamento' => $usuarioAtual->departamento->id,
 		);
 
 		$this->load->view('index', $dados); 
 	}
 
-	public function novoPregao(){
-		$this->load->view(
-			'index',
-			[
-				'titulo' => 'Novo Processo de Pregão',
-				'pagina' => 'processo/novo_pregao.php',
-			]
-		);
-	}
 	public function criar(){
 
 		$data = $this->input->post();
-
-		$timezone = new DateTimeZone('America/Sao_Paulo');
-		$agora = new DateTime('now', $timezone);
-
+		
 		$processo = new Processo(
 			null,
 			$data['objeto'],
 			$data['nup_nud'],
-			$agora->format('Y-m-d H:m:s'),
-			uniqid(),
-			$this->session->id,
-			true
+			$data['data_do_processo'],
+			$data['chave_de_acesso'],			
+			$this->DepartamentoDAO->retriveId($data['departamento_id']),
+			$data['status']
 		);
 
-		$this->ProcessoDAO->criar($processo);
-		redirect('ProcessoController');
-	}
+		$this->ProcessoDAO->create($processo);
 
-	public function criarPregao(){
-
-		$data = $this->input->post();
-
-		$timezone = new DateTimeZone('America/Sao_Paulo');
-		$agora = new DateTime('now', $timezone);
-
-		$processo = new Processo(
-			null,
-			$data['objeto'],
-			$data['nup_nud'],
-			$agora->format('Y-m-d H:m:s'),
-			uniqid(),
-			$this->session->id,
-			true
-		);
-
-		$this->ProcessoDAO->criar($processo);
 		redirect('ProcessoController');
 	}
 
 	public function alterar($id){        
 
-		$processo = $this->ProcessoDAO->retriveId($id);
-		$processos = $this->ProcessoDAO->retrive(null,null);
-		
+		$processo = $this->ProcessoDAO->retriveId($id);		
 		
 		$dados = array(
 			'titulo' => 'Alterar Processo',
 			'pagina' => 'processo/alterar.php',
 			'processo' => $processo,
-			'processos' => $this->Opcao->processo($processos),
+			'departamentos' => $this->DepartamentoDAO->options(),
 		);
 
 		$this->load->view('index',$dados);
@@ -153,10 +99,10 @@ class ProcessoController extends CI_Controller {
 			$data['id'],
 			$data['objeto'],
 			$data['nup_nud'],
-			null,
-			null,
-			$this->session->id,
-			null
+			$data['data_do_processo'],
+			$data['chave_de_acesso'],
+			$this->DepartamentoDAO->retriveId($data['departamento_id']),
+			$data['status']
 		);
 
 		$this->ProcessoDAO->update($processo);

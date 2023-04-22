@@ -2,7 +2,7 @@
 
 include('application/models/bo/Arquivo.php');
 
-class ArquivoDAO extends CI_Model 
+class ArquivoDAO extends CI_Model
 {
 
     public static $TABELA_DB = 'arquivo';
@@ -23,7 +23,6 @@ class ArquivoDAO extends CI_Model
                 'nome_do_arquivo' => $arquivo->nomeDoArquivo,
                 'data_do_upload' => $arquivo->dataDoUpload,
                 'processo_id' => $arquivo->processo->id,
-                'usuario_id' => $arquivo->usuario->id,
                 'status' => $arquivo->status,
             )
         );
@@ -48,7 +47,6 @@ class ArquivoDAO extends CI_Model
                 $linha->nome_do_arquivo,
                 $linha->data_do_upload,
                 $this->ProcessoDAO->retriveId($linha->processo_id),
-                $this->UsuarioDAO->retriveId($linha->usuario_id),
                 $linha->status
             );
 
@@ -75,7 +73,6 @@ class ArquivoDAO extends CI_Model
                 $linha->nome_do_arquivo,
                 $linha->data_do_upload,
                 $this->ProcessoDAO->retriveId($linha->processo_id),
-                $this->UsuarioDAO->retriveId($linha->usuario_id),
                 $linha->status
             );
         }
@@ -93,7 +90,6 @@ class ArquivoDAO extends CI_Model
                 'nome_do_arquivo' => $arquivo->nomeDoArquivo,
                 'data_do_upload' => $arquivo->dataDoUpload,
                 'processo_id' => $arquivo->processo->id,
-                'usuario_id' => $arquivo->usuario->id,
                 'status' => $arquivo->status,
             ),
             array('id' => $arquivo->id)
@@ -113,4 +109,3 @@ class ArquivoDAO extends CI_Model
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 }
-

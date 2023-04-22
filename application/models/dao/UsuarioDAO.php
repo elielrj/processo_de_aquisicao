@@ -1,7 +1,8 @@
 <?php
-
+defined('BASEPATH') or exit('No direct script access allowed');
 include('ICrudDAO.php');
 include('application/models/bo/Usuario.php');
+
 
 class UsuarioDAO extends CI_Model implements ICrudDAO
 {
@@ -16,12 +17,13 @@ class UsuarioDAO extends CI_Model implements ICrudDAO
     public function create($usuario)
     {
         $this->db->insert(
-            self::$TABELA_DB, 
+            self::$TABELA_DB,
             array(
                 'id' => $usuario->id,
                 'email' => $usuario->email,
                 'cpf' => $usuario->cpf,
                 'senha' => $usuario->senha,
+                'departamento_id' => $usuario->departamento->id,
                 'status' => $usuario->status,
             )
         );
@@ -45,6 +47,7 @@ class UsuarioDAO extends CI_Model implements ICrudDAO
                 $linha->email,
                 $linha->cpf,
                 $linha->senha,
+                $this->DepartamentoDAO->retriveId($linha->departamento_id),
                 $linha->status
             );
 
@@ -68,6 +71,7 @@ class UsuarioDAO extends CI_Model implements ICrudDAO
                 $linha->email,
                 $linha->cpf,
                 $linha->senha,
+                $this->DepartamentoDAO->retriveId($linha->departamento_id),
                 $linha->status
             );
         }
@@ -83,6 +87,7 @@ class UsuarioDAO extends CI_Model implements ICrudDAO
                 'email' => $usuario->email,
                 'cpf' => $usuario->cpf,
                 'senha' => $usuario->senha,
+                'departamento_id' => $usuario->departamento->id,
                 'status' => $usuario->status,
             ),
             array('id' => $usuario->id)
@@ -104,23 +109,18 @@ class UsuarioDAO extends CI_Model implements ICrudDAO
 
     public function verificarEmail($where)
     {
-
         $resultado = $this->db->get_where('usuario', $where);
-
         return $resultado->result();
     }
 
     public function verificarSenha($where)
     {
-
         $resultado = $this->db->get_where('usuario', $where);
-
         return $resultado->result();
     }
 
     public function retriveEmail($email)
     {
-
         $resultado = $this->db->get_where(
             self::$TABELA_DB,
             array('email' => $email)
@@ -132,10 +132,10 @@ class UsuarioDAO extends CI_Model implements ICrudDAO
                 $linha->email,
                 $linha->cpf,
                 $linha->senha,
+                $linha->departamento,
                 $linha->status
             );
         }
     }
 
 }
-

@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?> 
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');?> 
 
 	<!-- título -->    
 	<h1><?php echo $titulo ?></h1>

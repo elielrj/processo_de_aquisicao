@@ -1,19 +1,21 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class ArquivoController extends CI_Controller {
+class ArquivoController extends CI_Controller
+{
 
-	public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
 	}
 
 	public function index()
 	{
-		if(!isset($this->session->email)){
+		if (!isset($this->session->email)) {
 
 			$this->load->view('login.php');
 
-		}else{
+		} else {
 			$this->listar();
 		}
 	}
@@ -21,28 +23,29 @@ class ArquivoController extends CI_Controller {
 
 	public function listar($indice = 1)
 	{
-		$indice--;                
+		$indice--;
 
 		$mostrar = 10;
-		$indiceInicial  = $indice * $mostrar;
+		$indiceInicial = $indice * $mostrar;
 
-		$arquivos = $this->ArquivoDAO->retrive($indiceInicial,$mostrar);
-		
+		$arquivos = $this->ArquivoDAO->retrive($indiceInicial, $mostrar);
+
 		$quantidade = $this->ArquivoDAO->count_rows();
 
-		$botoes = empty($arquivos) ? '' : $this->botao->paginar('arquivo/listar',$indice,$quantidade,$mostrar);
+		$botoes = empty($arquivos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
 
 		$dados = array(
-			'titulo'=> 'Lista de arquivos',
-			'tabela'=> $this->tabela->arquivo($arquivos,$indiceInicial),
-			'pagina'=> 'arquivo/index.php',
-			'botoes'=> $botoes,
+			'titulo' => 'Lista de arquivos',
+			'tabela' => $this->tabela->arquivo($arquivos, $indiceInicial),
+			'pagina' => 'arquivo/index.php',
+			'botoes' => $botoes,
 		);
-		
-		$this->load->view('index',$dados);
+
+		$this->load->view('index', $dados);
 	}
 
-	public function novo(){
+	public function novo()
+	{
 
 		$dados = array(
 			'titulo' => 'Novo arquivo',
@@ -50,30 +53,27 @@ class ArquivoController extends CI_Controller {
 			'processos' => $this->ProcessoDAO->options()
 		);
 
-		$this->load->view('index', $dados); 
+		$this->load->view('index', $dados);
 	}
 
-	public function criar(){
-
-		
-		
+	public function criar()
+	{
 		$data_post = $this->input->post();
 
 		$arquivo = $_FILES['arquivo'];
 
-		if(isset($arquivo) && isset($data_post)){		
-			
+		if (isset($arquivo) && isset($data_post)) {
 
 			$tmp_name = $_FILES['arquivo']['tmp_name'];
 			$nomeDoArquivo = $_FILES['arquivo']['name'];
 			$novoNomeDoArquivo = uniqid();
-			$extensao = strtolower(pathinfo($nomeDoArquivo,PATHINFO_EXTENSION));
+			$extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
 			$path = 'arquivos/' . $novoNomeDoArquivo . '.' . $extensao;
-			
 
-			$arquivado = move_uploaded_file($tmp_name,$path);
 
-			if($arquivado){
+			$arquivado = move_uploaded_file($tmp_name, $path);
+
+			if ($arquivado) {
 
 				$timezone = new DateTimeZone('America/Sao_Paulo');
 				$agora = new DateTime('now', $timezone);
@@ -84,9 +84,8 @@ class ArquivoController extends CI_Controller {
 					$path,
 					$novoNomeDoArquivo,
 					$agora->format('Y-m-d H:m:s'),
-					$this->ProcessoDAO->retriveId($data_post['processo_id']), 
-					$this->UsuarioDAO->retriveId($this->session->id),
-					true
+					$this->ProcessoDAO->retriveId($data_post['processo_id']),
+					$data_post['status']
 				);
 
 				$this->ArquivoDAO->create($arquivo);
@@ -95,13 +94,14 @@ class ArquivoController extends CI_Controller {
 			}
 
 		}
-		
+
 	}
 
-	public function alterar($id){        
+	public function alterar($id)
+	{
 
 		$arquivo = $this->ArquivoDAO->retriveId($id);
-		
+
 		$dados = array(
 			'titulo' => 'Alterar Arquivo',
 			'pagina' => 'arquivo/alterar.php',
@@ -110,15 +110,16 @@ class ArquivoController extends CI_Controller {
 
 		);
 
-		$this->load->view('index',$dados);
-           
+		$this->load->view('index', $dados);
+
 	}
 
-	public function atualizar(){
-                    
-		$data = $this->input->post();	
-		
-    	$data_hora = new DateTime($data['data_do_upload']);
+	public function atualizar()
+	{
+
+		$data = $this->input->post();
+
+		$data_hora = new DateTime($data['data_do_upload']);
 
 
 		$arquivo = new Arquivo(
@@ -128,67 +129,20 @@ class ArquivoController extends CI_Controller {
 			$data['nome_do_arquivo'],
 			$data_hora->format('Y-m-d H:m:s'),
 			$this->ProcessoDAO->retriveId($data['processo_id']),
-			$this->UsuarioDAO->retriveId($data['usuario_id']),
 			$data['status']
 		);
 
 		$this->ArquivoDAO->update($arquivo);
 
-		redirect('ArquivoController');            
+		redirect('ArquivoController');
 	}
 
-	public function deletar($id){
+	public function deletar($id)
+	{
 
 		$this->ArquivoDAO->delete($id);
-                
-		redirect('ArquivoController');          
-	}
-/*
-	public function options(){
 
-		$processos = $this->ProcessoDAO->retrive(null,null);
-
-		if(! empty($processos)){
-
-			$options = [];
-
-			foreach($processos as $indice => $processo){
-
-				$option = array($processo->id => $processo->objeto . '('. $processo->nupNud . ')');
-
-				array_push($options,$option);
-			}
-		}
-
-		return $options;        
+		redirect('ArquivoController');
 	}
 
-	private function upload(){
-
-		$config['upload_path'] = './arquivos/';
-		$config['allowed_types'] = 'pdf';
-		$config['max_size'] = (10 * 1024 * 1024);
-		$config['overwrite'] = uniqid();
-		$config['file_ext_tolower'] = true;
-		$config['max_filename'] = 250;
-
-		$this->load->initialize($config);
-		
-
-		if ( ! $this->upload->do_upload('userfile'))
-		{
-			return array('error' => $this->upload->display_errors());
-		}
-		else
-		{
-			return array('upload_data' => $this->upload->data());
-		}*/
-
-		
-		
-		
-
-		
-	}
-
-
+}

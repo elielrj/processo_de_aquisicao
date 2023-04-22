@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
 
 class Processo
@@ -8,7 +9,8 @@ class Processo
     private $nupNud;
     private $dataDoProcesso;
     private $chaveDeAcesso;
-    private $usuario;
+    private $departamento;
+    private $arquivos;
     private $status;
 
 
@@ -18,16 +20,18 @@ class Processo
         $nupNud,
         $dataDoProcesso,
         $chaveDeAcesso,
-        $usuario,
-        $status
+        $departamento,
+        $status,
+        $arquivos = null
     ) {
         $this->id = $id;
         $this->objeto = $objeto;
         $this->nupNud = $nupNud;
         $this->dataDoProcesso = $dataDoProcesso;
         $this->chaveDeAcesso = $chaveDeAcesso;
-        $this->usuario = $usuario;
+        $this->departamento = $departamento;
         $this->status = $status;
+        $this->arquivos = $arquivos;
     }
 
     function __get($key)

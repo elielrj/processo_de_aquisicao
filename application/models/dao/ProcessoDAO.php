@@ -2,7 +2,7 @@
 
 include('application/models/bo/Processo.php');
 
-class ProcessoDAO extends CI_Model 
+class ProcessoDAO extends CI_Model  
 {
 
     public static $TABELA_DB = 'processo';
@@ -17,13 +17,13 @@ class ProcessoDAO extends CI_Model
         $this->db->insert(
             self::$TABELA_DB,
             array(
-                'id' => $processo->id,
+                
                 'objeto' => $processo->objeto,
                 'nup_nud' => $processo->nupNud,
                 'data_do_processo' => $processo->dataDoProcesso,
                 'chave_de_acesso' => $processo->chaveDeAcesso,
-                'usuario_id' => $processo->usuario->id,
-                'status' => $processo->status,
+                'departamento_id' => $processo->departamento->id,
+                'status' => $processo->status
             )
         );
     }
@@ -47,7 +47,7 @@ class ProcessoDAO extends CI_Model
                 $linha->nup_nud,
                 $linha->data_do_processo,
                 $linha->chave_de_acesso,
-                $this->UsuarioDAO->retriveId($linha->usuario_id),
+                $this->DepartamentoDAO->retriveId($linha->departamento_id),
                 $linha->status
             );
 
@@ -73,10 +73,38 @@ class ProcessoDAO extends CI_Model
                 $linha->nup_nud,
                 $linha->data_do_processo,
                 $linha->chave_de_acesso,
-                $this->UsuarioDAO->retriveId($linha->usuario_id),
+                $this->DepartamentoDAO->retriveId($linha->departamento_id),
                 $linha->status
             );
         }
+    }
+    
+    public function retriveDepartamentoId($departamento_id)
+    {
+
+        $resultado =
+            $this->db->get_where(
+                self::$TABELA_DB,
+                array('departamento_id' => $departamento_id)
+            );
+
+        $listaDeProcessos = array();
+
+        foreach ($resultado->result() as $linha) {
+
+            $processo = new Processo(
+                $linha->id,
+                $linha->objeto,
+                $linha->nup_nud,
+                $linha->data_do_processo,
+                $linha->chave_de_acesso,
+                $this->DepartamentoDAO->retriveId($linha->departamento_id),
+                $linha->status
+            );
+
+            array_push($listaDeProcessos, $processo);
+        }
+        return $listaDeProcessos;
     }
 
     public function update($processo)
@@ -90,7 +118,7 @@ class ProcessoDAO extends CI_Model
                 'nup_nud' => $processo->nupNud,
                 'data_do_processo' => $processo->dataDoProcesso,
                 'chave_de_acesso' => $processo->chaveDeAcesso,
-                'usuario_id' => $processo->usuario->id,
+                'departamento_id' => $processo->departamento->id,
                 'status' => $processo->status,
             ),
             array('id' => $processo->id)
@@ -115,11 +143,13 @@ class ProcessoDAO extends CI_Model
 
         $processos = $this->retrive(null, null);
 
-        $options = "<option value=''>Selecione uma Processo</option>";
+        $options = [];
 
         if (isset($processos)) {
+
             foreach ($processos as $key => $value) {
-                $options .= "<option value='{$value->id}'>" . $value->objeto . ' (Nup/Nud: ' . $value->nupNud . ')' . "</option>";
+                
+                $options += [$value->id => $value->objeto . ' (Nup/Nud: ' . $value->nupNud . ')'];
             }
         }
         return $options;

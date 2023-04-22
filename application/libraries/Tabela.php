@@ -1,8 +1,10 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
     
     include_once('tabela/TabelaProcesso.php');
     include_once('tabela/TabelaUsuario.php');
     include_once('tabela/TabelaArquivo.php');
+    include_once('tabela/TabelaDepartamento.php');
 
     class Tabela {
 
@@ -22,6 +24,12 @@
         {
             $tabelaArquivo = new TabelaArquivo();
             return $tabelaArquivo->arquivo($arquivos, $ordem);
+        }
+
+        public function departamento($departamentos, $ordem)
+        {
+            $tabelaDepartamento = new TabelaDepartamento();
+            return $tabelaDepartamento->departamento($departamentos, $ordem);
         }
     }
 

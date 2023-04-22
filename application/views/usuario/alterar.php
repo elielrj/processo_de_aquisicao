@@ -1,66 +1,26 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); 
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
 
-	echo "<h1>{$titulo}</h1>";
+echo "<h1>{$titulo}</h1>" . "</br>" .
+   
+    form_open('UsuarioController/atualizar', ['class' => 'form-group']) . "</br>" .
 
-    echo form_open(
-        'UsuarioController/atualizar', 
-        array('class' => 'form-group')
-    );
+    form_input(['name' => 'id', 'class' => 'form-control', 'type' => 'hidden', 'value' => $usuario->id]) . "</br>" .
 
-        echo form_input(
-            array(
-                'name' => 'id',
-                'type' => 'hidden', 
-                'value' => $usuario->id
-            )
-        );
+    form_label('Email') . form_input(['name' => 'email', 'class' => 'form-control', 'type' => 'email', 'maxlength' => 150, 'value' => $usuario->email]) . "</br>" .
 
-        echo form_label('Email');
-        echo form_input(
-            array(
-                'name' => 'objeto', 
-                'class' => 'form-control', 
-                'maxlength' => 150, 
-                'value' => $usuario->email
-            )
-        );
+    form_label('CPF') . form_input(['name' => 'cpf', 'class' => 'form-control', 'maxlength' => 11,'value' => $usuario->cpf]) . "</br>" .
 
-            echo "</br>";
+    form_label('Senha') . form_input(['name' => 'senha', 'class' => 'form-control', 'maxlength' => 6, 'value' => $usuario->senha]) . "</br>" .
 
-        echo form_label('CPF');
+    form_label('Departamento') . form_dropdown('departamento_id', $departamentos, $usuario->departamento->id, ['class' => 'form-control']) . "</br>" .
 
-        echo form_input(
-            array(
-                'name' => 'cpf', 
-                'class' => 'form-control', 
-                'maxlength' => 20, 
-                'value' => $usuario->cpf
-            )
-        );
+    form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $usuario->status, ['class' => 'form-control']) . "</br>" .
 
-            echo "</br>";
-        
-        echo form_label('Senha');
-        echo form_input(
-            array(
-                'name' => 'senha', 
-                'class' => 'form-control', 
-                'maxlength' => 20, 
-                'value' => $usuario->senha
-            )
-        );
+    form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']) . "</br>" .
 
-            echo "</br>";
-        
-        echo form_submit(
-            'enviar','Enviar', 
-            array(
-                'class' => 'btn btn-primary btn-lg btn-block'
-            )
-        );
-        echo "<a href=" . base_url('index.php/processo') . 
-                " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
-    
-    echo form_close();  
+    "<a href=" . base_url('index.php/UsuarioController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>" . "</br>" .
+
+    form_close();
 ?>

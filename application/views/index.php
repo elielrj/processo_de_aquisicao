@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
     if(!isset($_SESSION['email'])){
         header("Location:" . base_url());
         exit();
@@ -73,9 +75,10 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Pregão:</h6>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/ArquivoController'); ?>">Arquivos</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/DepartamentoController'); ?>">Departamento</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController'); ?>">Usuários</a>                        
                         <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Processos</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController'); ?>">Usuários</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/ArquivoController'); ?>">Arquivos</a>
                     </div>
                 </div>
             </li>

@@ -50,6 +50,7 @@ class UsuarioController extends CI_Controller
 		$dados = array(
 			'titulo' => 'Novo Usuário',
 			'pagina' => 'usuario/novo.php',
+			'departamentos' => $this->DepartamentoDAO->options(),
 		);
 
 		$this->load->view('index', $dados);
@@ -65,7 +66,8 @@ class UsuarioController extends CI_Controller
 			$data['email'],
 			$data['cpf'],
 			md5($data['senha']),
-			true
+			$this->DepartamentoDAO->retriveId($data['departamento_id']),
+			$data['status']
 		);
 
 		$this->UsuarioDAO->create($usuario);
@@ -81,7 +83,8 @@ class UsuarioController extends CI_Controller
 		$dados = array(
 			'titulo' => 'Alterar Usuário',
 			'pagina' => 'usuario/alterar.php',
-			'usuario' => $usuario
+			'usuario' => $usuario,
+			'departamentos' => $this->DepartamentoDAO->options(),
 		);
 
 		$this->load->view('index', $dados);
@@ -94,13 +97,14 @@ class UsuarioController extends CI_Controller
 		$data = $this->input->post();
 
 		$usuario = new Usuario(
-			null,
+			$data['id'],
 			$data['email'],
 			$data['cpf'],
 			md5($data['senha']),
-			true
+			$this->DepartamentoDAO->retriveId($data['departamento_id']),
+			$data['status']
 		);
-
+		
 		$this->UsuarioDAO->update($usuario);
 
 		redirect('UsuarioController');

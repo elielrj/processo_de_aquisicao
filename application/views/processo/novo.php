@@ -1,38 +1,26 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); 
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
-	echo "<h1>{$titulo}</h1>";
+echo "<h1>{$titulo}</h1>" .
 
-    echo form_open('ProcessoController/criar', 
-        array('class' => 'form-group')
-    );
+    form_open('ProcessoController/criar', ['class' => 'form-group']) .
 
-        echo form_label('Objeto do processo');
-        echo form_input(
-            array(
-                'name' => 'objeto', 
-                'class' => 'form-control', 
-                'maxlength' => 150)
-        );
+    form_input(['name' => 'id', 'type' => 'hidden']) . "</br>" .
 
-            echo "</br>";
+    form_label('Objeto do processo') . form_input(['name' => 'objeto', 'class' => 'form-control', 'maxlength' => 250]) . "</br>" .
 
-        echo form_label('Nup/Nud');
-        echo form_input(
-            array(
-                'name' => 'nup_nud', 
-                'class' => 'form-control', 
-                'maxlength' => 20
-            )
-        );
+    form_label('Nup/Nud') . form_input(['name' => 'nup_nud', 'class' => 'form-control', 'maxlength' => 20]) . "</br>" .
 
-            echo "</br>";
-        
-        echo form_submit(
-            'enviar','Enviar', 
-            array('class' => 'btn btn-primary btn-lg btn-block')
-        );
-        echo "<a href=" . base_url('index.php/processo') . 
-                " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
-    
-    echo form_close();  
+    form_label('Data do Processo') . form_input(['name' => 'data_do_processo', 'class' => 'form-control daterange', 'type' => 'date', 'value' => (new DateTime('now', new DateTimeZone('America/Sao_Paulo')))->format('d-m-Y')]) . "</br>" .
+
+    form_label('Chave de Acesso') . form_input(['name' => 'chave_de_acesso', 'class' => 'form-control', 'value' => uniqid()]) . "</br>" .
+
+    form_label('Seção') . form_dropdown('departamento_id', $departamentos, $departamento,[ 'class' => 'form-control']) . "</br>" .
+
+    form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']) . "</br>" .
+
+    form_submit('enviar', 'Enviar', array('class' => 'btn btn-primary btn-lg btn-block')) . "</br>" .
+    "<a href=" . base_url('index.php/ProcessoController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>" .
+
+    form_close();
 ?>
