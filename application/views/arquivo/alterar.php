@@ -17,16 +17,7 @@ echo "<h1>{$titulo}</h1>" . "</br>" .
 
     form_label('Data de Upload') . form_input(['name' => 'data_do_upload', 'class' => 'form-control', 'maxlength' => 20, 'value' => $data_hora->format('d-m-Y H:m:s')]) . "</br>" .
 
-    form_label('Processo') .
-
-        // form_input(['class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->processo->objeto . ' (' . $arquivo->processo->nupNud . ')', 'disabled' => 'disabled']) . "</br>" .
-    form_dropdown('processo_id', $processos, $arquivo->processo->id, ['class' => 'form-control']) . "</br>" .
-
-    // form_label('Usuário') . form_input(['class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->usuario->email, 'disabled' => 'disabled']) . "</br>" .
-
-    //    form_input(['name' => 'usuario_id', 'class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->usuario->id, 'type' => 'hidden']) . "</br>" .
-
-    // form_label('Status') . form_input(['class' => 'form-control', 'maxlength' => 20, 'value' => $arquivo->status ]) . "</br>" .
+    form_label('Processo') . form_dropdown('processo_id', $processos, $arquivo->processo->id, ['class' => 'form-control']) . "</br>" .
 
     form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $arquivo->status, ['class' => 'form-control']) . "</br>" .
 
