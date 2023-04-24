@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require 'vendor/autoload.php';
+use Dompdf\Dompdf;
+
 class ProcessoController extends CI_Controller {
 
 	public function __construct(){
@@ -115,6 +118,27 @@ class ProcessoController extends CI_Controller {
 		$this->ProcessoDAO->delete($id);
                 
 		redirect('ProcessoController');          
+	}
+
+	public function imprimir(){
+		
+		$dompdf = new Dompdf();
+
+		/*
+		$dados = [
+			'tabela' => $this->tabela->processo(null, null),
+			'titulo' => 'Lista de Processos',
+			'botoes' => []
+
+		];*/
+
+		//$pagina_html = $this->load->view('processo/index.php',$dados);
+
+		$dompdf->loadHtml('teste');
+
+		$dompdf->setPaper('A4', 'portrait');
+		$dompdf->render();
+		$dompdf->stream();
 	}
 	
 }
