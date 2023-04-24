@@ -63,7 +63,7 @@ class DepartamentoDAO extends CI_Model
                 $linha->id,
                 $linha->nome,
                 $linha->sigla,
-                $linha->status,
+                $linha->status
                 //$this->ProcessoDAO->retriveDepartamentoId($linha->id) //passa o Id do Departamento e trás todos os processos daquele departamento
             );
         }
