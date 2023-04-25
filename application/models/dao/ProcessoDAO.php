@@ -2,7 +2,7 @@
 
 include('application/models/bo/Processo.php');
 
-class ProcessoDAO extends CI_Model  
+class ProcessoDAO extends CI_Model
 {
 
     public static $TABELA_DB = 'processo';
@@ -17,7 +17,7 @@ class ProcessoDAO extends CI_Model
         $this->db->insert(
             self::$TABELA_DB,
             array(
-                
+
                 'objeto' => $processo->objeto,
                 'nup_nud' => $processo->nupNud,
                 'data_do_processo' => $processo->dataDoProcesso,
@@ -40,7 +40,7 @@ class ProcessoDAO extends CI_Model
         $listaDeProcessos = array();
 
         foreach ($resultado->result() as $linha) {
-            
+
             $processo = new Processo(
                 $linha->id,
                 $linha->objeto,
@@ -51,7 +51,7 @@ class ProcessoDAO extends CI_Model
                 $linha->status
             );
 
-            array_push($listaDeProcessos,$processo);
+            array_push($listaDeProcessos, $processo);
         }
         return $listaDeProcessos;
     }
@@ -78,7 +78,7 @@ class ProcessoDAO extends CI_Model
             );
         }
     }
-    
+
     public function retriveDepartamentoId($departamento_id)
     {
 
@@ -148,12 +148,16 @@ class ProcessoDAO extends CI_Model
         if (isset($processos)) {
 
             foreach ($processos as $key => $value) {
-                
+
                 $options += [$value->id => $value->objeto . ' (Nup/Nud: ' . $value->nupNud . ')'];
             }
         }
         return $options;
 
     }
-}
 
+    public function buscarArquivosDoProcesso($processoId)
+    {
+        return $this->ArquivoDAO->buscarArquivosDeUmProcesso($processoId);
+    }
+}

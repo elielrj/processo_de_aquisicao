@@ -1,11 +1,21 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+include_once('TabelaPregao.php');
+
     class TabelaProcesso {
 
         private $ordem;
 
-        public function processo($processos, $ordem)
+        /** Recebe um Array ou não no terceiro prâmetro, 
+         * caso o processo esteja selecionado.
+         * 
+         * $data = array(
+         *     'processo_selecionado' => $processo_completo,
+         *       'processo_id' => $processoId,
+         *  );
+         */
+        public function processo($processos, $ordem, $data)
         {
             $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDoProcesso();
@@ -13,7 +23,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             foreach($processos as $processo)
             {
                 $this->ordem++;
-                $tabela .= $this->linhaDoProcesso($processo);
+                if($processo->id == $data['processo_id']){
+                    $tabela .= $this->linhaDoProcesso($processo);
+                    $tabelaPregao = new TabelaPregao();
+                    $tabela .= $tabelaPregao->pregao($data);
+                }else{
+                   $tabela .= $this->linhaDoProcesso($processo); 
+                }
+                
             }
             return $tabela;
         }
@@ -43,7 +60,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 
                     $this->processoOrdem() .
                     $this->processoId($processo->id) .
-                    $this->processoObjeto($processo->objeto) .
+                    $this->processoObjeto($processo->objeto, $processo->id) .
                     $this->processoNupNud($processo->nupNud) .
                     $this->processoDataDoProcesso($processo->dataDoProcesso) .
                     $this->processoChaveDeAcesso($processo->chaveDeAcesso) .
@@ -65,9 +82,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
             return "<td>{$id}</td>";
         }
 
-        private function processoObjeto($objeto)
+        private function processoObjeto($objeto, $id)
         {
-            return "<td>{$objeto}</td>";
+            return "<td><a href='" . base_url('index.php/PregaoController/listarProcesso/' . $id) . "'>{$objeto}</a></td>";
         }
 
         private function processoNupNud($nup_nud)

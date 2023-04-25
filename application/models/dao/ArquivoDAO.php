@@ -108,4 +108,30 @@ class ArquivoDAO extends CI_Model
     {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
+
+    public function buscarArquivosDeUmProcesso($processoId){
+        $resultado =
+            $this->db->get_where(
+                self::$TABELA_DB,
+                array('processo_id' => $processoId)
+            );
+
+        $listaDeArquivos = array();
+
+        foreach ($resultado->result() as $linha) {
+            
+            $arquivo = new Arquivo(
+                $linha->id,
+                $linha->nome_do_documento,
+                $linha->path,
+                $linha->nome_do_arquivo,
+                $linha->data_do_upload,
+                null,
+                $linha->status
+            );
+            
+            array_push($listaDeArquivos, $arquivo);
+        }
+        return $listaDeArquivos;
+    }
 }

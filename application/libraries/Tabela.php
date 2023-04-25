@@ -8,10 +8,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     class Tabela {
 
-        public function processo($processos, $ordem)
+        public function processo($processos, $ordem, $data)
         {
             $tabelaProcesso = new TabelaProcesso();
-            return $tabelaProcesso->processo($processos, $ordem);
+            return $tabelaProcesso->processo($processos, $ordem, $data);
         }
 
        public function usuario($usuarios, $ordem)
