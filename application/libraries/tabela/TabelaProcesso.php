@@ -23,7 +23,8 @@ include_once('TabelaPregao.php');
             foreach($processos as $processo)
             {
                 $this->ordem++;
-                if($processo->id == $data['processo_id']){
+                
+                if((!empty($data)) && $processo->id == $data['processo_id']){
                     $tabela .= $this->linhaDoProcesso($processo);
                     $tabelaPregao = new TabelaPregao();
                     $tabela .= $tabelaPregao->pregao($data);

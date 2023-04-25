@@ -50,27 +50,21 @@ class PregaoController extends CI_Controller
     {
         $indice--;
 
-        $mostrar = 10;
-        $indiceInicial = $indice * $mostrar;
+       // $mostrar = 10;
+       // $indiceInicial = $indice * $mostrar;
 
-        $processos = $this->ProcessoDAO->retrive($indiceInicial, $mostrar);
+        $processos = $this->ProcessoDAO->retrive(null,null);
 
-        $quantidade = $this->ProcessoDAO->count_rows();
+//        $quantidade = $this->ProcessoDAO->count_rows();
 
-        $botoes = empty($processos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
+//        $botoes = empty($processos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
 
-        $processo_completo = $this->ProcessoDAO->buscarArquivosDoProcesso($indice);
-
-        $data = array(
-            'processo_selecionado' => $processo_completo,
-            'processo_id' => $indice,
-        );
+        $processo_completo = $this->ProcessoDAO->buscarArquivosDoProcesso(++$indice);      
 
         $dados = array(
             'titulo' => 'Lista de Processos de Pregão',
-            'tabela' => $this->tabela->processo($processos, $indiceInicial, $data),
-            'pagina' => 'pregao/index.php',
-            'botoes' => $botoes,
+            'tabela' => $this->tabela->pregao($processo_completo),
+            'pagina' => 'pregao/index.php'
         );
 
         $this->load->view('index', $dados);

@@ -23,14 +23,14 @@ class TabelaPregao
             $this->ordem++;
             $tabela .= $this->linhaDoPregao($arquivo_do_processo);
         }
-        $tabela .= "</table>";
+        
         return $tabela;
     }
 
     private function linhaDeCabecalhoDoPregao()
     {
         return
-            "<table class='table table-responsive-md table-hover'>
+            "
                     <tr class='text-center'> 
                         <td>Ordem</td>
                         <td>Nome do Documento</td>
@@ -62,7 +62,7 @@ class TabelaPregao
 
     private function pregaoNome($nomeDoDocumento)
     {
-        return "<td>>{$nomeDoDocumento}</td>";
+        return "<td>{$nomeDoDocumento}</td>";
     }
 
     private function pregaoDataDoUpload($dataDoUpload)
