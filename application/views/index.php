@@ -77,6 +77,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <h6 class="collapse-header">Pregão:</h6>
                         <a class="collapse-item" href="<?php echo base_url('index.php/DepartamentoController'); ?>">Departamento</a>
                         <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController'); ?>">Usuários</a>                        
+                        <a class="collapse-item" href="<?php echo base_url('index.php/TipoDeLicitacaoController'); ?>">Tipos de Licitações</a>                                             
                         <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Processos</a>
                         <a class="collapse-item" href="<?php echo base_url('index.php/ArquivoController'); ?>">Arquivos</a>
                     </div>

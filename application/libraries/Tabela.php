@@ -5,15 +5,14 @@ include_once('tabela/TabelaProcesso.php');
 include_once('tabela/TabelaUsuario.php');
 include_once('tabela/TabelaArquivo.php');
 include_once('tabela/TabelaDepartamento.php');
-include_once('tabela/TabelaPregao.php');
 
 class Tabela
 {
 
-    public function processo($processos, $ordem, $data)
+    public function processo($processos, $ordem)
     {
         $tabelaProcesso = new TabelaProcesso();
-        return $tabelaProcesso->processo($processos, $ordem, $data);
+        return $tabelaProcesso->processo($processos, $ordem);
     }
 
     public function usuario($usuarios, $ordem)

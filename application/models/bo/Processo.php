@@ -10,6 +10,7 @@ class Processo
     private $dataDoProcesso;
     private $chaveDeAcesso;
     private $departamento;
+    private $tipoDeLicitacao;
     private $arquivos;
     private $status;
 
@@ -21,6 +22,7 @@ class Processo
         $dataDoProcesso,
         $chaveDeAcesso,
         $departamento,
+        $tipoDeLicitacao,
         $status,
         $arquivos = null
     ) {
@@ -30,6 +32,7 @@ class Processo
         $this->dataDoProcesso = $dataDoProcesso;
         $this->chaveDeAcesso = $chaveDeAcesso;
         $this->departamento = $departamento;
+        $this->tipoDeLicitacao = $tipoDeLicitacao;
         $this->status = $status;
         $this->arquivos = $arquivos;
     }

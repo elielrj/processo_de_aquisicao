@@ -20,6 +20,14 @@ status boolean not null,
 foreign key (departamento_id) references departamento(id)
 );
 
+create table if not exists tipo_de_licitacao(
+id int primary key auto_increment not null,
+nome varchar(150) not null,
+lei varchar(150) not null,
+data_da_lei date not null,
+status boolean not null
+);
+
 create table if not exists processo(
 id int primary key auto_increment not null,
 objeto varchar(30) not null,
@@ -27,8 +35,10 @@ nup_nud varchar(30) not null,
 data_do_processo date not null,
 chave_de_acesso varchar(32) not null,
 departamento_id int not null,
+tipo_de_licitacao_id int not null,
 status boolean not null,
-foreign key (departamento_id) references departamento(id)
+foreign key (departamento_id) references departamento(id),
+foreign key (tipo_de_licitacao_id) references tipo_de_licitacao(id)
 );
 
 create table if not exists arquivo(
@@ -46,4 +56,3 @@ INSERT INTO `departamento`(`id`,`nome`,`sigla`,`status`) VALUES (1,'Almoxerifado
 
 INSERT INTO `usuario`(`id`, `email`, `cpf`, `senha`, `departamento_id`,`status`) 
 VALUES (1,'elielrj@gmail.com','09856260701',md5(952420),1,true);
-
