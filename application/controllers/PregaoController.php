@@ -32,13 +32,11 @@ class PregaoController extends CI_Controller
 
         $quantidade = $this->ProcessoDAO->count_rows();
 
-        $botoes = empty($processos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
-
-        $data = [];
+        $botoes = empty($processos) ? '' : $this->botao->paginar('PregaoController/listar', $indice, $quantidade, $mostrar);
 
         $dados = array(
             'titulo' => 'Lista de Processos de Pregão',
-            'tabela' => $this->tabela->processo($processos, $indiceInicial, $data),
+            'tabela' => $this->tabela->pregao($processos, $indiceInicial),
             'pagina' => 'pregao/index.php',
             'botoes' => $botoes,
         );
@@ -46,25 +44,16 @@ class PregaoController extends CI_Controller
         $this->load->view('index', $dados);
     }
 
-    public function listarProcesso($indice)
+    public function listarProcesso($processoId)
     {
-        $indice--;
+        $processo = $this->ProcessoDAO->retriveId($processoId);
 
-       // $mostrar = 10;
-       // $indiceInicial = $indice * $mostrar;
-
-        $processos = $this->ProcessoDAO->retrive(null,null);
-
-//        $quantidade = $this->ProcessoDAO->count_rows();
-
-//        $botoes = empty($processos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
-
-        $processo_completo = $this->ProcessoDAO->buscarArquivosDoProcesso(++$indice);      
+        $processo->arquivos = $this->ProcessoDAO->buscarArquivosDoProcesso($processoId);      
 
         $dados = array(
             'titulo' => 'Lista de Processos de Pregão',
-            'tabela' => $this->tabela->pregao($processo_completo),
-            'pagina' => 'pregao/index.php'
+            'tabela' => $this->tabela->processoDePregao($processo),
+            'pagina' => 'pregao/listar_processo/listar.php'
         );
 
         $this->load->view('index', $dados);

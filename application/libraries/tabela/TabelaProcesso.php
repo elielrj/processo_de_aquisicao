@@ -7,15 +7,7 @@ include_once('TabelaPregao.php');
 
         private $ordem;
 
-        /** Recebe um Array ou não no terceiro prâmetro, 
-         * caso o processo esteja selecionado.
-         * 
-         * $data = array(
-         *     'processo_selecionado' => $processo_completo,
-         *       'processo_id' => $processoId,
-         *  );
-         */
-        public function processo($processos, $ordem, $data)
+        public function processo($processos, $ordem)
         {
             $this->ordem = $ordem;
             $tabela = $this->linhaDeCabecalhoDoProcesso();
@@ -24,14 +16,7 @@ include_once('TabelaPregao.php');
             {
                 $this->ordem++;
                 
-                if((!empty($data)) && $processo->id == $data['processo_id']){
-                    $tabela .= $this->linhaDoProcesso($processo);
-                    $tabelaPregao = new TabelaPregao();
-                    $tabela .= $tabelaPregao->pregao($data);
-                }else{
-                   $tabela .= $this->linhaDoProcesso($processo); 
-                }
-                
+                $tabela .= $this->linhaDoProcesso($processo);                
             }
             return $tabela;
         }

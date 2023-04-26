@@ -37,7 +37,7 @@ class ProcessoController extends CI_Controller {
 
 		$dados = array(
 			'titulo'=> 'Lista de processos',
-			'tabela'=> $this->tabela->processo($processos,$indiceInicial, null),
+			'tabela'=> $this->tabela->processo($processos,$indiceInicial),
 			'pagina'=> 'processo/index.php',
 			'botoes'=> $botoes,
 		);
