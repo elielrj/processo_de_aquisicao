@@ -36,7 +36,7 @@ class TipoDeLicitacaoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de Tipos De Licitacões',
-			'tabela' => $this->tabela->departamento($tiposDeLicitacoes, $indiceInicial),
+			'tabela' => $this->tabela->tipoDeLicitacao($tiposDeLicitacoes, $indiceInicial),
 			'pagina' => 'tipoDeLicitacao/index.php',
 			'botoes' => $botoes,
 		);
@@ -48,7 +48,7 @@ class TipoDeLicitacaoController extends CI_Controller
 	{
 
 		$dados = array(
-			'titulo' => 'Nova Seção',
+			'titulo' => 'Novo Tipo de Licitação',
 			'pagina' => 'tipoDeLicitacao/novo.php',
 		);
 

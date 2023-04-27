@@ -19,8 +19,7 @@ class TipoDeLicitacaoDAO extends CI_Model
                 'id' => $tipoDeLicitacao->id,
                 'nome' => $tipoDeLicitacao->nome,
                 'lei' => $tipoDeLicitacao->lei,
-                'dataDaLei' => $tipoDeLicitacao->dataDaLei,
-                'tipoDeLicitacao' => $tipoDeLicitacao->tipoDeLicitacao,
+                'data_da_lei' => $tipoDeLicitacao->dataDaLei,
                 'status' => $tipoDeLicitacao->status,
             )
         );
@@ -43,7 +42,7 @@ class TipoDeLicitacaoDAO extends CI_Model
                 $linha->id,
                 $linha->nome,
                 $linha->lei,
-                $linha->dataDaLei,
+                $linha->data_da_lei,
                 $linha->status
             );
 
@@ -66,7 +65,7 @@ class TipoDeLicitacaoDAO extends CI_Model
                 $linha->id,
                 $linha->nome,
                 $linha->lei,
-                $linha->dataDaLei,
+                $linha->data_da_lei,
                 $linha->status
             );
         }
@@ -81,7 +80,7 @@ class TipoDeLicitacaoDAO extends CI_Model
                 'id' => $tipoDeLicitacao->id,
                 'nome' => $tipoDeLicitacao->nome,
                 'lei' => $tipoDeLicitacao->lei,
-                'dataDaLei' => $tipoDeLicitacao->dataDaLei,
+                'data_da_lei' => $tipoDeLicitacao->dataDaLei,
                 'status' => $tipoDeLicitacao->status,
             ),
             array('id' => $tipoDeLicitacao->id)

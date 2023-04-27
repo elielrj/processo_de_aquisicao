@@ -5,6 +5,7 @@ include_once('tabela/TabelaProcesso.php');
 include_once('tabela/TabelaUsuario.php');
 include_once('tabela/TabelaArquivo.php');
 include_once('tabela/TabelaDepartamento.php');
+include_once('tabela/TabelaTipoDeLicitacao.php');
 
 class Tabela
 {
@@ -43,6 +44,12 @@ class Tabela
     {
        $tabelaProcesso = new TabelaProcesso();
         return $tabelaProcesso->processoDePregao($processo);
+    }
+
+    public function tipoDeLicitacao($tiposDeLicitacoes)
+    {
+       $tabelaTipoDeLicitacao = new TabelaTipoDeLicitacao();
+        return $tabelaTipoDeLicitacao->tipoDeLicitacao($tiposDeLicitacoes);
     }
 }
 
