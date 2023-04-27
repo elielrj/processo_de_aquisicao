@@ -59,7 +59,7 @@ class TipoDeLicitacaoController extends CI_Controller
 	{
 		$data = $this->input->post();
 		
-		$departamento = new TipoDeLicitacao(
+		$tipoDeLicitacao = new TipoDeLicitacao(
 			null,
 			$data['nome'],
 			$data['lei'],
@@ -67,7 +67,7 @@ class TipoDeLicitacaoController extends CI_Controller
 			$data['status']		
 		);
 
-		$this->TipoDeLicitacaoDAO->create($departamento);
+		$this->TipoDeLicitacaoDAO->create($tipoDeLicitacao);
 
 		redirect('TipoDeLicitacaoController');
 	}
@@ -75,12 +75,12 @@ class TipoDeLicitacaoController extends CI_Controller
 	public function alterar($id)
 	{
 
-		$departamento = $this->TipoDeLicitacaoDAO->retriveId($id);
+		$tipoDeLicitacao = $this->TipoDeLicitacaoDAO->retriveId($id);
 
 		$dados = array(
 			'titulo' => 'Alterar Tipo de Licitação',
 			'pagina' => 'tipoDeLicitacao/alterar.php',
-			'departamento' => $departamento,
+			'tipoDeLicitacao' => $tipoDeLicitacao,
 		);
 
 		$this->load->view('index', $dados);
@@ -92,7 +92,7 @@ class TipoDeLicitacaoController extends CI_Controller
 
 		$data = $this->input->post();
 		
-		$departamento = new Departamento(
+		$tipoDeLicitacao = new TipoDeLicitacao(
 			$data['id'],
 			$data['nome'],
 			$data['lei'],
@@ -100,7 +100,7 @@ class TipoDeLicitacaoController extends CI_Controller
 			$data['status']	
 		);
 
-		$this->TipoDeLicitacaoDAO->update($departamento);
+		$this->TipoDeLicitacaoDAO->update($tipoDeLicitacao);
 
 		redirect('TipoDeLicitacaoController');
 	}

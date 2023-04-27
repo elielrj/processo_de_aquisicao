@@ -46,10 +46,10 @@ class Tabela
         return $tabelaProcesso->processoDePregao($processo);
     }
 
-    public function tipoDeLicitacao($tiposDeLicitacoes)
+    public function tipoDeLicitacao($tiposDeLicitacoes, $ordem)
     {
        $tabelaTipoDeLicitacao = new TabelaTipoDeLicitacao();
-        return $tabelaTipoDeLicitacao->tipoDeLicitacao($tiposDeLicitacoes);
+        return $tabelaTipoDeLicitacao->tipoDeLicitacao($tiposDeLicitacoes, $ordem);
     }
 }
 

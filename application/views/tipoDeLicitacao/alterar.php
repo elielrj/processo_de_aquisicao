@@ -5,15 +5,15 @@ echo "<h1>{$titulo}</h1>" . "</br>" .
 
     form_open('TipoDeLicitacaoController/atualizar', array('class' => 'form-group')) .
 
-    form_input(['name' => 'id', 'class' => 'form-control', 'type' => 'hidden', 'value' => $departamento->id]) . "</br>" .
+    form_input(['name' => 'id', 'class' => 'form-control', 'type' => 'hidden', 'value' => $tipoDeLicitacao->id]) . "</br>" .
 
-    form_label('Nome') . form_input(['name' => 'nome', 'class' => 'form-control', 'maxlength' => 150, 'value' => $departamento->nome]) . "</br>" .
+    form_label('Nome') . form_input(['name' => 'nome', 'class' => 'form-control', 'maxlength' => 150, 'value' => $tipoDeLicitacao->nome]) . "</br>" .
 
-    form_label('Lei') . form_input(['name' => 'lei', 'class' => 'form-control', 'maxlength' => 20, 'value' => $departamento->sigla]) . "</br>" .
+    form_label('Lei') . form_input(['name' => 'lei', 'class' => 'form-control', 'maxlength' => 20, 'value' => $tipoDeLicitacao->lei]) . "</br>" .
     
-    form_label('Data da Lei') . form_input(['name' => 'dataDaLei', 'type' => 'date','class' => 'form-control', 'maxlength' => 20, 'value' => $departamento->sigla]) . "</br>" .
+    form_label('Data da Lei') . form_input(['name' => 'dataDaLei', 'type' => 'date','class' => 'form-control', 'maxlength' => 20, 'value' => $tipoDeLicitacao->dataDaLei]) . "</br>" .
 
-    form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $departamento->status, ['class' => 'form-control']) . "</br>" .
+    form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $tipoDeLicitacao->status, ['class' => 'form-control']) . "</br>" .
 
     form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']) . "</br>" .
 

@@ -5,108 +5,93 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         private $ordem;
 
-        public function processo($processos, $ordem)
+        public function tipoDeLicitacao($tiposDeLicitacoes, $ordem)
         {
             $this->ordem = $ordem;
-            $tabela = $this->linhaDeCabecalhoDoProcesso();
+            $tabela = $this->linhaDeCabecalhoDeTipoDeLicitacao();
 
-            foreach($processos as $processo)
+            foreach($tiposDeLicitacoes as $tipoDeLicitacao)
             {
                 $this->ordem++;
                 
-                $tabela .= $this->linhaDoProcesso($processo);                
+                $tabela .= $this->linhaDeTipoDeLicitacao($tipoDeLicitacao);                
             }
             return $tabela;
         }
 
-        private function linhaDeCabecalhoDoProcesso()
+        private function linhaDeCabecalhoDeTipoDeLicitacao()
         {
             return
                 "<tr class='text-center'> 
                     <td>Ordem</td>
                     <td>Id</td>
-                    <td>Objeto do Processo</td>
-                    <td>Nup/Nud</td>
-                    <td>Data do Processo</td>
-                    <td>Chave de Acesso</td>
-                    <td>Usuário</td>
+                    <td>Nome</td>
+                    <td>Lei</td>
+                    <td>Data da Lei</td>
                     <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
         }
 
-        private function linhaDoProcesso($processo)
+        private function linhaDeTipoDeLicitacao($tipoDeLicitacao)
     {
        
             return
                 "<tr class='text-center'>" .
                 
-                    $this->processoOrdem() .
-                    $this->processoId($processo->id) .
-                    $this->processoObjeto($processo->objeto, $processo->id) .
-                    $this->processoNupNud($processo->nupNud) .
-                    $this->processoDataDoProcesso($processo->dataDoProcesso) .
-                    $this->processoChaveDeAcesso($processo->chaveDeAcesso) .
-                    $this->processoDepartamento($processo->departamento) .
-                    $this->processoStatus($processo->status) .
-                    $this->processoAlterar($processo->id) .
-                    $this->processoExcluir($processo->id) .
+                    $this->tipoDeLicitacaoOrdem() .
+                    $this->tipoDeLicitacaoId($tipoDeLicitacao->id) .
+                    $this->tipoDeLicitacaoNome($tipoDeLicitacao->nome) .
+                    $this->tipoDeLicitacaoLei($tipoDeLicitacao->lei) .
+                    $this->tipoDeLicitacaoDataDaLei($tipoDeLicitacao->dataDaLei) .
+                    $this->tipoDeLicitacaoStatus($tipoDeLicitacao->status) .
+                    $this->tipoDeLicitacaoAlterar($tipoDeLicitacao->id) .
+                    $this->tipoDeLicitacaoExcluir($tipoDeLicitacao->id) .
                                 
                 "</tr>";
         }
 
-        private function processoOrdem()
+        private function tipoDeLicitacaoOrdem()
         {
             return "<td>{$this->ordem}</td>";
         }
         
-        private function processoId($id)
+        private function tipoDeLicitacaoId($id)
         {
             return "<td>{$id}</td>";
         }
 
-        private function processoObjeto($objeto, $id)
+        private function tipoDeLicitacaoNome($nome)
         {
-            return "<td><a href='" . base_url('index.php/PregaoController/listarProcesso/' . $id) . "'>{$objeto}</a></td>";
+            return "<td>{$nome}</td>";
         }
 
-        private function processoNupNud($nup_nud)
+        private function tipoDeLicitacaoLei($lei)
         {
-            return "<td>{$nup_nud}</td>";
+            return "<td>{$lei}</td>";
         }
 
-        private function processoDataDoProcesso($data_do_processo)
+        private function tipoDeLicitacaoDataDalei($dataDaLei)
         {
-            return "<td>{$this->formatarData($data_do_processo)}</td>";
+            return "<td>{$this->formatarData($dataDaLei)}</td>";
         }
 
-        private function processoChaveDeAcesso($chave_de_acesso)
-        {
-            return "<td>{$chave_de_acesso}</td>";
-        }
-
-        private function processoDepartamento($departamento)
-    {
-       
-            return "<td>{$departamento->nome}</td>";
-        }
-
-        private function processoStatus($status)
+        private function tipoDeLicitacaoStatus($status)
         {
             return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
         }
 
-        private function processoAlterar($id)
+        private function tipoDeLicitacaoAlterar($id)
         {
-            $link = "index.php/ProcessoController/alterar/{$id}";
+            $link = "index.php/TipoDeLicitacaoController/alterar/{$id}";
             $value = "<a href='" . base_url($link) . "'>Alterar</a>";
             return "<td>{$value}</td>";
         }
 
-        private function processoExcluir($id)
+        private function tipoDeLicitacaoExcluir($id)
         {
-            $link = "index.php/ProcessoController/deletar/{$id}";
+            $link = "index.php/TipoDeLicitacaoController/deletar/{$id}";
 
             $value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
 
@@ -117,7 +102,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         {
             return form_input(array(
                 'type' => 'datetime', 
-                'value' => (new DateTime($data))->format('d-m-Y H:m:s'), 
+                'value' => (new DateTime($data))->format('d-m-Y'), 
                 'disabled' => 'disable',  
                 'class' => 'text-center'
             ));

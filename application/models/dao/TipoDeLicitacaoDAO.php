@@ -109,7 +109,7 @@ class TipoDeLicitacaoDAO extends CI_Model
         if (isset($tiposDeLicitacoes)) {
 
             foreach ($tiposDeLicitacoes as $key => $value) {
-                $options += [$value->id => $value->lei . ' (' . $value->dataDaLei . ')'];
+                $options += [$value->id => 'Lei ' . $value->lei . ' (' . $value->dataDaLei . ')'];
             }
 
         }

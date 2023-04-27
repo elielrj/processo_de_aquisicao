@@ -23,6 +23,7 @@ class ProcessoDAO extends CI_Model
                 'data_do_processo' => $processo->dataDoProcesso,
                 'chave_de_acesso' => $processo->chaveDeAcesso,
                 'departamento_id' => $processo->departamento->id,
+                'tipo_de_licitacao_id' => $processo->tipoDeLicitacao->id,
                 'status' => $processo->status
             )
         );
@@ -48,6 +49,7 @@ class ProcessoDAO extends CI_Model
                 $linha->data_do_processo,
                 $linha->chave_de_acesso,
                 $this->DepartamentoDAO->retriveId($linha->departamento_id),
+                $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
                 $linha->status
             );
 
@@ -74,6 +76,7 @@ class ProcessoDAO extends CI_Model
                 $linha->data_do_processo,
                 $linha->chave_de_acesso,
                 $this->DepartamentoDAO->retriveId($linha->departamento_id),
+                $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
                 $linha->status
             );
         }
@@ -98,7 +101,8 @@ class ProcessoDAO extends CI_Model
                 $linha->nup_nud,
                 $linha->data_do_processo,
                 $linha->chave_de_acesso,
-                $this->DepartamentoDAO->retriveId($linha->departamento_id),
+                $this->DepartamentoDAO->retriveId($linha->departamento_id), 
+                $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
                 $linha->status
             );
 
@@ -119,6 +123,7 @@ class ProcessoDAO extends CI_Model
                 'data_do_processo' => $processo->dataDoProcesso,
                 'chave_de_acesso' => $processo->chaveDeAcesso,
                 'departamento_id' => $processo->departamento->id,
+                'tipo_de_licitacao_id' => $processo->tipoDeLicitacao->id,
                 'status' => $processo->status,
             ),
             array('id' => $processo->id)

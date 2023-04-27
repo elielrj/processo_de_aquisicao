@@ -17,6 +17,8 @@ echo form_open('ProcessoController/atualizar', ['class' => 'form-group']) .
 
     form_label('Seção') . form_dropdown('departamento_id', $departamentos, $processo->departamento->id, ['class' => 'form-control']) . "</br>" .
 
+    form_label('Tipo de Licitação') . form_dropdown('tipoDeLicitacaoId', $tiposDeLicitacoes, $processo->tipoDeLicitacao->id,[ 'class' => 'form-control']) . "</br>" .
+
     form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $processo->status, ['class' => 'form-control']) . "</br>" .
 
     form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']);

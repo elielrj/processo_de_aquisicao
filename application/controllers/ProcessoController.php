@@ -55,6 +55,7 @@ class ProcessoController extends CI_Controller {
 			'pagina' => 'processo/novo.php',
 			'departamentos' => $this->DepartamentoDAO->options(),
 			'departamento' => $usuarioAtual->departamento->id,
+			'tiposDeLicitacoes' => $this->TipoDeLicitacaoDAO->options()
 		);
 
 		$this->load->view('index', $dados); 
@@ -63,7 +64,7 @@ class ProcessoController extends CI_Controller {
 	public function criar(){
 
 		$data = $this->input->post();
-		
+		var_dump($data);
 		$processo = new Processo(
 			null,
 			$data['objeto'],
@@ -71,6 +72,7 @@ class ProcessoController extends CI_Controller {
 			$data['data_do_processo'],
 			$data['chave_de_acesso'],			
 			$this->DepartamentoDAO->retriveId($data['departamento_id']),
+			$this->TipoDeLicitacaoDAO->retriveId($data['tipoDeLicitacaoId']),
 			$data['status']
 		);
 
@@ -88,6 +90,8 @@ class ProcessoController extends CI_Controller {
 			'pagina' => 'processo/alterar.php',
 			'processo' => $processo,
 			'departamentos' => $this->DepartamentoDAO->options(),
+			'tiposDeLicitacoes' => $this->TipoDeLicitacaoDAO->options(),
+
 		);
 
 		$this->load->view('index',$dados);
@@ -105,6 +109,7 @@ class ProcessoController extends CI_Controller {
 			$data['data_do_processo'],
 			$data['chave_de_acesso'],
 			$this->DepartamentoDAO->retriveId($data['departamento_id']),
+			$this->TipoDeLicitacaoDAO->retriveId($data['tipoDeLicitacaoId']),
 			$data['status']
 		);
 

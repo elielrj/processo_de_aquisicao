@@ -16,6 +16,8 @@ echo "<h1>{$titulo}</h1>" .
     form_label('Chave de Acesso') . form_input(['name' => 'chave_de_acesso', 'class' => 'form-control', 'value' => uniqid()]) . "</br>" .
 
     form_label('Seção') . form_dropdown('departamento_id', $departamentos, $departamento,[ 'class' => 'form-control']) . "</br>" .
+    
+    form_label('Tipo de Licitação') . form_dropdown('tipoDeLicitacaoId', $tiposDeLicitacoes, '',[ 'class' => 'form-control']) . "</br>" .
 
     form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']) . "</br>" .
 

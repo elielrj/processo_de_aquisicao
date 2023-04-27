@@ -25,6 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 "<tr class='text-center'> 
                     <td>Ordem</td>
                     <td>Id</td>
+                    <td>Tipo de Licitação</td>
                     <td>Objeto do Processo</td>
                     <td>Nup/Nud</td>
                     <td>Data do Processo</td>
@@ -44,6 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 
                     $this->processoOrdem() .
                     $this->processoId($processo->id) .
+                    $this->processoTipoDeLicitcao($processo->tipoDeLicitacao->nome) .
                     $this->processoObjeto($processo->objeto, $processo->id) .
                     $this->processoNupNud($processo->nupNud) .
                     $this->processoDataDoProcesso($processo->dataDoProcesso) .
@@ -64,6 +66,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         private function processoId($id)
         {
             return "<td>{$id}</td>";
+        }
+
+        private function processoTipoDeLicitcao($tipoDeLicitcao)
+        {
+            return "<td>{$tipoDeLicitcao}</td>";
         }
 
         private function processoObjeto($objeto, $id)
