@@ -19,6 +19,8 @@ class TipoDeLicitacaoDAO extends CI_Model
                 'id' => $tipoDeLicitacao->id,
                 'nome' => $tipoDeLicitacao->nome,
                 'lei' => $tipoDeLicitacao->lei,
+                'artigo' => $tipoDeLicitacao->artigo,
+                'inciso' => $tipoDeLicitacao->inciso,
                 'data_da_lei' => $tipoDeLicitacao->dataDaLei,
                 'status' => $tipoDeLicitacao->status,
             )
@@ -42,6 +44,8 @@ class TipoDeLicitacaoDAO extends CI_Model
                 $linha->id,
                 $linha->nome,
                 $linha->lei,
+                $linha->artigo,
+                $linha->inciso,
                 $linha->data_da_lei,
                 $linha->status
             );
@@ -65,6 +69,8 @@ class TipoDeLicitacaoDAO extends CI_Model
                 $linha->id,
                 $linha->nome,
                 $linha->lei,
+                $linha->artigo,
+                $linha->inciso,
                 $linha->data_da_lei,
                 $linha->status
             );
@@ -80,6 +86,8 @@ class TipoDeLicitacaoDAO extends CI_Model
                 'id' => $tipoDeLicitacao->id,
                 'nome' => $tipoDeLicitacao->nome,
                 'lei' => $tipoDeLicitacao->lei,
+                'artigo' => $tipoDeLicitacao->artigo,
+                'inciso' => $tipoDeLicitacao->inciso,
                 'data_da_lei' => $tipoDeLicitacao->dataDaLei,
                 'status' => $tipoDeLicitacao->status,
             ),
@@ -109,7 +117,14 @@ class TipoDeLicitacaoDAO extends CI_Model
         if (isset($tiposDeLicitacoes)) {
 
             foreach ($tiposDeLicitacoes as $key => $value) {
-                $options += [$value->id => 'Lei ' . $value->lei . ' (' . $value->dataDaLei . ')'];
+
+                $artigo = empty($value->artigo) ? '' : (', ' . $value->artigo);
+                $inciso = empty($value->inciso) ? '' : (', ' . $value->inciso);
+
+                
+
+                $options += [$value->id => 'Lei ' . $value->lei . ' (' . (new DateTime($value->dataDaLei))->format('d-m-Y') . $artigo . $inciso . ')'];
+
             }
 
         }

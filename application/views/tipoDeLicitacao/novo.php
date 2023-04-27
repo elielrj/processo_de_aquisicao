@@ -10,6 +10,10 @@ echo "<h1>{$titulo}</h1>" .
     form_label('Nome') . form_input(['name' => 'nome', 'class' => 'form-control', 'maxlength' => 150]) . "</br>" .
 
     form_label('Lei') . form_input(['name' => 'lei', 'class' => 'form-control', 'maxlength' => 150]) . "</br>" .
+   
+    form_label('Artigo') . form_input(['name' => 'artigo', 'class' => 'form-control', 'maxlength' => 10]) . "</br>" .
+   
+    form_label('Inciso') . form_input(['name' => 'inciso', 'class' => 'form-control', 'maxlength' => 10]) . "</br>" .
 
     form_label('Data da Lei') . form_input(['name' => 'dataDaLei', 'type' => 'date', 'class' => 'form-control', 'maxlength' => 150]) . "</br>" .
 

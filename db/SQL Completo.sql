@@ -24,6 +24,8 @@ create table if not exists tipo_de_licitacao(
 id int primary key auto_increment not null,
 nome varchar(150) not null,
 lei varchar(150) not null,
+artigo varchar(10),
+inciso varchar(10),
 data_da_lei date not null,
 status boolean not null
 );
