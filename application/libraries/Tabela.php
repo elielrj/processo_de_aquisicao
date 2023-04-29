@@ -6,6 +6,7 @@ include_once('tabela/TabelaUsuario.php');
 include_once('tabela/TabelaArquivo.php');
 include_once('tabela/TabelaDepartamento.php');
 include_once('tabela/TabelaTipoDeLicitacao.php');
+include_once('tabela/TabelaArtefato.php');
 
 class Tabela
 {
@@ -55,7 +56,7 @@ class Tabela
     public function artefato($artefatos, $ordem)
     {
        $tabelaArtefato = new TabelaArtefato();
-        return $tabelaArtefato->tipoDeLicitacao($artefatos, $ordem);
+        return $tabelaArtefato->artefato($artefatos, $ordem);
     }
 }
 

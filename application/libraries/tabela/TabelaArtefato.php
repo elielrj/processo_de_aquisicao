@@ -11,10 +11,10 @@ class TabelaArtefato
         $this->ordem = $ordem;
         $tabela = $this->linhaDeCabecalhoDeArtefatos();
 
-        foreach ($artefatos as $artefatos) {
+        foreach ($artefatos as $artefato) {
             $this->ordem++;
 
-            $tabela .= $this->linhaDeTipoDeLicitacao($artefatos);
+            $tabela .= $this->linhaDeTipoDeLicitacao($artefato);
         }
         return $tabela;
     }
@@ -26,24 +26,24 @@ class TabelaArtefato
                     <td>Ordem</td>
                     <td>Id</td>
                     <td>Nome</td>
-                    <td>Status</td>
+                    
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
     }
 
-    private function linhaDeTipoDeLicitacao($artefatos)
+    private function linhaDeTipoDeLicitacao($artefato)
     {
 
         return
             "<tr class='text-center'>" .
 
             $this->tipoDeLicitacaoOrdem() .
-            $this->tipoDeLicitacaoId($artefatos->id) .
-            $this->tipoDeLicitacaoNome($artefatos->nome) .
-            $this->tipoDeLicitacaoStatus($artefatos->status) .
-            $this->tipoDeLicitacaoAlterar($artefatos->id) .
-            $this->tipoDeLicitacaoExcluir($artefatos->id) .
+            $this->tipoDeLicitacaoId($artefato->id) .
+            $this->tipoDeLicitacaoNome($artefato->nome) .
+            //$this->tipoDeLicitacaoStatus($artefato->status) .
+            $this->tipoDeLicitacaoAlterar($artefato->id) .
+            $this->tipoDeLicitacaoExcluir($artefato->id) .
 
             "</tr>";
     }
@@ -70,29 +70,18 @@ class TabelaArtefato
 
     private function tipoDeLicitacaoAlterar($id)
     {
-        $link = "index.php/ArterfatoController/alterar/{$id}";
+        $link = "index.php/ArtefatoController/alterar/{$id}";
         $value = "<a href='" . base_url($link) . "'>Alterar</a>";
         return "<td>{$value}</td>";
     }
 
     private function tipoDeLicitacaoExcluir($id)
     {
-        $link = "index.php/ArterfatoController/deletar/{$id}";
+        $link = "index.php/ArtefatoController/deletar/{$id}";
 
         $value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
 
         return "<td>{$value}</td>";
     }
 
-    public function formatarData($data)
-    {
-        return form_input(
-            array(
-                'type' => 'datetime',
-                'value' => (new DateTime($data))->format('d-m-Y'),
-                'disabled' => 'disable',
-                'class' => 'text-center'
-            )
-        );
-    }
 }

@@ -1,93 +1,70 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include('application/models/bo/Artefato.php');
+class ArtefatoController extends CI_Controller {
 
-class ArtefatoController extends CI_Controller
-{
+    public function __construct() {
+        parent::__construct();
+    }
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function index() {
+        if (!isset($this->session->email)) {
+            $this->load->view('login.php');
+        } else {
+            $this->listar();
+        }
+    }
 
-	public function index()
-	{
-		if (!isset($this->session->email)) {
+    public function listar($indice = 1) {
+        $indice--;
 
-			$this->load->view('login.php');
+        $mostrar = 10;
+        $indiceInicial = $indice * $mostrar;
 
-		} else {
-			$this->listar();
-		}
-	}
+        $artefatos = $this->ArtefatoDAO->retrive($indiceInicial, $mostrar);
 
+        $quantidade = $this->ArtefatoDAO->count_rows();
 
-	public function listar($indice = 1)
-	{
-		$indice--;
+        $botoes = empty($artefatos) ? '' : $this->botao->paginar('ArtefatoController/listar', $indice, $quantidade, $mostrar);
 
-		$mostrar = 10;
-		$indiceInicial = $indice * $mostrar;
+        $dados = array(
+            'titulo' => 'Lista de Artefatos',
+            'tabela' => $this->tabela->artefato($artefatos, $indiceInicial),
+            'pagina' => 'artefato/index.php',
+            'botoes' => $botoes,
+        );
+        $this->load->view('index', $dados);
+    }
 
-		$artefatos = $this->ArtefatoDAO->retrive($indiceInicial, $mostrar);
+    public function novo() {
+        $this->load->view('index', [
+            'titulo' => 'Novo Artefato',
+            'pagina' => 'artefato/novo.php'
+        ]);
+    }
 
-		$quantidade = $this->ArtefatoDAO->count_rows();
+    public function criar() {
+        $this->ArtefatoDAO->create($this->input->post());
+        redirect('ArtefatoController');
+    }
 
-		$botoes = empty($artefatos) ? '' : $this->botao->paginar('ArtefatoController/listar', $indice, $quantidade, $mostrar);
+    public function alterar($id) {
+        $this->load->view('index', [
+            'titulo' => 'Alterar Artefato',
+            'pagina' => 'artefato/alterar.php',
+            'artefato' => $this->ArtefatoDAO->retriveId($id)
+        ]);
+    }
 
-		$dados = array(
-			'titulo' => 'Lista de Artefatos',
-			'tabela' => $this->tabela->artefato($artefatos, $indiceInicial),
-			'pagina' => 'artefato/index.php',
-			'botoes' => $botoes,
-		);
+    public function atualizar() {
+        $this->ArtefatoDAO->update(Artefato::fromPostToObject($this->input->post()));
+        redirect('ArtefatoController');
+    }
 
-		$this->load->view('index', $dados);
-	}
+    public function deletar($id) {
+        $this->ArtefatoDAO->delete($id);
+        redirect('ArtefatoController');
+    }
 
-	public function novo()
-	{
-		$this->load->view('index', [
-			'titulo' => 'Novo Artefato',
-			'pagina' => 'artefato/novo.php'
-		]);
-	}
-
-	public function criar()
-	{
-		$data = $this->input->post();
-
-		$this->ArtefatoDAO->create(Artefato::toArray($data));
-
-		redirect('ArtefatoController');
-	}
-
-	public function alterar($id)
-	{
-		$this->load->view('index', [
-			'titulo' => 'Alterar Artefato',
-			'pagina' => 'artefato/alterar.php',
-			'artefato' => $this->ArtefatoDAO->retriveId($id)
-		]);
-
-	}
-
-	public function atualizar()
-	{
-		$this->ArtefatoDAO->update(
-			Artefato::fromArray(
-				$this->input->post()
-			)
-		);
-
-		redirect('ArtefatoController');
-	}
-
-	public function deletar($id)
-	{
-		$this->ArtefatoDAO->delete($id);
-
-		redirect('ArtefatoController');
-	}
 }
