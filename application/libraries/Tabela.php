@@ -51,6 +51,12 @@ class Tabela
        $tabelaTipoDeLicitacao = new TabelaTipoDeLicitacao();
         return $tabelaTipoDeLicitacao->tipoDeLicitacao($tiposDeLicitacoes, $ordem);
     }
+    
+    public function artefato($artefatos, $ordem)
+    {
+       $tabelaArtefato = new TabelaArtefato();
+        return $tabelaArtefato->tipoDeLicitacao($artefatos, $ordem);
+    }
 }
 
 ?>
