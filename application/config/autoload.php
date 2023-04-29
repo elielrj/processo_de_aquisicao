@@ -144,5 +144,8 @@ $autoload['model'] = array(
     'dao/UsuarioDAO',
     'dao/DepartamentoDAO',
     'dao/TipoDeLicitacaoDAO',
+    'dao/ArtefatoDAO',
+   // 'dao/IndiceDAO',
+   // 'dao/ItemDoIndiceDAODAO',
 
 );

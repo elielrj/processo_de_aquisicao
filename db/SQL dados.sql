@@ -5,7 +5,13 @@ INSERT INTO `departamento`(`id`,`nome`,`sigla`,`status`) VALUES (3,'Setor de Apr
 INSERT INTO `departamento`(`id`,`nome`,`sigla`,`status`) VALUES (4,'Seção de Saúde','Sç Sau',true);
 
 #USUÁRIOS
-INSERT INTO `usuario`(`id`, `email`, `cpf`, `senha`, `departamento_id`,`status`) VALUES (1,'elielrj@gmail.com','09856260701',md5(952420),1,true);
+INSERT INTO `usuario`(`id`, `email`, `cpf`, `senha`, `departamento_id`,`status`) VALUES 
+(1,'leitor@leitor','09856260701',md5(123),1,true),
+(2,'escrito@escritor','09856260701',md5(123), 2,true),
+(3,'despachante@despachante','09856260701',md5(123), 3,true),
+(4,'admin@admin','09856260701',md5(123), 4,true),
+(5,'root@root','09856260701',md5(123), 1,true);
+
 
 #tIPO DE LICITAÇÕES
 INSERT INTO `tipo_de_licitacao`(`id`,`nome`,`lei`,`artigo`,`inciso`,`data_da_lei`,`pagina`,`status`) VALUES (1,'Pregão SRP','10.520','1','',now(),'tipoDeLicitacao/10520/pregao/',true);

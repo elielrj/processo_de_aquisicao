@@ -25,4 +25,17 @@ class Artefato
     {
         $this->$key = $value;
     }
+
+    public static function toArray($object)
+    {
+
+    }
+
+    public static function fromArray($array)
+    {
+        return new Artefato(
+            isset($array['id']) ? $array['id'] : null,
+            isset($array['nome']) ? $array['nome'] : null
+        );
+    }
 }
