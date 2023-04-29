@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 
@@ -80,6 +80,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <a class="collapse-item" href="<?php echo base_url('index.php/TipoDeLicitacaoController'); ?>">Tipos de Licitações</a>                                             
                         <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Processos</a>
                         <a class="collapse-item" href="<?php echo base_url('index.php/ArquivoController'); ?>">Arquivos</a>
+                        
+                        <a class="collapse-item" href="<?php echo base_url('index.php/ArtefatoController'); ?>">Artefato</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/IndiceController'); ?>">Indice</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/ItemDoIndiceController'); ?>">IndiItemDoIndicece</a>
                     </div>
                 </div>
             </li>

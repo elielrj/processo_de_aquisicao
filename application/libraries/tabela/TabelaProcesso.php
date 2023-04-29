@@ -75,7 +75,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         private function processoObjeto($objeto, $id)
         {
-            return "<td><a href='" . base_url('index.php/PregaoController/listarProcesso/' . $id) . "'>{$objeto}</a></td>";
+            return "<td><a href='" . base_url('index.php/ProcessoController/listarProcesso/' . $id) . "'>{$objeto}</a></td>";
         }
 
         private function processoNupNud($nup_nud)

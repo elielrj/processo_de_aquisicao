@@ -9,6 +9,7 @@ class TipoDeLicitacao
     private $artigo;
     private $inciso;
     private $dataDaLei;
+    private $pagina;
     private $status;
 
 
@@ -19,6 +20,7 @@ class TipoDeLicitacao
         $artigo,
         $inciso,
         $dataDaLei,
+        $pagina,
         $status
     ) {
         $this->id = $id;
@@ -27,6 +29,7 @@ class TipoDeLicitacao
         $this->artigo = $artigo;
         $this->inciso = $inciso;
         $this->dataDaLei = $dataDaLei;
+        $this->pagina = $pagina;
         $this->status = $status;
     }
 

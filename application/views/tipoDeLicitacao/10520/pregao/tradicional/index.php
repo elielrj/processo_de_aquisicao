@@ -16,6 +16,3 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         <?php echo $tabela; ?>
     </table>
 </table>
-
-<!-- botão na horizontal -->
-<?php echo "<div class='row'>{$botoes}</div>"; ?>

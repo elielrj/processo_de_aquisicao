@@ -22,6 +22,7 @@ class TipoDeLicitacaoDAO extends CI_Model
                 'artigo' => $tipoDeLicitacao->artigo,
                 'inciso' => $tipoDeLicitacao->inciso,
                 'data_da_lei' => $tipoDeLicitacao->dataDaLei,
+                'pagina' => $tipoDeLicitacao->pagina,
                 'status' => $tipoDeLicitacao->status,
             )
         );
@@ -47,6 +48,7 @@ class TipoDeLicitacaoDAO extends CI_Model
                 $linha->artigo,
                 $linha->inciso,
                 $linha->data_da_lei,
+                $linha->pagina,
                 $linha->status
             );
 
@@ -72,6 +74,7 @@ class TipoDeLicitacaoDAO extends CI_Model
                 $linha->artigo,
                 $linha->inciso,
                 $linha->data_da_lei,
+                $linha->pagina,
                 $linha->status
             );
         }
@@ -89,6 +92,7 @@ class TipoDeLicitacaoDAO extends CI_Model
                 'artigo' => $tipoDeLicitacao->artigo,
                 'inciso' => $tipoDeLicitacao->inciso,
                 'data_da_lei' => $tipoDeLicitacao->dataDaLei,
+                'pagina' => $tipoDeLicitacao->pagina,
                 'status' => $tipoDeLicitacao->status,
             ),
             array('id' => $tipoDeLicitacao->id)

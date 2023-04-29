@@ -24,7 +24,7 @@ class TabelaArquivo
             "<tr class='text-center'> 
                     <td>Ordem</td>
                     <td>Id</td>
-                    <td>Nome do Documento</td>
+                    <td>Artefato</td>
                     <td>Path</td>
                     <td>Nome do Arquivo</td>
                     <td>Data do Upload</td>
@@ -42,7 +42,7 @@ class TabelaArquivo
 
             $this->arquivoOrdem() .
             $this->arquivoId($arquivo->id) .
-            $this->arquivoNomeDoDocumento($arquivo->nomeDoDocumento) .
+            $this->arquivoArtefato($arquivo->artefato->nome) .
             $this->arquivoPath($arquivo->path) .
             $this->arquivoNomeDoArquivo($arquivo->nomeDoArquivo) .
             $this->arquivoDataDoUpload($arquivo->dataDoUpload) .
@@ -64,9 +64,9 @@ class TabelaArquivo
         return "<td>{$id}</td>";
     }
 
-    private function arquivoNomeDoDocumento($nomeDoDocumento)
+    private function arquivoArtefato($artefato)
     {
-        return "<td>{$nomeDoDocumento}</td>";
+        return "<td>{$artefato}</td>";
     }
 
     private function arquivoPath($path)

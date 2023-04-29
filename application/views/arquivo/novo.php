@@ -7,7 +7,7 @@ echo form_open_multipart('ArquivoController/criar', ['class' => 'form-group']) .
 
     form_input(['name' => 'id', 'type' => 'hidden']) . "</br>" .
 
-    form_label('Nome do Documento') . form_input(['name' => 'nome_do_documento', 'class' => 'form-control', 'maxlength' => 150]) . "</br>" .
+    form_label('Artefato') . form_dropdown('artefato_id',$artefatos,'',['class' => 'form-control', 'maxlength' => 150]) . "</br>" .
 
     form_dropdown('processo_id', $processos, '', ['class' => 'form-control', 'id' => 'processo_id']) . "</br>" .
 

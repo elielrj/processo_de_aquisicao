@@ -17,6 +17,8 @@ echo "<h1>{$titulo}</h1>" . "</br>" .
     
     form_label('Data da Lei') . form_input(['name' => 'dataDaLei', 'type' => 'date','class' => 'form-control', 'maxlength' => 20, 'value' => $tipoDeLicitacao->dataDaLei]) . "</br>" .
 
+    form_label('Página') . form_input(['name' => 'pagina', 'class' => 'form-control', 'maxlength' => 250, 'value' => $tipoDeLicitacao->pagina]) . "</br>" .
+
     form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $tipoDeLicitacao->status, ['class' => 'form-control']) . "</br>" .
 
     form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']) . "</br>" .

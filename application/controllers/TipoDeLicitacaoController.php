@@ -66,6 +66,7 @@ class TipoDeLicitacaoController extends CI_Controller
 			$data['artigo'],
 			$data['inciso'],
 			$data['dataDaLei'],
+			$data['pagina'],
 			$data['status']		
 		);
 
@@ -101,6 +102,7 @@ class TipoDeLicitacaoController extends CI_Controller
 			$data['artigo'],
 			$data['inciso'],
 			$data['dataDaLei'],
+			$data['pagina'],
 			$data['status']	
 		);
 

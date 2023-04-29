@@ -30,6 +30,7 @@ class TabelaTipoDeLicitacao
                     <td>Artigo</td>
                     <td>Inciso</td>
                     <td>Data da Lei</td>
+                    <td>Página</td>
                     <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
@@ -49,6 +50,7 @@ class TabelaTipoDeLicitacao
             $this->tipoDeLicitacaoArtigo($tipoDeLicitacao->artigo) .
             $this->tipoDeLicitacaoInciso($tipoDeLicitacao->inciso) .
             $this->tipoDeLicitacaoDataDaLei($tipoDeLicitacao->dataDaLei) .
+            $this->tipoDeLicitacaoPagina($tipoDeLicitacao->pagina) .
             $this->tipoDeLicitacaoStatus($tipoDeLicitacao->status) .
             $this->tipoDeLicitacaoAlterar($tipoDeLicitacao->id) .
             $this->tipoDeLicitacaoExcluir($tipoDeLicitacao->id) .
@@ -93,6 +95,10 @@ class TabelaTipoDeLicitacao
         return "<td>{$this->formatarData($dataDaLei)}</td>";
     }
 
+    private function tipoDeLicitacaoPagina($pagina)
+    {
+        return "<td>{$pagina}</td>";
+    }
     private function tipoDeLicitacaoStatus($status)
     {
         return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
