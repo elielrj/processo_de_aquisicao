@@ -21,4 +21,3 @@ echo form_open_multipart('ArquivoController/criar', ['class' => 'form-group']) .
 
     form_close();
 
-?>

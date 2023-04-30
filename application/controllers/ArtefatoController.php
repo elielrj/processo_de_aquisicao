@@ -45,25 +45,52 @@ class ArtefatoController extends CI_Controller {
     }
 
     public function criar() {
-        $this->ArtefatoDAO->create($this->input->post());
+
+        $data = $this->input->post();
+
+        $artefato = new Artefato(
+                null,
+                $data['nome'],
+                $data['status']
+        );
+
+        $this->ArtefatoDAO->create($artefato);
+
         redirect('ArtefatoController');
     }
 
     public function alterar($id) {
-        $this->load->view('index', [
+
+        $artefato = $this->ArtefatoDAO->retriveId($id);
+
+        $dados = [
             'titulo' => 'Alterar Artefato',
             'pagina' => 'artefato/alterar.php',
-            'artefato' => $this->ArtefatoDAO->retriveId($id)
-        ]);
+            'artefato' => $artefato
+        ];
+
+        $this->load->view('index', $dados);
     }
 
     public function atualizar() {
-        $this->ArtefatoDAO->update(Artefato::fromPostToObject($this->input->post()));
+
+        $data = $this->input->post();
+
+        $artefato = new Artefato(
+                $data['id'],
+                $data['nome'],
+                $data['status']
+        );
+
+        $this->ArtefatoDAO->update($artefato);
+
         redirect('ArtefatoController');
     }
 
     public function deletar($id) {
+
         $this->ArtefatoDAO->delete($id);
+
         redirect('ArtefatoController');
     }
 

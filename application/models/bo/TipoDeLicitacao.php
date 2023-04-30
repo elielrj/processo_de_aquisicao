@@ -1,8 +1,9 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TipoDeLicitacao
-{
+class TipoDeLicitacao {
+
     private $id;
     private $nome;
     private $lei;
@@ -12,16 +13,15 @@ class TipoDeLicitacao
     private $pagina;
     private $status;
 
-
     public function __construct(
-        $id,
-        $nome,
-        $lei,
-        $artigo,
-        $inciso,
-        $dataDaLei,
-        $pagina,
-        $status
+            $id,
+            $nome,
+            $lei,
+            $artigo,
+            $inciso,
+            $dataDaLei,
+            $pagina,
+            $status
     ) {
         $this->id = $id;
         $this->nome = $nome;
@@ -33,13 +33,12 @@ class TipoDeLicitacao
         $this->status = $status;
     }
 
-    function __get($key)
-    {
+    function __get($key) {
         return $this->$key;
     }
 
-    function __set($key, $value)
-    {
+    function __set($key, $value) {
         $this->$key = $value;
     }
+
 }

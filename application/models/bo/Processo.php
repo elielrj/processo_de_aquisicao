@@ -1,9 +1,9 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
+class Processo {
 
-class Processo
-{
     private $id;
     private $objeto;
     private $nupNud;
@@ -14,17 +14,16 @@ class Processo
     private $arquivos;
     private $status;
 
-
     public function __construct(
-        $id,
-        $objeto,
-        $nupNud,
-        $dataDoProcesso,
-        $chaveDeAcesso,
-        $departamento,
-        $tipoDeLicitacao,
-        $status,
-        $arquivos = null
+            $id,
+            $objeto,
+            $nupNud,
+            $dataDoProcesso,
+            $chaveDeAcesso,
+            $departamento,
+            $tipoDeLicitacao,
+            $status,
+            $arquivos = null
     ) {
         $this->id = $id;
         $this->objeto = $objeto;
@@ -37,13 +36,12 @@ class Processo
         $this->arquivos = $arquivos;
     }
 
-    function __get($key)
-    {
+    function __get($key) {
         return $this->$key;
     }
 
-    function __set($key, $value)
-    {
+    function __set($key, $value) {
         $this->$key = $value;
     }
+
 }

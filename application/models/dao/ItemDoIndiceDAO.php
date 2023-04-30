@@ -1,96 +1,76 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/ItemDoIndice.php');
 
-class ItemDoIndiceDAO extends CI_Model
-{
+class ItemDoIndiceDAO extends CI_Model {
 
     public static $TABELA_DB = 'item_do_indice';
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
-    public function create($itemDoIndice)
-    {
+    public function create($itemDoIndice) {
         $this->db->insert(
-            self::$TABELA_DB,
-            array(
-                'ordem' => $itemDoIndice->ordem,
-                'status' => $itemDoIndice->status
-            )
+                self::$TABELA_DB,
+                $this->fromObjectToArray($itemDoIndice)
         );
     }
 
-    public function retrive($indiceInicial, $mostrar)
-    {
+    public function retrive($indiceInicial, $mostrar) {
 
         $resultado = $this->db->get(
-            self::$TABELA_DB,
-            $mostrar,
-            $indiceInicial
+                self::$TABELA_DB,
+                $mostrar,
+                $indiceInicial
         );
 
         $listaDeItemDoIndices = array();
 
         foreach ($resultado->result() as $linha) {
 
-            $itemDoIndice = new ItemDoIndice(
-                $linha->id,
-                $linha->ordem,
-                $linha->status
-            );
+            $itemDoIndice = $this->fromArrayToObject($linha);
 
             array_push($listaDeItemDoIndices, $itemDoIndice);
         }
         return $listaDeItemDoIndices;
     }
 
-    public function retriveId($id)
-    {
+    public function retriveId($id) {
 
-        $resultado =
-            $this->db->get_where(
+        $resultado = $this->db->get_where(
                 self::$TABELA_DB,
                 array('id' => $id)
-            );
+        );
 
         foreach ($resultado->result() as $linha) {
 
-            return new ItemDoIndice(
-                $linha->id,
-                $linha->ordem,
-                $linha->status
-            );
+            return $this->fromArrayToObject($linha);
         }
     }
 
-    public function update($itemDoIndice)
-    {
+    public function update($itemDoIndice) {
 
         $this->db->update(
-            self::$TABELA_DB,
-            array(
-                'id' => $itemDoIndice->id,
-                'ordem' => $itemDoIndice->ordem,
-                'status' => $itemDoIndice->status
-            ),
-            array('id' => $itemDoIndice->id)
+                self::$TABELA_DB,
+                $this->fromObjectToArray($itemDoIndice),
+                array('id' => $itemDoIndice->id)
         );
     }
 
-    public function delete($id)
-    {
+    public function delete($id) {
         return $this->db->delete(
-            self::$TABELA_DB,
-            array('id' => $id)
+                        self::$TABELA_DB,
+                        array('id' => $id)
         );
     }
 
-    public function count_rows()
-    {
+    public function count_rows() {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
+    
+    
 
 }

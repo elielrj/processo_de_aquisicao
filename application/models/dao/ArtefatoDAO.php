@@ -14,7 +14,13 @@ class ArtefatoDAO extends CI_Model {
 
     public function create($artefato) {
 
-        $this->db->insert(self::$TABELA_DB, Artefato::fromObjectToArray($artefato));
+        $this->db->insert(
+                self::$TABELA_DB,
+                array(
+                    'id' => $artefato->id,
+                    'nome' => $artefato->nome,
+                    'status' => $artefato->status
+        ));
     }
 
     public function retrive($indiceInicial, $mostrar) {
@@ -28,7 +34,14 @@ class ArtefatoDAO extends CI_Model {
         $listaDeArtefatos = array();
 
         foreach ($resultado->result() as $linha) {
-            array_push($listaDeArtefatos, Artefato::fromArrayToObject($linha));
+
+            $artefato = new Artefato(
+                    $linha->id,
+                    $linha->nome,
+                    $linha->status
+            );
+
+            array_push($listaDeArtefatos, $artefato);
         }
         return $listaDeArtefatos;
     }
@@ -41,7 +54,11 @@ class ArtefatoDAO extends CI_Model {
         );
 
         foreach ($resultado->result() as $linha) {
-            return Artefato::fromArrayToObject($linha);
+            return new Artefato(
+                    $linha->id,
+                    $linha->nome,
+                    $linha->status
+            );
         }
     }
 
@@ -49,14 +66,19 @@ class ArtefatoDAO extends CI_Model {
 
         $this->db->update(
                 self::$TABELA_DB,
-                Artefato::fromObjectToArray($artefato),
+                array(
+                    'id' => $artefato->id,
+                    'nome' => $artefato->nome,
+                    'status' => $artefato->status
+                ),
                 array('id' => $artefato->id)
         );
     }
 
     public function delete($id) {
-        return $this->db->delete(
+        return $this->db->update(
                         self::$TABELA_DB,
+                        array('status' => false),
                         array('id' => $id)
         );
     }
@@ -80,4 +102,5 @@ class ArtefatoDAO extends CI_Model {
         }
         return $options;
     }
+
 }

@@ -18,11 +18,11 @@ class ArquivoDAO extends CI_Model
             self::$TABELA_DB,
             array(
                 'id' => $arquivo->id,
-                'artefato' => $arquivo->artefato,
                 'path' => $arquivo->path,
                 'nome_do_arquivo' => $arquivo->nomeDoArquivo,
                 'data_do_upload' => $arquivo->dataDoUpload,
                 'processo_id' => $arquivo->processo->id,
+                'artefato_id' => $arquivo->artefato->id,
                 'status' => $arquivo->status,
             )
         );
@@ -42,11 +42,11 @@ class ArquivoDAO extends CI_Model
         foreach ($resultado->result() as $linha) {
             $arquivo = new Arquivo(
                 $linha->id,
-                $linha->artefato,
                 $linha->path,
                 $linha->nome_do_arquivo,
                 $linha->data_do_upload,
                 $this->ProcessoDAO->retriveId($linha->processo_id),
+                $this->ArtefatoDAO->retriveId($linha->artefato_id),
                 $linha->status
             );
 
@@ -68,11 +68,11 @@ class ArquivoDAO extends CI_Model
         foreach ($resultado->result() as $linha) {
             return new Arquivo(
                 $linha->id,
-                $linha->artefato,
                 $linha->path,
                 $linha->nome_do_arquivo,
                 $linha->data_do_upload,
                 $this->ProcessoDAO->retriveId($linha->processo_id),
+                $this->ArtefatoDAO->retriveId($linha->artefato_id),
                 $linha->status
             );
         }
@@ -85,11 +85,11 @@ class ArquivoDAO extends CI_Model
             self::$TABELA_DB,
             array(
                 'id' => $arquivo->id,
-                'artefato' => $arquivo->artefato,
                 'path' => $arquivo->path,
                 'nome_do_arquivo' => $arquivo->nomeDoArquivo,
                 'data_do_upload' => $arquivo->dataDoUpload,
                 'processo_id' => $arquivo->processo->id,
+                'artefato_id' => $arquivo->artefato->id,
                 'status' => $arquivo->status,
             ),
             array('id' => $arquivo->id)
@@ -122,11 +122,11 @@ class ArquivoDAO extends CI_Model
             
             $arquivo = new Arquivo(
                 $linha->id,
-                $linha->artefato,
                 $linha->path,
                 $linha->nome_do_arquivo,
                 $linha->data_do_upload,
                 null,
+                $this->ArtefatoDAO->retriveId($linha->artefato_id),
                 $linha->status
             );
             

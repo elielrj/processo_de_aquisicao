@@ -50,7 +50,8 @@ class ArquivoController extends CI_Controller
 		$dados = array(
 			'titulo' => 'Novo arquivo',
 			'pagina' => 'arquivo/novo.php',
-			'processos' => $this->ProcessoDAO->options()
+			'processos' => $this->ProcessoDAO->options(),
+			'artefatos' => $this->ArtefatoDAO->options()
 		);
 
 		$this->load->view('index', $dados);
@@ -80,11 +81,11 @@ class ArquivoController extends CI_Controller
 
 				$arquivo = new Arquivo(
 					null,
-					$this->ArtefatoDAO->retriveId($data_post['artefatoId']),
 					$path,
 					$nomeDoArquivo,
 					$agora->format('Y-m-d H:m:s'),
 					$this->ProcessoDAO->retriveId($data_post['processo_id']),
+					$this->ArtefatoDAO->retriveId($data_post['artefato_id']),
 					$data_post['status']
 				);
 
@@ -106,7 +107,8 @@ class ArquivoController extends CI_Controller
 			'titulo' => 'Alterar Arquivo',
 			'pagina' => 'arquivo/alterar.php',
 			'arquivo' => $arquivo,
-			'processos' => $this->ProcessoDAO->options()
+			'processos' => $this->ProcessoDAO->options(),
+                        'artefatos' => $this->ArtefatoDAO->options()
 
 		);
 
@@ -124,11 +126,11 @@ class ArquivoController extends CI_Controller
 
 		$arquivo = new Arquivo(
 			$data['id'],
-			$this->ArtefatoDAO->retriveId($data['artefatoId']),
 			$data['path'],
 			$data['nome_do_arquivo'],
 			$data_hora->format('Y-m-d H:m:s'),
 			$this->ProcessoDAO->retriveId($data['processo_id']),
+			$this->ArtefatoDAO->retriveId($data['artefato_id']),
 			$data['status']
 		);
 

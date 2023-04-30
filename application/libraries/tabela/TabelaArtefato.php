@@ -26,7 +26,7 @@ class TabelaArtefato
                     <td>Ordem</td>
                     <td>Id</td>
                     <td>Nome</td>
-                    
+                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
@@ -41,7 +41,7 @@ class TabelaArtefato
             $this->tipoDeLicitacaoOrdem() .
             $this->tipoDeLicitacaoId($artefato->id) .
             $this->tipoDeLicitacaoNome($artefato->nome) .
-            //$this->tipoDeLicitacaoStatus($artefato->status) .
+            $this->tipoDeLicitacaoStatus($artefato->status) .
             $this->tipoDeLicitacaoAlterar($artefato->id) .
             $this->tipoDeLicitacaoExcluir($artefato->id) .
 

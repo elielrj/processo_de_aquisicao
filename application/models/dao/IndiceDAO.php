@@ -1,36 +1,34 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/Indice.php');
 
-class IndiceDAO extends CI_Model
-{
+class IndiceDAO extends CI_Model {
 
     public static $TABELA_DB = 'indice';
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
-    public function create($indice)
-    {
+    public function create($indice) {
         $this->db->insert(
-            self::$TABELA_DB,
-            array(
-                'nome' => $indice->nupNud,
-                'tipo_de_licitacao_id' => $indice->tipoDeLicitacao->id,
-                'status' => $indice->status,
-            )
+                self::$TABELA_DB,
+                array(
+                    'id' => $indice->id,
+                    'tipo_de_licitacao_id' => $indice->tipoDeLicitacao->id,
+                    'status' => $indice->status,
+                )
         );
     }
 
-    public function retrive($indiceInicial, $mostrar)
-    {
+    public function retrive($indiceInicial, $mostrar) {
 
         $resultado = $this->db->get(
-            self::$TABELA_DB,
-            $mostrar,
-            $indiceInicial
+                self::$TABELA_DB,
+                $mostrar,
+                $indiceInicial
         );
 
         $listaDeIndices = array();
@@ -38,9 +36,9 @@ class IndiceDAO extends CI_Model
         foreach ($resultado->result() as $linha) {
 
             $indice = new Indice(
-                $linha->id,
-                $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
-                $linha->status
+                    $linha->id,
+                    $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
+                    $this->status,
             );
 
             array_push($listaDeIndices, $indice);
@@ -48,54 +46,48 @@ class IndiceDAO extends CI_Model
         return $listaDeIndices;
     }
 
-    public function retriveId($id)
-    {
+    public function retriveId($id) {
 
-        $resultado =
-            $this->db->get_where(
+        $resultado = $this->db->get_where(
                 self::$TABELA_DB,
                 array('id' => $id)
-            );
+        );
 
         foreach ($resultado->result() as $linha) {
 
-            return new TipoDeLicitacao(
-                $linha->id,
-                $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
-                $linha->status
+            return new Indice(
+                    $linha->id,
+                    $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
+                    $this->status,
             );
         }
     }
 
-    public function update($indice)
-    {
+    public function update($indice) {
 
         $this->db->update(
-            self::$TABELA_DB,
-            array(
-                'id' => $indice->id,
-                'tipo_de_licitacao_id' => $indice->tipoDeLicitacao->id,
-                'status' => $indice->status,
-            ),
-            array('id' => $indice->id)
+                self::$TABELA_DB,
+                array(
+                    'id' => $indice->id,
+                    'tipo_de_licitacao_id' => $indice->tipoDeLicitacao->id,
+                    'status' => $indice->status,
+                ),
+                array('id' => $indice->id)
         );
     }
 
-    public function delete($id)
-    {
+    public function delete($id) {
         return $this->db->delete(
-            self::$TABELA_DB,
-            array('id' => $id)
+                        self::$TABELA_DB,
+                        array('id' => $id)
         );
     }
 
-    public function count_rows()
-    {
+    public function count_rows() {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 
-    public function options()
-    {
+    public function options() {
 
         $indices = $this->retrive(null, null);
 
@@ -109,6 +101,6 @@ class IndiceDAO extends CI_Model
             }
         }
         return $options;
-
     }
+
 }

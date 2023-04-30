@@ -53,7 +53,8 @@ foreign key (tipo_de_licitacao_id) references tipo_de_licitacao(id)
 
 create table if not exists artefato(
 id int primary key auto_increment not null,
-nome varchar(250) not null
+nome varchar(250) not null,
+status boolean not null
 );
 
 create table if not exists item_do_indice(

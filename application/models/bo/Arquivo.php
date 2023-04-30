@@ -4,29 +4,29 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Arquivo
 {
     private $id;
-    private $artefato;
     private $path;
     private $nomeDoArquivo;
     private $dataDoUpload;
     private $processo;
+    private $artefato;
     private $status;
 
 
     public function __construct(
         $id,
-        $artefato,
         $path,
         $nomeDoArquivo,
         $dataDoUpload,
         $processo,
+        $artefato,
         $status
     ) {
         $this->id = $id;
-        $this->artefato = $artefato;
         $this->path = $path;
         $this->nomeDoArquivo = $nomeDoArquivo;
         $this->dataDoUpload = $dataDoUpload;
         $this->processo = $processo;
+        $this->artefato = $artefato;
         $this->status = $status;
     }
 

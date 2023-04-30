@@ -80,7 +80,7 @@ class ProcessoController extends CI_Controller
 	{
 
 		$data = $this->input->post();
-		var_dump($data);
+		
 		$processo = new Processo(
 			null,
 			$data['objeto'],
