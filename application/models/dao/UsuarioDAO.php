@@ -78,18 +78,18 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function desativar($usuarioId) {
-        return $this->db->delete(
+        return $this->db->update(
                         self::$TABELA_DB,
-                        array('id' => $usuarioId),
-                        array('status' => false)
+                        array('status' => false),
+                        array('id' => $usuarioId)
         );
     }
 
     public function ativar($usuarioId) {
-        return $this->db->delete(
+        return $this->db->update(
                         self::$TABELA_DB,
-                        array('id' => $usuarioId),
-                        array('status' => true)
+                        array('status' => true),
+                        array('id' => $usuarioId)
         );
     }
 
@@ -135,7 +135,7 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
                 $arrayList->email,
                 $arrayList->cpf,
                 $arrayList->senha,
-                $arrayList->departamento,
+                $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id),
                 $arrayList->status
         );
     }

@@ -25,9 +25,9 @@ class UsuarioController extends CI_Controller {
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $usuarios = $this->UsuarioDAO->retrive($indiceInicial, $mostrar);
+        $usuarios = $this->UsuarioDAO->buscar($indiceInicial, $mostrar);
 
-        $quantidade = $this->UsuarioDAO->count_rows();
+        $quantidade = $this->UsuarioDAO->quantidade();
 
         $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $mostrar);
 
@@ -102,9 +102,16 @@ class UsuarioController extends CI_Controller {
         redirect('UsuarioController');
     }
 
-    public function deletar($id) {
+    public function ativar($id) {
 
-        $this->UsuarioDAO->delete($id);
+        $this->UsuarioDAO->ativar($id);
+
+        redirect('UsuarioController');
+    }
+    
+    public function desativar($id) {
+
+        $this->UsuarioDAO->desativar($id);
 
         redirect('UsuarioController');
     }

@@ -31,7 +31,7 @@ class ProcessoController extends CI_Controller
 		$mostrar = 10;
 		$indiceInicial = $indice * $mostrar;
 
-		$processos = $this->ProcessoDAO->retrive($indiceInicial, $mostrar);
+		$processos = $this->ProcessoDAO->buscar($indiceInicial, $mostrar);
 
 		$quantidade = $this->ProcessoDAO->count_rows();
 
