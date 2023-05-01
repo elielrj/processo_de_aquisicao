@@ -62,8 +62,8 @@ $autoload['packages'] = array();
 $autoload['libraries'] = array(
     'database',
     'session',
-    'Botao',
-    'Tabela',
+    'botao',
+    'tabela',
     'upload',
 );
 

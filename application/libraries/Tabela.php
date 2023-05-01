@@ -12,7 +12,7 @@ include_once('tabela/TabelaIndice.php');
 include_once('tabela/TabelaItemDoIndice.php');
 include_once('tabela/TabelaUg.php');
 
-class Tabela {
+class tabela {
 
     public function processo($processos, $ordem) {
         $tabelaProcesso = new TabelaProcesso();
