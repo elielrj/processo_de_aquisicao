@@ -10,6 +10,7 @@ include_once('tabela/TabelaTipoDeLicitacao.php');
 include_once('tabela/TabelaArtefato.php');
 include_once('tabela/TabelaIndice.php');
 include_once('tabela/TabelaItemDoIndice.php');
+include_once('tabela/TabelaUg.php');
 
 class Tabela {
 
@@ -61,5 +62,10 @@ class Tabela {
     public function itemDoIndice($itensDoIndice, $ordem) {
         $tabelaItemDoIndice = new TabelaItemDoIndice();
         return $tabelaItemDoIndice->itemDoIndice($itensDoIndice, $ordem);
+    }
+    
+    public function ug($listaDeUg, $ordem) {
+        $tabelaUg = new TabelaUg();
+        return $tabelaUg->ug($listaDeUg, $ordem);
     }
 }

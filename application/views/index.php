@@ -76,14 +76,10 @@ if (!isset($_SESSION['email'])) {
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Pregão:</h6>
                             <a class="collapse-item" href="<?php echo base_url('index.php/DepartamentoController'); ?>">Departamento</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/UgController'); ?>">Ug</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController'); ?>">Usuários</a>                        
-                            <a class="collapse-item" href="<?php echo base_url('index.php/TipoDeLicitacaoController'); ?>">Tipos de Licitações</a>                                             
                             <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Processos</a>
                             <a class="collapse-item" href="<?php echo base_url('index.php/ArquivoController'); ?>">Arquivos</a>
-
-                            <a class="collapse-item" href="<?php echo base_url('index.php/ArtefatoController'); ?>">Artefato</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/ItemDoIndiceController'); ?>">Itens do índice</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/IndiceController'); ?>">Indice</a>
                         </div>
                     </div>
                 </li>

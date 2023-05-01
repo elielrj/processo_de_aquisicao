@@ -1,55 +1,37 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
-include('ICrudDAO.php');
+
 include('application/models/bo/Usuario.php');
 
-
-class UsuarioDAO extends CI_Model implements ICrudDAO
-{
+class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
 
     public static $TABELA_DB = 'usuario';
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
-    public function create($usuario)
-    {
+    public function criar($objeto) {
         $this->db->insert(
-            self::$TABELA_DB,
-            array(
-                'id' => $usuario->id,
-                'email' => $usuario->email,
-                'cpf' => $usuario->cpf,
-                'senha' => $usuario->senha,
-                'departamento_id' => $usuario->departamento->id,
-                'status' => $usuario->status,
-            )
+                self::$TABELA_DB,
+                $this->toArray($objeto)
         );
     }
 
-    public function retrive($indiceInicial, $mostrar)
-    {
+    public function buscar($indiceInicial, $quantidadeMostrar) {
 
         $resultado = $this->db->get(
-            self::$TABELA_DB,
-            $mostrar,
-            $indiceInicial
+                self::$TABELA_DB,
+                $quantidadeMostrar,
+                $indiceInicial
         );
 
         $listaDeUsuarios = array();
 
         foreach ($resultado->result() as $linha) {
 
-            $usuario = new Usuario(
-                $linha->id,
-                $linha->email,
-                $linha->cpf,
-                $linha->senha,
-                $this->DepartamentoDAO->retriveId($linha->departamento_id),
-                $linha->status
-            );
+            $usuario = $this->toObject($linha);
 
             array_push($listaDeUsuarios, $usuario);
         }
@@ -57,85 +39,104 @@ class UsuarioDAO extends CI_Model implements ICrudDAO
         return $listaDeUsuarios;
     }
 
-    public function retriveId($id)
-    {
+    public function buscarPorId($objetoId) {
 
         $resultado = $this->db->get_where(
-            self::$TABELA_DB,
-            array('id' => $id)
+                self::$TABELA_DB,
+                array('id' => $objetoId)
         );
 
         foreach ($resultado->result() as $linha) {
-            return new Usuario(
-                $linha->id,
-                $linha->email,
-                $linha->cpf,
-                $linha->senha,
-                $this->DepartamentoDAO->retriveId($linha->departamento_id),
-                $linha->status
-            );
+            return $this->toObject($linha);
         }
     }
 
-    public function update($usuario)
-    {
+    public function buscarUsuariosPeloDepartamentoId($departamento_id) {
+
+        $resultado = $this->db->get_where(
+                self::$TABELA_DB,
+                array('departamento_id' => $departamento_id)
+        );
+
+        foreach ($resultado->result() as $linha) {
+            return new $this->toObject($linha);
+        }
+    }
+
+    public function buscarUsuarioAtual() {
+        return $this->retriveId($this->session->id);
+    }
+
+    public function atualizar($usuario) {
 
         $this->db->update(
-            self::$TABELA_DB,
-            array(
-                'id' => $usuario->id,
-                'email' => $usuario->email,
-                'cpf' => $usuario->cpf,
-                'senha' => $usuario->senha,
-                'departamento_id' => $usuario->departamento->id,
-                'status' => $usuario->status,
-            ),
-            array('id' => $usuario->id)
+                self::$TABELA_DB,
+                $this->toArray($usuario),
+                array('id' => $usuario->id)
         );
     }
 
-    public function delete($id)
-    {
+    public function desativar($usuarioId) {
         return $this->db->delete(
-            self::$TABELA_DB,
-            array('id' => $id)
+                        self::$TABELA_DB,
+                        array('id' => $usuarioId),
+                        array('status' => false)
         );
     }
 
-    public function count_rows()
-    {
+    public function ativar($usuarioId) {
+        return $this->db->delete(
+                        self::$TABELA_DB,
+                        array('id' => $usuarioId),
+                        array('status' => true)
+        );
+    }
+
+    public function quantidade() {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 
-    public function verificarEmail($where)
-    {
+    public function verificarEmail($where) {
         $resultado = $this->db->get_where('usuario', $where);
         return $resultado->result();
     }
 
-    public function verificarSenha($where)
-    {
+    public function verificarSenha($where) {
         $resultado = $this->db->get_where('usuario', $where);
         return $resultado->result();
     }
 
-    public function retriveEmail($email)
-    {
+    public function buscarPeloEmail($email) {
         $resultado = $this->db->get_where(
-            self::$TABELA_DB,
-            array('email' => $email)
+                self::$TABELA_DB,
+                array('email' => $email)
         );
 
         foreach ($resultado->result() as $linha) {
-            return new Usuario(
-                $linha->id,
-                $linha->email,
-                $linha->cpf,
-                $linha->senha,
-                $linha->departamento,
-                $linha->status
-            );
+            return $this->toObject($linha);
         }
+    }
+
+    public function toArray($objeto) {
+        return array(
+            'id' => $objeto->id,
+            'email' => $objeto->email,
+            'cpf' => $objeto->cpf,
+            'senha' => $objeto->senha,
+            'departamento_id' => $objeto->departamento->id,
+            'status' => $objeto->status,
+        );
+    }
+
+    public function toObject($arrayList) {
+        return new Usuario(
+                $arrayList->id,
+                $arrayList->email,
+                $arrayList->cpf,
+                $arrayList->senha,
+                $arrayList->departamento,
+                $arrayList->status
+        );
     }
 
 }

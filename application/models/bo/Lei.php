@@ -2,22 +2,28 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class ItemDoIndice {
+class Lei {
 
     private $id;
-    private $ordem;
-    private $artefato;
+    private $numero;
+    private $artigo;
+    private $inciso;
+    private $data;
     private $status;
 
     public function __construct(
             $id,
-            $ordem,
-            $artefato,
-            $status
+            $numero,
+            $artigo,
+            $inciso,
+            $data,
+            $status = true
     ) {
         $this->id = $id;
-        $this->ordem = $ordem;
-        $this->artefato = $artefato;
+        $this->numero = $numero;
+        $this->artigo = $artigo;
+        $this->inciso = $inciso;
+        $this->data = $data;
         $this->status = $status;
     }
 

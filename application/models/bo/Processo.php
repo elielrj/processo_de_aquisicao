@@ -6,34 +6,31 @@ class Processo {
 
     private $id;
     private $objeto;
-    private $nupNud;
-    private $dataDoProcesso;
-    private $chaveDeAcesso;
+    private $numero;
+    private $data;
+    private $chave;
     private $departamento;
-    private $tipoDeLicitacao;
-    private $arquivos;
+    private $modalidade;
     private $status;
 
     public function __construct(
             $id,
             $objeto,
-            $nupNud,
-            $dataDoProcesso,
-            $chaveDeAcesso,
+            $numero,
+            $data,
+            $chave,
             $departamento,
-            $tipoDeLicitacao,
-            $status,
-            $arquivos = null
+            $modalidade,
+            $status = true
     ) {
         $this->id = $id;
         $this->objeto = $objeto;
-        $this->nupNud = $nupNud;
-        $this->dataDoProcesso = $dataDoProcesso;
-        $this->chaveDeAcesso = $chaveDeAcesso;
+        $this->numero = $numero;
+        $this->data = $data;
+        $this->chave = $chave;
         $this->departamento = $departamento;
-        $this->tipoDeLicitacao = $tipoDeLicitacao;
+        $this->modalidade = $modalidade;
         $this->status = $status;
-        $this->arquivos = $arquivos;
     }
 
     function __get($key) {

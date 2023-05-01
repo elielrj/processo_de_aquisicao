@@ -1,150 +1,104 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/Processo.php');
 
-class ProcessoDAO extends CI_Model
-{
+class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public static $TABELA_DB = 'processo';
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
-    public function create($processo)
-    {
+    public function criar($objeto) {
         $this->db->insert(
-            self::$TABELA_DB,
-            array(
-
-                'objeto' => $processo->objeto,
-                'nup_nud' => $processo->nupNud,
-                'data_do_processo' => $processo->dataDoProcesso,
-                'chave_de_acesso' => $processo->chaveDeAcesso,
-                'departamento_id' => $processo->departamento->id,
-                'tipo_de_licitacao_id' => $processo->tipoDeLicitacao->id,
-                'status' => $processo->status
-            )
+                self::$TABELA_DB,
+                $this->toArray($objeto)
         );
     }
 
-    public function retrive($indiceInicial, $mostrar)
-    {
+    public function buscar($indiceInicial, $quantidadeMostrar) {
 
         $resultado = $this->db->get(
-            self::$TABELA_DB,
-            $mostrar,
-            $indiceInicial
+                self::$TABELA_DB,
+                $quantidadeMostrar,
+                $indiceInicial
         );
 
         $listaDeProcessos = array();
 
         foreach ($resultado->result() as $linha) {
 
-            $processo = new Processo(
-                $linha->id,
-                $linha->objeto,
-                $linha->nup_nud,
-                $linha->data_do_processo,
-                $linha->chave_de_acesso,
-                $this->DepartamentoDAO->retriveId($linha->departamento_id),
-                $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
-                $linha->status
-            );
+            $processo = $this->toObject($linha);
 
             array_push($listaDeProcessos, $processo);
         }
         return $listaDeProcessos;
     }
 
-    public function retriveId($id)
-    {
+    public function buscarPorId($objetoId) {
 
-        $resultado =
-            $this->db->get_where(
+        $resultado = $this->db->get_where(
                 self::$TABELA_DB,
-                array('id' => $id)
-            );
+                array('id' => $objetoId)
+        );
 
         foreach ($resultado->result() as $linha) {
 
-            return new Processo(
-                $linha->id,
-                $linha->objeto,
-                $linha->nup_nud,
-                $linha->data_do_processo,
-                $linha->chave_de_acesso,
-                $this->DepartamentoDAO->retriveId($linha->departamento_id),
-                $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
-                $linha->status
-            );
+            return $this->toObject($linha);
         }
     }
 
-    public function retriveDepartamentoId($departamento_id)
-    {
+    public function retriveDepartamentoId($departamento_id) {
 
-        $resultado =
-            $this->db->get_where(
+        $resultado = $this->db->get_where(
                 self::$TABELA_DB,
                 array('departamento_id' => $departamento_id)
-            );
+        );
 
         $listaDeProcessos = array();
 
         foreach ($resultado->result() as $linha) {
 
-            $processo = new Processo(
-                $linha->id,
-                $linha->objeto,
-                $linha->nup_nud,
-                $linha->data_do_processo,
-                $linha->chave_de_acesso,
-                $this->DepartamentoDAO->retriveId($linha->departamento_id), 
-                $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
-                $linha->status
-            );
+            $processo = $this->toObject($linha);
 
             array_push($listaDeProcessos, $processo);
         }
         return $listaDeProcessos;
     }
 
-    public function update($processo)
-    {
+    public function atualizar($objeto) {
 
         $this->db->update(
-            self::$TABELA_DB,
-            array(
-                'id' => $processo->id,
-                'objeto' => $processo->objeto,
-                'nup_nud' => $processo->nupNud,
-                'data_do_processo' => $processo->dataDoProcesso,
-                'chave_de_acesso' => $processo->chaveDeAcesso,
-                'departamento_id' => $processo->departamento->id,
-                'tipo_de_licitacao_id' => $processo->tipoDeLicitacao->id,
-                'status' => $processo->status,
-            ),
-            array('id' => $processo->id)
+                self::$TABELA_DB,
+                $this->toArray($objeto),
+                array('id' => $objeto->id)
         );
     }
 
-    public function delete($id)
-    {
-        return $this->db->delete(
-            self::$TABELA_DB,
-            array('id' => $id)
+    public function desativar($objetoId) {
+        return $this->db->update(
+                        self::$TABELA_DB,
+                        array('id' => $objetoId),
+                        array('status' => false)
         );
     }
 
-    public function count_rows()
-    {
+    public function ativar($objetoId) {
+        return $this->db->update(
+                        self::$TABELA_DB,
+                        array('id' => $objetoId),
+                        array('status' => true)
+        );
+    }
+
+    public function quantidade() {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 
-    public function options()
-    {
+    public function options() {
 
         $processos = $this->retrive(null, null);
 
@@ -158,11 +112,35 @@ class ProcessoDAO extends CI_Model
             }
         }
         return $options;
-
     }
 
-    public function buscarArquivosDoProcesso($processoId)
-    {
+    public function buscarArquivosDoProcesso($processoId) {
         return $this->ArquivoDAO->buscarArquivosDeUmProcesso($processoId);
     }
+
+    public function toArray($objeto) {
+        return array(
+            'objeto' => $objeto->objeto,
+            'numero' => $objeto->numero,
+            'data' => $objeto->data,
+            'chave' => $objeto->chave,
+            'departamento_id' => $objeto->departamento->id,
+            'modalidade_id' => $objeto->modalidade->id,
+            'status' => $objeto->status
+        );
+    }
+
+    public function toObject($arrayList) {
+        return new Processo(
+                $arrayList->id,
+                $arrayList->objeto,
+                $arrayList->numero,
+                $arrayList->data,
+                $arrayList->chave,
+                $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id),
+                $this->TipoDeModalidadeDAO->buscarPorId($arrayList->modalidade_id),
+                $arrayList->status
+        );
+    }
+
 }

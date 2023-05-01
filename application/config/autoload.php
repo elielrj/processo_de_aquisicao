@@ -140,12 +140,12 @@ $autoload['language'] = array();
   |	$autoload['model'] = array('first_model' => 'first');
  */
 $autoload['model'] = array(
+    'dao/UgDAO',
+    'dao/DepartamentoDAO',
+    'dao/UsuarioDAO',
+    'dao/LeiDAO',
+    'dao/ArtefatoDAO',
+    'dao/ModalidadeDAO',
     'dao/ProcessoDAO',
     'dao/ArquivoDAO',
-    'dao/UsuarioDAO',
-    'dao/DepartamentoDAO',
-    'dao/TipoDeLicitacaoDAO',
-    'dao/ArtefatoDAO',
-    'dao/IndiceDAO',
-    'dao/ItemDoIndiceDAO',
 );

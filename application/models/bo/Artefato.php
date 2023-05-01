@@ -6,15 +6,18 @@ class Artefato {
 
     private $id;
     private $nome;
+    private $arquivo;
     private $status;
 
     public function __construct(
             $id,
             $nome,
-            $status
+            $arquivo,
+            $status = true
     ) {
         $this->id = $id;
         $this->nome = $nome;
+        $this->arquivo = $arquivo;
         $this->status = $status;
     }
 

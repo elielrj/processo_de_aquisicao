@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/Artefato.php');
 
-class ArtefatoDAO extends CI_Model {
+class ArtefatoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public static $TABELA_DB = 'artefato';
 
@@ -12,14 +12,14 @@ class ArtefatoDAO extends CI_Model {
         parent::__construct();
     }
 
-    public function create($artefato) {
+    public function criar($objeto) {
 
         $this->db->insert(
                 self::$TABELA_DB,
                 array(
-                    'id' => $artefato->id,
-                    'nome' => $artefato->nome,
-                    'status' => $artefato->status
+                    'id' => $objeto->id,
+                    'nome' => $objeto->nome,
+                    'status' => $objeto->status
         ));
     }
 
@@ -101,6 +101,24 @@ class ArtefatoDAO extends CI_Model {
             }
         }
         return $options;
+    }
+
+    public function toArray($objeto) {
+        return array(
+            'id' => $objeto->id,
+            'nome' => $objeto->nome,
+            'arquivo_id' => $objeto->arquivo->id,
+            'status' => $objeto->status
+        );
+    }
+
+    public function toObject($arrayList) {
+        return new Artefato(
+                $arrayList->id,
+                $arrayList->nome,
+                $this->ArquivoDAO->buscarPorId($arrayList->arquivo_id),
+                $arrayList->status
+        );
     }
 
 }

@@ -2,34 +2,25 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TipoDeLicitacao {
+class Modalidade {
 
     private $id;
     private $nome;
     private $lei;
-    private $artigo;
-    private $inciso;
-    private $dataDaLei;
-    private $pagina;
+    private $listaDeArtefatos;
     private $status;
 
     public function __construct(
             $id,
             $nome,
             $lei,
-            $artigo,
-            $inciso,
-            $dataDaLei,
-            $pagina,
+            $listaDeArtefatos,
             $status
     ) {
         $this->id = $id;
         $this->nome = $nome;
         $this->lei = $lei;
-        $this->artigo = $artigo;
-        $this->inciso = $inciso;
-        $this->dataDaLei = $dataDaLei;
-        $this->pagina = $pagina;
+        $this->listaDeArtefatos = $listaDeArtefatos;
         $this->status = $status;
     }
 

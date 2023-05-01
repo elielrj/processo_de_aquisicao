@@ -1,112 +1,102 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class DepartamentoController extends CI_Controller
-{
+class DepartamentoController extends CI_Controller {
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct() {
+        parent::__construct();
+    }
 
-	public function index()
-	{
-		if (!isset($this->session->email)) {
+    public function index() {
+        if (!isset($this->session->email)) {
 
-			$this->load->view('login.php');
+            $this->load->view('login.php');
+        } else {
+            $this->listar();
+        }
+    }
 
-		} else {
-			$this->listar();
-		}
-	}
+    public function listar($indice = 1) {
+        $indice--;
 
+        $mostrar = 10;
+        $indiceInicial = $indice * $mostrar;
 
-	public function listar($indice = 1)
-	{
-		$indice--;
+        $departamentos = $this->DepartamentoDAO->retrive($indiceInicial, $mostrar);
 
-		$mostrar = 10;
-		$indiceInicial = $indice * $mostrar;
+        $quantidade = $this->DepartamentoDAO->count_rows();
 
-		$departamentos = $this->DepartamentoDAO->retrive($indiceInicial, $mostrar);
+        $botoes = empty($departamentos) ? '' : $this->botao->paginar('DepartamentoController/listar', $indice, $quantidade, $mostrar);
 
-		$quantidade = $this->DepartamentoDAO->count_rows();
+        $dados = array(
+            'titulo' => 'Lista de Departamentos',
+            'tabela' => $this->tabela->departamento($departamentos, $indiceInicial),
+            'pagina' => 'departamento/index.php',
+            'botoes' => $botoes,
+        );
 
-		$botoes = empty($departamentos) ? '' : $this->botao->paginar('DepartamentoController/listar', $indice, $quantidade, $mostrar);
+        $this->load->view('index', $dados);
+    }
 
-		$dados = array(
-			'titulo' => 'Lista de Departamentos',
-			'tabela' => $this->tabela->departamento($departamentos, $indiceInicial),
-			'pagina' => 'departamento/index.php',
-			'botoes' => $botoes,
-		);
+    public function novo() {
 
-		$this->load->view('index', $dados);
-	}
+        $dados = array(
+            'titulo' => 'Nova Seção',
+            'pagina' => 'departamento/novo.php',
+        );
 
-	public function novo()
-	{
+        $this->load->view('index', $dados);
+    }
 
-		$dados = array(
-			'titulo' => 'Nova Seção',
-			'pagina' => 'departamento/novo.php',
-		);
+    public function criar() {
+        $data = $this->input->post();
 
-		$this->load->view('index', $dados);
-	}
+        $departamento = new Departamento(
+                null,
+                $data['nome'],
+                $data['sigla'],
+                $data['status']
+        );
 
-	public function criar()
-	{
-		$data = $this->input->post();
-		
-		$departamento = new Departamento(
-			null,
-			$data['nome'],
-			$data['sigla'],
-			$data['status']		
-		);
+        $this->DepartamentoDAO->create($departamento);
 
-		$this->DepartamentoDAO->create($departamento);
+        redirect('DepartamentoController');
+    }
 
-		redirect('DepartamentoController');
-	}
+    public function alterar($id) {
 
-	public function alterar($id)
-	{
+        $departamento = $this->DepartamentoDAO->retriveId($id);
 
-		$departamento = $this->DepartamentoDAO->retriveId($id);
+        $dados = array(
+            'titulo' => 'Alterar Seção',
+            'pagina' => 'departamento/alterar.php',
+            'departamento' => $departamento,
+        );
 
-		$dados = array(
-			'titulo' => 'Alterar Seção',
-			'pagina' => 'departamento/alterar.php',
-			'departamento' => $departamento,
-		);
+        $this->load->view('index', $dados);
+    }
 
-		$this->load->view('index', $dados);
+    public function atualizar() {
 
-	}
+        $data = $this->input->post();
 
-	public function atualizar()
-	{
+        $departamento = new Departamento(
+                $data['id'],
+                $data['nome'],
+                $data['sigla'],
+                $data['status']
+        );
 
-		$data = $this->input->post();
-		
-		$departamento = new Departamento(
-			$data['id'],
-			$data['nome'],
-			$data['sigla'],
-			$data['status']
-		);
+        $this->DepartamentoDAO->update($departamento);
 
-		$this->DepartamentoDAO->update($departamento);
+        redirect('DepartamentoController');
+    }
 
-		redirect('DepartamentoController');
-	}
+    public function deletar($id) {
+        $this->DepartamentoDAO->delete($id);
 
-	public function deletar($id)
-	{
-		$this->DepartamentoDAO->delete($id);
+        redirect('DepartamentoController');
+    }
 
-		redirect('DepartamentoController');
-	}
 }

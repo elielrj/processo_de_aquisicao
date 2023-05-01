@@ -7,21 +7,21 @@ class Departamento {
     private $id;
     private $nome;
     private $sigla;
+    private $ug;
     private $status;
-    private $processos;
 
     public function __construct(
             $id,
             $nome,
             $sigla,
-            $status,
-            $processos = null
+            $ug,
+            $status = true
     ) {
         $this->id = $id;
         $this->nome = $nome;
         $this->sigla = $sigla;
+        $this->ug = $ug;
         $this->status = $status;
-        $this->processos = $processos;
     }
 
     function __get($key) {

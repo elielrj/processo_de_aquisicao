@@ -5,9 +5,6 @@
     <?php echo $titulo ?>
 </h1>
 
-<a class="btn btn-primary btn-sm" href="<?php echo base_url('index.php/DepartamentoController/novo') ?>">NOVO</a>
-
-</br></br>
 
 <!-- tabela -->
 <table class=''>

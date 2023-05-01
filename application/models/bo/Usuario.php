@@ -1,8 +1,8 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Usuario
-{
+class Usuario {
 
     private $id;
     private $email;
@@ -11,9 +11,14 @@ class Usuario
     private $departamento;
     private $status;
 
-
-    public function __construct($id, $email, $cpf, $senha, $departamento, $status)
-    {
+    public function __construct(
+            $id,
+            $email,
+            $cpf,
+            $senha,
+            $departamento,
+            $status = true
+    ) {
         $this->id = $id;
         $this->email = $email;
         $this->cpf = $cpf;
@@ -22,13 +27,12 @@ class Usuario
         $this->status = $status;
     }
 
-    function __get($key)
-    {
+    function __get($key) {
         return $this->$key;
     }
 
-    function __set($key, $value)
-    {
+    function __set($key, $value) {
         $this->$key = $value;
     }
+
 }

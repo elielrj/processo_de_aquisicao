@@ -2,19 +2,25 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Indice {
+class Ug {
 
     private $id;
-    private $tipoDeLicitacao;
+    private $numero;
+    private $nome;
+    private $sigla;
     private $status;
 
     public function __construct(
             $id,
-            $tipoDeLicitacao,
-            $status
+            $numero,
+            $nome,
+            $sigla,
+            $status = true
     ) {
         $this->id = $id;
-        $this->tipoDeLicitacao = $tipoDeLicitacao;
+        $this->numero = $numero;
+        $this->nome = $nome;
+        $this->sigla = $sigla;
         $this->status = $status;
     }
 
