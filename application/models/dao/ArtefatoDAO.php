@@ -3,6 +3,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/Artefato.php');
+include('InterfaceCrudDAO.php');
 
 class ArtefatoDAO extends CI_Model implements InterfaceCrudDAO {
 

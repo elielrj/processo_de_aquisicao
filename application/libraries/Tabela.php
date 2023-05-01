@@ -2,15 +2,12 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('tabela/TabelaProcesso.php');
-include_once('tabela/TabelaUsuario.php');
 include_once('tabela/TabelaArquivo.php');
-include_once('tabela/TabelaDepartamento.php');
-include_once('tabela/TabelaTipoDeLicitacao.php');
 include_once('tabela/TabelaArtefato.php');
-include_once('tabela/TabelaIndice.php');
-include_once('tabela/TabelaItemDoIndice.php');
+include_once('tabela/TabelaDepartamento.php');
+include_once('tabela/TabelaProcesso.php');
 include_once('tabela/TabelaUg.php');
+include_once('tabela/TabelaUsuario.php');
 
 class tabela {
 

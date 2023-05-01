@@ -3,6 +3,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/Usuario.php');
+include('InterfaceCrudDAO.php');
 
 class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
 

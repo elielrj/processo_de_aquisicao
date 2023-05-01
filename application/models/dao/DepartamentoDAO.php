@@ -3,6 +3,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/Departamento.php');
+include('InterfaceCrudDAO.php');
 
 class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
 
