@@ -38,7 +38,7 @@ class IndiceDAO extends CI_Model {
             $indice = new Indice(
                     $linha->id,
                     $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
-                    $this->status,
+                    $linha->status
             );
 
             array_push($listaDeIndices, $indice);
@@ -58,7 +58,7 @@ class IndiceDAO extends CI_Model {
             return new Indice(
                     $linha->id,
                     $this->TipoDeLicitacaoDAO->retriveId($linha->tipo_de_licitacao_id),
-                    $this->status,
+                    $linha->status,
             );
         }
     }

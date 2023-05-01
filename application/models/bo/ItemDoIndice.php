@@ -6,15 +6,18 @@ class ItemDoIndice {
 
     private $id;
     private $ordem;
+    private $artefato;
     private $status;
 
     public function __construct(
             $id,
             $ordem,
+            $artefato,
             $status
     ) {
         $this->id = $id;
         $this->ordem = $ordem;
+        $this->artefato = $artefato;
         $this->status = $status;
     }
 

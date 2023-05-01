@@ -2,18 +2,18 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TabelaIndice {
+class TabelaItemDoIndice {
 
     private $ordem;
 
-    public function indice($indices, $ordem) {
+    public function itemDoIndice($itensDoIndice, $ordem) {
         $this->ordem = $ordem;
         $tabela = $this->cabecalho();
         
-        foreach ($indices as $indice) {
+        foreach ($itensDoIndice as $itemDoindice) {
             $this->ordem++;
 
-            $tabela .= $this->linha($indice);
+            $tabela .= $this->linha($itemDoindice);
         }
         return $tabela;
     }
@@ -23,23 +23,25 @@ class TabelaIndice {
                 "<tr class='text-center'> 
                     <td>Ordem</td>
                     <td>Id</td>
-                    <td>Nome do Tipo de Licitação</td>
+                    <td>Ordem</td>
+                    <td>Artefato</td>
                     <td>Status</td>
                     <td>Alterar</td>                    
                     <td>Excluir</td>               
                 </tr>";
     }
 
-    private function linha($indice) {
+    private function linha($itemDoindice) {
        
         return
                 "<tr class='text-center'>" .
                 $this->ordem() .
-                $this->id($indice->id) .
-                $this->nomeDoTipoDeLicitacao($indice->tipoDeLicitacao->nome,$indice->id) .
-                $this->status($indice->status) .
-                $this->alterar($indice->id) .
-                $this->excluir($indice->id) .
+                $this->id($itemDoindice->id) .
+                $this->ordemDoArtefato($itemDoindice->ordem) .
+                $this->artefato($itemDoindice->artefato->nome) .
+                $this->status($itemDoindice->status) .
+                $this->alterar($itemDoindice->id) .
+                $this->excluir($itemDoindice->id) .
                 "</tr>";
     }
 
@@ -50,11 +52,13 @@ class TabelaIndice {
     private function id($id) {
         return "<td>{$id}</td>";
     }
+    
+    private function ordemDoArtefato($ordem) {
+        return "<td>{$ordem}</td>";
+    }
 
-    private function nomeDoTipoDeLicitacao($nome,$id) {
-        $link = "index.php/ItemDoIndiceController/listarItensDoIndice/{$id}";
-        $value = "<a href='" . base_url($link) . "'>" . $nome . "</a>";
-        return "<td>{$value}</td>";
+    private function artefato($artefato) {
+         return "<td>{$artefato}</td>";
     }
 
     private function status($status) {

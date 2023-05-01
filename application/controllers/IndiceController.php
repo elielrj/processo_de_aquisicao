@@ -22,15 +22,15 @@ class IndiceController extends CI_Controller {
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $indices = $this->IndiceDAO->retrive($indiceInicial, $mostrar);
+        $listaDeIndices = $this->IndiceDAO->retrive($indiceInicial, $mostrar);
 
         $quantidade = $this->IndiceDAO->count_rows();
 
-        $botoes = empty($indices) ? '' : $this->botao->paginar('IndiceController/listar', $indice, $quantidade, $mostrar);
+        $botoes = empty($listaDeIndices) ? '' : $this->botao->paginar('IndiceController/listar', $indice, $quantidade, $mostrar);
 
         $dados = array(
             'titulo' => 'Lista de Indices',
-            'tabela' => $this->tabela->indice($indices, $indiceInicial),
+            'tabela' => $this->tabela->indice($listaDeIndices, $indiceInicial),
             'pagina' => 'indice/index.php',
             'botoes' => $botoes,
         );

@@ -9,6 +9,7 @@ include_once('tabela/TabelaDepartamento.php');
 include_once('tabela/TabelaTipoDeLicitacao.php');
 include_once('tabela/TabelaArtefato.php');
 include_once('tabela/TabelaIndice.php');
+include_once('tabela/TabelaItemDoIndice.php');
 
 class Tabela {
 
@@ -55,5 +56,10 @@ class Tabela {
     public function indice($indices, $ordem) {
         $tabelaIndice = new TabelaIndice();
         return $tabelaIndice->indice($indices, $ordem);
+    }
+    
+    public function itemDoIndice($itensDoIndice, $ordem) {
+        $tabelaItemDoIndice = new TabelaItemDoIndice();
+        return $tabelaItemDoIndice->itemDoIndice($itensDoIndice, $ordem);
     }
 }

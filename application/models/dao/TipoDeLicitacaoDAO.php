@@ -122,12 +122,10 @@ class TipoDeLicitacaoDAO extends CI_Model
 
             foreach ($tiposDeLicitacoes as $key => $value) {
 
-                $artigo = empty($value->artigo) ? '' : (', ' . $value->artigo);
-                $inciso = empty($value->inciso) ? '' : (', ' . $value->inciso);
+                $artigo = ($value->artigo != '') ? (', ' . $value->artigo) : '';
+                $inciso = ($value->inciso != '') ? (', ' . $value->inciso) : '';
 
-                
-
-                $options += [$value->id => 'Lei ' . $value->lei . ' (' . (new DateTime($value->dataDaLei))->format('d-m-Y') . $artigo . $inciso . ')'];
+                $options += [$value->id => $value->nome . ' (' . 'Lei ' . $value->lei . $artigo . $inciso . ", de ". (new DateTime($value->dataDaLei))->format('d-m-Y') . ')'];
 
             }
 
