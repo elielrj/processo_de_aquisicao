@@ -2,8 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include('application/models/bo/Arquivo.php');
-include('InterfaceCrudDAO.php');
+require_once('application/models/bo/Arquivo.php');
+include_once('InterfaceCrudDAO.php');
 
 class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
 

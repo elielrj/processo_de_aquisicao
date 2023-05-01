@@ -2,8 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include('application/models/bo/Lei.php');
-include('InterfaceCrudDAO.php');
+require_once('application/models/bo/Lei.php');
+include_once('InterfaceCrudDAO.php');
 
 class LeiDAO extends CI_Model implements InterfaceCrudDAO {
 

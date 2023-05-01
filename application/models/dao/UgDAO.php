@@ -2,8 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include('application/models/bo/Ug.php');
-include('InterfaceCrudDAO.php');
+require_once('application/models/bo/Ug.php');
+include_once('InterfaceCrudDAO.php');
 
 class UgDAO extends CI_Model implements InterfaceCrudDAO {
 
