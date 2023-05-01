@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include('application/models/bo/Departamento.php');
 
-class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO{
+class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public static $TABELA_DB = 'departamento';
 
@@ -19,11 +19,11 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO{
         );
     }
 
-    public function retrive($indiceInicial, $mostrar) {
+    public function buscar($indiceInicial, $quantidadeMostrar) {
 
         $resultado = $this->db->get(
                 self::$TABELA_DB,
-                $mostrar,
+                $quantidadeMostrar,
                 $indiceInicial
         );
 
@@ -38,10 +38,10 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO{
         return $listaDeDepartamentos;
     }
 
-    public function retriveId($id) {
+    public function buscarPorId($objetoId) {
         $resultado = $this->db->get_where(
                 self::$TABELA_DB,
-                array('id' => $id)
+                array('id' => $objetoId)
         );
 
         foreach ($resultado->result() as $linha) {
@@ -50,16 +50,31 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO{
         }
     }
 
-    public function update($departamento) {
-
+    public function ativar($objetoId) {
         $this->db->update(
                 self::$TABELA_DB,
-                $this->toArray($departamento),
-                array('id' => $departamento->id)
+                array('id' => $objetoId),
+                array('status' => true)
         );
     }
 
-    public function count_rows() {
+    public function desativar($objetoId) {
+        $this->db->update(
+                self::$TABELA_DB,
+                array('id' => $objetoId),
+                array('status' => false)
+        );
+    }
+
+    public function atualizar($objeto) {
+        $this->db->update(
+                self::$TABELA_DB,
+                $this->toArray($objeto),
+                array('id' => $objeto->id)
+        );
+    }
+
+    public function quantidade() {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 
@@ -76,31 +91,31 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO{
         }
         return $options;
     }
-    
-    public function listarProcessos(){
-        
+
+    public function listarProcessos() {
+
         $usuario = $this->UsuarioDAO->retriveUsuarioAtual();
-        $listaDeUsuarios= $this->UsuarioDAO->retriveUsuariosPeloDepartamentoId($usuario->departamento->id);
-        
+        $listaDeUsuarios = $this->UsuarioDAO->retriveUsuariosPeloDepartamentoId($usuario->departamento->id);
+
         return $listaDeUsuarios;
     }
-    
-    public function listarUsuarios(){
-        
+
+    public function listarUsuarios() {
+
         $usuario = $this->UsuarioDAO->retriveUsuarioAtual();
-        
+
         $listaDeProcessos = $this->ProcessoDAO->retriveDepartamentoId($usuario->departamento->id);
-        
+
         return $listaDeProcessos;
     }
 
-    public function toArray($departamento) {
+    public function toArray($objeto) {
         return array(
-            'id' => $departamento->id,
-            'nome' => $departamento->nome,
-            'sigla' => $departamento->sigla,
-            'ug_id' => $departamento->ug->id,
-            'status' => $departamento->status
+            'id' => $objeto->id,
+            'nome' => $objeto->nome,
+            'sigla' => $objeto->sigla,
+            'ug_id' => $objeto->ug->id,
+            'status' => $objeto->status
         );
     }
 

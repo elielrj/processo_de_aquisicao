@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include('application/models/bo/Artefato.php');
+include('application/models/bo/Ug.php');
 
 class UgDAO extends CI_Model implements InterfaceCrudDAO {
 

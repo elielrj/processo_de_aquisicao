@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include('application/models/bo/TipoDeLicitacao.php');
+include('application/models/bo/Modalidade.php');
 
 class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
 
