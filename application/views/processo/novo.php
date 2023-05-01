@@ -9,15 +9,15 @@ echo "<h1>{$titulo}</h1>" .
 
     form_label('Objeto do processo') . form_input(['name' => 'objeto', 'class' => 'form-control', 'maxlength' => 250]) . "</br>" .
 
-    form_label('Nup/Nud') . form_input(['name' => 'nup_nud', 'class' => 'form-control', 'maxlength' => 20]) . "</br>" .
+    form_label('Numero') . form_input(['name' => 'numero', 'class' => 'form-control', 'maxlength' => 20]) . "</br>" .
 
-    form_label('Data do Processo') . form_input(['name' => 'data_do_processo', 'class' => 'form-control daterange', 'type' => 'date', 'value' => (new DateTime('now', new DateTimeZone('America/Sao_Paulo')))->format('d-m-Y')]) . "</br>" .
+    form_label('Data do Processo') . form_input(['name' => 'data', 'class' => 'form-control daterange', 'type' => 'date', 'value' => (new DateTime('now', new DateTimeZone('America/Sao_Paulo')))->format('d-m-Y')]) . "</br>" .
 
-    form_label('Chave de Acesso') . form_input(['name' => 'chave_de_acesso', 'class' => 'form-control', 'value' => uniqid()]) . "</br>" .
+    form_label('Chave de Acesso') . form_input(['name' => 'chave', 'class' => 'form-control', 'value' => uniqid()]) . "</br>" .
 
     form_label('Seção') . form_dropdown('departamento_id', $departamentos, $departamento,[ 'class' => 'form-control']) . "</br>" .
     
-    form_label('Tipo de Licitação') . form_dropdown('tipoDeLicitacaoId', $tiposDeLicitacoes, '',[ 'class' => 'form-control']) . "</br>" .
+    form_label('Modalidade') . form_dropdown('modalidade_id', $modalidades, '',[ 'class' => 'form-control']) . "</br>" .
 
     form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']) . "</br>" .
 

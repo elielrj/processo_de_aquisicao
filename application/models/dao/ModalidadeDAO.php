@@ -82,18 +82,15 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function options() {
-        $tiposDeLicitacoes = $this->retrive(null, null);
+        $modalidade = $this->buscar(null, null);
 
         $options = [];
 
-        if (isset($tiposDeLicitacoes)) {
+        if (isset($modalidade)) {
 
-            foreach ($tiposDeLicitacoes as $key => $value) {
+            foreach ($modalidade as $key => $value) {
 
-                $artigo = ($value->artigo != '') ? (', ' . $value->artigo) : '';
-                $inciso = ($value->inciso != '') ? (', ' . $value->inciso) : '';
-
-                $options += [$value->id => $value->nome . ' (' . 'Lei ' . $value->lei . $artigo . $inciso . ", de " . (new DateTime($value->dataDaLei))->format('d-m-Y') . ')'];
+                $options += [$value->id => $value->nome . ' (' . 'Lei ' . $value->lei->toString() . ')'];
             }
         }
         return $options;

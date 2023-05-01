@@ -118,6 +118,7 @@ if (!isset($_SESSION['email'])) {
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Novo:</h6>
                             <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Todos</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/novo'); ?>">Novo</a>
                         </div>
                     </div>
                 </li>

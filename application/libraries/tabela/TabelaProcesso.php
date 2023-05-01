@@ -18,13 +18,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
             return $tabela;
         }
+        
+        public function processo_exibir($processo)
+        {
+            $this->ordem = 0;
+            $tabela = $this->linhaDeCabecalhoDoProcesso_para_exibir();
+
+            foreach($processo->modalidade->listaDeArtefatos as $artefato)
+            {
+                $this->ordem++;
+                
+                $tabela .= $this->linhaDoProcesso_para_exibir($artefato);                
+            }
+            return $tabela;
+        }
 
         private function linhaDeCabecalhoDoProcesso()
         {
             return
                 "<tr class='text-center'> 
                     <td>Ordem</td>
-                    <td>Id</td>
                     <td>Objeto</td>
                     <td>Modalidade</td>
                     <td>Lei</td>
@@ -44,7 +57,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 "<tr class='text-center'>" .
                 
                     $this->ordem() .
-                    $this->id($processo->id) .
                     $this->objeto($processo->objeto,$processo->id) .
                     $this->modalidade($processo->modalidade->nome) .
                     $this->lei($processo->modalidade->lei->toString()) .
@@ -76,7 +88,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         private function objeto($objeto,$id)
         {
-            return "<td><a href='" . base_url('index.php/ProcessoController/listarProcesso/' . $id) . "'>{$objeto}</a></td>";
+            return "<td><a href='" . base_url('index.php/ProcessoController/exibir/' . $id) . "'>{$objeto}</a></td>";
         }
         private function lei($lei)
         {

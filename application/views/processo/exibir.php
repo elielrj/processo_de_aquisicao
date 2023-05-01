@@ -6,9 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
     <?php echo $titulo ?>
 </h1>
 
-<a class="btn btn-primary btn-sm" href="<?php echo base_url('index.php/TipoDeLicitacaoController/novo') ?>">NOVO</a>
 
-</br></br>
 
 <!-- tabela -->
 <table class=''>
@@ -17,5 +15,3 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
     </table>
 </table>
 
-<!-- botão na horizontal -->
-<?php echo "<div class='row'>{$botoes}</div>"; ?>

@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 echo "<h1>{$titulo}</h1>" .
 
-    form_open('TipoDeLicitacaoController/criar', array('class' => 'form-group')) .
+    form_open('ModalidadeController/criar', array('class' => 'form-group')) .
 
     form_input(['name' => 'id', 'class' => 'form-control', 'type' => 'hidden']) . "</br>" .
 
@@ -22,7 +22,7 @@ echo "<h1>{$titulo}</h1>" .
     form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']) . "</br>" .
 
     form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']) .
-    "<a href=" . base_url('index.php/TipoDeLicitacaoController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
+    "<a href=" . base_url('index.php/ModalidadeController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
 
 echo form_close();
 ?>

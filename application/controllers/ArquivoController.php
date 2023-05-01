@@ -28,9 +28,9 @@ class ArquivoController extends CI_Controller
 		$mostrar = 10;
 		$indiceInicial = $indice * $mostrar;
 
-		$arquivos = $this->ArquivoDAO->retrive($indiceInicial, $mostrar);
+		$arquivos = $this->ArquivoDAO->buscar($indiceInicial, $mostrar);
 
-		$quantidade = $this->ArquivoDAO->count_rows();
+		$quantidade = $this->ArquivoDAO->quantidade();
 
 		$botoes = empty($arquivos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
 
@@ -84,8 +84,8 @@ class ArquivoController extends CI_Controller
 					$path,
 					$nomeDoArquivo,
 					$agora->format('Y-m-d H:m:s'),
-					$this->ProcessoDAO->retriveId($data_post['processo_id']),
-					$this->ArtefatoDAO->retriveId($data_post['artefato_id']),
+					$this->ProcessoDAO->buscarPorId($data_post['processo_id']),
+					$this->ArtefatoDAO->buscarPorId($data_post['artefato_id']),
 					$data_post['status']
 				);
 
@@ -101,7 +101,7 @@ class ArquivoController extends CI_Controller
 	public function alterar($id)
 	{
 
-		$arquivo = $this->ArquivoDAO->retriveId($id);
+		$arquivo = $this->ArquivoDAO->buscarPorId($id);
 
 		$dados = array(
 			'titulo' => 'Alterar Arquivo',
@@ -129,8 +129,8 @@ class ArquivoController extends CI_Controller
 			$data['path'],
 			$data['nome_do_arquivo'],
 			$data_hora->format('Y-m-d H:m:s'),
-			$this->ProcessoDAO->retriveId($data['processo_id']),
-			$this->ArtefatoDAO->retriveId($data['artefato_id']),
+			$this->ProcessoDAO->buscarPorId($data['processo_id']),
+			$this->ArtefatoDAO->buscarPorId($data['artefato_id']),
 			$data['status']
 		);
 

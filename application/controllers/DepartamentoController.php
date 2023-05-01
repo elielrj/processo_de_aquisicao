@@ -23,9 +23,9 @@ class DepartamentoController extends CI_Controller {
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $departamentos = $this->DepartamentoDAO->retrive($indiceInicial, $mostrar);
+        $departamentos = $this->DepartamentoDAO->buscar($indiceInicial, $mostrar);
 
-        $quantidade = $this->DepartamentoDAO->count_rows();
+        $quantidade = $this->DepartamentoDAO->quantidade();
 
         $botoes = empty($departamentos) ? '' : $this->botao->paginar('DepartamentoController/listar', $indice, $quantidade, $mostrar);
 
@@ -66,7 +66,7 @@ class DepartamentoController extends CI_Controller {
 
     public function alterar($id) {
 
-        $departamento = $this->DepartamentoDAO->retriveId($id);
+        $departamento = $this->DepartamentoDAO->buscarPorId($id);
 
         $dados = array(
             'titulo' => 'Alterar Seção',

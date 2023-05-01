@@ -48,29 +48,28 @@ class ProcessoController extends CI_Controller
 
 	}
 
-	public function listarProcesso($id)
+	public function exibir($id)
 	{
-		$processo = $this->ProcessoDAO->retriveId($id);
-		$processo->arquivos = $this->ProcessoDAO->buscarArquivosDoProcesso($id);
-
+		$processo = $this->ProcessoDAO->buscarPorId($id);
+                
 		$this->load->view('index', [
-			'titulo' => 'Processo: ' . $processo->objeto,
-			'processo' => $processo,
-			'pagina' => $processo->tipoDeLicitacao->pagina . 'index.php',
+			'titulo' => 'Processo: ' . $processo->modalidade->nome,
+			'tabela' => $this->processo_exibir($processo),
+			'pagina' => 'processo/exibir.php',
 		]);
 	}
 
 	public function novo()
 	{
 
-		$usuarioAtual = $this->UsuarioDAO->retriveId($this->session->id);
+		$usuarioAtual = $this->UsuarioDAO->buscarPorId($this->session->id);
 
 		$dados = array(
 			'titulo' => 'Novo Processo',
 			'pagina' => 'processo/novo.php',
 			'departamentos' => $this->DepartamentoDAO->options(),
 			'departamento' => $usuarioAtual->departamento->id,
-			'tiposDeLicitacoes' => $this->TipoDeLicitacaoDAO->options()
+			'modalidades' => $this->ModalidadeDAO->options()
 		);
 
 		$this->load->view('index', $dados);
@@ -84,15 +83,15 @@ class ProcessoController extends CI_Controller
 		$processo = new Processo(
 			null,
 			$data['objeto'],
-			$data['nup_nud'],
-			((new DateTime($data['data_do_processo']))->format('Y-d-m H:m:s')),
-			$data['chave_de_acesso'],
-			$this->DepartamentoDAO->retriveId($data['departamento_id']),
-			$this->TipoDeLicitacaoDAO->retriveId($data['tipoDeLicitacaoId']),
+			$data['numero'],
+			((new DateTime($data['data']))->format('Y-d-m H:m:s')),
+			$data['chave'],
+			$this->DepartamentoDAO->buscarPorId($data['departamento_id']),
+			$this->ModalidadeDAO->buscarPorId($data['modalidade_id']),
 			$data['status']
 		);
 
-		$this->ProcessoDAO->create($processo);
+		$this->ProcessoDAO->criar($processo);
 
 		redirect('ProcessoController');
 	}
@@ -100,14 +99,14 @@ class ProcessoController extends CI_Controller
 	public function alterar($id)
 	{
 
-		$processo = $this->ProcessoDAO->retriveId($id);
+		$processo = $this->ProcessoDAO->buscarPorId($id);
 
 		$dados = array(
 			'titulo' => 'Alterar Processo',
 			'pagina' => 'processo/alterar.php',
 			'processo' => $processo,
 			'departamentos' => $this->DepartamentoDAO->options(),
-			'tiposDeLicitacoes' => $this->TipoDeLicitacaoDAO->options(),
+			'modalidades' => $this->ModalidadeDAO->options(),
 
 		);
 
@@ -123,15 +122,15 @@ class ProcessoController extends CI_Controller
 		$processo = new Processo(
 			$data['id'],
 			$data['objeto'],
-			$data['nup_nud'],
-			((new DateTime($data['data_do_processo']))->format('Y-d-m H:m:s')),
-			$data['chave_de_acesso'],
-			$this->DepartamentoDAO->retriveId($data['departamento_id']),
-			$this->TipoDeLicitacaoDAO->retriveId($data['tipoDeLicitacaoId']),
+			$data['numero'],
+			((new DateTime($data['data']))->format('Y-d-m H:m:s')),
+			$data['chave'],
+			$this->DepartamentoDAO->buscarPorId($data['departamento_id']),
+			$this->ModalidadeDAO->buscarPorId($data['modalidade_id']),
 			$data['status']
 		);
 
-		$this->ProcessoDAO->update($processo);
+		$this->ProcessoDAO->atualizar($processo);
 
 		redirect('ProcessoController');
 	}

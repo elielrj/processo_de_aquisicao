@@ -21,14 +21,10 @@ class TabelaUg {
         return
                 "<tr class='text-center'> 
                     <td>Ordem</td>
-                    <td>Id</td>
-                    <td>Email</td>
-                    <td>CPF</td>
-                    <td>Senha</td>
-                    <td>Departamento</td>
+                    <td>UASG</td>
+                    <td>OM</td>
+                    <td>Sigla</td>
                     <td>Status</td>
-                    <td>Alterar</td>
-                    <td>Excluir</td>               
                 </tr>";
     }
 
@@ -38,7 +34,7 @@ class TabelaUg {
                 $this->ordem() .
                 $this->numero($ug->numero) .
                 $this->nome($ug->nome) .
-                $this->sigla($ug->sugla) .
+                $this->sigla($ug->sigla) .
                 $this->status($ug->status) .
                 "</tr>";
     }

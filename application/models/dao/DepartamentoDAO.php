@@ -95,17 +95,17 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function listarProcessos() {
 
-        $usuario = $this->UsuarioDAO->retriveUsuarioAtual();
-        $listaDeUsuarios = $this->UsuarioDAO->retriveUsuariosPeloDepartamentoId($usuario->departamento->id);
+        $usuario = $this->UsuarioDAO->buscarUsuarioAtual();
+        $listaDeUsuarios = $this->UsuarioDAO->buscarUsuariosPeloDepartamentoId($usuario->departamento->id);
 
         return $listaDeUsuarios;
     }
 
     public function listarUsuarios() {
 
-        $usuario = $this->UsuarioDAO->retriveUsuarioAtual();
+        $usuario = $this->UsuarioDAO->buscarUsuarioAtual();
 
-        $listaDeProcessos = $this->ProcessoDAO->retriveDepartamentoId($usuario->departamento->id);
+        $listaDeProcessos = $this->ProcessoDAO->buscarDepartamentoId($usuario->departamento->id);
 
         return $listaDeProcessos;
     }

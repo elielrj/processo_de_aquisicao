@@ -40,6 +40,11 @@ class tabela {
         $tabelaProcesso = new TabelaProcesso();
         return $tabelaProcesso->processoDePregao($processo);
     }
+    
+    public function processo_exibir($processo) {
+        $tabelaProcesso = new TabelaProcesso();
+        return $tabelaProcesso->processo_exibir($processo);
+    }
 
     public function tipoDeLicitacao($tiposDeLicitacoes, $ordem) {
         $tabelaTipoDeLicitacao = new TabelaTipoDeLicitacao();

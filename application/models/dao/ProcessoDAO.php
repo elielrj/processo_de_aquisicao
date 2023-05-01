@@ -52,7 +52,7 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
         }
     }
 
-    public function retriveDepartamentoId($departamento_id) {
+    public function buscarDepartamentoId($departamento_id) {
 
         $resultado = $this->db->get_where(
                 self::$TABELA_DB,

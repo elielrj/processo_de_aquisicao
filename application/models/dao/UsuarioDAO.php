@@ -111,7 +111,7 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function buscarUsuarioAtual() {
-        return $this->retriveId($this->session->id);
+        return $this->bucarPorId($this->session->id);
     }
 
     public function atualizar($usuario) {
