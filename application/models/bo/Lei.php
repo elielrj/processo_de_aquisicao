@@ -35,4 +35,14 @@ class Lei {
         $this->$key = $value;
     }
 
+    public function toString() {
+
+
+        $art = ($this->artigo != "") ? (", Art. " . $this->artigo) : '';
+        $inc = ($this->inciso != "") ? (", Inc. " . $this->inciso) : '';
+        $dat = ", de " . (new DateTime($this->data))->format('d-m-Y');
+
+        return $this->numero . $art . $inc . $dat;
+    }
+
 }

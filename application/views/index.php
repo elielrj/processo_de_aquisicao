@@ -67,12 +67,12 @@ if (!isset($_SESSION['email'])) {
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                       aria-expanded="true" aria-controls="collapseTwo">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                       aria-expanded="true" aria-controls="collapseOne">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Banco de Dados</span>
                     </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Pregão:</h6>
                             <a class="collapse-item" href="<?php echo base_url('index.php/DepartamentoController'); ?>">Departamento</a>
@@ -84,22 +84,40 @@ if (!isset($_SESSION['email'])) {
                     </div>
                 </li>
 
-                <!-- Nav Item - Utilities Collapse Menu -->
+                <!-- Nav Item - Utilities Collapse Usuários -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                       aria-expanded="true" aria-controls="collapseUtilities">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                       aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>Usuários</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Novo:</h6>
+
+                            <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController'); ?>">Todos</a>
+
+                            <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/novo'); ?>">Novo</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/listarAtivos'); ?>">Desativar</a>
+                            <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/listarDesativados'); ?>">Ativar</a>
+
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Nav Item - Utilities Collapse Processos -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                       aria-expanded="true" aria-controls="collapseThree">
                         <i class="fas fa-fw fa-wrench"></i>
                         <span>Processos</span>
                     </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingUtilities"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Novo:</h6>
                             <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Todos</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarProcesso'); ?>">Pregão Tradicional</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarProcesso'); ?>">Pregão SRP</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarProcesso'); ?>">Inexigibilidade</a>
-                            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarProcesso'); ?>">Agricultura Famíliar</a>
                         </div>
                     </div>
                 </li>

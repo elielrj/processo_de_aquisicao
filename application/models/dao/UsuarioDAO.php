@@ -52,6 +52,52 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
         }
     }
 
+    public function buscarPorUsuariosAtivos($indiceInicial, $quantidadeMostrar) {
+
+
+        $resultado = $this->db
+                ->where('status', true)
+                ->order_by('email')
+                ->get(
+                    self::$TABELA_DB,
+                    $quantidadeMostrar,
+                    $indiceInicial);
+
+        $listaDeUsuarios = array();
+
+        foreach ($resultado->result() as $linha) {
+
+            $usuario = $this->toObject($linha);
+
+            array_push($listaDeUsuarios, $usuario);
+        }
+
+        return $listaDeUsuarios;
+    }
+
+    public function buscarPorUsuariosDesativados($indiceInicial, $quantidadeMostrar) {
+
+
+        $resultado = $this->db
+                ->where('status', false)
+                ->order_by('email')
+                ->get(
+                    self::$TABELA_DB,
+                    $quantidadeMostrar,
+                    $indiceInicial);
+
+        $listaDeUsuarios = array();
+
+        foreach ($resultado->result() as $linha) {
+
+            $usuario = $this->toObject($linha);
+
+            array_push($listaDeUsuarios, $usuario);
+        }
+
+        return $listaDeUsuarios;
+    }
+
     public function buscarUsuariosPeloDepartamentoId($departamento_id) {
 
         $resultado = $this->db->get_where(
@@ -95,6 +141,14 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function quantidade() {
         return $this->db->count_all_results(self::$TABELA_DB);
+    }
+
+    public function quantidadeAtivos() {
+        return $this->db->count_all_results(self::$TABELA_DB, array('status' => true));
+    }
+
+    public function quantidadeDesativados() {
+        return $this->db->count_all_results(self::$TABELA_DB, array('status' => false));
     }
 
     public function verificarEmail($where) {

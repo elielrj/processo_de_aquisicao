@@ -25,12 +25,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 "<tr class='text-center'> 
                     <td>Ordem</td>
                     <td>Id</td>
-                    <td>Tipo de Licitação</td>
-                    <td>Objeto do Processo</td>
-                    <td>Nup/Nud</td>
+                    <td>Objeto</td>
+                    <td>Modalidade</td>
+                    <td>Lei</td>
+                    <td>Número</td>
                     <td>Data do Processo</td>
                     <td>Chave de Acesso</td>
-                    <td>Usuário</td>
+                    <td>Seção</td>
                     <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
@@ -39,79 +40,83 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         private function linhaDoProcesso($processo)
     {
-       
             return
                 "<tr class='text-center'>" .
                 
-                    $this->processoOrdem() .
-                    $this->processoId($processo->id) .
-                    $this->processoTipoDeLicitcao($processo->tipoDeLicitacao->nome) .
-                    $this->processoObjeto($processo->objeto, $processo->id) .
-                    $this->processoNupNud($processo->nupNud) .
-                    $this->processoDataDoProcesso($processo->dataDoProcesso) .
-                    $this->processoChaveDeAcesso($processo->chaveDeAcesso) .
-                    $this->processoDepartamento($processo->departamento) .
-                    $this->processoStatus($processo->status) .
-                    $this->processoAlterar($processo->id) .
-                    $this->processoExcluir($processo->id) .
+                    $this->ordem() .
+                    $this->id($processo->id) .
+                    $this->objeto($processo->objeto,$processo->id) .
+                    $this->modalidade($processo->modalidade->nome) .
+                    $this->lei($processo->modalidade->lei->toString()) .
+                    $this->numero($processo->numero) .
+                    $this->data($processo->data) .
+                    $this->chave($processo->chave) .
+                    $this->departamento($processo->departamento) .
+                    $this->status($processo->status) .
+                    $this->alterar($processo->id) .
+                    $this->excluir($processo->id) .
                                 
                 "</tr>";
         }
 
-        private function processoOrdem()
+        private function ordem()
         {
             return "<td>{$this->ordem}</td>";
         }
         
-        private function processoId($id)
+        private function id($id)
         {
             return "<td>{$id}</td>";
         }
 
-        private function processoTipoDeLicitcao($tipoDeLicitcao)
+        private function modalidade($modalidade)
         {
-            return "<td>{$tipoDeLicitcao}</td>";
+            return "<td>{$modalidade}</td>";
         }
 
-        private function processoObjeto($objeto, $id)
+        private function objeto($objeto,$id)
         {
             return "<td><a href='" . base_url('index.php/ProcessoController/listarProcesso/' . $id) . "'>{$objeto}</a></td>";
         }
-
-        private function processoNupNud($nup_nud)
+        private function lei($lei)
         {
-            return "<td>{$nup_nud}</td>";
+             return "<td>{$lei}</td>";
         }
 
-        private function processoDataDoProcesso($data_do_processo)
+        private function numero($numero)
         {
-            return "<td>{$this->formatarData($data_do_processo)}</td>";
+            return "<td>{$numero}</td>";
         }
 
-        private function processoChaveDeAcesso($chave_de_acesso)
+        private function data($data)
         {
-            return "<td>{$chave_de_acesso}</td>";
+            return "<td>{$this->formatarData($data)}</td>";
         }
 
-        private function processoDepartamento($departamento)
+        private function chave($chave)
+        {
+            return "<td>{$chave}</td>";
+        }
+
+        private function departamento($departamento)
     {
        
             return "<td>{$departamento->nome}</td>";
         }
 
-        private function processoStatus($status)
+        private function status($status)
         {
             return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
         }
 
-        private function processoAlterar($id)
+        private function alterar($id)
         {
             $link = "index.php/ProcessoController/alterar/{$id}";
             $value = "<a href='" . base_url($link) . "'>Alterar</a>";
             return "<td>{$value}</td>";
         }
 
-        private function processoExcluir($id)
+        private function excluir($id)
         {
             $link = "index.php/ProcessoController/deletar/{$id}";
 

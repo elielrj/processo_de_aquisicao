@@ -111,7 +111,7 @@ class ArtefatoDAO extends CI_Model implements InterfaceCrudDAO {
         return new Artefato(
                 $arrayList->id,
                 $arrayList->nome,
-                $this->ArquivoDAO->buscarPorId($arrayList->arquivo_id),
+                null,
                 $arrayList->status
         );
     }

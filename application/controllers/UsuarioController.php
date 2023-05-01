@@ -40,6 +40,50 @@ class UsuarioController extends CI_Controller {
 
         $this->load->view('index', $dados);
     }
+    
+    public function listarAtivos($indice = 1) {
+        $indice--;
+
+        $mostrar = 10;
+        $indiceInicial = $indice * $mostrar;
+
+        $usuarios = $this->UsuarioDAO->buscarPorUsuariosAtivos($indiceInicial, $mostrar);
+
+        $quantidade = $this->UsuarioDAO->quantidadeAtivos();
+
+        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $mostrar);
+
+        $dados = array(
+            'titulo' => 'Lista de Usuários',
+            'tabela' => $this->tabela->usuario($usuarios, $indiceInicial),
+            'pagina' => 'usuario/index.php',
+            'botoes' => $botoes,
+        );
+
+        $this->load->view('index', $dados);
+    }
+
+    public function listarDesativados($indice = 1) {
+        $indice--;
+
+        $mostrar = 10;
+        $indiceInicial = $indice * $mostrar;
+
+        $usuarios = $this->UsuarioDAO->buscarPorUsuariosDesativados($indiceInicial, $mostrar);
+
+        $quantidade = $this->UsuarioDAO->quantidadeDesativados();
+
+        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $mostrar);
+
+        $dados = array(
+            'titulo' => 'Lista de Usuários',
+            'tabela' => $this->tabela->usuario($usuarios, $indiceInicial),
+            'pagina' => 'usuario/index.php',
+            'botoes' => $botoes,
+        );
+
+        $this->load->view('index', $dados);
+    }
 
     public function novo() {
 
@@ -61,11 +105,11 @@ class UsuarioController extends CI_Controller {
                 $data['email'],
                 $data['cpf'],
                 md5($data['senha']),
-                $this->DepartamentoDAO->retriveId($data['departamento_id']),
+                $this->DepartamentoDAO->buscarPorId($data['departamento_id']),
                 $data['status']
         );
 
-        $this->UsuarioDAO->create($usuario);
+        $this->UsuarioDAO->criar($usuario);
 
         redirect('UsuarioController');
     }

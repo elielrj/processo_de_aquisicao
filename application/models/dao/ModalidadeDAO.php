@@ -48,16 +48,7 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
 
         foreach ($resultado->result() as $linha) {
 
-            return new TipoDeLicitacao(
-                    $linha->id,
-                    $linha->nome,
-                    $linha->lei,
-                    $linha->artigo,
-                    $linha->inciso,
-                    $linha->data_da_lei,
-                    $linha->pagina,
-                    $linha->status
-            );
+            return $this->toObject($linha);
         }
     }
 
@@ -121,7 +112,8 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
         return new Modalidade(
                 $arrayList->id,
                 $arrayList->nome,
-                $this->ModalidadeDAO->buscarPorId($arrayList->lei_id),
+                $this->LeiDAO->buscarPorId($arrayList->lei_id),
+                $this->ModalidadeArtefatoDAO->buscarListaDeArtefatos($arrayList->id),
                 $arrayList->status
         );
     }

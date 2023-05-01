@@ -139,7 +139,7 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
                 $arrayList->data,
                 $arrayList->chave,
                 $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id),
-                $this->TipoDeModalidadeDAO->buscarPorId($arrayList->modalidade_id),
+                $this->ModalidadeDAO->buscarPorId($arrayList->modalidade_id),
                 $arrayList->status
         );
     }

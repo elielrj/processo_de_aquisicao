@@ -80,7 +80,7 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function options() {
-        $departamentos = $this->retrive(null, null);
+        $departamentos = $this->buscar(null, null);
 
         $options = [];
 

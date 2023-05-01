@@ -29,15 +29,15 @@ class UgDAO extends CI_Model implements InterfaceCrudDAO {
                 $indiceInicial
         );
 
-        $listaDeArtefatos = array();
+        $listaDeUgs = array();
 
         foreach ($resultado->result() as $linha) {
 
-            $artefato = $this->toObject($linha);
+            $ug = $this->toObject($linha);
 
-            array_push($listaDeArtefatos, $artefato);
+            array_push($listaDeUgs, $ug);
         }
-        return $listaDeArtefatos;
+        return $listaDeUgs;
     }
 
     public function buscarPorId($id) {
@@ -75,9 +75,11 @@ class UgDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function toObject($arrayList) {
-        return new Artefato(
+        return new Ug(
                 $arrayList->id,
+                $arrayList->numero,
                 $arrayList->nome,
+                $arrayList->sigla,
                 $arrayList->status
         );
     }
@@ -101,13 +103,13 @@ class UgDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function options() {
 
-        $artefatos = $this->retrive(null, null);
+        $ugs = $this->retrive(null, null);
 
         $options = [];
 
-        if (isset($artefatos)) {
+        if (isset($ugs)) {
 
-            foreach ($artefatos as $key => $value) {
+            foreach ($ugs as $key => $value) {
 
                 $options += [$value->id => $value->nome . "(" . $value->numero . " - " . $value->sigla . ")"];
             }

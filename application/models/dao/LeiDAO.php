@@ -68,16 +68,20 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
         return array(
             'id' => $objeto->id,
             'numero' => $objeto->numero,
-            'nome' => $objeto->nome,
-            'sigla' => $objeto->sigla,
+            'artigo' => $objeto->artigo,
+            'inciso' => $objeto->inciso,
+            'data' => $objeto->data,
             'status' => $objeto->status
         );
     }
 
     public function toObject($arrayList) {
-        return new Artefato(
+        return new Lei(
                 $arrayList->id,
-                $arrayList->nome,
+                $arrayList->numero,
+                $arrayList->artigo,
+                $arrayList->inciso,
+                $arrayList->data,
                 $arrayList->status
         );
     }

@@ -33,7 +33,7 @@ class ProcessoController extends CI_Controller
 
 		$processos = $this->ProcessoDAO->buscar($indiceInicial, $mostrar);
 
-		$quantidade = $this->ProcessoDAO->count_rows();
+                $quantidade = $this->ProcessoDAO->quantidade();
 
 		$botoes = empty($processos) ? '' : $this->botao->paginar('ProcessoController/listar', $indice, $quantidade, $mostrar);
 
@@ -43,7 +43,7 @@ class ProcessoController extends CI_Controller
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
-
+              
 		$this->load->view('index', $dados);
 
 	}
