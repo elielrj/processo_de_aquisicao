@@ -97,20 +97,18 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function buscarArquivoDoArtefato($processoId,$artefatoId) {
-        $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array(
-                    'processo_id' => $processoId,
-                    'artefato_id' => $artefatoId
-                )
-        );
-
-        $listaDeArquivos = array();
+        
+        
+        $resultado = $this->db
+            ->where(array('processo_id'=> $processoId, 'artefato_id'=> $artefatoId))
+            //->where('artefato_id',$artefatoId)
+            ->get(self::$TABELA_DB);
 
         foreach ($resultado->result() as $linha) {
 
             return $this->toObject($linha);
         }
+        
     }
 
     public function toArray($objeto) {

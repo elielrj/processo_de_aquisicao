@@ -29,7 +29,4 @@ class Artefato {
         $this->$key = $value;
     }
 
-    public function buscarArquivoDoArtefato($processoId){
-        $this->arquivo = $this->ArquivoDAO->buscarArquivoDoArtefato($processoId,$this->id);
-    }
 }

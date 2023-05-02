@@ -6,6 +6,7 @@ include_once('tabela/TabelaArquivo.php');
 include_once('tabela/TabelaArtefato.php');
 include_once('tabela/TabelaDepartamento.php');
 include_once('tabela/TabelaProcesso.php');
+include_once('tabela/TabelaProcessoExibir.php');
 include_once('tabela/TabelaUg.php');
 include_once('tabela/TabelaUsuario.php');
 
@@ -42,8 +43,8 @@ class tabela {
     }
     
     public function processo_exibir($processo) {
-        $tabelaProcesso = new TabelaProcesso();
-        return $tabelaProcesso->processo_exibir($processo);
+        $tabelaProcessoExibir = new TabelaProcessoExibir();
+        return $tabelaProcessoExibir->processo_exibir($processo);
     }
 
     public function tipoDeLicitacao($tiposDeLicitacoes, $ordem) {

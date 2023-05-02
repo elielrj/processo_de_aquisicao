@@ -143,7 +143,10 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
                 $arrayList->status
         );
 
-        $processo->modalidade->buscarArquivosDaListaDeArtefatos($processo->id);
+        foreach($processo->modalidade->listaDeArtefatos as $artefato){
+            
+            $artefato->arquivo = $this->ArquivoDAO->buscarArquivoDoArtefato($processo->id,$artefato->id);
+        }
 
         return $processo;
     }

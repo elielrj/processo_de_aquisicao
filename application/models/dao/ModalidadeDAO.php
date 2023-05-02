@@ -65,7 +65,7 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
         return $this->db->update(
                         self::$TABELA_DB,
                         array('id' => $objetoId),
-                        array('status' => false),
+                        array('status' => false)
         );
     }
 
@@ -73,7 +73,7 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
         return $this->db->update(
                         self::$TABELA_DB,
                         array('id' => $objetoId),
-                        array('status' => true),
+                        array('status' => true)
         );
     }
 

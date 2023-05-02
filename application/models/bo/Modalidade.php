@@ -32,12 +32,4 @@ class Modalidade {
         $this->$key = $value;
     }
 
-    public function buscarArquivosDaListaDeArtefatos($processoId){
-
-        foreach($listaDeArtefatos as $artefato){
-
-            $artefato->buscarArquivoDoArtefato($processoId);
-        }
-    }
-
 }

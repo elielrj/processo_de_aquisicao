@@ -18,18 +18,7 @@ class TabelaProcesso {
         return $tabela;
     }
 
-    public function processo_exibir($processo) {
-        $this->ordem = 0;
-
-        $tabela = $this->processoExibirCabecalho($processo);
-        
-        $tabela .= "</br></br></br>";
-
-        $tabela .= $this->processoExibirListarArtefatos($processo);
-
-        return $tabela;
-    }
-
+    
     private function linhaDeCabecalhoDoProcesso() {
         return
                 "<tr class='text-center'> 
@@ -47,38 +36,6 @@ class TabelaProcesso {
                 </tr>";
     }
 
-    private function processoExibirCabecalho($processo) {
-
-        return
-                "
-                    <table>
-                        <tr class='text-left'> 
-                            <td>Objeto: </td>
-                            <td>" . $processo->objeto . "</td> 
-                        </tr>
-                        <tr class='text-left'> 
-                            <td>Número do Processo (Nup/Nud): </td>
-                            <td>" . $processo->numero . "</td> 
-                        </tr>
-                        <tr class='text-left'> 
-                            <td>Data de abertura(Nup/Nud): </td>
-                            <td>" . $this->formatarData($processo->data) . "</td> 
-                        </tr>
-                        <tr class='text-left'> 
-                            <td>Chave para acompanhar: </td>
-                            <td>" . $processo->chave . "</td> 
-                        </tr>
-                        <tr class='text-left'> 
-                            <td>Modalidade: </td>
-                            <td>" . $processo->modalidade->nome . "</td> 
-                        </tr>
-                        <tr class='text-left'> 
-                            <td>Amparo legal: </td>
-                            <td>" . $processo->modalidade->lei->toString() . "</td> 
-                        </tr>
-                    </table>
-                ";
-    }
 
     private function linhaDoProcesso($processo) {
         return
@@ -97,24 +54,6 @@ class TabelaProcesso {
                 "</tr>";
     }
 
-    public function processoExibirListarArtefatos($processo) {
-        
-        $lista = "";
-        
-        foreach ($processo->modalidade->listaDeArtefatos as $artefato){
-          
-            "
-                <tr class='text-left'> 
-                    
-                    <td><a href='" . base_url('index.php/ArquivoController/exibir/' . $id) . "'>{$artefato->nome}</a></td> 
-                </tr>
-            "
-        }           
-            
-
-        }
-       
-    }
 
     private function ordem() {
         return "<td>{$this->ordem}</td>";

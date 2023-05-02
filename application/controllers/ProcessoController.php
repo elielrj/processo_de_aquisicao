@@ -54,7 +54,7 @@ class ProcessoController extends CI_Controller
                 
 		$this->load->view('index', [
 			'titulo' => 'Processo: ' . $processo->modalidade->nome,
-			'tabela' => $this->processo_exibir($processo),
+			'tabela' => $this->tabela->processo_exibir($processo),
 			'pagina' => 'processo/exibir.php',
 		]);
 	}
