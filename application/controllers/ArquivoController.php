@@ -79,17 +79,17 @@ class ArquivoController extends CI_Controller
 				$timezone = new DateTimeZone('America/Sao_Paulo');
 				$agora = new DateTime('now', $timezone);
 
-				$arquivo = new Arquivo(
-					null,
-					$path,
-					$nomeDoArquivo,
-					$agora->format('Y-m-d H:m:s'),
-					$this->ProcessoDAO->buscarPorId($data_post['processo_id']),
-					$this->ArtefatoDAO->buscarPorId($data_post['artefato_id']),
-					$data_post['status']
+				$arrayList = array(
+					'id' => $null,
+            		'path' => $path,
+					'data' => $agora->format('Y-m-d H:m:s'),
+					'usuario_id' => $this->session->id,
+					'processo_id' => $data_post['processo_id'],
+					'artefato_id' => $data_post['artefato_id'],
+            		'status' => $data_post['status']
 				);
 
-				$this->ArquivoDAO->create($arquivo);
+				$this->ArquivoDAO->criar($arrayList);
 
 				redirect('ArquivoController');
 			}
@@ -121,20 +121,21 @@ class ArquivoController extends CI_Controller
 
 		$data = $this->input->post();
 
-		$data_hora = new DateTime($data['data_do_upload']);
+		$data_hora = new DateTime($data['data']);
 
 
-		$arquivo = new Arquivo(
-			$data['id'],
-			$data['path'],
-			$data['nome_do_arquivo'],
-			$data_hora->format('Y-m-d H:m:s'),
-			$this->ProcessoDAO->buscarPorId($data['processo_id']),
-			$this->ArtefatoDAO->buscarPorId($data['artefato_id']),
-			$data['status']
-		);
+		$arrayList = array(
+					'id' => $data_post['d'],
+            		'path' => $path,
+					'data' => $agora->format('Y-m-d H:m:s'),
+					'usuario_id' => $this->session->id,
+					'processo_id' => $data_post['processo_id'],
+					'artefato_id' => $data_post['artefato_id'],
+            		'status' => $data_post['status']
+				);
 
-		$this->ArquivoDAO->update($arquivo);
+				$this->ArquivoDAO->criar($arrayList);
+
 
 		redirect('ArquivoController');
 	}

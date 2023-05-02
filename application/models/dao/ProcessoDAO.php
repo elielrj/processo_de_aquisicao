@@ -101,7 +101,7 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function options() {
 
-        $processos = $this->retrive(null, null);
+        $processos = $this->buscar(null, null);
 
         $options = [];
 
@@ -109,7 +109,7 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
 
             foreach ($processos as $key => $value) {
 
-                $options += [$value->id => $value->objeto . ' (Nup/Nud: ' . $value->nupNud . ')'];
+                $options += [$value->id => 'Nup/Nud: ' . $value->numero . ' - Objeto: ' . $value->objeto];
             }
         }
         return $options;

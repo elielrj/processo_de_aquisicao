@@ -84,7 +84,7 @@ class ArtefatoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function options() {
 
-        $artefatos = $this->retrive(null, null);
+        $artefatos = $this->buscar(null, null);
 
         $options = [];
 

@@ -13,10 +13,10 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
         parent::__construct();
     }
 
-    public function criar($objeto) {
+    public function criar($arrayList) {
         $this->db->insert(
                 self::$TABELA_DB,
-                $this->toArray($objeto)
+                $arrayList
         );
     }
 
@@ -122,7 +122,7 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function toObject($arrayList) {
         return new Arquivo(
-                $arrayList->id,
+                (isset($arrayList->id)) ? null : $arrayList->id,
                 $arrayList->path,
                 $arrayList->data,
                 $arrayList->status
