@@ -132,7 +132,7 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function toObject($arrayList) {
-        return new Processo(
+        $processo = new Processo(
                 $arrayList->id,
                 $arrayList->objeto,
                 $arrayList->numero,
@@ -142,6 +142,10 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
                 $this->ModalidadeDAO->buscarPorId($arrayList->modalidade_id),
                 $arrayList->status
         );
+
+        $processo->modalidade->buscarArquivosDaListaDeArtefatos($processo->id);
+
+        return $processo;
     }
 
 }
