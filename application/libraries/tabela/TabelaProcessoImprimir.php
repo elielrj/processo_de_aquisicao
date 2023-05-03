@@ -2,25 +2,23 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TabelaProcessoExibir
+class TabelaProcessoImprimir
 {
 
-    private $ordem;
 
-    public function processo_exibir($processo)
+    public function processo_imprimir($processo)
     {
-        $this->ordem = 0;
 
-        $tabela = $this->processoExibirCabecalho($processo);
+        $tabela = $this->processoImpirmirCabecalho($processo);
 
         $tabela .= "</br></br></br>";
 
-        $tabela .= $this->processoExibirListarArtefatos($processo);
+        $tabela .= $this->processoImprimirListaDeArtefatos($processo);
 
         return $tabela;
     }
 
-    private function processoExibirCabecalho($processo)
+    private function processoImpirmirCabecalho($processo)
     {
 
         return
@@ -50,54 +48,27 @@ class TabelaProcessoExibir
                             <td>Amparo legal: </td>
                             <td>" . $processo->modalidade->lei->toString() . "</td> 
                         </tr>
-                        <tr class='text-left'> 
-                            <td>Amparo legal: </td>
-                            <td>" . "<a href=" . base_url('index.php/ProcessoController/imprimirProcesso/' . $processo->id) . " class='btn btn-primary btn-lg btn-block' >Imprimir</a>" . "</td> 
-                        </tr>
                     </table>
                 ";
     }
 
-    public function processoExibirListarArtefatos($processo)
+    public function processoImprimirListaDeArtefatos($processo)
     {
 
         $listagemDeArtefatos = "<table class='table table-responsive-md table-hover'>";
 
         foreach ($processo->modalidade->listaDeArtefatos as $artefato) {
 
-            $link = "";
+           
 
             if ($artefato->arquivo != null) {
 
-                $link = "<a href='" . base_url($artefato->arquivo->path) . "'>{$artefato->nome}</a>";
-            } else {
+                $listagemDeArtefatos .= "<tr class='text-left'><td>Artefato *** exibir arquivo em PDF na página ****</tr>";
 
-                $link = "{$artefato->nome}";
-            }
-            $this->ordem++;
-
-            $listagemDeArtefatos .= "
-                <tr class='text-left'>                    
-                    <td>{$this->ordem}</td> 
-                    <td>{$link}</td> 
-                    <td>" .
-                form_open_multipart('ArquivoController/' . $this->formCriarOuAtualizar($artefato->arquivo), ['class' => 'form-group']) .
-                form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($artefato->arquivo)]) .
-                form_input(['name' => 'processo_id', 'type' => 'hidden', 'value' => $processo->id]) .
-                form_input(['name' => 'artefato_id', 'type' => 'hidden', 'value' => $artefato->id]) .
-                form_input(['name' => 'arquivo_status', 'type' => 'hidden', 'value' => $this->statusDoArquivo($artefato->arquivo)]) .
-                form_input(['name' => 'arquivo_path', 'type' => 'hidden', 'value' => $this->pathDoArquivo($artefato->arquivo)]) .
-                "<div class='form-label'>" .
-                form_input(['name' => 'arquivo', 'class' => 'form-label', 'type' => 'file']) .
-                form_submit('enviar', 'Enviar', ['class' => 'form-label btn btn-primary btn-lg']) . 
-                "</div>" .
-                form_close() .
-                "</td>
-                    <td>Excluir</td>
-                </tr>
-
-            ";
+            } 
+            
         }
+
         $listagemDeArtefatos .= "</table>";
 
         return $listagemDeArtefatos;

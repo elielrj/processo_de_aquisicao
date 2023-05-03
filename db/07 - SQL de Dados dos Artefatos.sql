@@ -64,5 +64,6 @@ VALUES
 (59,'Regularidade RF',true),
 (60,'Regularidade TRABALHISTA',true),
 (61,'Projeto Básico',true),
-(62,'Projeto Executivo',true);
+(62,'Projeto Executivo',true),
+(63,'Nota Explicativa',true);
 

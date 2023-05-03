@@ -52,12 +52,12 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
         }
     }
 
-    public function atualizar($objeto) {
+    public function atualizar($arrayList) {
 
         $this->db->update(
                 self::$TABELA_DB,
-                $this->toArray($objeto),
-                array('id' => $objeto->id)
+                $arrayList,
+                array('id' => $arrayList->id)
         );
     }
 
@@ -122,7 +122,7 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function toObject($arrayList) {
         return new Arquivo(
-                (isset($arrayList->id)) ? null : $arrayList->id,
+                (isset($arrayList->id)) ? $arrayList->id : null,
                 $arrayList->path,
                 $arrayList->data,
                 $arrayList->status
