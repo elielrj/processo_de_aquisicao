@@ -46,5 +46,21 @@ VALUES
 (25,'14.133','74º','II',date('2021-01-04'),true),
 (26,'14.133','74º','III',date('2021-01-04'),true),
 (27,'14.133','74º','IV',date('2021-01-04'),true),
-(28,'14.133','74º','V',date('2021-01-04'),true);
+(28,'14.133','74º','V',date('2021-01-04'),true),
+
+###LEIS ANTERIORES
+
+#licitação Pregão SRP
+(29,'10.520','1º','',date('2002-07-17'),true),
+
+#licitação 'Pregão Tradicional'
+(30,'10.520','1º','',date('2002-07-17'),true),
+
+#Dispensa de Licitação
+(31,'8.666','24º','I',date('1993-06-21'),true),
+(32,'8.666','24º','II',date('1993-06-21'),true),
+
+#Inexigibilidade de Licitação
+(33,'8.666','25º','',date('1993-06-21'),true);
+
 

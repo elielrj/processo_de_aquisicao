@@ -65,5 +65,6 @@ VALUES
 (60,'Regularidade TRABALHISTA',true),
 (61,'Projeto Básico',true),
 (62,'Projeto Executivo',true),
-(63,'Nota Explicativa',true);
+(63,'Nota Explicativa',true),
+(64,'Nota de Empenho',true);
 

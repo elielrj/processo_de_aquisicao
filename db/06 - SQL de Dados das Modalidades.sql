@@ -3,6 +3,8 @@ use processo_de_aquisicao;
 INSERT INTO 
 `modalidade`(`id`,`nome`,`lei_id`,`status`) 
 VALUES 
+
+#LEI 14.133
 (1,'Pregão SRP',1,true),
 (2,'Pregão Tradicional',2,true),
 (3,'Concorrência',3,true),
@@ -30,4 +32,11 @@ VALUES
 (25,'Inexigibilidade de Licitação',24,true),
 (26,'Inexigibilidade de Licitação',24,true),
 (27,'Inexigibilidade de Licitação',24,true),
-(28,'Inexigibilidade de Licitação',24,true);
+(28,'Inexigibilidade de Licitação',24,true),
+
+#LEI 10.520
+(29,'Empenho de Pregão SRP',29,true),
+(30,'Empenho de Pregão Tradicional',30,true),
+(31,'Empenho de Dispensa de Licitação',31,true),
+(32,'Empenho de Dispensa de Licitação',32,true),
+(33,'Empenho de Inexigibilidade de Licitação',33,true);

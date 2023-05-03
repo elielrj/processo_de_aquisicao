@@ -181,3 +181,21 @@ VALUES
 (28,61,true),
 (28,62,true),
 (28,63,true);
+
+##Processos de Empenho de Modalidade de 29 à 33
+
+INSERT INTO `modalidade_artefato`(`modalidade_id`,`artefato_id`,`status`) 
+VALUES (29,51,true),(29,53,true),(29,54,true),(29,55,true),(29,56,true),(29,57,true),(29,58,true),(29,59,true),(29,60,true),(29,64,true);
+
+INSERT INTO `modalidade_artefato`(`modalidade_id`,`artefato_id`,`status`) 
+VALUES (30,51,true),(30,53,true),(30,54,true),(30,55,true),(30,56,true),(30,57,true),(30,58,true),(30,59,true),(30,60,true),(30,64,true);
+
+INSERT INTO `modalidade_artefato`(`modalidade_id`,`artefato_id`,`status`) 
+VALUES (31,51,true),(31,52,true),(31,53,true),(31,54,true),(31,55,true),(31,56,true),(31,57,true),(31,58,true),(31,59,true),(31,60,true),(31,64,true);
+
+INSERT INTO `modalidade_artefato`(`modalidade_id`,`artefato_id`,`status`) 
+VALUES (32,51,true),(32,52,true),(32,53,true),(32,54,true),(32,55,true),(32,56,true),(32,57,true),(32,58,true),(32,59,true),(32,60,true),(32,64,true);
+
+INSERT INTO `modalidade_artefato`(`modalidade_id`,`artefato_id`,`status`) 
+VALUES (33,51,true),(33,53,true),(33,54,true),(33,55,true),(33,56,true),(33,57,true),(33,58,true),(33,59,true),(33,60,true),(33,64,true);
+

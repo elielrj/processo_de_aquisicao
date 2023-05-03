@@ -59,14 +59,19 @@ class TabelaProcessoImprimir
 
         foreach ($processo->modalidade->listaDeArtefatos as $artefato) {
 
-           
+
 
             if ($artefato->arquivo != null) {
 
-                $listagemDeArtefatos .= "<tr class='text-left'><td>Artefato *** exibir arquivo em PDF na página ****</tr>";
-
-            } 
-            
+                $listagemDeArtefatos .=
+                    "
+                    <table cellpadding='0' cellspacing='0' align='center' width='100%' height='100%'>
+                        <tr>
+                            <td><iframe src='" . $artefato->arquivo->path . "' width='600' height='780' style='border: none;'></iframe></td>
+                        </tr>
+                    <table>
+                ";
+            }
         }
 
         $listagemDeArtefatos .= "</table>";
@@ -80,7 +85,6 @@ class TabelaProcessoImprimir
         if ($arquivo != null) {
 
             return $arquivo->id;
-
         } else {
             return null;
         }
@@ -88,20 +92,19 @@ class TabelaProcessoImprimir
 
     public function formCriarOuAtualizar($arquivo)
     {
-        
-        if($arquivo == null) {
-            
-            return 'criarApartirDeUmProcesso';
 
+        if ($arquivo == null) {
+
+            return 'criarApartirDeUmProcesso';
         } else {
             return 'atualizarApartirDeUmProcesso';
         }
     }
-    
+
     public function statusDoArquivo($arquivo)
     {
 
-        if($arquivo == null) {
+        if ($arquivo == null) {
             return true;
         } else {
             return $arquivo->status;
@@ -110,8 +113,8 @@ class TabelaProcessoImprimir
 
     public function pathDoArquivo($arquivo)
     {
-        
-        if($arquivo != null) {
+
+        if ($arquivo != null) {
             return $arquivo->path;
         } else {
             return '';
@@ -196,5 +199,4 @@ class TabelaProcessoImprimir
             )
         );
     }
-
 }
