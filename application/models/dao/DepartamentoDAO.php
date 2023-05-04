@@ -22,7 +22,9 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function buscar($indiceInicial, $quantidadeMostrar) {
 
-        $resultado = $this->db->get(
+        $resultado = $this->db
+                ->order_by('nome')
+                ->get(
                 self::$TABELA_DB,
                 $quantidadeMostrar,
                 $indiceInicial

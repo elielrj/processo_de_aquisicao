@@ -10,7 +10,8 @@ class Processo {
     private $data;
     private $chave;
     private $departamento;
-    private $modalidade;
+    private $lei;
+    private $tipo;
     private $status;
 
     public function __construct(
@@ -20,7 +21,8 @@ class Processo {
             $data,
             $chave,
             $departamento,
-            $modalidade,
+            $lei,
+            $tipo,
             $status = true
     ) {
         $this->id = $id;
@@ -29,7 +31,8 @@ class Processo {
         $this->data = $data;
         $this->chave = $chave;
         $this->departamento = $departamento;
-        $this->modalidade = $modalidade;
+        $this->lei = $lei;
+        $this->tipo = $tipo;
         $this->status = $status;
     }
 
