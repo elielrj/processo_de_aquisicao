@@ -23,7 +23,9 @@ class UgDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function buscar($indiceInicial, $quantidadeMostrar) {
 
-        $resultado = $this->db->get(
+        $resultado = $this->db
+        ->where(array('status' => true))
+        ->get(
                 self::$TABELA_DB,
                 $quantidadeMostrar,
                 $indiceInicial
@@ -109,9 +111,9 @@ class UgDAO extends CI_Model implements InterfaceCrudDAO {
 
         if (isset($ugs)) {
 
-            foreach ($ugs as $key => $value) {
+            foreach ($ugs as $key => $ug) {
 
-                $options += [$value->id => $value->nome . "(" . $value->numero . " - " . $value->sigla . ")"];
+                $options += [$ug->id => $ug->toString()];
             }
         }
         return $options;

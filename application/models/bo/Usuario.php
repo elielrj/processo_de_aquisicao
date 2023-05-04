@@ -5,6 +5,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Usuario {
 
     private $id;
+    private $nome;
+    private $sobrenome;
     private $email;
     private $cpf;
     private $senha;
@@ -13,6 +15,8 @@ class Usuario {
 
     public function __construct(
             $id,
+            $nome,
+            $sobrenome,
             $email,
             $cpf,
             $senha,
@@ -20,6 +24,8 @@ class Usuario {
             $status = true
     ) {
         $this->id = $id;
+        $this->nome = $nome;
+        $this->sobrenome = $sobrenome;
         $this->email = $email;
         $this->cpf = $cpf;
         $this->senha = $senha;

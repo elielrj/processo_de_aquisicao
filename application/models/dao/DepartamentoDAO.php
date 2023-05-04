@@ -23,6 +23,7 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
     public function buscar($indiceInicial, $quantidadeMostrar) {
 
         $resultado = $this->db
+        ->where(array('status' => true))
                 ->order_by('nome')
                 ->get(
                 self::$TABELA_DB,
@@ -78,7 +79,9 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function quantidade() {
-        return $this->db->count_all_results(self::$TABELA_DB);
+        return $this->db
+        ->where(array('status' => true))
+        ->count_all_results(self::$TABELA_DB);
     }
 
     public function options() {
@@ -88,8 +91,8 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
 
         if (isset($departamentos)) {
 
-            foreach ($departamentos as $key => $value) {
-                $options += [$value->id => $value->nome . ' (' . $value->sigla . ')'];
+            foreach ($departamentos as $key => $departamento) {
+                $options += [$departamento->id => $departamento->toString()];
             }
         }
         return $options;

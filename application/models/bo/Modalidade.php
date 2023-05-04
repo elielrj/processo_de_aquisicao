@@ -6,21 +6,15 @@ class Modalidade {
 
     private $id;
     private $nome;
-    private $lei;
-    private $listaDeArtefatos;
     private $status;
 
     public function __construct(
             $id,
             $nome,
-            $lei,
-            $listaDeArtefatos,
             $status
     ) {
         $this->id = $id;
         $this->nome = $nome;
-        $this->lei = $lei;
-        $this->listaDeArtefatos = $listaDeArtefatos;
         $this->status = $status;
     }
 

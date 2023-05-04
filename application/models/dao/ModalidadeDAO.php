@@ -2,7 +2,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Modalidade.php');
 include_once('InterfaceCrudDAO.php');
 
 class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
@@ -22,7 +21,9 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function buscar($indiceInicial, $quantidadeMostrar) {
 
-        $resultado = $this->db->get(
+        $resultado = $this->db
+        ->where(array('status' => true))
+        ->get(
                 self::$TABELA_DB,
                 $quantidadeMostrar,
                 $indiceInicial
@@ -41,7 +42,8 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function buscarPorId($objetoId) {
-        $resultado = $this->db->get_where(
+        $resultado = $this->db
+        ->get_where(
                 self::$TABELA_DB,
                 array('id' => $objetoId)
         );
@@ -81,7 +83,8 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 
-    public function options() {
+    //todo mover para Lei
+    public function options() { 
         $modalidade = $this->buscar(null, null);
 
         $options = [];
@@ -100,7 +103,6 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
         return array(
             'id' => $objeto->id,
             'nome' => $objeto->nome,
-            'lei_id' => $objeto->lei->id,
             'status' => $objeto->status,
         );
     }
@@ -109,8 +111,6 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
         return new Modalidade(
                 $arrayList->id,
                 $arrayList->nome,
-                $this->LeiDAO->buscarPorId($arrayList->lei_id),
-                $this->ModalidadeArtefatoDAO->buscarListaDeArtefatos($arrayList->id),
                 $arrayList->status
         );
     }

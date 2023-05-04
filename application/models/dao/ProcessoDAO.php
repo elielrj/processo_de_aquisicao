@@ -128,7 +128,8 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
             'data' => $objeto->data,
             'chave' => $objeto->chave,
             'departamento_id' => $objeto->departamento->id,
-            'modalidade_id' => $objeto->modalidade->id,
+            'lei_id' => $objeto->lei->id,
+            'tipo_id' => $objeto->tipo->id,
             'status' => $objeto->status
         );
     }
@@ -141,12 +142,13 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
                 $arrayList->data,
                 $arrayList->chave,
                 $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id),
-                $this->ModalidadeDAO->buscarPorId($arrayList->modalidade_id),
+                $this->LeiDAO->buscarPorId($arrayList->lei_id),
+                $this->TipoDAO->buscarPorId($arrayList->tipo_id),
                 $arrayList->status
         );
-
-        foreach($processo->modalidade->listaDeArtefatos as $artefato){
-            
+//todo TipoDAO vai buscar na tabela lei_tipo_artefato todo os artefatos (entre artefatos, tipos e lei), tipo precisará saber qual é a lei
+        foreach($processo->tipo->listaDeArtefatos as $artefato){
+            //todo verificar
             $artefato->arquivo = $this->ArquivoDAO->buscarArquivoDoArtefato($processo->id,$artefato->id);
         }
 

@@ -32,4 +32,8 @@ class Departamento {
         $this->$key = $value;
     }
 
+    public function toString(){
+        return $this->nome . ' (' . $this->sigla . ')';
+    }
+
 }

@@ -9,6 +9,7 @@ class Lei {
     private $artigo;
     private $inciso;
     private $data;
+    private $modalidade;
     private $status;
 
     public function __construct(
@@ -17,6 +18,7 @@ class Lei {
             $artigo,
             $inciso,
             $data,
+            $modalidade,
             $status = true
     ) {
         $this->id = $id;
@@ -24,6 +26,7 @@ class Lei {
         $this->artigo = $artigo;
         $this->inciso = $inciso;
         $this->data = $data;
+        $this->modalidade = $modalidade;
         $this->status = $status;
     }
 

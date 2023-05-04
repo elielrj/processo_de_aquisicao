@@ -2,14 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Lei.php');
-require_once('application/models/bo/Modalidade.php');
+require_once('application/models/bo/Tipo.php');
 
 include_once('InterfaceCrudDAO.php');
 
-class LeiDAO extends CI_Model implements InterfaceCrudDAO {
+class TipoDAO extends CI_Model implements InterfaceCrudDAO {
 
-    public static $TABELA_DB = 'lei';
+    public static $TABELA_DB = 'tipo';
 
     public function __construct() {
         parent::__construct();
@@ -32,15 +31,15 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
                 $indiceInicial
         );
 
-        $listaDeLeis = array();
+        $listaDeTipos = array();
 
         foreach ($resultado->result() as $linha) {
 
-            $lei = $this->toObject($linha);
+            $tipo = $this->toObject($linha);
 
-            array_push($listaDeLeis, $lei);
+            array_push($listaDeTipos, $tipos);
         }
-        return $listaDeLeis;
+        return $listaDeTipos;
     }
 
     public function buscarPorId($id) {
@@ -72,23 +71,15 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
     public function toArray($objeto) {
         return array(
             'id' => $objeto->id,
-            'numero' => $objeto->numero,
-            'artigo' => $objeto->artigo,
-            'inciso' => $objeto->inciso,
-            'data' => $objeto->data,
-            'modalidade_id' => $objeto->modalidade->id,
+            'nome' => $objeto->nome,
             'status' => $objeto->status
         );
     }
 
     public function toObject($arrayList) {
-        return new Lei(
+        return new Tipo(
                 $arrayList->id,
-                $arrayList->numero,
-                $arrayList->artigo,
-                $arrayList->inciso,
-                $arrayList->data,
-                $this->ModalidadeDAO->buscarPorId($arrayList->modalidade),
+                $arrayList->nome,
                 $arrayList->status
         );
     }
@@ -111,15 +102,15 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function options() {
 
-        $leis = $this->buscar(null, null);
+        $tipos = $this->buscar(null, null);
 
         $options = [];
 
-        if (isset($leis)) {
+        if (isset($tipos)) {
 
-            foreach ($leis as $key => $lei) {
+            foreach ($tipos as $key => $tipo) {
 
-                $options += [$lei->id => $lei->toString()];
+                $options += [$tipo->id => $tipo->nome];
             }
         }
         return $options;

@@ -23,7 +23,9 @@ class ArtefatoDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function buscar($indiceInicial, $quantidadeMostrar) {
 
-        $resultado = $this->db->get(
+        $resultado = $this->db
+        ->where(array('status' => true))
+        ->get(
                 self::$TABELA_DB,
                 $quantidadeMostrar,
                 $indiceInicial
@@ -101,8 +103,8 @@ class ArtefatoDAO extends CI_Model implements InterfaceCrudDAO {
     public function toArray($objeto) {
         return array(
             'id' => $objeto->id,
+            'ordem' => $objeto->ordem,
             'nome' => $objeto->nome,
-            'arquivo_id' => $objeto->arquivo->id,
             'status' => $objeto->status
         );
     }
@@ -110,6 +112,7 @@ class ArtefatoDAO extends CI_Model implements InterfaceCrudDAO {
     public function toObject($arrayList) {
         return new Artefato(
                 $arrayList->id,
+                $arrayList->ordem,
                 $arrayList->nome,
                 null,
                 $arrayList->status

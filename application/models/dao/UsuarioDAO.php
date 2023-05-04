@@ -22,7 +22,9 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
 
     public function buscar($indiceInicial, $quantidadeMostrar) {
 
-        $resultado = $this->db->get(
+        $resultado = $this->db
+        ->where(array('status' => true))
+        ->get(
                 self::$TABELA_DB,
                 $quantidadeMostrar,
                 $indiceInicial
@@ -140,15 +142,21 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
     }
 
     public function quantidade() {
-        return $this->db->count_all_results(self::$TABELA_DB);
+        return $this->db
+        ->where(array('status' => true))
+        ->count_all_results(self::$TABELA_DB);
     }
 
     public function quantidadeAtivos() {
-        return $this->db->count_all_results(self::$TABELA_DB, array('status' => true));
+        return $this->db
+        ->where(array('status' => true))
+        ->count_all_results(self::$TABELA_DB, array('status' => true));
     }
 
     public function quantidadeDesativados() {
-        return $this->db->count_all_results(self::$TABELA_DB, array('status' => false));
+        return $this->db
+        ->where(array('status' => true))
+        ->count_all_results(self::$TABELA_DB, array('status' => false));
     }
 
     public function verificarEmail($where) {
@@ -175,6 +183,8 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
     public function toArray($objeto) {
         return array(
             'id' => $objeto->id,
+            'nome' => $objeto->nome,
+            'sobrenome' => $objeto->sobrenome,
             'email' => $objeto->email,
             'cpf' => $objeto->cpf,
             'senha' => $objeto->senha,
@@ -186,6 +196,8 @@ class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
     public function toObject($arrayList) {
         return new Usuario(
                 $arrayList->id,
+                $arrayList->nome,
+                $arrayList->sobrenome,
                 $arrayList->email,
                 $arrayList->cpf,
                 $arrayList->senha,
