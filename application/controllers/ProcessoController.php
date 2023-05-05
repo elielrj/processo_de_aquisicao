@@ -62,9 +62,9 @@ class ProcessoController extends CI_Controller
 	public function imprimirProcesso($id)
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
-
+		
 		$this->load->view('index', [
-			'titulo' => 'Processo: ' . $processo->modalidade->nome,
+			'titulo' => 'Processo: '. $processo->tipo->nome ,
 			'tabela' => $this->tabela->processo_imprimir($processo),
 			'pagina' => 'processo/imprimir.php',
 		]);

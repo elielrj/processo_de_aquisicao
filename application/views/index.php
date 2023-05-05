@@ -76,20 +76,20 @@ if (!isset($_SESSION['email'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Processo de Aquisição</h6>
                         <a class="collapse-item"
-                            href="<?php echo base_url('index.php/ArquivoController'); ?>">Arquivos</a>
+                            href="<?php echo base_url('index.php/arquivos'); ?>">Arquivos</a>
                         <a class="collapse-item"
-                            href="<?php echo base_url('index.php/ArtefatoController'); ?>">Artefato</a>
+                            href="<?php echo base_url('index.php/artefatos'); ?>">Artefato</a>
                         <a class="collapse-item"
-                            href="<?php echo base_url('index.php/DepartamentoController'); ?>">Departamento</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/LeiController'); ?>">Lei</a>
+                            href="<?php echo base_url('index.php/departamentos'); ?>">Departamento</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/leis'); ?>">Lei</a>
                         <a class="collapse-item"
-                            href="<?php echo base_url('index.php/ModalidadeController'); ?>">Modalidade</a>
+                            href="<?php echo base_url('index.php/modalidades'); ?>">Modalidade</a>
                         <a class="collapse-item"
-                            href="<?php echo base_url('index.php/ProcessoController'); ?>">Processos</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/TipoController'); ?>">Tipo</a>
-                        <a class="collapse-item" href="<?php echo base_url('index.php/UgController'); ?>">Ug</a>
+                            href="<?php echo base_url('index.php/processos'); ?>">Processos</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/tipos'); ?>">Tipo</a>
+                        <a class="collapse-item" href="<?php echo base_url('index.php/ugs'); ?>">Ug</a>
                         <a class="collapse-item"
-                            href="<?php echo base_url('index.php/UsuarioController'); ?>">Usuários</a>
+                            href="<?php echo base_url('index.php/usuarios'); ?>">Usuários</a>
                     </div>
                 </div>
             </li>

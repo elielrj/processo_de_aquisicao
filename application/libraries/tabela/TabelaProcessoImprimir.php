@@ -5,9 +5,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class TabelaProcessoImprimir
 {
 
+    private $ordem;
 
     public function processo_imprimir($processo)
     {
+
+        $this->ordem = 0;
 
         $tabela = $this->processoImpirmirCabecalho($processo);
 
@@ -42,11 +45,11 @@ class TabelaProcessoImprimir
                         </tr>
                         <tr class='text-left'> 
                             <td>Modalidade: </td>
-                            <td>" . $processo->modalidade->nome . "</td> 
+                            <td>" . $processo->lei->modalidade->nome . "</td> 
                         </tr>
                         <tr class='text-left'> 
                             <td>Amparo legal: </td>
-                            <td>" . $processo->modalidade->lei->toString() . "</td> 
+                            <td>" . $processo->lei->toString() . "</td> 
                         </tr>
                     </table>
                 ";
@@ -54,27 +57,26 @@ class TabelaProcessoImprimir
 
     public function processoImprimirListaDeArtefatos($processo)
     {
+       
+        $listagemDeArtefatos = "";
 
-        $listagemDeArtefatos = "<table class='table table-responsive-md table-hover'>";
+        foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 
-        foreach ($processo->modalidade->listaDeArtefatos as $artefato) {
-
-
+            ++$this->ordem;
 
             if ($artefato->arquivo != null) {
 
                 $listagemDeArtefatos .=
-                    "
-                    <table cellpadding='0' cellspacing='0' align='center' width='100%' height='100%'>
-                        <tr>
-                            <td><iframe src='" . $artefato->arquivo->path . "' width='600' height='780' style='border: none;'></iframe></td>
-                        </tr>
-                    <table>
+                    "</br>
+                    <p>" . $this->ordem() . " - " . $artefato->nome ."<p>
+                    <div style='height: 1080px; width:100%;'>
+                        <embed src='" . base_url($artefato->arquivo->path) . "' type='application/pdf' width='100%' height='100%'>
+                    </div>
                 ";
             }
         }
 
-        $listagemDeArtefatos .= "</table>";
+        $listagemDeArtefatos .= "";
 
         return $listagemDeArtefatos;
     }

@@ -52,3 +52,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'UsuarioController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
+$route['arquivos'] = 'ArquivoController/listar';
+$route['processos'] = 'ProcessoController/listar';
+$route['artefatos'] = 'ArtefatoController/listar';
+$route['departamentos'] = 'DepartamentoController/listar';
+$route['leis'] = 'LeiController/listar';
+$route['tipos'] = 'TipoDeLicitacaoController/listar';
+$route['ugs'] = 'UgController/listar';
+$route['usuarios'] = 'UsuarioController/listar';
+$route['modalidades'] = 'ModalidadeController/listar';
+
+
+
+
+
+
