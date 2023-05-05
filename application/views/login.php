@@ -1,6 +1,3 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -39,67 +36,58 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block center">
-                                <img src="<?php echo base_url('img/processo.jpg'); ?>" width="465" height="685" >
+                                <img src="<?php echo base_url('img/processo.jpg'); ?>" width="465" height="685">
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
 
-                                <hr>
+                                    <hr>
 
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">iSALC</h1>
                                     </div>
 
-                                        <form class="user" id="form" action="index.php/UsuarioController/logar" method="POST" >
+                                    <hr>
+                                    </br>
 
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Consultar</h1>
+                                    </div>
 
-                                        <hr>
-                                        </br>       
-
-                                        <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">Consultar</h1>
-                                        </div>
-
+                                    <form class="user" id="form" action="index.php/ConsultarController" method="POST">
+                                        <!--  Nup/Nud -->
                                         <div class="form-group">
-                                                <input 
-                                                type="text" 
-                                                class="form-control form-control-user inputs register" 
-                                                id="numero"                                                 
-                                                placeholder="Digite o Nup/Nud" 
-                                                name="numero" 
-                                                autofocus                                         
-                                                >
+                                            <input type="text" class="form-control form-control-user inputs register"
+                                                id="numero" placeholder="Digite o Nup/Nud" name="numero" autofocus>
                                         </div>
-
+                                        <!--  Chave -->
                                         <div class="form-group">
-                                                <input 
-                                                type="text" 
-                                                class="form-control form-control-user inputs register" 
-                                                id="chave"                                                 
-                                                placeholder="Digite Chave de Acesso" 
-                                                name="chave" 
-                                                autofocus                                         
-                                                >
+                                            <input type="text" class="form-control form-control-user inputs register"
+                                                id="chave" placeholder="Digite Chave de Acesso" name="chave" autofocus>
                                         </div>
 
-                                        
-
+                                        <!--  Botão Consultar -->
+                                        <input class="form-group btn btn-primary btn-user btn-block" type="submit"
+                                            value="Consultar">
+                                    </form>
+                                    <form class="user" id="form" action="index.php/UsuarioController/logar"
+                                        method="POST">
                                         <?php
                                         if (isset($_SESSION['email_valido'])):
                                             if (!$_SESSION['email_valido']):
 
                                                 ?>
-                                                        <div class='form-group'>
-                                                            <p>Email inválido!</p>
-                                                        </div>
+                                                <div class='form-group'>
+                                                    <p>Email inválido!</p>
+                                                </div>
 
 
                                                 <?php
                                             endif;
                                         endif;
 
-                                                if(isset($_SESSION['senha_valida'])):
-                                                    if(!$_SESSION['senha_valida']):
+                                        if (isset($_SESSION['senha_valida'])):
+                                            if (!$_SESSION['senha_valida']):
                                                 ?>
                                                 <div class='form-group'>
                                                     <p>Senha inválida!</p>
@@ -110,8 +98,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         endif;
                                         ?>
 
-<hr>
-                                        </br>
+                                        <hr>
+                                  
 
                                         <div class="text-center">
                                             <h1 class="h4 text-gray-900 mb-4">Logar</h1>
@@ -119,53 +107,38 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <!-- email -->
                                         <div class="form-group">
-                                                <input 
-                                                type="email" 
-                                                class="form-control form-control-user inputs register" 
-                                                id="email" 
-                                                aria-describedby="emailHelp" 
-                                                placeholder="Digite seu email..." 
-                                                name="email" 
-                                                autofocus
-                                          
-                                                required>
+                                            <input type="email" class="form-control form-control-user inputs register"
+                                                id="email" aria-describedby="emailHelp"
+                                                placeholder="Digite seu email..." name="email" autofocus required>
                                         </div>
 
                                         <!-- senha -->
                                         <div class="form-group">
-                                                <input 
-                                                type="password" 
-                                                class="form-control form-control-user" 
-                                                id="senha" 
-                                                placeholder="Digite sua senha" 
-                                                name="senha"  
-                                                required >
+                                            <input type="password" class="form-control form-control-user" id="senha"
+                                                placeholder="Digite sua senha" name="senha" required>
                                         </div>
 
 
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                    <input 
-                                                        type="checkbox" 
-                                                        class="custom-control-input" 
-                                                        id="customCheck" 
+                                                <input type="checkbox" class="custom-control-input" id="customCheck"
                                                     checked>
-                                                    <label 
-                                                        class="custom-control-label" 
-                                                        for="customCheck">Lembre-me
+                                                <label class="custom-control-label" for="customCheck">Lembre-me
                                                 </label>
                                             </div>
                                         </div>
 
-                                         <input class="form-group btn btn-primary btn-user btn-block" type="submit" value="Login">
-                                        
-                                         <!--  LOGIN WITH TOKEN -->
+                                        <!--  Botão Login -->
+                                        <input class="form-group btn btn-primary btn-user btn-block" type="submit"
+                                            value="Login">
+
+                                        <!--  LOGIN WITH TOKEN -->
                                         <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> Login com Token
                                         </a>
 
                                         <hr>
-                                        
+
                                         <div class="text-center">
                                             <a class="small" href="recuperarSenha.php">Esqueceu sua senha?</a>
                                         </div>
@@ -173,17 +146,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <div class="text-center">
                                             <a class="small" href="criarUsuario.php">Criar conta!</a>
                                         </div>
-                                        
-                                        
 
-                                        
-                                        
+
+
+
+
 
                                     </form>
 
 
 
-                                    
+
                                 </div>
                             </div>
                         </div>

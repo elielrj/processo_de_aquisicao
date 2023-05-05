@@ -10,7 +10,7 @@ class ArtefatoController extends CI_Controller {
 
     public function index() {
         if (!isset($this->session->email)) {
-            $this->load->view('login.php');
+            header("Location:" . base_url());
         } else {
             $this->listar();
         }

@@ -13,7 +13,7 @@ class TipoDeLicitacaoController extends CI_Controller
 	{
 		if (!isset($this->session->email)) {
 
-			$this->load->view('login.php');
+			header("Location:" . base_url());
 
 		} else {
 			$this->listar();

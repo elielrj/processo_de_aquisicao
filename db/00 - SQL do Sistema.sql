@@ -67,9 +67,9 @@ status boolean not null
 create table if not exists processo(
 id int primary key auto_increment not null,
 objeto varchar(250) not null,
-numero varchar(30) not null,
+numero varchar(30) not null unique,
 data datetime not null default current_timestamp,
-chave varchar(250) not null,
+chave varchar(250) not null unique,
 departamento_id int not null,
 lei_id int not null,
 tipo_id int not null,

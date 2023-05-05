@@ -150,4 +150,5 @@ $autoload['model'] = array(
     'dao/ProcessoDAO',
     'dao/ArquivoDAO',
     'dao/TipoDAO',
+    'dao/ConsultarDAO',
 );

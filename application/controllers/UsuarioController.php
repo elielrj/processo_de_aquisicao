@@ -2,24 +2,29 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UsuarioController extends CI_Controller {
+class UsuarioController extends CI_Controller
+{
 
     private $usuarioDAO;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function index() {
+    public function index()
+    {
         if (!isset($this->session->email)) {
 
             $this->load->view('login.php');
+
         } else {
             $this->listar();
         }
     }
 
-    public function listar($indice = 1) {
+    public function listar($indice = 1)
+    {
         $indice--;
 
         $mostrar = 10;
@@ -40,8 +45,9 @@ class UsuarioController extends CI_Controller {
 
         $this->load->view('index', $dados);
     }
-    
-    public function listarAtivos($indice = 1) {
+
+    public function listarAtivos($indice = 1)
+    {
         $indice--;
 
         $mostrar = 10;
@@ -63,7 +69,8 @@ class UsuarioController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function listarDesativados($indice = 1) {
+    public function listarDesativados($indice = 1)
+    {
         $indice--;
 
         $mostrar = 10;
@@ -85,7 +92,8 @@ class UsuarioController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function novo() {
+    public function novo()
+    {
 
         $dados = array(
             'titulo' => 'Novo Usuário',
@@ -96,17 +104,18 @@ class UsuarioController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function criar() {
+    public function criar()
+    {
 
         $data = $this->input->post();
 
         $usuario = new Usuario(
-                null,
-                $data['email'],
-                $data['cpf'],
-                md5($data['senha']),
-                $this->DepartamentoDAO->buscarPorId($data['departamento_id']),
-                $data['status']
+            null,
+            $data['email'],
+            $data['cpf'],
+            md5($data['senha']),
+            $this->DepartamentoDAO->buscarPorId($data['departamento_id']),
+            $data['status']
         );
 
         $this->UsuarioDAO->criar($usuario);
@@ -114,7 +123,8 @@ class UsuarioController extends CI_Controller {
         redirect('UsuarioController');
     }
 
-    public function alterar($id) {
+    public function alterar($id)
+    {
 
         $usuario = $this->UsuarioDAO->retriveId($id);
 
@@ -128,17 +138,18 @@ class UsuarioController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function atualizar() {
+    public function atualizar()
+    {
 
         $data = $this->input->post();
 
         $usuario = new Usuario(
-                $data['id'],
-                $data['email'],
-                $data['cpf'],
-                md5($data['senha']),
-                $this->DepartamentoDAO->retriveId($data['departamento_id']),
-                $data['status']
+            $data['id'],
+            $data['email'],
+            $data['cpf'],
+            md5($data['senha']),
+            $this->DepartamentoDAO->retriveId($data['departamento_id']),
+            $data['status']
         );
 
         $this->UsuarioDAO->update($usuario);
@@ -146,21 +157,24 @@ class UsuarioController extends CI_Controller {
         redirect('UsuarioController');
     }
 
-    public function ativar($id) {
+    public function ativar($id)
+    {
 
         $this->UsuarioDAO->ativar($id);
 
         redirect('UsuarioController');
     }
-    
-    public function desativar($id) {
+
+    public function desativar($id)
+    {
 
         $this->UsuarioDAO->desativar($id);
 
         redirect('UsuarioController');
     }
 
-    public function logar() {
+    public function logar()
+    {
 
         if ($this->verificarEmail()) {
 
@@ -188,7 +202,8 @@ class UsuarioController extends CI_Controller {
         redirect(base_url());
     }
 
-    public function verificarEmail() {
+    public function verificarEmail()
+    {
 
         $email = $this->input->post('email');
 
@@ -206,7 +221,8 @@ class UsuarioController extends CI_Controller {
         return isset($resultado[0]);
     }
 
-    public function verificarSenha() {
+    public function verificarSenha()
+    {
 
         $senha = md5($this->input->post('senha'));
 
