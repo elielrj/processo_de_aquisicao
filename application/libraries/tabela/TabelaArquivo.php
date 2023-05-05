@@ -23,7 +23,6 @@ class TabelaArquivo
         return
             "<tr class='text-center'> 
                     <td>Ordem</td>
-                    <td>Id</td>
                     <td>Path</td>
                     <td>Data do Upload</td>
                     <td>Status</td>
@@ -38,7 +37,6 @@ class TabelaArquivo
             "<tr class='text-center'>" .
 
             $this->arquivoOrdem() .
-            $this->arquivoId($arquivo->id) .
             $this->arquivoPath($arquivo->path) .
             $this->arquivoDataDoUpload($arquivo->data) .
             $this->arquivoStatus($arquivo->status) .

@@ -24,7 +24,7 @@ class ArtefatoController extends CI_Controller {
 
         $artefatos = $this->ArtefatoDAO->buscar($indiceInicial, $mostrar);
 
-        $quantidade = $this->ArtefatoDAO->count_rows();
+        $quantidade = $this->ArtefatoDAO->quantidade();
 
         $botoes = empty($artefatos) ? '' : $this->botao->paginar('ArtefatoController/listar', $indice, $quantidade, $mostrar);
 

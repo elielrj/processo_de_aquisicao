@@ -24,7 +24,6 @@ class TabelaArtefato
         return
             "<tr class='text-center'> 
                     <td>Ordem</td>
-                    <td>Id</td>
                     <td>Nome</td>
                     <td>Status</td>
                     <td>Alterar</td>
@@ -39,7 +38,6 @@ class TabelaArtefato
             "<tr class='text-center'>" .
 
             $this->tipoDeLicitacaoOrdem() .
-            $this->tipoDeLicitacaoId($artefato->id) .
             $this->tipoDeLicitacaoNome($artefato->nome) .
             $this->tipoDeLicitacaoStatus($artefato->status) .
             $this->tipoDeLicitacaoAlterar($artefato->id) .

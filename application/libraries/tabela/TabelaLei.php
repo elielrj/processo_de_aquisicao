@@ -24,7 +24,6 @@ class TabelaLei
         return
             "<tr class='text-center'> 
                     <td>Ordem</td>
-                    <td>Id</td>
                     <td>Número</td>
                     <td>Artigo</td>
                     <td>Inciso</td>
@@ -43,11 +42,11 @@ class TabelaLei
             "<tr class='text-center'>" .
 
             $this->ordem() .
-            $this->id($lei->id) .
             $this->numero($lei->numero) .
             $this->artigo($lei->artigo) .
             $this->inciso($lei->inciso) .
             $this->data($lei->data) .
+            $this->modalidade($lei->modalidade->nome) .
             $this->tipoDeLicitacaoStatus($lei->status) .
             $this->tipoDeLicitacaoAlterar($lei->id) .
             $this->tipoDeLicitacaoExcluir($lei->id) .
@@ -78,6 +77,11 @@ class TabelaLei
     private function inciso($inciso)
     {
         return "<td>{$inciso}</td>";
+    }
+
+    private function modalidade($modalidade)
+    {
+        return "<td>{$modalidade}</td>";
     }
 
     private function data($data)
