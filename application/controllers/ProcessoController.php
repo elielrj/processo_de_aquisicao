@@ -59,15 +59,32 @@ class ProcessoController extends CI_Controller
 		]);
 	}
 
+	public function visualizarProcesso($id)
+	{
+		$processo = $this->ProcessoDAO->buscarPorId($id);
+
+		$this->load->view('index', [
+			'titulo' => 'Processo: ' . $processo->tipo->nome,
+			'tabela' => $this->tabela->processo_imprimir($processo),
+			'pagina' => 'processo/visualizar.php',
+		]);
+	}
+
 	public function imprimirProcesso($id)
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
-		
-		$this->load->view('index', [
-			'titulo' => 'Processo: '. $processo->tipo->nome ,
-			'tabela' => $this->tabela->processo_imprimir($processo),
-			'pagina' => 'processo/imprimir.php',
-		]);
+		/*
+		$html = $this->load->view('index/processo/visualizar.php', [
+		'titulo' => 'Processo: '. $processo->tipo->nome ,
+		'tabela' => $this->tabela->processo_imprimir($processo),
+		//'pagina' => 'processo/visualizar.php',
+		]);*/
+
+
+		$html = $this->tabela->processo_imprimir($processo);
+
+		$this->imprimir($html);
+
 	}
 
 	public function novo()
@@ -162,7 +179,7 @@ class ProcessoController extends CI_Controller
 		redirect('ProcessoController');
 	}
 
-	public function imprimir()
+	public function imprimir($html)
 	{
 
 		$dompdf = new Dompdf();
@@ -176,7 +193,7 @@ class ProcessoController extends CI_Controller
 
 		//$pagina_html = $this->load->view('processo/index.php',$dados);
 
-		$dompdf->loadHtml('teste');
+		$dompdf->loadHtml($html);
 
 		$dompdf->setPaper('A4', 'portrait');
 		$dompdf->render();
