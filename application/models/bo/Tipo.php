@@ -17,7 +17,7 @@ class Tipo {
             $listaDeArtefatos = null
     ) {
         $this->id = $id;
-        $this->nome;
+        $this->nome = $nome;
         $this->status = $status;
         $this->listaDeArtefatos = $listaDeArtefatos;
     }

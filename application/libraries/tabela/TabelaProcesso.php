@@ -24,12 +24,14 @@ class TabelaProcesso {
                 "<tr class='text-center'> 
                     <td>Ordem</td>
                     <td>Objeto</td>
+                    <td>Tipo de Processo</td>
                     <td>Modalidade</td>
                     <td>Lei</td>
                     <td>Número</td>
                     <td>Data do Processo</td>
                     <td>Chave de Acesso</td>
                     <td>Seção</td>
+                    <td>Andamento</td>
                     <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
@@ -42,12 +44,14 @@ class TabelaProcesso {
                 "<tr class='text-center'>" .
                 $this->ordem() .
                 $this->objeto($processo->objeto, $processo->id) .
-                $this->modalidade($processo->modalidade->nome) .
-                $this->lei($processo->modalidade->lei->toString()) .
+                $this->tipo($processo->tipo->nome) .
+                $this->modalidade($processo->lei->modalidade->nome) .
+                $this->lei($processo->lei->toString()) .
                 $this->numero($processo->numero) .
                 $this->data($processo->data) .
                 $this->chave($processo->chave) .
                 $this->departamento($processo->departamento) .
+                $this->completo($processo->completo) .
                 $this->status($processo->status) .
                 $this->alterar($processo->id) .
                 $this->excluir($processo->id) .
@@ -71,6 +75,10 @@ class TabelaProcesso {
         return "<td><a href='" . base_url('index.php/ProcessoController/exibir/' . $id) . "'>{$objeto}</a></td>";
     }
 
+    private function tipo($tipo) {
+        return "<td>{$tipo}</td>";
+    }
+    
     private function lei($lei) {
         return "<td>{$lei}</td>";
     }
@@ -92,6 +100,14 @@ class TabelaProcesso {
         return "<td>{$departamento->nome}</td>";
     }
 
+    private function completo($completo) {
+        return
+            "<td><p style='color:" . ($completo ? 'green' : 'red') . "'>" .
+            ($completo
+                ? 'Finalizado'
+                : 'Pendente...') .
+            "</p></td>";
+    }
     private function status($status) {
         return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
     }

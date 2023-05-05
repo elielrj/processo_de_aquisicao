@@ -5,30 +5,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require_once('application/models/bo/Processo.php');
 include_once('InterfaceCrudDAO.php');
 
-class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
+class ProcessoDAO extends CI_Model implements InterfaceCrudDAO
+{
 
     public static $TABELA_DB = 'processo';
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function criar($objeto) {
+    public function criar($objeto)
+    {
         $this->db->insert(
-                self::$TABELA_DB,
-                $this->toArray($objeto)
+            self::$TABELA_DB,
+            $objeto
         );
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar) {
+    public function buscar($indiceInicial, $quantidadeMostrar)
+    {
 
         $resultado = $this->db
-                ->order_by('data')
-                ->get(
+            ->order_by('data','DESC')
+            ->get(
                 self::$TABELA_DB,
                 $quantidadeMostrar,
                 $indiceInicial
-        );
+            );
 
         $listaDeProcessos = array();
 
@@ -41,11 +45,12 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
         return $listaDeProcessos;
     }
 
-    public function buscarPorId($objetoId) {
+    public function buscarPorId($objetoId)
+    {
 
         $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('id' => $objetoId)
+            self::$TABELA_DB,
+            array('id' => $objetoId)
         );
 
         foreach ($resultado->result() as $linha) {
@@ -54,11 +59,12 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
         }
     }
 
-    public function buscarDepartamentoId($departamento_id) {
+    public function buscarDepartamentoId($departamento_id)
+    {
 
         $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('departamento_id' => $departamento_id)
+            self::$TABELA_DB,
+            array('departamento_id' => $departamento_id)
         );
 
         $listaDeProcessos = array();
@@ -72,36 +78,41 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
         return $listaDeProcessos;
     }
 
-    public function atualizar($objeto) {
+    public function atualizar($objeto)
+    {
 
         $this->db->update(
-                self::$TABELA_DB,
-                $this->toArray($objeto),
-                array('id' => $objeto->id)
+            self::$TABELA_DB,
+            $this->toArray($objeto),
+            array('id' => $objeto->id)
         );
     }
 
-    public function desativar($objetoId) {
+    public function desativar($objetoId)
+    {
         return $this->db->update(
-                        self::$TABELA_DB,
-                        array('id' => $objetoId),
-                        array('status' => false)
+            self::$TABELA_DB,
+            array('id' => $objetoId),
+            array('status' => false)
         );
     }
 
-    public function ativar($objetoId) {
+    public function ativar($objetoId)
+    {
         return $this->db->update(
-                        self::$TABELA_DB,
-                        array('id' => $objetoId),
-                        array('status' => true)
+            self::$TABELA_DB,
+            array('id' => $objetoId),
+            array('status' => true)
         );
     }
 
-    public function quantidade() {
+    public function quantidade()
+    {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 
-    public function options() {
+    public function options()
+    {
 
         $processos = $this->buscar(null, null);
 
@@ -117,12 +128,15 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
         return $options;
     }
 
-    public function buscarArquivosDoProcesso($processoId) {
+    public function buscarArquivosDoProcesso($processoId)
+    {
         return $this->ArquivoDAO->buscarArquivosDeUmProcesso($processoId);
     }
 
-    public function toArray($objeto) {
+    public function toArray($objeto)
+    {
         return array(
+            'id' => null,
             'objeto' => $objeto->objeto,
             'numero' => $objeto->numero,
             'data' => $objeto->data,
@@ -130,26 +144,38 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO {
             'departamento_id' => $objeto->departamento->id,
             'lei_id' => $objeto->lei->id,
             'tipo_id' => $objeto->tipo->id,
+            'completo' => $objeto->completo,
             'status' => $objeto->status
         );
     }
 
-    public function toObject($arrayList) {
+    public function toObject($arrayList)
+    {
         $processo = new Processo(
-                $arrayList->id,
-                $arrayList->objeto,
-                $arrayList->numero,
-                $arrayList->data,
-                $arrayList->chave,
-                $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id),
-                $this->LeiDAO->buscarPorId($arrayList->lei_id),
-                $this->TipoDAO->buscarPorId($arrayList->tipo_id),
-                $arrayList->status
+            $arrayList->id,
+            $arrayList->objeto,
+            $arrayList->numero,
+            $arrayList->data,
+            $arrayList->chave,
+            $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id),
+            $this->LeiDAO->buscarPorId($arrayList->lei_id),
+            $this->TipoDAO->buscarPorId($arrayList->tipo_id),
+            $arrayList->completo,
+            $arrayList->status
         );
-//todo TipoDAO vai buscar na tabela lei_tipo_artefato todo os artefatos (entre artefatos, tipos e lei), tipo precisará saber qual é a lei
-        foreach($processo->tipo->listaDeArtefatos as $artefato){
-            //todo verificar
-            $artefato->arquivo = $this->ArquivoDAO->buscarArquivoDoArtefato($processo->id,$artefato->id);
+        
+        /**
+         * LeiTipoArtefatoDAO vai buscar na tabela lei_tipo_artefato todo os artefatos 
+         * (entre artefatos, tipos e lei), tem que ser passado os parâmetros lei_id e processo_id
+         */
+        $processo->tipo->listaDeArtefatos =
+            $this->LeiTipoArtefatoDAO
+                ->buscarListaDeArtefatos($processo->lei->id, $processo->tipo->id);
+
+        foreach ($processo->tipo->listaDeArtefatos as $artefato) {
+
+            $artefato->arquivo = $this->ArquivoDAO
+                ->buscarArquivoDoArtefato($processo->id, $artefato->id);
         }
 
         return $processo;

@@ -33,7 +33,7 @@ class ProcessoController extends CI_Controller
 
 		$processos = $this->ProcessoDAO->buscar($indiceInicial, $mostrar);
 
-                $quantidade = $this->ProcessoDAO->quantidade();
+		$quantidade = $this->ProcessoDAO->quantidade();
 
 		$botoes = empty($processos) ? '' : $this->botao->paginar('ProcessoController/listar', $indice, $quantidade, $mostrar);
 
@@ -43,7 +43,7 @@ class ProcessoController extends CI_Controller
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
-              
+
 		$this->load->view('index', $dados);
 
 	}
@@ -51,9 +51,9 @@ class ProcessoController extends CI_Controller
 	public function exibir($id)
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
-                
+
 		$this->load->view('index', [
-			'titulo' => 'Processo: ' . $processo->modalidade->nome,
+			'titulo' => 'Processo: ' . $processo->tipo->nome,
 			'tabela' => $this->tabela->processo_exibir($processo),
 			'pagina' => 'processo/exibir.php',
 		]);
@@ -75,12 +75,17 @@ class ProcessoController extends CI_Controller
 
 		$usuarioAtual = $this->UsuarioDAO->buscarPorId($this->session->id);
 
+		$lei_e_modalidade_pre_definido = 1;
+
 		$dados = array(
 			'titulo' => 'Novo Processo',
 			'pagina' => 'processo/novo.php',
 			'departamentos' => $this->DepartamentoDAO->options(),
 			'departamento' => $usuarioAtual->departamento->id,
-			'modalidades' => $this->ModalidadeDAO->options()
+			'modalidades' => $this->ModalidadeDAO->options(),
+			'tipos' => $this->TipoDAO->options(),
+			'leis' => $this->LeiDAO->optionsDeLeisPorModalidadeId($lei_e_modalidade_pre_definido),
+			'lei_e_modalidade_pre_definido' => $lei_e_modalidade_pre_definido
 		);
 
 		$this->load->view('index', $dados);
@@ -90,16 +95,18 @@ class ProcessoController extends CI_Controller
 	{
 
 		$data = $this->input->post();
-		
-		$processo = new Processo(
-			null,
-			$data['objeto'],
-			$data['numero'],
-			((new DateTime($data['data']))->format('Y-d-m H:m:s')),
-			$data['chave'],
-			$this->DepartamentoDAO->buscarPorId($data['departamento_id']),
-			$this->ModalidadeDAO->buscarPorId($data['modalidade_id']),
-			$data['status']
+
+		$processo = array(
+			'id' => null,
+			'objeto' => $data['objeto'],
+			'numero' => $data['numero'],
+			'data' => ((new DateTime($data['data']))->format('Y-m-d H:m:s')),
+			'chave' => uniqid(),
+			'departamento_id' => $data['departamento_id'],
+			'lei_id' => $data['lei_id'],
+			'tipo_id' => $data['tipo_id'],
+			'completo' => $data['completo'],
+			'status' => $data['status']
 		);
 
 		$this->ProcessoDAO->criar($processo);
@@ -138,6 +145,7 @@ class ProcessoController extends CI_Controller
 			$data['chave'],
 			$this->DepartamentoDAO->buscarPorId($data['departamento_id']),
 			$this->ModalidadeDAO->buscarPorId($data['modalidade_id']),
+			$data['completo'],
 			$data['status']
 		);
 

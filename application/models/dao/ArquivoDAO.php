@@ -5,27 +5,31 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require_once('application/models/bo/Arquivo.php');
 include_once('InterfaceCrudDAO.php');
 
-class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
+class ArquivoDAO extends CI_Model implements InterfaceCrudDAO
+{
 
     public static $TABELA_DB = 'arquivo';
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    public function criar($arrayList) {
+    public function criar($arrayList)
+    {
         $this->db->insert(
-                self::$TABELA_DB,
-                $arrayList
+            self::$TABELA_DB,
+            $arrayList
         );
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar) {
+    public function buscar($indiceInicial, $quantidadeMostrar)
+    {
 
         $resultado = $this->db->get(
-                self::$TABELA_DB,
-                $quantidadeMostrar,
-                $indiceInicial
+            self::$TABELA_DB,
+            $quantidadeMostrar,
+            $indiceInicial
         );
 
         $listaDeArquivos = array();
@@ -39,11 +43,12 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
         return $listaDeArquivos;
     }
 
-    public function buscarPorId($objetoId) {
+    public function buscarPorId($objetoId)
+    {
 
         $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('id' => $objetoId)
+            self::$TABELA_DB,
+            array('id' => $objetoId)
         );
 
         foreach ($resultado->result() as $linha) {
@@ -52,39 +57,44 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
         }
     }
 
-    public function atualizar($arrayList) {
+    public function atualizar($arrayList)
+    {
 
         $this->db->update(
-                self::$TABELA_DB,
-                $arrayList,
-                array('id' => $arrayList->id)
+            self::$TABELA_DB,
+            $arrayList,
+            array('id' => $arrayList->id)
         );
     }
 
-    public function desativar($objetoId) {
+    public function desativar($objetoId)
+    {
         return $this->db->update(
-                        self::$TABELA_DB,
-                        array('id' => $objetoId),
-                        array('status' => false)
+            self::$TABELA_DB,
+            array('id' => $objetoId),
+            array('status' => false)
         );
     }
 
-    public function ativar($objetoId) {
+    public function ativar($objetoId)
+    {
         return $this->db->update(
-                        self::$TABELA_DB,
-                        array('id' => $objetoId),
-                        array('status' => true)
+            self::$TABELA_DB,
+            array('id' => $objetoId),
+            array('status' => true)
         );
     }
 
-    public function quantidade() {
+    public function quantidade()
+    {
         return $this->db->count_all_results(self::$TABELA_DB);
     }
 
-    public function buscarArquivosDeUmProcesso($processoId) {
+    public function buscarArquivosDeUmProcesso($processoId)
+    {
         $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('processo_id' => $processoId)
+            self::$TABELA_DB,
+            array('processo_id' => $processoId)
         );
 
         $listaDeArquivos = array();
@@ -96,11 +106,12 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
         return $listaDeArquivos;
     }
 
-    public function buscarArquivoDoArtefato($processoId,$artefatoId) {
-        
-        
+    public function buscarArquivoDoArtefato($processoId, $artefatoId)
+    {
+
+
         $resultado = $this->db
-            ->where(array('processo_id'=> $processoId, 'artefato_id'=> $artefatoId))
+            ->where(array('processo_id' => $processoId, 'artefato_id' => $artefatoId))
             //->where('artefato_id',$artefatoId)
             ->get(self::$TABELA_DB);
 
@@ -108,10 +119,11 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
 
             return $this->toObject($linha);
         }
-        
+
     }
 
-    public function toArray($objeto) {
+    public function toArray($objeto)
+    {
         return array(
             'id' => $objeto->id,
             'path' => $objeto->path,
@@ -120,12 +132,13 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO {
         );
     }
 
-    public function toObject($arrayList) {
+    public function toObject($arrayList)
+    {
         return new Arquivo(
-                (isset($arrayList->id)) ? $arrayList->id : null,
-                $arrayList->path,
-                $arrayList->data,
-                $arrayList->status
+            (isset($arrayList->id)) ? $arrayList->id : null,
+            $arrayList->path,
+            $arrayList->data,
+            $arrayList->status
         );
     }
 

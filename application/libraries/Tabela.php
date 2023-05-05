@@ -10,6 +10,7 @@ include_once('tabela/TabelaProcessoExibir.php');
 include_once('tabela/TabelaProcessoImprimir.php');
 include_once('tabela/TabelaUg.php');
 include_once('tabela/TabelaUsuario.php');
+include_once('tabela/TabelaLei.php');
 
 class tabela {
 
@@ -75,5 +76,10 @@ class tabela {
     public function ug($listaDeUg, $ordem) {
         $tabelaUg = new TabelaUg();
         return $tabelaUg->ug($listaDeUg, $ordem);
+    }
+
+    public function lei($lei, $ordem) {
+        $tabelaLei = new TabelaLei();
+        return $tabelaLei->lei($lei, $ordem);
     }
 }

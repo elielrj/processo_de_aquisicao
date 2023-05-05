@@ -6,19 +6,18 @@ require_once('application/models/bo/Modalidade.php');
 require_once('application/models/bo/Artefato.php');
 
 
-class ModalidadeArtefatoDAO extends CI_Model  {
+class LeiTipoArtefatoDAO extends CI_Model  {
 
-    public static $TABELA_DB = 'modalidade_artefato';
+    public static $TABELA_DB = 'lei_tipo_artefato';
 
     public function __construct() {
         parent::__construct();
     }
 
-    public function buscarListaDeArtefatos($modalidadeId) {
+    public function buscarListaDeArtefatos($lei_id,$tipo_id) {
         
         $resultado = $this->db
-                ->where('modalidade_id', $modalidadeId)
-                ->order_by('artefato_id')
+                ->where(array('lei_id' => $lei_id, 'tipo_id' => $tipo_id))
                 ->get(self::$TABELA_DB);
 
         $listaDeArtefatos = array();

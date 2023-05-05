@@ -88,7 +88,7 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
                 $arrayList->artigo,
                 $arrayList->inciso,
                 $arrayList->data,
-                $this->ModalidadeDAO->buscarPorId($arrayList->modalidade),
+                $this->ModalidadeDAO->buscarPorId($arrayList->modalidade_id),
                 $arrayList->status
         );
     }
@@ -122,6 +122,44 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
                 $options += [$lei->id => $lei->toString()];
             }
         }
+        return $options;
+    }
+
+    private function buscarPorModalideId($modalidade_id)
+    {     
+        $resultado = $this->db->get_where(
+            self::$TABELA_DB,
+            array('modalidade_id' => $modalidade_id)
+        );
+        
+        $listaDeLeis = array();
+
+        foreach ($resultado->result() as $linha) {
+            
+            $lei = $this->toObject($linha);
+            
+            array_push($listaDeLeis, $lei);
+        }
+  
+        return $listaDeLeis;
+    }
+
+    public function optionsDeLeisPorModalidadeId($modalidade_id)
+    {
+        
+        $leis = $this->buscarPorModalideId($modalidade_id);
+
+        $options = [];
+
+        if (isset($leis)) {
+
+            foreach ($leis as $key => $lei) {
+
+                $options += array($lei->id => $lei->toString());
+            }
+        }
+    
+
         return $options;
     }
 

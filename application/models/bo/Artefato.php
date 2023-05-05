@@ -5,17 +5,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Artefato {
 
     private $id;
+    private $ordem;
     private $nome;
     private $arquivo;
     private $status;
 
     public function __construct(
             $id,
+            $ordem,
             $nome,
-            $arquivo,
+            $arquivo = null,
             $status = true
     ) {
         $this->id = $id;
+        $this->ordem = $ordem;
         $this->nome = $nome;
         $this->arquivo = $arquivo;
         $this->status = $status;

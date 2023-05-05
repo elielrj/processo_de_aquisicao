@@ -37,7 +37,7 @@ class TipoDAO extends CI_Model implements InterfaceCrudDAO {
 
             $tipo = $this->toObject($linha);
 
-            array_push($listaDeTipos, $tipos);
+            array_push($listaDeTipos, $tipo);
         }
         return $listaDeTipos;
     }
@@ -109,10 +109,11 @@ class TipoDAO extends CI_Model implements InterfaceCrudDAO {
         if (isset($tipos)) {
 
             foreach ($tipos as $key => $tipo) {
-
+               
                 $options += [$tipo->id => $tipo->nome];
             }
         }
+        
         return $options;
     }
 

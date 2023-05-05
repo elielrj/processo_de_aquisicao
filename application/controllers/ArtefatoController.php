@@ -22,7 +22,7 @@ class ArtefatoController extends CI_Controller {
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $artefatos = $this->ArtefatoDAO->retrive($indiceInicial, $mostrar);
+        $artefatos = $this->ArtefatoDAO->buscar($indiceInicial, $mostrar);
 
         $quantidade = $this->ArtefatoDAO->count_rows();
 
@@ -61,7 +61,7 @@ class ArtefatoController extends CI_Controller {
 
     public function alterar($id) {
 
-        $artefato = $this->ArtefatoDAO->retriveId($id);
+        $artefato = $this->ArtefatoDAO->buscarId($id);
 
         $dados = [
             'titulo' => 'Alterar Artefato',

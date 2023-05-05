@@ -85,15 +85,15 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
 
     //todo mover para Lei
     public function options() { 
-        $modalidade = $this->buscar(null, null);
+        $modalidades = $this->buscar(null, null);
 
         $options = [];
 
-        if (isset($modalidade)) {
+        if (isset($modalidades)) {
 
-            foreach ($modalidade as $key => $value) {
+            foreach ($modalidades as $key => $modalidade) {
 
-                $options += [$value->id => $value->nome . ' (' . 'Lei ' . $value->lei->toString() . ')'];
+                $options += [$modalidade->id => $modalidade->nome];
             }
         }
         return $options;

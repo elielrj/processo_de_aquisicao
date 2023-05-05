@@ -41,11 +41,11 @@ class TabelaProcessoExibir {
                         </tr>
                         <tr class='text-left'> 
                             <td>Modalidade: </td>
-                            <td>" . $processo->modalidade->nome . "</td> 
+                            <td>" . $processo->lei->modalidade->nome . "</td> 
                         </tr>
                         <tr class='text-left'> 
                             <td>Amparo legal: </td>
-                            <td>" . $processo->modalidade->lei->toString() . "</td> 
+                            <td>" . $processo->lei->toString() . "</td> 
                         </tr>
                         <tr class='text-left'> 
                             <td>Amparo legal: </td>
@@ -59,7 +59,7 @@ class TabelaProcessoExibir {
 
         $listagemDeArtefatos = "<table class='table table-responsive-md table-hover'>";
 
-        foreach ($processo->modalidade->listaDeArtefatos as $artefato) {
+        foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 
             $link = "";
 
@@ -69,6 +69,7 @@ class TabelaProcessoExibir {
             } else {
 
                 $link = "{$artefato->nome}";
+            
             }
             $this->ordem++;
 

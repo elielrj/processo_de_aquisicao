@@ -12,6 +12,7 @@ class Processo {
     private $departamento;
     private $lei;
     private $tipo;
+    private $completo;
     private $status;
 
     public function __construct(
@@ -23,6 +24,7 @@ class Processo {
             $departamento,
             $lei,
             $tipo,
+            $completo = false,
             $status = true
     ) {
         $this->id = $id;
@@ -33,6 +35,7 @@ class Processo {
         $this->departamento = $departamento;
         $this->lei = $lei;
         $this->tipo = $tipo;
+        $this->completo = $completo;
         $this->status = $status;
     }
 
