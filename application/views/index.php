@@ -38,7 +38,7 @@ if (!isset($_SESSION['email'])) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include_once('sidebar.php'); ?>
+        <?php include_once('index/sidebar.php'); ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -47,7 +47,7 @@ if (!isset($_SESSION['email'])) {
             <div id="content">
 
                 <!-- Topbar -->
-                <?php include_once('topbar.php'); ?>
+                <?php include_once('index/topbar.php'); ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid table-responsive">
