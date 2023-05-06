@@ -32,7 +32,7 @@ class LoginDAO extends CI_Model
 
     public function buscarDadosDoUsuarioLogado($email, $senha)
     {
-        $where = array('email' => $email, 'senha' => $senha);
+        $where = array('email' => $email, 'senha' => md5($senha));
 
         $resultado = $this->db->get_where('usuario', $where);
 
