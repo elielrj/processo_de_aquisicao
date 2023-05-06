@@ -16,7 +16,7 @@ class UsuarioController extends CI_Controller
     {
         if (!isset($this->session->email)) {
 
-            $this->load->view('login.php');
+            header("Location:" . base_url());
 
         } else {
             $this->listar();
@@ -171,73 +171,8 @@ class UsuarioController extends CI_Controller
         $this->UsuarioDAO->desativar($id);
 
         redirect('UsuarioController');
-    }
+    } 
+    
 
-    public function logar()
-    {
-
-        if ($this->verificarEmail()) {
-
-            if ($this->verificarSenha()) {
-
-                $email = $this->input->post('email');
-
-                $usuario = $this->UsuarioDAO->buscarPeloEmail($email);
-
-                $data = array(
-                    'id' => $usuario->id,
-                    'email' => $usuario->email,
-                    'cpf' => $usuario->cpf,
-                    'senha' => $usuario->senha,
-                    'departamento_id' => $usuario->departamento->id,
-                    'status' => $usuario->status,
-                );
-
-                $this->session->set_userdata($data);
-
-                redirect('ProcessoController');
-            }
-        }
-
-        redirect(base_url());
-    }
-
-    public function verificarEmail()
-    {
-
-        $email = $this->input->post('email');
-
-        $where = array('email' => $email);
-
-        $resultado = $this->UsuarioDAO->verificarEmail($where);
-
-        if (isset($resultado[0])) {
-
-            $this->session->set_userdata('email_valido', true);
-        } else {
-            $this->session->set_userdata('email_valido', false);
-        }
-
-        return isset($resultado[0]);
-    }
-
-    public function verificarSenha()
-    {
-
-        $senha = md5($this->input->post('senha'));
-
-        $where = array('senha' => $senha);
-
-        $resultado = $this->UsuarioDAO->verificarSenha($where);
-
-        if (isset($resultado[0])) {
-
-            $this->session->set_userdata('senha_valida', true);
-        } else {
-            $this->session->set_userdata('senha_valida', false);
-        }
-
-        return isset($resultado[0]);
-    }
 
 }

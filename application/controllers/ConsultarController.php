@@ -4,55 +4,78 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ConsultarController extends CI_Controller
 {
+
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('dao/ConsultarDAO');
     }
 
-    public function index()
-    {
-        $this->exibir();
-    }
-
-
-    private function exibir()
+    public function consultar()
     {
         $data = $this->input->post();
 
         $numero = $data['numero'];
         $chave = $data['chave'];
 
-        if($this->permitirAcesso($numero,$chave)){
-
-            $this->session->set_userdata('consultar_validado', true);
-
-            $processo = $this->buscarProcesso($numero, $chave);
-
-            $tabela = $this->tabela->processo_imprimir($processo);
-
-            $this->load->view('index', [
-                'titulo' => 'Processo: ' . $processo->tipo->nome,
-                'tabela' => $tabela,
-                'pagina' => 'exibir.php',
-            ]);
-            
-        }
-        
+        $this->numeroExiste($numero)
+            ? ($this->chaveEstaCorreta($chave)
+                ? $this->exibir($numero, $chave)
+                : redirect(base_url()))
+            : redirect(base_url());
     }
 
-    private function buscarProcesso($numero,$chave)
+    private function exibir($numero, $chave)
     {
-        return $this->ConsultarDAO->buscarPorNumeroChave($numero, $chave);
-    }
+        $processo = $this->ConsultarDAO->buscarPorNumeroChave($numero, $chave);
 
-    private function permitirAcesso($numero,$chave)
-    {
-        $where = array(
-            'numero' => $numero,
-            'chave' => $chave,
+        $data = array(
+            'titulo' => 'Processo: ' . $processo->tipo->nome,
+            'tabela' => $this->tabela->processo_imprimir($processo),
+            'pagina' => 'exibir.php',
         );
-
-        return $this->ConsultarDAO->permitirAcesso($where);
+        $this->load->view('consultar/exibir', $data);
     }
 
+    private function numeroExiste($numero)
+    {
+        if ($this->ConsultarDAO->numeroExiste($numero)) {
+            $this->numeroValido();
+            return true;
+        } else {
+            $this->numeroInvalido();
+            return false;
+        }
+    }
+
+    private function chaveEstaCorreta($chave)
+    {
+        if ($this->ConsultarDAO->chaveEstaCorreta($chave)) {
+            $this->chaveValida();
+            return true;
+        } else {
+            $this->chaveInvalida();
+            return false;
+        }
+    }
+
+    private function numeroValido()
+    {
+        $this->session->set_userdata('numero_valido', true);
+    }
+
+    private function numeroInvalido()
+    {
+        $this->session->set_userdata('numero_valido', false);
+    }
+
+    private function chaveValida()
+    {
+        $this->session->set_userdata('chave_valida', true);
+    }
+
+    private function chaveInvalida()
+    {
+        $this->session->set_userdata('chave_valida', false);
+    }
 }

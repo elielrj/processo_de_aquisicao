@@ -27,7 +27,7 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO
     {
 
         $resultado = $this->db
-            ->order_by('data','DESC')
+            ->order_by('data', 'DESC')
             ->get(
                 self::$TABELA_DB,
                 $quantidadeMostrar,
@@ -128,6 +128,24 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO
         return $options;
     }
 
+    public function buscarProcessoPeloNumeroChave($numero, $chave)
+    {
+
+        $resultado = $this->db->get_where(
+            self::$TABELA_DB,
+            array(
+                'numero' => $numero,
+                'chave' => $chave
+            )
+        );
+
+        foreach ($resultado->result() as $linha) {
+
+            return $this->toObject($linha);
+        }
+
+    }
+
     public function buscarArquivosDoProcesso($processoId)
     {
         return $this->ArquivoDAO->buscarArquivosDeUmProcesso($processoId);
@@ -163,7 +181,7 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO
             $arrayList->completo,
             $arrayList->status
         );
-        
+
         /**
          * LeiTipoArtefatoDAO vai buscar na tabela lei_tipo_artefato todo os artefatos 
          * (entre artefatos, tipos e lei), tem que ser passado os parâmetros lei_id e processo_id
