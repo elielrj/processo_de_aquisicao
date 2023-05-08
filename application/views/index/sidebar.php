@@ -1,4 +1,7 @@
 <!-- Sidebar -->
+
+
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -7,7 +10,7 @@
             <i class="fas fa-laugh-wink"></i>
         </div>
         <div class="sidebar-brand-text mx-3">
-            <?php echo $_SESSION['nome']; ?><sup>2</sup>
+            <?php echo isset($_SESSION['nome']) ? $_SESSION['nome'] : ''; ?><sup>2</sup>
         </div>
     </a>
 
@@ -58,4 +61,5 @@
     </div>
 
 </ul>
+
 <!-- End of Sidebar -->

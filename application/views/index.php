@@ -38,18 +38,8 @@ exit();
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php
-
-
-        isset($_SESSION['numero_valido'])
-            ? ($_SESSION['numero_valido'] ? include_once('index/sidebar.php') : '')
-            : '';
-
-
-
-
-
-        ?>
+        <?php (isset($_SESSION['numero_valido']) && isset($_SESSION['chave_valida'])) ? '' : include_once('index/sidebar.php')  ?>
+ 
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -58,14 +48,9 @@ exit();
             <div id="content">
 
                 <!-- Topbar -->
-                <?php
+                <?php (isset($_SESSION['numero_valido']) && isset($_SESSION['chave_valida'])) ? '' : include_once('index/topbar.php') ?>
 
-                if ($_SESSION['numero_valido'] && $_SESSION['chave_valida']):
 
-                    include_once('index/topbar.php');
-
-                endif;
-                ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid table-responsive">
