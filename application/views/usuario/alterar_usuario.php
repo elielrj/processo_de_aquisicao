@@ -3,9 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once 'campos.php';
 
-echo "<h1>{$titulo}</h1>" . "</br>";
+echo "<h1>{$titulo}</h1>";
 
-echo form_open('UsuarioController/atualizar', $form_open);
+echo form_open('UsuarioController/atualizarUsuario', $form_open);
 
 echo form_input($form_input_id);
 
@@ -25,7 +25,7 @@ echo form_label($form_label_status) . form_dropdown('status', [true => 'Ativo', 
 
 echo form_submit('enviar', 'Enviar', $form_submit_enviar) . "</br>";
 
-echo "<a href=" . base_url('index.php/UsuarioController') . " {$form_submit_cancelar} >Cancelar</a>";
+echo "<a href=" . base_url('index.php/processos') . " {$form_submit_cancelar} >Cancelar</a>";
 
 echo form_close();
 ?>

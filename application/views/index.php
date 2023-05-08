@@ -2,8 +2,8 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 /*
 if (!isset($_SESSION['email'])) {
-    header("Location:" . base_url());
-    exit();
+header("Location:" . base_url());
+exit();
 }
 */
 ?>
@@ -38,7 +38,18 @@ if (!isset($_SESSION['email'])) {
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include_once('index/sidebar.php'); ?>
+        <?php
+
+
+        isset($_SESSION['numero_valido'])
+            ? ($_SESSION['numero_valido'] ? include_once('index/sidebar.php') : '')
+            : '';
+
+
+
+
+
+        ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -47,7 +58,14 @@ if (!isset($_SESSION['email'])) {
             <div id="content">
 
                 <!-- Topbar -->
-                <?php include_once('index/topbar.php'); ?>
+                <?php
+
+                if ($_SESSION['numero_valido'] && $_SESSION['chave_valida']):
+
+                    include_once('index/topbar.php');
+
+                endif;
+                ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid table-responsive">
@@ -88,7 +106,8 @@ if (!isset($_SESSION['email'])) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="<?php echo base_url('index.php/LoginController/sair'); ?>">Logout</a>
+                    <a class="btn btn-primary"
+                        href="<?php echo base_url('index.php/LoginController/sair'); ?>">Logout</a>
                 </div>
             </div>
         </div>

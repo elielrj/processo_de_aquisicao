@@ -29,10 +29,8 @@ class TabelaProcesso {
                     <td>Lei</td>
                     <td>Número</td>
                     <td>Data do Processo</td>
-                    <td>Chave de Acesso</td>
                     <td>Seção</td>
                     <td>Andamento</td>
-                    <td>Status</td>
                     <td>Alterar</td>
                     <td>Excluir</td>               
                 </tr>";
@@ -49,10 +47,8 @@ class TabelaProcesso {
                 $this->lei($processo->lei->toString()) .
                 $this->numero($processo->numero) .
                 $this->data($processo->data) .
-                $this->chave($processo->chave) .
                 $this->departamento($processo->departamento) .
                 $this->completo($processo->completo) .
-                $this->status($processo->status) .
                 $this->alterar($processo->id) .
                 $this->excluir($processo->id) .
                 "</tr>";

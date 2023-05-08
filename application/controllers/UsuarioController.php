@@ -111,6 +111,8 @@ class UsuarioController extends CI_Controller
 
         $usuario = new Usuario(
             null,
+            $data['nome'],
+            $data['sobrenome'],
             $data['email'],
             $data['cpf'],
             md5($data['senha']),
@@ -126,11 +128,25 @@ class UsuarioController extends CI_Controller
     public function alterar($id)
     {
 
-        $usuario = $this->UsuarioDAO->retriveId($id);
+        $usuario = $this->UsuarioDAO->buscarPorId($id);
 
         $dados = array(
             'titulo' => 'Alterar Usuário',
             'pagina' => 'usuario/alterar.php',
+            'usuario' => $usuario,
+            'departamentos' => $this->DepartamentoDAO->options(),
+        );
+
+        $this->load->view('index', $dados);
+    }
+    public function alterarUsuario($id)
+    {
+
+        $usuario = $this->UsuarioDAO->buscarPorId($id);
+
+        $dados = array(
+            'titulo' => 'Atualizar dados do usuário: ' . $_SESSION['nome'],
+            'pagina' => 'usuario/alterar_usuario.php',
             'usuario' => $usuario,
             'departamentos' => $this->DepartamentoDAO->options(),
         );
@@ -145,16 +161,38 @@ class UsuarioController extends CI_Controller
 
         $usuario = new Usuario(
             $data['id'],
+            $data['nome'],
+            $data['sobrenome'],
             $data['email'],
             $data['cpf'],
-            md5($data['senha']),
-            $this->DepartamentoDAO->retriveId($data['departamento_id']),
+            $data['senha'],
+            $this->DepartamentoDAO->buscarPorId($data['departamento_id']),
             $data['status']
         );
 
-        $this->UsuarioDAO->update($usuario);
+        $this->UsuarioDAO->atualizar($usuario);
 
         redirect('UsuarioController');
+    }
+    public function atualizarUsuario()
+    {
+
+        $data = $this->input->post();
+
+        $usuario = new Usuario(
+            $data['id'],
+            $data['nome'],
+            $data['sobrenome'],
+            $data['email'],
+            $data['cpf'],
+            $data['senha'],
+            $this->DepartamentoDAO->buscarPorId($data['departamento_id']),
+            $data['status']
+        );
+
+        $this->UsuarioDAO->atualizar($usuario);
+        
+        redirect('ProcessoController');
     }
 
     public function ativar($id)

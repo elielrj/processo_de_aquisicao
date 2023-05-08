@@ -32,9 +32,9 @@ class ConsultarController extends CI_Controller
         $data = array(
             'titulo' => 'Processo: ' . $processo->tipo->nome,
             'tabela' => $this->tabela->processo_imprimir($processo),
-            'pagina' => 'exibir.php',
+            'pagina' => 'consultar/exibir.php',
         );
-        $this->load->view('consultar/exibir', $data);
+        $this->load->view('index', $data);
     }
 
     private function numeroExiste($numero)

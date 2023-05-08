@@ -22,6 +22,6 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 
 ?>
-<a href="<?php echo base_url('index.php/ProcessoController/imprimir/')?>">Pdf</a> </br>
+
 <!-- botão na horizontal -->
 <?php echo "<div class='row'>{$botoes}</div>"; ?>
