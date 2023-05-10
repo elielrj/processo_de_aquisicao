@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         public function transformarObjetoEmArray($objeto);
 
-        public function transformarArrayEmObjeto($arrayList);
+        public static function transformarArrayEmObjeto($arrayList);
     }
 
 ?>

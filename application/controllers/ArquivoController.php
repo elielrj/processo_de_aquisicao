@@ -76,6 +76,7 @@ class ArquivoController extends CI_Controller
 
             if ($arquivado) {
 
+                //todo date
                 $timezone = new DateTimeZone('America/Sao_Paulo');
                 $agora = new DateTime('now', $timezone);
 
