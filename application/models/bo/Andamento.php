@@ -5,30 +5,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Andamento implements StatusDoAndamento{
 
-    private $status;
+    private $id;
+    private $statusDoAndamento;
     private $dataHora;
 
-    public function __construct($id,$status,$dataHora){
-        $this->id = $id;
-        $this->status = $status;
-        $this->dataHora = $dataHora;       
+    public function __construct(
+        $id = null,
+        $statusDoAndamento = new Enviado(),
+        $dataHora = now()){
+            $this->id = $id;
+            $this->statusDoAndamento = $statusDoAndamento;
+            $this->dataHora = $dataHora;       
     }
     
     public function nome(){
-        return $this->status->nome();
+        return $this->statusDoAndamento->nome();
     }
     public function nivel(){
-        return $this->status->nivel();
+        return $this->statusDoAndamento->nivel();
     }
 
-    function __get($key)
+    public function getId()
     {
-        return $this->$key;
+        return $this->id;
     }
 
-    function __set($key, $value)
+    public function setId($id)
     {
-        $this->$key = $value;
+        $this->id = $id;
+    }
+
+    public function getDataHora()
+    {
+        return $this->dataHora;
+    }
+
+    public function setDataHora($dataHora)
+    {
+        $this->dataHora = $dataHora;
     }
 
 }

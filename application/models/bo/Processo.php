@@ -13,6 +13,7 @@ class Processo {
     private $lei;
     private $tipo;
     private $completo;
+    private $andamento;
     private $status;
 
     public function __construct(
@@ -25,6 +26,7 @@ class Processo {
             $lei,
             $tipo,
             $completo = false,
+            $andamento = new Andamento(),
             $status = true
     ) {
         $this->id = $id;
@@ -36,6 +38,7 @@ class Processo {
         $this->lei = $lei;
         $this->tipo = $tipo;
         $this->completo = $completo;
+        $this->andamento = $andamento;
         $this->status = $status;
     }
 
