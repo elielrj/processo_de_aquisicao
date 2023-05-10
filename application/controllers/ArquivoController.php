@@ -70,7 +70,7 @@ class ArquivoController extends CI_Controller
             $nomeDoArquivo = $_FILES['arquivo']['name'];
             $novoNomeDoArquivo = uniqid();
             $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-            $path = 'arquivos/' . $novoNomeDoArquivo . '.' . $extensao;
+            $path = 'arquivos/' . $data_post['artefato_id'] . "/" . $novoNomeDoArquivo . '.' . $extensao;
 
             $arquivado = move_uploaded_file($tmp_name, $path);
 
@@ -109,7 +109,7 @@ class ArquivoController extends CI_Controller
             $nomeDoArquivo = $_FILES['arquivo']['name'];
             $novoNomeDoArquivo = uniqid();
             $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-            $path = 'arquivos/' . $novoNomeDoArquivo . '.' . $extensao;
+            $path = 'arquivos/' . $data_post['artefato_id'] . "/" . $novoNomeDoArquivo . '.' . $extensao;
 
             $arquivado = move_uploaded_file($tmp_name, $path);
 
