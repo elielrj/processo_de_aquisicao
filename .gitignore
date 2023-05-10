@@ -33,3 +33,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 ## Iginorar Arquivos do de Upload
 /arquivos/ 
+
+#Astah
+*.asta.loc
