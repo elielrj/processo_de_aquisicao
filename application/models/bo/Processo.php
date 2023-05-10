@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Processo {
+class Processo implements Utilidades{
 
     private $id;
     private $objeto;
@@ -16,6 +16,7 @@ class Processo {
     private $andamento;
     private $status;
 
+    //todo
     public function __construct(
             $id,
             $objeto,

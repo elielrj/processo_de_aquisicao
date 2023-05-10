@@ -33,12 +33,12 @@ class tabela {
         $tabelaDepartamento = new TabelaDepartamento();
         return $tabelaDepartamento->departamento($departamentos, $ordem);
     }
-
+//todo
     public function pregao($processos, $ordem) {
         $tabelaPregao = new TabelaPregao();
         return $tabelaPregao->pregao($processos, $ordem);
     }
-
+//todo
     public function processoDePregao($processo) {
         $tabelaProcesso = new TabelaProcesso();
         return $tabelaProcesso->processoDePregao($processo);
@@ -53,6 +53,7 @@ class tabela {
         return $tabelaProcessoImprimir->processo_imprimir($processo);
     }
 
+    //todo
     public function tipoDeLicitacao($tiposDeLicitacoes, $ordem) {
         $tabelaTipoDeLicitacao = new TabelaTipoDeLicitacao();
         return $tabelaTipoDeLicitacao->tipoDeLicitacao($tiposDeLicitacoes, $ordem);
@@ -62,12 +63,12 @@ class tabela {
         $tabelaArtefato = new TabelaArtefato();
         return $tabelaArtefato->artefato($artefatos, $ordem);
     }
-    
+    //todo
     public function indice($indices, $ordem) {
         $tabelaIndice = new TabelaIndice();
         return $tabelaIndice->indice($indices, $ordem);
     }
-    
+    //todo
     public function itemDoIndice($itensDoIndice, $ordem) {
         $tabelaItemDoIndice = new TabelaItemDoIndice();
         return $tabelaItemDoIndice->itemDoIndice($itensDoIndice, $ordem);

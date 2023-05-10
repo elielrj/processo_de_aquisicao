@@ -1,6 +1,6 @@
 <?php
 
-    class Executado implements StatusDoAndamento{
+    class Executado implements StatusDoAndamento,  Utilidades{
 
 
         static $NOME = 'executado';

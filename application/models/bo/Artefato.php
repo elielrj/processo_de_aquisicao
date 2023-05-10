@@ -2,7 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Artefato {
+class Artefato
+implements Utilidades {
 
     private $id;
     private $ordem;

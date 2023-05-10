@@ -1,6 +1,6 @@
 <?php
 
-    class Conformado implements StatusDoAndamento{
+    class Conformado implements StatusDoAndamento, Utilidades{
 
 
         static $NOME = 'conformado';

@@ -3,7 +3,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 
-class Andamento implements StatusDoAndamento{
+class Andamento implements StatusDoAndamento, Utilidades{
 
     private $id;
     private $statusDoAndamento;

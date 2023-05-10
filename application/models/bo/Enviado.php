@@ -1,6 +1,6 @@
 <?php
 
-    class Enviado implements StatusDoAndamento{
+    class Enviado implements StatusDoAndamento,  Utilidades{
 
 
         static $NOME = 'enviado';

@@ -5,8 +5,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         private $linkPrincipal;
 
-        private $ultimaPagina;
-        private $inicio;
+        private $ultimaPagina;//todo
+        private $inicio;//todo
         private $apartirDoIndiceDoVetor;
         private $quantidadesDeRegistrosParaMostrar;
         private $quantidadeDeRegistrosNoDB;

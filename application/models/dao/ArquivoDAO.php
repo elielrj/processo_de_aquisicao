@@ -101,6 +101,8 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO
 
         foreach ($resultado->result() as $linha) {
 
+            $arquivo = $this->toArray($linha);
+            
             $arquivo = array_push($listaDeArquivos, $arquivo);
         }
         return $listaDeArquivos;

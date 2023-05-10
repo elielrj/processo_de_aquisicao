@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Ug {
+class Ug implements Utilidades{
 
     private $id;
     private $numero;

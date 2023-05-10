@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Lei {
+class Lei implements Utilidades{
 
     private $id;
     private $numero;
@@ -43,7 +43,7 @@ class Lei {
 
         $art = ($this->artigo != "") ? (", Art. " . $this->artigo) : '';
         $inc = ($this->inciso != "") ? (", Inc. " . $this->inciso) : '';
-        $dat = ", de " . (new DateTime($this->data))->format('d-m-Y');
+        $dat = ", de " . (new DateTime($this->data))->format('d-m-Y');//todo data
 
         return $this->numero . $art . $inc . $dat;
     }

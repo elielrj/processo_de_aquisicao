@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Modalidade {
+class Modalidade implements Utilidades{
 
     private $id;
     private $nome;
