@@ -67,13 +67,13 @@ class Andamento implements StatusDoAndamento, Utilidades
         );
     }
 
-    public static function selecionarStatus($statusDoAndamento)
+    public static function selecionarStatus($nome)
     {
-        if ($statusDoAndamento == Enviado::$NOME) {
+        if ($nome == Enviado::$NOME) {
             return new Enviado();
-        } else if ($statusDoAndamento == Executado::$NOME) {
+        } else if ($nome == Executado::$NOME) {
             return new Executado();
-        } else if ($statusDoAndamento == Conformado::$NOME) {
+        } else if ($nome == Conformado::$NOME) {
             return new Conformado();
         }
     }
