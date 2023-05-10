@@ -1,19 +1,20 @@
 <?php
 
-    class Enviado implements StatusDoAndamento,  Utilidades{
+class Enviado implements StatusDoAndamento
+{
+    static $NOME = 'enviado';
+    static $NIVEL = 1;
 
-
-        static $NOME = 'enviado';
-        static $NIVEL = 1;
-
-        public function nome(){
-            return $this->NOME;
-        }
-
-        public function nivel(){
-            return $this->NIVEL;
-        }
-
+    public function nome()
+    {
+        return $this->NOME;
     }
+
+    public function nivel()
+    {
+        return $this->NIVEL;
+    }
+
+}
 
 ?>

@@ -53,7 +53,7 @@ class Andamento implements StatusDoAndamento, Utilidades
     {
         return array(
             'id' => $this->id,
-            'statusDoAndamento' => $this->statusDoAndamento,
+            'statusDoAndamento' => $this->statusDoAndamento->nome(),
             'dataHora' => $this->dataHora,
         );
     }
@@ -62,9 +62,20 @@ class Andamento implements StatusDoAndamento, Utilidades
     {
         return new Andamento(
             isset($arrayList->id) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
-            isset($arrayList->statusDoAndamento) ? $arrayList->statusDoAndamento : (isset($arrayList['statusDoAndamento']) ? $arrayList['statusDoAndamento'] : null),
+            isset($arrayList->statusDoAndamento) ? (Andamento::selecionarStatus($arrayList->statusDoAndamento)) : (isset($arrayList['statusDoAndamento']) ? Andamento::selecionarStatus($arrayList['statusDoAndamento']) : null),
             isset($arrayList->dataHora) ? $arrayList->dataHora : (isset($arrayList['dataHora']) ? $arrayList['dataHora'] : null)
         );
+    }
+
+    public static function selecionarStatus($statusDoAndamento)
+    {
+        if ($statusDoAndamento == Enviado::$NOME) {
+            return new Enviado();
+        } else if ($statusDoAndamento == Executado::$NOME) {
+            return new Executado();
+        } else if ($statusDoAndamento == Conformado::$NOME) {
+            return new Conformado();
+        }
     }
 
 }
