@@ -2,8 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Artefato
-implements Utilidades {
+class Artefato implements Utilidades {
 
     private $id;
     private $ordem;
@@ -11,17 +10,20 @@ implements Utilidades {
     private $arquivo;
     private $status;
 
+    /**
+     * O Arquivo não é construindo juntamente com o Artefato, 
+     * somente é acrescentado a este Objeto quando o Objeto Processo for criado 
+     * com a lista de Artefatos
+     */
     public function __construct(
-            $id,
+            $id = null,
             $ordem,
             $nome,
-            $arquivo = null,
             $status = true
     ) {
         $this->id = $id;
         $this->ordem = $ordem;
         $this->nome = $nome;
-        $this->arquivo = $arquivo;
         $this->status = $status;
     }
 
@@ -31,6 +33,25 @@ implements Utilidades {
 
     function __set($key, $value) {
         $this->$key = $value;
+    }
+
+    public function transformarObjetoEmArray()
+    {
+        return array(
+            'id' => $this->id,
+            'ordem' => $this->ordem,
+            'nome' => $this->nome,
+            'status' => $this->status,
+        );
+    }
+
+    public static function transformarArrayEmObjeto($arrayList)
+    {
+        return new Artefato(
+            isset($arrayList->id) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->nome) ? $arrayList->nome : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
+            isset($arrayList->status) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
+        );
     }
 
 }

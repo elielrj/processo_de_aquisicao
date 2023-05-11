@@ -9,11 +9,11 @@ class Modalidade implements Utilidades{
     private $status;
 
     public function __construct(
-            $id,
+            $id = null,
             $nome,
-            $status
+            $status = true
     ) {
-        $this->id = $id;
+        $this->id = isset($id) ? $id : null;
         $this->nome = $nome;
         $this->status = $status;
     }
@@ -24,6 +24,24 @@ class Modalidade implements Utilidades{
 
     function __set($key, $value) {
         $this->$key = $value;
+    }
+
+    public function transformarObjetoEmArray()
+    {
+        return array(
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'status' => $this->status,
+        );
+    }
+
+    public static function transformarArrayEmObjeto($arrayList)
+    {
+        return new Modalidade(
+            isset($arrayList->id) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->nome) ? $arrayList->nome : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
+            isset($arrayList->status) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
+        );
     }
 
 }
