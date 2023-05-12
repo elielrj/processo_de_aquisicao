@@ -2,208 +2,114 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Usuario.php');
-include_once('InterfaceCrudDAO.php');
+class UsuarioDAO extends DAO
+{
 
-class UsuarioDAO extends CI_Model implements InterfaceCrudDAO {
+    private final $TABELA_DB = 'usuario';
 
-    public static $TABELA_DB = 'usuario';
-
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
+        $this->load->model('DAO');
     }
 
-    public function criar($objeto) {
-        $this->db->insert(
-                self::$TABELA_DB,
-                $this->toArray($objeto)
-        );
+    public function criar($usuario)
+    {
+        $this->DAO->criar($this->TABELA_DB, $usuario->toArray());
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar) {
+    public function buscarTodos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
 
-        $resultado = $this->db
-        ->where(array('status' => true))
-        ->get(
-                self::$TABELA_DB,
-                $quantidadeMostrar,
-                $indiceInicial
-        );
-
-        $listaDeUsuarios = array();
-
-        foreach ($resultado->result() as $linha) {
-
-            $usuario = $this->toObject($linha);
-
-            array_push($listaDeUsuarios, $usuario);
-        }
-
-        return $listaDeUsuarios;
+        return $this->criarLista($array);
     }
 
-    public function buscarPorId($objetoId) {
+    public function buscarTodosDesativados($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
 
-        $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('id' => $objetoId)
-        );
-
-        foreach ($resultado->result() as $linha) {
-            return $this->toObject($linha);
-        }
+        return $this->criarLista($array);
     }
 
-    public function buscarPorUsuariosAtivos($indiceInicial, $quantidadeMostrar) {
+    public function buscarPorId($usuarioId)
+    {
+        $array = $this->db->get_where($this->TABELA_DB, array('id' => $usuarioId));
 
-
-        $resultado = $this->db
-                ->where('status', true)
-                ->order_by('email')
-                ->get(
-                    self::$TABELA_DB,
-                    $quantidadeMostrar,
-                    $indiceInicial);
-
-        $listaDeUsuarios = array();
-
-        foreach ($resultado->result() as $linha) {
-
-            $usuario = $this->toObject($linha);
-
-            array_push($listaDeUsuarios, $usuario);
-        }
-
-        return $listaDeUsuarios;
+        return $this->toObject($array->result());
     }
 
-    public function buscarPorUsuariosDesativados($indiceInicial, $quantidadeMostrar) {
+    public function buscarOnde($key, $value)
+    {
+        $array = $this->DAO->buscarOnde($this->TABELA_DB, array($key => $value));
 
-
-        $resultado = $this->db
-                ->where('status', false)
-                ->order_by('email')
-                ->get(
-                    self::$TABELA_DB,
-                    $quantidadeMostrar,
-                    $indiceInicial);
-
-        $listaDeUsuarios = array();
-
-        foreach ($resultado->result() as $linha) {
-
-            $usuario = $this->toObject($linha);
-
-            array_push($listaDeUsuarios, $usuario);
-        }
-
-        return $listaDeUsuarios;
+        return $this->criarLista($array->result());
     }
 
-    public function buscarUsuariosPeloDepartamentoId($departamento_id) {
-
-        $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('departamento_id' => $departamento_id)
-        );
-
-        foreach ($resultado->result() as $linha) {
-            return new $this->toObject($linha);
-        }
+    public function atualizar($usuario)
+    {
+        $this->DAO->atualizar($this->TABELA_DB, $usuario->toArray());
     }
 
-    public function buscarUsuarioAtual() {
-        return $this->bucarPorId($this->session->id);
+
+    public function deletar($usuario)
+    {
+        $this->DAO->deletar($this->TABELA_DB, $usuario->toArray());
     }
 
-    public function atualizar($usuario) {
-
-        $this->db->update(
-                self::$TABELA_DB,
-                $this->toArray($usuario),
-                array('id' => $usuario->id)
-        );
+    public function contar()
+    {
+        return $this->DAO->contar($this->TABELA_DB);
     }
 
-    public function desativar($usuarioId) {
-        return $this->db->update(
-                        self::$TABELA_DB,
-                        array('status' => false),
-                        array('id' => $usuarioId)
-        );
+    public function contarDesativados()
+    {
+        return $this->DAO->contarDesativados($this->TABELA_DB);
     }
 
-    public function ativar($usuarioId) {
-        return $this->db->update(
-                        self::$TABELA_DB,
-                        array('status' => true),
-                        array('id' => $usuarioId)
-        );
-    }
-
-    public function quantidade() {
-        return $this->db
-        ->where(array('status' => true))
-        ->count_all_results(self::$TABELA_DB);
-    }
-
-    public function quantidadeAtivos() {
-        return $this->db
-        ->where(array('status' => true))
-        ->count_all_results(self::$TABELA_DB, array('status' => true));
-    }
-
-    public function quantidadeDesativados() {
-        return $this->db
-        ->where(array('status' => true))
-        ->count_all_results(self::$TABELA_DB, array('status' => false));
-    }
-
-    public function verificarEmail($where) {
-        $resultado = $this->db->get_where('usuario', $where);
-        return $resultado->result();
-    }
-
-    public function verificarSenha($where) {
-        $resultado = $this->db->get_where('usuario', $where);
-        return $resultado->result();
-    }
-
-    public function buscarPeloEmail($email) {
-        $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('email' => $email)
-        );
-
-        foreach ($resultado->result() as $linha) {
-            return $this->toObject($linha);
-        }
-    }
-
-    public function toArray($objeto) {
-        return array(
-            'id' => $objeto->id,
-            'nome' => $objeto->nome,
-            'sobrenome' => $objeto->sobrenome,
-            'email' => $objeto->email,
-            'cpf' => $objeto->cpf,
-            'senha' => $objeto->senha,
-            'departamento_id' => $objeto->departamento->id,
-            'status' => $objeto->status,
-        );
-    }
-
-    public function toObject($arrayList) {
+    public function toObject($arrayList)
+    {
         return new Usuario(
-                $arrayList->id,
-                $arrayList->nome,
-                $arrayList->sobrenome,
-                $arrayList->email,
-                $arrayList->cpf,
-                $arrayList->senha,
-                $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id),
-                $arrayList->status
+            isset($arrayList->id)
+            ? $arrayList->id
+            : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->nome)
+            ? $arrayList->nome
+            : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
+            isset($arrayList->sobrenome)
+            ? $arrayList->sobrenome
+            : (isset($arrayList['sobrenome']) ? $arrayList['sobrenome'] : null),
+            isset($arrayList->email)
+            ? $arrayList->email
+            : (isset($arrayList['email']) ? $arrayList['email'] : null),
+            isset($arrayList->cpf)
+            ? $arrayList->cpf
+            : (isset($arrayList['cpf']) ? $arrayList['cpf'] : null),
+            isset($arrayList->departamento)
+            ? $this->buscarDepartamento($arrayList->departamento)
+            : (isset($arrayList['departamento']) ? $this->buscarDepartamento($arrayList['departamento']) : null),
+            isset($arrayList->status)
+            ? $arrayList->status
+            : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
     }
 
+    private function criarLista($array)
+    {
+        $listaDeUsuarios = array();
+
+        foreach ($array->result() as $linha) {
+
+            $usuario = $this->toObject($linha);
+
+            array_push($listaDeUsuarios, $usuario);
+        }
+
+        return $listaDeUsuarios;
+    }
+
+    private function buscarDepartamento($departamentoId)
+    {
+        return $this->DepartamentoDAO->buscarPorId($departamentoId);
+    }
 }

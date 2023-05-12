@@ -134,7 +134,7 @@ class ArquivoDAO extends CI_Model implements InterfaceCrudDAO
         );
     }
 
-    public function toObject($arrayList)
+    public function transformarArrayEmObjeto($arrayList)
     {
         return new Arquivo(
             (isset($arrayList->id)) ? $arrayList->id : null,

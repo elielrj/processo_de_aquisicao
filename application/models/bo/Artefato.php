@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Artefato implements Utilidades {
+class Artefato implements InterfaceBO {
 
     private $id;
     private $ordem;
@@ -35,7 +35,7 @@ class Artefato implements Utilidades {
         $this->$key = $value;
     }
 
-    public function transformarObjetoEmArray()
+    public function toArray()
     {
         return array(
             'id' => $this->id,

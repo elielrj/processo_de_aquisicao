@@ -2,108 +2,105 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Ug.php');
-include_once('InterfaceCrudDAO.php');
+class UgDAO extends CI_Model implements InterfaceCrudDAO
+{
 
-class UgDAO extends CI_Model implements InterfaceCrudDAO {
+    private final $TABELA_DB = 'ug';
 
-    public static $TABELA_DB = 'ug';
-
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
+        $this->load->model('DAO');
     }
 
-    public function criar($objeto) {
-        $this->db->create(
-                self::$TABELA_DB,
-                $this->toArray($objeto),
-                array('id' => $objeto->id)
-        );
+    public function criar($objeto)
+    {
+        $this->DAO->criar($this->TABELA_DB, $objeto->toArray());
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar) {
+    public function buscarTodos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
 
-        $resultado = $this->db
-        ->where(array('status' => true))
-        ->get(
-                self::$TABELA_DB,
-                $quantidadeMostrar,
-                $indiceInicial
-        );
-
-        $listaDeUgs = array();
-
-        foreach ($resultado->result() as $linha) {
-
-            $ug = $this->toObject($linha);
-
-            array_push($listaDeUgs, $ug);
-        }
-        return $listaDeUgs;
+        return $this->criarLista($array);
     }
 
-    public function buscarPorId($id) {
+    public function buscarTodosDesativados($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
 
-        $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('id' => $id)
-        );
-
-        foreach ($resultado->result() as $linha) {
-            return $this->toObject($linha);
-        }
+        return $this->criarLista($array);
     }
 
-    public function atualizar($objeto) {
-        $this->db->update(
-                self::$TABELA_DB,
-                $this->toArray($objeto),
-                array('id' => $objeto->id)
-        );
+    public function buscarPorId($ugId)
+    {
+        $array = $this->db->get_where($this->TABELA_DB, array('id' => $ugId));
+
+        return $this->toObject($array->result());
     }
 
-    public function quantidade() {
-        return $this->db->count_all_results(self::$TABELA_DB);
+    public function buscarOnde($key, $value)
+    {
+        $array = $this->DAO->buscarOnde($this->TABELA_DB, array($key => $value));
+
+        return $this->criarLista($array->result());
     }
 
-    public function toArray($objeto) {
-        return array(
-            'id' => $objeto->id,
-            'numero' => $objeto->numero,
-            'nome' => $objeto->nome,
-            'sigla' => $objeto->sigla,
-            'status' => $objeto->status
-        );
+    public function atualizar($ug)
+    {
+        $this->DAO->atualizar($this->TABELA_DB, $ug->toArray());
     }
 
-    public function toObject($arrayList) {
+
+    public function deletar($ug)
+    {
+        $this->DAO->deletar($this->TABELA_DB, $ug->toArray());
+    }
+
+    public function contar()
+    {
+        return $this->DAO->contar($this->TABELA_DB);
+    }
+
+    public function contarDesativados()
+    {
+        return $this->DAO->contarDesativados($this->TABELA_DB);
+    }
+
+    public function toObject($arrayList)
+    {
         return new Ug(
-                $arrayList->id,
-                $arrayList->numero,
-                $arrayList->nome,
-                $arrayList->sigla,
-                $arrayList->status
+            isset($arrayList->id)
+            ? $arrayList->id
+            : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->nome)
+            ? $arrayList->nome
+            : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
+            isset($arrayList->sigla)
+            ? $arrayList->sigla
+            : (isset($arrayList['sigla']) ? $arrayList['sigla'] : null),
+            isset($arrayList->status)
+            ? $arrayList->status
+            : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
     }
 
-    
-    public function ativar($objetoId) {
-        $this->db->update(
-                self::$TABELA_DB,
-                array('id' => $objetoId),
-                array('status' => true)
-        );
-    }
-    
-    public function desativar($objetoId) {
-        $this->db->update(
-                self::$TABELA_DB,
-                array('id' => $objetoId),
-                array('status' => false)
-        );
+    private function criarLista($array)
+    {
+        $listaDeUg = array();
+
+        foreach ($array->result() as $linha) {
+
+            $usuario = $this->toObject($linha);
+
+            array_push($listaDeUg, $usuario);
+        }
+
+        return $listaDeUg;
     }
 
-    public function options() {
+    public function options()
+    {
 
         $ugs = $this->retrive(null, null);
 

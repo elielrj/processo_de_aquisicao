@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Processo implements Utilidades{
+class Processo implements InterfaceBO{
 
     private $id;
     private $objeto;
@@ -27,7 +27,7 @@ class Processo implements Utilidades{
             $lei,
             $tipo,
             $completo = false,
-            $andamento = new Andamento(),
+            $andamento = null,
             $status = true
     ) {
         $this->id = $id;
@@ -51,4 +51,19 @@ class Processo implements Utilidades{
         $this->$key = $value;
     }
 
+    public function toArray()
+    {
+        return array(
+            'id' => $this->id,
+            'objeto' => $this->objeto,
+            'numero' => $this->numero,
+            'data' => $this->data,
+            'chave' => $this->chave,
+            'departamento_id' => $this->departamento->id,
+            'lei_id' => $this->lei->id,
+            'tipo_id' => $this->tipo->id,
+            'completo' => $this->completo,
+            'status' => $this->status
+        );
+    }
 }

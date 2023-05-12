@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Modalidade implements Utilidades{
+class Modalidade implements InterfaceBO{
 
     private $id;
     private $nome;
@@ -26,7 +26,7 @@ class Modalidade implements Utilidades{
         $this->$key = $value;
     }
 
-    public function transformarObjetoEmArray()
+    public function toArray()
     {
         return array(
             'id' => $this->id,

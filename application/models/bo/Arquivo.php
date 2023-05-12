@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Arquivo implements Utilidades{
+class Arquivo implements InterfaceBO{
 
     private $id;
     private $path;
@@ -29,7 +29,7 @@ class Arquivo implements Utilidades{
         $this->$key = $value;
     }
 
-    public function transformarObjetoEmArray()
+    public function toArray()
     {
         return array(
             'id' => $this->id,
@@ -41,7 +41,7 @@ class Arquivo implements Utilidades{
 
     public static function transformarArrayEmObjeto($arrayList)
     {
-        return new Andamento(
+        return new Arquivo(
             isset($arrayList->id) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
             isset($arrayList->path) ? $arrayList->path : (isset($arrayList['path']) ? $arrayList['path'] : null),
             isset($arrayList->dataHora) ? $arrayList->dataHora : (isset($arrayList['dataHora']) ? $arrayList['dataHora'] : null),

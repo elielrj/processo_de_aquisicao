@@ -35,7 +35,7 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
 
         foreach ($resultado->result() as $linha) {
 
-            $departamento = $this->toObject($linha);
+            $departamento = $this->transformarArrayEmObjeto($linha);
 
             array_push($listaDeDepartamentos, $departamento);
         }
@@ -50,7 +50,7 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
 
         foreach ($resultado->result() as $linha) {
 
-            return $this->toObject($linha);
+            return $this->transformarArrayEmObjeto($linha);
         }
     }
 
@@ -115,17 +115,7 @@ class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
         return $listaDeProcessos;
     }
 
-    public function toArray($objeto) {
-        return array(
-            'id' => $objeto->id,
-            'nome' => $objeto->nome,
-            'sigla' => $objeto->sigla,
-            'ug_id' => $objeto->ug->id,
-            'status' => $objeto->status
-        );
-    }
-
-    public function toObject($arrayList) {
+    public function transformarArrayEmObjeto($arrayList) {
         return new Departamento(
                 $arrayList->id,
                 $arrayList->nome,

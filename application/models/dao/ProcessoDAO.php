@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require_once('application/models/bo/Processo.php');
 include_once('InterfaceCrudDAO.php');
 
-class ProcessoDAO extends CI_Model implements InterfaceCrudDAO
+class ProcessoDAO extends DAO
 {
 
     public static $TABELA_DB = 'processo';
@@ -13,50 +13,34 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('DAO');
     }
 
-    public function criar($objeto)
+    public function criar($processo)
     {
-        $this->db->insert(
-            self::$TABELA_DB,
-            $objeto
-        );
+        $this->DAO->criar($this->TABELA_DB, $processo->toArray());
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar)
+    public function buscarTodos($inicial, $final)
     {
+        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
 
-        $resultado = $this->db
-            ->order_by('data', 'DESC')
-            ->get(
-                self::$TABELA_DB,
-                $quantidadeMostrar,
-                $indiceInicial
-            );
-
-        $listaDeProcessos = array();
-
-        foreach ($resultado->result() as $linha) {
-
-            $processo = $this->toObject($linha);
-
-            array_push($listaDeProcessos, $processo);
-        }
-        return $listaDeProcessos;
+        return $this->criarLista($array);
     }
 
-    public function buscarPorId($objetoId)
+
+    public function buscarTodosDesativados($inicial, $final)
     {
+        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
 
-        $resultado = $this->db->get_where(
-            self::$TABELA_DB,
-            array('id' => $objetoId)
-        );
+        return $this->criarLista($array);
+    }
 
-        foreach ($resultado->result() as $linha) {
+    public function buscarPorId($usuarioId)
+    {
+        $array = $this->db->get_where($this->TABELA_DB, array('id' => $usuarioId));
 
-            return $this->toObject($linha);
-        }
+        return $this->toObject($array->result());
     }
 
     public function buscarDepartamentoId($departamento_id)
@@ -151,23 +135,8 @@ class ProcessoDAO extends CI_Model implements InterfaceCrudDAO
         return $this->ArquivoDAO->buscarArquivosDeUmProcesso($processoId);
     }
 
-    public function toArray($objeto)
-    {
-        return array(
-            'id' => null,
-            'objeto' => $objeto->objeto,
-            'numero' => $objeto->numero,
-            'data' => $objeto->data,
-            'chave' => $objeto->chave,
-            'departamento_id' => $objeto->departamento->id,
-            'lei_id' => $objeto->lei->id,
-            'tipo_id' => $objeto->tipo->id,
-            'completo' => $objeto->completo,
-            'status' => $objeto->status
-        );
-    }
 
-    public function toObject($arrayList)
+    private function toObject($arrayList)
     {
         $processo = new Processo(
             $arrayList->id,

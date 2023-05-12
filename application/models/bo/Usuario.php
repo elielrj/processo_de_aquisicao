@@ -2,7 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Usuario implements Utilidades{
+class Usuario implements InterfaceBO
+{
 
     private $id;
     private $nome;
@@ -14,14 +15,14 @@ class Usuario implements Utilidades{
     private $status;
 
     public function __construct(
-            $id,
-            $nome,
-            $sobrenome,
-            $email,
-            $cpf,
-            $senha,
-            $departamento,
-            $status = true
+        $id,
+        $nome,
+        $sobrenome,
+        $email,
+        $cpf,
+        $senha,
+        $departamento,
+        $status = true
     ) {
         $this->id = $id;
         $this->nome = $nome;
@@ -33,12 +34,28 @@ class Usuario implements Utilidades{
         $this->status = $status;
     }
 
-    function __get($key) {
+    function __get($key)
+    {
         return $this->$key;
     }
 
-    function __set($key, $value) {
+    function __set($key, $value)
+    {
         $this->$key = $value;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'sobrenome' => $this->sobrenome,
+            'email' => $this->email,
+            'cpf' => $this->cpf,
+            'senha' => $this->senha,
+            'departamento_id' => $this->departamento->id,
+            'status' => $this->status,
+        );
     }
 
 }

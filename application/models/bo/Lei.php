@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Lei implements Utilidades{
+class Lei implements InterfaceBO{
 
     private $id;
     private $numero;
@@ -46,6 +46,19 @@ class Lei implements Utilidades{
         $dat = ", de " . (new DateTime($this->data))->format('d-m-Y');//todo data
 
         return $this->numero . $art . $inc . $dat;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'id' => $this->id,
+            'numero' => $this->numero,
+            'artigo' => $this->artigo,
+            'inciso' => $this->inciso,
+            'data' => $this->data,
+            'modalidade_id' => $this->modalidade->id,
+            'status' => $this->status
+        );
     }
 
 }

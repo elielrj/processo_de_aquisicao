@@ -18,7 +18,7 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
     public function criar($objeto) {
         $this->db->create(
                 self::$TABELA_DB,
-                $this->toArray($objeto)
+                $objeto->transformarObjetoEmArray()
         );
     }
 
@@ -58,7 +58,7 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
     public function atualizar($objeto) {
         $this->db->update(
                 self::$TABELA_DB,
-                $this->toArray($objeto),
+                $objeto->transformarObjetoEmArray(),
                 array('id' => $objeto->id)
         );
     }
@@ -69,19 +69,7 @@ class LeiDAO extends CI_Model implements InterfaceCrudDAO {
         ->count_all_results(self::$TABELA_DB);
     }
 
-    public function toArray($objeto) {
-        return array(
-            'id' => $objeto->id,
-            'numero' => $objeto->numero,
-            'artigo' => $objeto->artigo,
-            'inciso' => $objeto->inciso,
-            'data' => $objeto->data,
-            'modalidade_id' => $objeto->modalidade->id,
-            'status' => $objeto->status
-        );
-    }
-
-    public function toObject($arrayList) {
+    public function transformarArrayEmObjeto($arrayList) {
         return new Lei(
                 $arrayList->id,
                 $arrayList->numero,

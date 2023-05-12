@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Ug implements Utilidades{
+class Ug implements InterfaceBO{
 
     private $id;
     private $numero;
@@ -34,5 +34,16 @@ class Ug implements Utilidades{
 
     public function toString() {
         return $this->nome . "(" . $this->sigla . " - " . $this->numero . ")";
+    }
+
+    public function toArray()
+    {
+        return new Ug(
+            $this->id,
+            $this->numero,
+            $this->nome,
+            $this->sigla,
+            $this->status
+        );
     }
 }

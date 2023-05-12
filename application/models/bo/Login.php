@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Loginimplements Utilidades
+class Login implements InterfaceBO
 {
 
     private $email;
@@ -24,5 +24,13 @@ class Loginimplements Utilidades
     function __set($key, $value)
     {
         $this->$key = $value;
+    }
+
+    public function toArray()
+    {
+        return array(
+            'email' => $this->email,
+            'senha' => md5($this->senha),
+        );
     }
 }

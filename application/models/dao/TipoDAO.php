@@ -2,118 +2,115 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Tipo.php');
-
-include_once('InterfaceCrudDAO.php');
-
-class TipoDAO extends CI_Model implements InterfaceCrudDAO {
+class TipoDAO extends DAO
+{
 
     public static $TABELA_DB = 'tipo';
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
+        $this->load->model('DAO');
     }
 
-    public function criar($objeto) {
-        $this->db->create(
-                self::$TABELA_DB,
-                $this->toArray($objeto)
+    public function criar($objeto)
+    {
+        $this->DAO->criar($this->TABELA_DB, $objeto->toArray());
+    }
+
+    public function buscarTodos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarTodosDesativados($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarPorId($tipoId)
+    {
+        $array = $this->db->get_where($this->TABELA_DB, array('id' => $tipoId));
+
+        return $this->toObject($array->result());
+    }
+
+    public function buscarOnde($key, $value)
+    {
+        $array = $this->DAO->buscarOnde($this->TABELA_DB, array($key => $value));
+
+        return $this->criarLista($array->result());
+    }
+
+    public function atualizar($tipo)
+    {
+        $this->DAO->atualizar($this->TABELA_DB, $tipo->toArray());
+    }
+
+
+    public function deletar($tipo)
+    {
+        $this->DAO->deletar($this->TABELA_DB, $tipo->toArray());
+    }
+
+    public function contar()
+    {
+        return $this->DAO->contar($this->TABELA_DB);
+    }
+
+    public function contarDesativados()
+    {
+        return $this->DAO->contarDesativados($this->TABELA_DB);
+    }
+
+    public function toObject($arrayList)
+    {
+        return new Tipo(
+            isset($arrayList->id)
+            ? $arrayList->id
+            : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->nome)
+            ? $arrayList->nome
+            : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
+            isset($arrayList->status)
+            ? $arrayList->status
+            : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar) {
+    private function criarLista($array)
+    {
+        $listaDeTipo = array();
 
-        $resultado = $this->db
-        ->where(array('status' => true))
-        ->get(
-                self::$TABELA_DB,
-                $quantidadeMostrar,
-                $indiceInicial
-        );
-
-        $listaDeTipos = array();
-
-        foreach ($resultado->result() as $linha) {
+        foreach ($array->result() as $linha) {
 
             $tipo = $this->toObject($linha);
 
-            array_push($listaDeTipos, $tipo);
+            array_push($listaDeTipo, $tipo);
         }
-        return $listaDeTipos;
+
+        return $listaDeTipo;
     }
 
-    public function buscarPorId($id) {
+    public function options()
+    {
 
-        $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('id' => $id)
-        );
-
-        foreach ($resultado->result() as $linha) {
-            return $this->toObject($linha);
-        }
-    }
-
-    public function atualizar($objeto) {
-        $this->db->update(
-                self::$TABELA_DB,
-                $this->toArray($objeto),
-                array('id' => $objeto->id)
-        );
-    }
-
-    public function quantidade() {
-        return $this->db
-        ->where(array('status' => true))
-        ->count_all_results(self::$TABELA_DB);
-    }
-
-    public function toArray($objeto) {
-        return array(
-            'id' => $objeto->id,
-            'nome' => $objeto->nome,
-            'status' => $objeto->status
-        );
-    }
-
-    public function toObject($arrayList) {
-        return new Tipo(
-                $arrayList->id,
-                $arrayList->nome,
-                $arrayList->status
-        );
-    }
-
-    public function ativar($objetoId) {
-        $this->db->update(
-                self::$TABELA_DB,
-                array('id' => $objetoId),
-                array('status' => true)
-        );
-    }
-
-    public function desativar($objetoId) {
-        $this->db->update(
-                self::$TABELA_DB,
-                array('id' => $objetoId),
-                array('status' => false)
-        );
-    }
-
-    public function options() {
-
-        $tipos = $this->buscar(null, null);
+        $tipos = $this->buscarTodos(null, null);
 
         $options = [];
 
         if (isset($tipos)) {
 
             foreach ($tipos as $key => $tipo) {
-               
+
                 $options += [$tipo->id => $tipo->nome];
             }
         }
-        
+
         return $options;
     }
 

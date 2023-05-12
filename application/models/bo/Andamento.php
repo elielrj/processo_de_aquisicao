@@ -3,7 +3,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 
-class Andamento implements StatusDoAndamento, Utilidades
+class Andamento implements StatusDoAndamento, InterfaceBO
 {
 
     private $id;
@@ -49,7 +49,7 @@ class Andamento implements StatusDoAndamento, Utilidades
         $this->dataHora = $dataHora;
     }
 
-    public function transformarObjetoEmArray()
+    public function toArray()
     {
         return array(
             'id' => $this->id,
@@ -58,14 +58,7 @@ class Andamento implements StatusDoAndamento, Utilidades
         );
     }
 
-    public static function transformarArrayEmObjeto($arrayList)
-    {
-        return new Andamento(
-            isset($arrayList->id) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
-            isset($arrayList->statusDoAndamento) ? (Andamento::selecionarStatus($arrayList->statusDoAndamento)) : (isset($arrayList['statusDoAndamento']) ? Andamento::selecionarStatus($arrayList['statusDoAndamento']) : null),
-            isset($arrayList->dataHora) ? $arrayList->dataHora : (isset($arrayList['dataHora']) ? $arrayList['dataHora'] : null)
-        );
-    }
+    
 
     public static function selecionarStatus($nome)
     {

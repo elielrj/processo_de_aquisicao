@@ -99,14 +99,6 @@ class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
         return $options;
     }
 
-    public function toArray($objeto) {
-        return array(
-            'id' => $objeto->id,
-            'nome' => $objeto->nome,
-            'status' => $objeto->status,
-        );
-    }
-
     public function toObject($arrayList) {
         return new Modalidade(
                 $arrayList->id,
