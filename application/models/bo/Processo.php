@@ -2,12 +2,18 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+include_once('InterfaceBO.php');
+include_once('Enviado.php');
+include_once('Executado.php');
+include_once('Conformado.php');
+
+
 class Processo implements InterfaceBO{
 
     private $id;
     private $objeto;
     private $numero;
-    private $data;
+    private $dataHora;
     private $chave;
     private $departamento;
     private $lei;
@@ -16,12 +22,12 @@ class Processo implements InterfaceBO{
     private $andamento;
     private $status;
 
-    //todo
+    
     public function __construct(
             $id,
             $objeto,
             $numero,
-            $data,
+            $dataHora,
             $chave,
             $departamento,
             $lei,
@@ -33,13 +39,13 @@ class Processo implements InterfaceBO{
         $this->id = $id;
         $this->objeto = $objeto;
         $this->numero = $numero;
-        $this->data = $data;
+        $this->dataHora = $dataHora;
         $this->chave = $chave;
         $this->departamento = $departamento;
         $this->lei = $lei;
         $this->tipo = $tipo;
         $this->completo = $completo;
-        $this->andamento = $andamento;
+        $this->andamento = isset($andamento) ? $andamento : new Enviado();
         $this->status = $status;
     }
 
@@ -57,12 +63,13 @@ class Processo implements InterfaceBO{
             'id' => $this->id,
             'objeto' => $this->objeto,
             'numero' => $this->numero,
-            'data' => $this->data,
+            'data_hora' => $this->dataHora,
             'chave' => $this->chave,
             'departamento_id' => $this->departamento->id,
             'lei_id' => $this->lei->id,
             'tipo_id' => $this->tipo->id,
             'completo' => $this->completo,
+            'andamento_id' => $this->andamento->nome(),
             'status' => $this->status
         );
     }

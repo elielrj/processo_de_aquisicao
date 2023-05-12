@@ -2,69 +2,70 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UsuarioDAO extends DAO
+include_once('application/models/bo/Usuario.php');
+
+class UsuarioDAO extends CI_Model
 {
 
-    private final $TABELA_DB = 'usuario';
+    public static $TABELA_DB = 'usuario';
 
     public function __construct()
     {
-        parent::__construct();
-        $this->load->model('DAO');
+        $this->load->model('dao/DAO');
     }
 
     public function criar($usuario)
     {
-        $this->DAO->criar($this->TABELA_DB, $usuario->toArray());
+        $this->DAO->criar(self::$TABELA_DB, $usuario->toArray());
     }
 
     public function buscarTodos($inicial, $final)
     {
-        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
 
         return $this->criarLista($array);
     }
 
     public function buscarTodosDesativados($inicial, $final)
     {
-        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
 
         return $this->criarLista($array);
     }
 
     public function buscarPorId($usuarioId)
     {
-        $array = $this->db->get_where($this->TABELA_DB, array('id' => $usuarioId));
+        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $usuarioId);
 
-        return $this->toObject($array->result());
+        return $this->toObject($array->result()[0]);
     }
 
     public function buscarOnde($key, $value)
     {
-        $array = $this->DAO->buscarOnde($this->TABELA_DB, array($key => $value));
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
         return $this->criarLista($array->result());
     }
 
     public function atualizar($usuario)
     {
-        $this->DAO->atualizar($this->TABELA_DB, $usuario->toArray());
+        $this->DAO->atualizar(self::$TABELA_DB, $usuario->toArray());
     }
 
 
     public function deletar($usuario)
     {
-        $this->DAO->deletar($this->TABELA_DB, $usuario->toArray());
+        $this->DAO->deletar(self::$TABELA_DB, $usuario->toArray());
     }
 
     public function contar()
     {
-        return $this->DAO->contar($this->TABELA_DB);
+        return $this->DAO->contar(self::$TABELA_DB);
     }
 
     public function contarDesativados()
     {
-        return $this->DAO->contarDesativados($this->TABELA_DB);
+        return $this->DAO->contarDesativados(self::$TABELA_DB);
     }
 
     public function toObject($arrayList)

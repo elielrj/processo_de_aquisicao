@@ -12,7 +12,7 @@ class DAO extends CI_Model
     {
         return $this->db
             ->where(array('status' => true))
-            ->order_by('email')
+            ->order_by('id', 'DSC')
             ->get($banco, $inicio, $fim);
     }
 
@@ -20,14 +20,14 @@ class DAO extends CI_Model
     {
         return $this->db
             ->where(array('status' => false))
-            ->order_by('email')
+            ->order_by('id','DSC')
             ->get($banco, $inicio, $fim);
     }
 
 
-    public function buscarPorId($banco, $array)
+    public function buscarPorId($banco, $id)
     {
-        return $this->db->get_where($banco, $array);
+        return $this->db->get_where($banco, array('id' => $id));
     }
 
     public function buscarOnde($banco, $array)

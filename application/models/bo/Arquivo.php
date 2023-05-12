@@ -2,6 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+include_once('InterfaceBO.php');
+
 class Arquivo implements InterfaceBO{
 
     private $id;
@@ -32,21 +34,10 @@ class Arquivo implements InterfaceBO{
     public function toArray()
     {
         return array(
-            'id' => $this->id,
+            'id' => isset($this->id) ? $this->id : null,
             'path' => $this->path,
-            'dataHora' => $this->dataHora,
+            'data_hora' => $this->dataHora,
             'status' => $this->status,
         );
     }
-
-    public static function transformarArrayEmObjeto($arrayList)
-    {
-        return new Arquivo(
-            isset($arrayList->id) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
-            isset($arrayList->path) ? $arrayList->path : (isset($arrayList['path']) ? $arrayList['path'] : null),
-            isset($arrayList->dataHora) ? $arrayList->dataHora : (isset($arrayList['dataHora']) ? $arrayList['dataHora'] : null),
-            isset($arrayList->status) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
-        );
-    }
-
 }

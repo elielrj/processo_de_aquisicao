@@ -2,121 +2,119 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Artefato.php');
-include_once('InterfaceCrudDAO.php');
+include_once('application/models/bo/Artefato.php');
 
-class ArtefatoDAO extends CI_Model implements InterfaceCrudDAO {
+class ArtefatoDAO extends CI_Model
+{
 
     public static $TABELA_DB = 'artefato';
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct()
+    {
+        $this->load->model('dao/DAO');
     }
 
-    public function criar($objeto) {
+    public function criar($objeto)
+    {
+        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+    }
 
-        $this->db->insert(
-                self::$TABELA_DB,
-                $this->toArray($objeto)
+    public function buscarTodos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarTodosDesativados($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarPorId($artefatoId)
+    {
+        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $artefatoId);
+
+        return $this->toObject($array->result()[0]);
+    }
+
+    public function buscarOnde($key, $value)
+    {
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+
+        return $this->criarLista($array->result());
+    }
+
+    public function atualizar($artefato)
+    {
+        $this->DAO->atualizar(self::$TABELA_DB, $artefato->toArray());
+    }
+
+
+    public function deletar($artefato)
+    {
+        $this->DAO->deletar(self::$TABELA_DB, $artefato->toArray());
+    }
+
+    public function contar()
+    {
+        return $this->DAO->contar(self::$TABELA_DB);
+    }
+
+    public function contarDesativados()
+    {
+        return $this->DAO->contarDesativados(self::$TABELA_DB);
+    }
+
+    /**
+     * Summary of toObject
+     * @param mixed $arrayList
+     * @return Artefato
+     * Este método não buscar o Arquivo do artefato, 
+     * pois quem tem essa responsabilidade é ProcessoDAO
+     */
+    public function toObject($arrayList)
+    {
+        return new Artefato(
+            $arrayList->id,
+            $arrayList->ordem,
+            $arrayList->nome,
+            null,
+            $arrayList->status
         );
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar) {
+    private function criarLista($array)
+    {
+        $listaDeArtefato = array();
 
-        $resultado = $this->db
-        ->where(array('status' => true))
-        ->get(
-                self::$TABELA_DB,
-                $quantidadeMostrar,
-                $indiceInicial
-        );
-
-        $listaDeArtefatos = array();
-
-        foreach ($resultado->result() as $linha) {
+        foreach ($array->result() as $linha) {
 
             $artefato = $this->toObject($linha);
 
-            array_push($listaDeArtefatos, $artefato);
+            array_push($listaDeArtefato, $artefato);
         }
-        return $listaDeArtefatos;
+
+        return $listaDeArtefato;
     }
 
-    public function buscarPorId($objetoId) {
+    public function options()
+    {
 
-        $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('id' => $objetoId)
-        );
-
-        foreach ($resultado->result() as $linha) {
-
-            return $this->toObject($linha);
-        }
-    }
-
-    public function ativar($objetoId) {
-        $this->db->update(
-                self::$TABELA_DB,
-                array('id' => $objetoId),
-                array('status' => true)
-        );
-    }
-
-    public function desativar($objetoId) {
-        $this->db->update(
-                self::$TABELA_DB,
-                array('id' => $objetoId),
-                array('status' => false)
-        );
-    }
-
-    public function atualizar($objeto) {
-
-        $this->db->update(
-                self::$TABELA_DB,
-                $this->toArray($objeto),
-                array('id' => $objeto->id)
-        );
-    }
-
-    public function quantidade() {
-        return $this->db->count_all_results(self::$TABELA_DB);
-    }
-
-    public function options() {
-
-        $artefatos = $this->buscar(null, null);
+        $artefatos = $this->buscarTodos(null, null);
 
         $options = [];
 
         if (isset($artefatos)) {
 
-            foreach ($artefatos as $key => $value) {
+            foreach ($artefatos as $value) {
 
                 $options += [$value->id => $value->nome];
             }
         }
         return $options;
-    }
-
-    public function toArray($objeto) {
-        return array(
-            'id' => $objeto->id,
-            'ordem' => $objeto->ordem,
-            'nome' => $objeto->nome,
-            'status' => $objeto->status
-        );
-    }
-
-    public function toObject($arrayList) {
-        return new Artefato(
-                $arrayList->id,
-                $arrayList->ordem,
-                $arrayList->nome,
-                null,
-                $arrayList->status
-        );
     }
 
 }

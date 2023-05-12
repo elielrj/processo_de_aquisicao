@@ -46,7 +46,7 @@ class TabelaProcesso {
                 $this->modalidade($processo->lei->modalidade->nome) .
                 $this->lei($processo->lei->toString()) .
                 $this->numero($processo->numero) .
-                $this->data($processo->data) .
+                $this->data($processo->dataHora) .
                 $this->departamento($processo->departamento) .
                 $this->completo($processo->completo) .
                 $this->alterar($processo->id) .

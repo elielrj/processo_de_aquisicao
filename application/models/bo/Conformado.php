@@ -1,5 +1,8 @@
 <?php
 
+include_once('StatusDoAndamento.php');
+
+
 class Conformado implements StatusDoAndamento
 {
     static $NOME = 'conformado';

@@ -2,6 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+include_once('InterfaceBO.php');
+
 class Departamento implements InterfaceBO {
 
     private $id;
@@ -39,7 +41,7 @@ class Departamento implements InterfaceBO {
     public function toArray()
     {
         return array(
-            'id' => $this->id,
+            'id' => isset($this->id) ? $this->id : null,
             'nome' => $this->nome,
             'sigla' => $this->sigla,
             'ug_id' => $this->ug->id,

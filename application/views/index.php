@@ -6,6 +6,7 @@ header("Location:" . base_url());
 exit();
 }
 */
+
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +39,18 @@ exit();
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php (isset($_SESSION['numero_valido']) && isset($_SESSION['chave_valida'])) ? '' : include_once('index/sidebar.php')  ?>
- 
+        <?php
+    
+
+        $email = isset($_SESSION['email_valido']) ? $_SESSION['email_valido'] : false;
+        $senha = isset($_SESSION['senha_valida']) ? $_SESSION['senha_valida'] : false;
+
+        $numeroDoProcesso = isset($_SESSION['numero_valido']) ? $_SESSION['numero_valido'] : false;
+        $chaveDoProcesso = isset($_SESSION['chave_valida']) ? $_SESSION['chave_valida'] : false;
+
+        ($email && $senha) ? include_once('index/sidebar.php') : '';
+
+        ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -48,7 +59,11 @@ exit();
             <div id="content">
 
                 <!-- Topbar -->
-                <?php (isset($_SESSION['numero_valido']) && isset($_SESSION['chave_valida'])) ? '' : include_once('index/topbar.php') ?>
+                <?php
+
+                (($numeroDoProcesso && $chaveDoProcesso) || ($email && $senha)) ? include_once('index/topbar.php') : '';
+
+                ?>
 
 
 

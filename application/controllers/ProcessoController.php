@@ -10,6 +10,7 @@ class ProcessoController extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('dao/ProcessoDAO');
 	}
 
 	public function index()
@@ -29,9 +30,9 @@ class ProcessoController extends CI_Controller
 		$mostrar = 10;
 		$indiceInicial = $indice * $mostrar;
 
-		$processos = $this->ProcessoDAO->buscar($indiceInicial, $mostrar);
+		$processos = $this->ProcessoDAO->buscarTodos($indiceInicial, $mostrar);
 
-		$quantidade = $this->ProcessoDAO->quantidade();
+		$quantidade = $this->ProcessoDAO->contar();
 
 		$botoes = empty($processos) ? '' : $this->botao->paginar('ProcessoController/listar', $indice, $quantidade, $mostrar);
 

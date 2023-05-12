@@ -2,52 +2,40 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Modalidade.php');
-require_once('application/models/bo/Artefato.php');
-
-
 class LeiTipoArtefatoDAO extends CI_Model
 {
 
-    public static $TABELA_DB = 'lei_tipo_artefato';
+    public static $TABEL_DB_LE_TIPO_ARTEFATO = 'lei_tipo_artefato';
 
     public function __construct()
     {
-        parent::__construct();
+        $this->load->model('dao/ArtefatoDAO');
+        $this->load->model('dao/DAO');
     }
 
     public function buscarListaDeArtefatos($lei_id, $tipo_id)
     {
+        $array = $this->DAO->buscarOnde(self::$TABEL_DB_LE_TIPO_ARTEFATO, array('lei_id' => $lei_id, 'tipo_id' => $tipo_id));
 
-        $resultado = $this->db
-            ->where(array('lei_id' => $lei_id, 'tipo_id' => $tipo_id))
-            ->get(self::$TABELA_DB);
+        return $this->criarLista($array);
+    }
 
-        $listaDeArtefatos = array();
+    private function criarLista($array)
+    {
+        $listaDeArtefato = array();
 
-        foreach ($resultado->result() as $linha) {
+        foreach ($array->result() as $linha) {
 
-            $artefato = $this->toObjectArtefato($linha);
+            $artefato = $this->toObject($linha);
 
-            array_push($listaDeArtefatos, $artefato);
+            array_push($listaDeArtefato, $artefato);
         }
 
-        return $listaDeArtefatos;
+        return $listaDeArtefato;
     }
 
-
-
-    public function toArray($objeto)
+    private function toObject($array)
     {
-        return array(
-            'id' => $objeto->modalidade_id,
-            'nome' => $objeto->artefato_id,
-            'status' => $objeto->status
-        );
-    }
-
-    public function toObjectArtefato($arrayList)
-    {
-        return $this->ArtefatoDAO->buscarPorId($arrayList->artefato_id);
+        return $this->ArtefatoDAO->buscarPorId($array->artefato_id);
     }
 }

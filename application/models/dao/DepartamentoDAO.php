@@ -2,127 +2,121 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Departamento.php');
-include_once('InterfaceCrudDAO.php');
+include_once('application/models/bo/Departamento.php');
 
-class DepartamentoDAO extends CI_Model implements InterfaceCrudDAO {
+class DepartamentoDAO extends CI_Model
+{
 
     public static $TABELA_DB = 'departamento';
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct()
+    {
+        $this->load->model('dao/DAO');
+        $this->load->model('dao/UgDAO');
     }
 
-    public function criar($objeto) {
-        $this->db->insert(
-                self::$TABELA_DB,
-                $this->toArray($objeto)
+    public function criar($objeto)
+    {
+        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+    }
+
+    public function buscarTodos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarTodosDesativados($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarPorId($departamentoId)
+    {
+        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $departamentoId);
+        
+        return $this->toObject($array->result()[0]);
+    }
+
+    public function buscarOnde($key, $value)
+    {
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+
+        return $this->criarLista($array->result());
+    }
+
+    public function atualizar($departamento)
+    {
+        $this->DAO->atualizar(self::$TABELA_DB, $departamento->toArray());
+    }
+
+
+    public function deletar($departamento)
+    {
+        $this->DAO->deletar(self::$TABELA_DB, $departamento->toArray());
+    }
+
+    public function contar()
+    {
+        return $this->DAO->contar(self::$TABELA_DB);
+    }
+
+    public function contarDesativados()
+    {
+        return $this->DAO->contarDesativados(self::$TABELA_DB);
+    }
+
+    public function toObject($arrayList)
+    {
+        return new Departamento(
+            isset($arrayList->id)
+            ? $arrayList->id
+            : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->nome)
+            ? $arrayList->nome
+            : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
+            isset($arrayList->sigla)
+            ? $arrayList->sigla
+            : (isset($arrayList['sigla']) ? $arrayList['sigla'] : null),
+            isset($arrayList->ug_id)
+            ? $this->UgDAO->buscarPorId($arrayList->ug_id)
+            : (isset($arrayList['ug_id']) ? $this->UgDAO->buscarPorId($arrayList['ug_id']) : null),
+            isset($arrayList->status)
+            ? $arrayList->status
+            : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar) {
+    private function criarLista($array)
+    {
+        $listaDeDepartamento = array();
 
-        $resultado = $this->db
-        ->where(array('status' => true))
-                ->order_by('nome')
-                ->get(
-                self::$TABELA_DB,
-                $quantidadeMostrar,
-                $indiceInicial
-        );
+        foreach ($array->result() as $linha) {
 
-        $listaDeDepartamentos = array();
+            $departamento = $this->toObject($linha);
 
-        foreach ($resultado->result() as $linha) {
-
-            $departamento = $this->transformarArrayEmObjeto($linha);
-
-            array_push($listaDeDepartamentos, $departamento);
+            array_push($listaDeDepartamento, $departamento);
         }
-        return $listaDeDepartamentos;
+
+        return $listaDeDepartamento;
     }
 
-    public function buscarPorId($objetoId) {
-        $resultado = $this->db->get_where(
-                self::$TABELA_DB,
-                array('id' => $objetoId)
-        );
-
-        foreach ($resultado->result() as $linha) {
-
-            return $this->transformarArrayEmObjeto($linha);
-        }
-    }
-
-    public function ativar($objetoId) {
-        $this->db->update(
-                self::$TABELA_DB,
-                array('id' => $objetoId),
-                array('status' => true)
-        );
-    }
-
-    public function desativar($objetoId) {
-        $this->db->update(
-                self::$TABELA_DB,
-                array('id' => $objetoId),
-                array('status' => false)
-        );
-    }
-
-    public function atualizar($objeto) {
-        $this->db->update(
-                self::$TABELA_DB,
-                $this->toArray($objeto),
-                array('id' => $objeto->id)
-        );
-    }
-
-    public function quantidade() {
-        return $this->db
-        ->where(array('status' => true))
-        ->count_all_results(self::$TABELA_DB);
-    }
-
-    public function options() {
-        $departamentos = $this->buscar(null, null);
+    public function options()
+    {
+        $departamentos = $this->buscarTodos(null, null);
 
         $options = [];
 
         if (isset($departamentos)) {
 
-            foreach ($departamentos as $key => $departamento) {
+            foreach ($departamentos as $departamento) {
                 $options += [$departamento->id => $departamento->toString()];
             }
         }
         return $options;
-    }
-
-    public function listarProcessos() {
-
-        $usuario = $this->UsuarioDAO->buscarUsuarioAtual();
-        $listaDeUsuarios = $this->UsuarioDAO->buscarUsuariosPeloDepartamentoId($usuario->departamento->id);
-
-        return $listaDeUsuarios;
-    }
-
-    public function listarUsuarios() {
-
-        $usuario = $this->UsuarioDAO->buscarUsuarioAtual();
-
-        $listaDeProcessos = $this->ProcessoDAO->buscarDepartamentoId($usuario->departamento->id);
-
-        return $listaDeProcessos;
-    }
-
-    public function transformarArrayEmObjeto($arrayList) {
-        return new Departamento(
-                $arrayList->id,
-                $arrayList->nome,
-                $arrayList->sigla,
-                $this->UgDAO->buscarPorId($arrayList->ug_id),
-                $arrayList->status
-        );
-    }
+    }   
 
 }

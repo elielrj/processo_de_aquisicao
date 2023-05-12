@@ -2,109 +2,115 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('InterfaceCrudDAO.php');
+include_once('application/models/bo/Modalidade.php');
 
-class ModalidadeDAO extends CI_Model implements InterfaceCrudDAO {
+class ModalidadeDAO extends CI_Model
+{
 
     public static $TABELA_DB = 'modalidade';
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct()
+    {
+        $this->load->model('dao/DAO');
     }
 
-    public function criar($objeto) {
-        $this->db->insert(
-                self::$TABELA_DB,
-                $this->toArray($objeto)
+    public function criar($objeto)
+    {
+        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+    }
+
+    public function buscarTodos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarTodosDesativados($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarPorId($modalidadeId)
+    {
+        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $modalidadeId);
+
+        return $this->toObject($array->result()[0]);
+    }
+
+    public function buscarOnde($key, $value)
+    {
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+
+        return $this->criarLista($array->result());
+    }
+
+    public function atualizar($modalidade)
+    {
+        $this->DAO->atualizar(self::$TABELA_DB, $modalidade->toArray());
+    }
+
+
+    public function deletar($modalidade)
+    {
+        $this->DAO->deletar(self::$TABELA_DB, $modalidade->toArray());
+    }
+
+    public function contar()
+    {
+        return $this->DAO->contar(self::$TABELA_DB);
+    }
+
+    public function contarDesativados()
+    {
+        return $this->DAO->contarDesativados(self::$TABELA_DB);
+    }
+
+    private function toObject($arrayList)
+    {
+        return new Modalidade(
+            isset($arrayList->id)
+            ? $arrayList->id
+            : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->nome)
+            ? $arrayList->nome
+            : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
+            isset($arrayList->status)
+            ? $arrayList->status
+            : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar) {
+    private function criarLista($array)
+    {
+        $listaDeModalidade = array();
 
-        $resultado = $this->db
-        ->where(array('status' => true))
-        ->get(
-                self::$TABELA_DB,
-                $quantidadeMostrar,
-                $indiceInicial
-        );
-
-        $listaDeModalidades = array();
-
-        foreach ($resultado->result() as $linha) {
+        foreach ($array->result() as $linha) {
 
             $modalidade = $this->toObject($linha);
 
-            array_push($listaDeModalidades, $modalidade);
+            array_push($listaDeModalidade, $modalidade);
         }
-        
-        return $listaDeModalidades;
+
+        return $listaDeModalidade;
     }
 
-    public function buscarPorId($objetoId) {
-        $resultado = $this->db
-        ->get_where(
-                self::$TABELA_DB,
-                array('id' => $objetoId)
-        );
-
-        foreach ($resultado->result() as $linha) {
-
-            return $this->toObject($linha);
-        }
-    }
-
-    public function atualizar($objeto) {
-
-        $this->db->update(
-                self::$TABELA_DB,
-                $this->toArray($objeto),
-                 array('id' => $objeto->id)
-        );
-    }
-
-    public function desativar($objetoId) {
-        return $this->db->update(
-                        self::$TABELA_DB,
-                        array('id' => $objetoId),
-                        array('status' => false)
-        );
-    }
-
-    public function ativar($objetoId) {
-        return $this->db->update(
-                        self::$TABELA_DB,
-                        array('id' => $objetoId),
-                        array('status' => true)
-        );
-    }
-
-    public function quantidade() {
-        return $this->db->count_all_results(self::$TABELA_DB);
-    }
-
-    //todo mover para Lei
-    public function options() { 
-        $modalidades = $this->buscar(null, null);
+    public function options()
+    {
+        $modalidades = $this->buscarTodos(null, null);
 
         $options = [];
 
         if (isset($modalidades)) {
 
-            foreach ($modalidades as $key => $modalidade) {
+            foreach ($modalidades as $modalidade) {
 
                 $options += [$modalidade->id => $modalidade->nome];
             }
         }
         return $options;
-    }
-
-    public function toObject($arrayList) {
-        return new Modalidade(
-                $arrayList->id,
-                $arrayList->nome,
-                $arrayList->status
-        );
     }
 
 }

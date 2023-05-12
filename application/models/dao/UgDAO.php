@@ -2,69 +2,70 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UgDAO extends CI_Model implements InterfaceCrudDAO
+include_once('application/models/bo/Ug.php');
+
+class UgDAO extends CI_Model
 {
 
-    private final $TABELA_DB = 'ug';
+    public static $TABELA_DB = 'ug';
 
     public function __construct()
     {
-        parent::__construct();
-        $this->load->model('DAO');
+        $this->load->model('dao/DAO');
     }
 
     public function criar($objeto)
     {
-        $this->DAO->criar($this->TABELA_DB, $objeto->toArray());
+        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
     }
 
     public function buscarTodos($inicial, $final)
     {
-        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
 
         return $this->criarLista($array);
     }
 
     public function buscarTodosDesativados($inicial, $final)
     {
-        $array = $this->DAO->buscarTodos($this->TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
 
         return $this->criarLista($array);
     }
 
     public function buscarPorId($ugId)
     {
-        $array = $this->db->get_where($this->TABELA_DB, array('id' => $ugId));
+        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $ugId);
 
-        return $this->toObject($array->result());
+        return $this->toObject($array->result()[0]);
     }
 
     public function buscarOnde($key, $value)
     {
-        $array = $this->DAO->buscarOnde($this->TABELA_DB, array($key => $value));
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
         return $this->criarLista($array->result());
     }
 
     public function atualizar($ug)
     {
-        $this->DAO->atualizar($this->TABELA_DB, $ug->toArray());
+        $this->DAO->atualizar(self::$TABELA_DB, $ug->toArray());
     }
 
 
     public function deletar($ug)
     {
-        $this->DAO->deletar($this->TABELA_DB, $ug->toArray());
+        $this->DAO->deletar(self::$TABELA_DB, $ug->toArray());
     }
 
     public function contar()
     {
-        return $this->DAO->contar($this->TABELA_DB);
+        return $this->DAO->contar(self::$TABELA_DB);
     }
 
     public function contarDesativados()
     {
-        return $this->DAO->contarDesativados($this->TABELA_DB);
+        return $this->DAO->contarDesativados(self::$TABELA_DB);
     }
 
     public function toObject($arrayList)
@@ -91,9 +92,9 @@ class UgDAO extends CI_Model implements InterfaceCrudDAO
 
         foreach ($array->result() as $linha) {
 
-            $usuario = $this->toObject($linha);
+            $ug = $this->toObject($linha);
 
-            array_push($listaDeUg, $usuario);
+            array_push($listaDeUg, $ug);
         }
 
         return $listaDeUg;

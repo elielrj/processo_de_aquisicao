@@ -2,41 +2,39 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Login.php');
 
 class LoginDAO extends CI_Model
 {
 
+    public static $TABELA_DB = 'usuario';
+
     public function __construct()
     {
-        parent::__construct();
+       // parent::__construct();
+        $this->load->model('dao/DAO');
     }
 
     public function emailExiste($email)
     {
-        $where = array('email' => $email);
+        $array = $this->DAO->buscarOnde(LoginDAO::$TABELA_DB, array('email' => $email));
 
-        $resultado = $this->db->get_where('usuario', $where);
-
-        return ($resultado->num_rows() == 1);
+        return ($array->num_rows() == 1);
     }
 
-    public function senhaEstaCorreta($email, $senha)
+    public function senhaEstaCorreta($email,$senha)
     {
-        $where = array('email' => $email, 'senha' => md5($senha));
+        $array = $this->DAO->buscarOnde(LoginDAO::$TABELA_DB, array('email' => $email, 'senha' => $senha));
 
-        $resultado = $this->db->get_where('usuario', $where);
-
-        return ($resultado->num_rows() == 1);
+        return ($array->num_rows() == 1);
     }
 
     public function buscarDadosDoUsuarioLogado($email, $senha)
     {
-        $where = array('email' => $email, 'senha' => md5($senha));
+        $where = array('email' => $email, 'senha' => $senha);
 
-        $resultado = $this->db->get_where('usuario', $where);
+        $array = $this->DAO->buscarOnde(LoginDAO::$TABELA_DB, $where);
 
-        foreach ($resultado->result() as $linha) {
+        foreach ($array->result() as $linha) {
 
             $this->session->set_userdata(
                 array(
@@ -45,7 +43,7 @@ class LoginDAO extends CI_Model
                     'sobrenome' => $linha->sobrenome,
                     'email' => $linha->email,
                     'cpf' => $linha->cpf,
-                    'senha' => md5($linha->senha),
+                    'senha' => $linha->senha,
                     'departamento_id' => $linha->departamento_id,
                     'status' => $linha->status,
                 )

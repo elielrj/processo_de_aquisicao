@@ -8,6 +8,7 @@ class LoginController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('dao/LoginDAO');
+        $this->load->library('session');
     }
 
     public function index()
@@ -17,13 +18,15 @@ class LoginController extends CI_Controller
 
     public function logar()
     {
+        $this->limparValidacao();
+
         $data = $this->input->post();
 
         $email = $data['email'];
-        $senha = $data['senha'];
+        $senha = md5($data['senha']);
 
         $this->emailExiste($email)
-            ? ($this->senhaEstaCorreta($email, $senha)
+            ? ($this->senhaEstaCorreta($email,$senha)
                 ? $this->login($email, $senha)
                 : redirect(base_url()))
             : redirect(base_url());
@@ -47,9 +50,19 @@ class LoginController extends CI_Controller
         }
     }
 
-    private function senhaEstaCorreta($email, $senha)
+    /**
+     * Summary of senhaEstaCorreta
+     * email é not null no banco de dados, 
+     * assim, tem que ser passado o email e a 
+     * senha para ser pesquisado a senha somente no email
+     * 
+     * @param mixed $email
+     * @param mixed $senha
+     * @return bool
+     */
+    private function senhaEstaCorreta($email,$senha)
     {
-        if ($this->LoginDAO->senhaEstaCorreta($email, $senha)) {
+        if ($this->LoginDAO->senhaEstaCorreta($email,$senha)) {
             $this->senhaValida();
             return true;
         } else {
@@ -60,7 +73,7 @@ class LoginController extends CI_Controller
 
     private function emailValido()
     {
-        $this->session->set_userdata('email_validado', true);
+        $this->session->set_userdata('email_valido', true);
     }
 
     private function emailInvalido()
@@ -83,5 +96,10 @@ class LoginController extends CI_Controller
         session_destroy();
 
         redirect(base_url());
+    }
+
+    private function limparValidacao()
+    {
+        $this->session->unset_userdata('email_valido','senha_valida','numero_valido','chave_valida');
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+
+include_once('StatusDoAndamento.php');
+
+
 class Executado implements StatusDoAndamento
 {
 

@@ -2,6 +2,9 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+include_once('InterfaceBO.php');
+
+
 class Lei implements InterfaceBO{
 
     private $id;
@@ -51,7 +54,7 @@ class Lei implements InterfaceBO{
     public function toArray()
     {
         return array(
-            'id' => $this->id,
+            'id' => isset($this->id) ? $this->id : null,
             'numero' => $this->numero,
             'artigo' => $this->artigo,
             'inciso' => $this->inciso,

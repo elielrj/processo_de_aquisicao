@@ -9,10 +9,13 @@ class ConsultarController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('dao/ConsultarDAO');
+        $this->load->library('session');
     }
 
     public function consultar()
     {
+        $this->limparValidacao();
+
         $data = $this->input->post();
 
         $numero = $data['numero'];
@@ -77,5 +80,10 @@ class ConsultarController extends CI_Controller
     private function chaveInvalida()
     {
         $this->session->set_userdata('chave_valida', false);
+    }
+
+    private function limparValidacao()
+    {
+        $this->session->unset_userdata('email_valido', 'senha_valida', 'numero_valido', 'chave_valida');
     }
 }

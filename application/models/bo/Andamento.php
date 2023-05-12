@@ -2,7 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-
+include_once('InterfaceBO.php');
+include_once('StatusDoAndamento.php');
 class Andamento implements StatusDoAndamento, InterfaceBO
 {
 
@@ -53,8 +54,8 @@ class Andamento implements StatusDoAndamento, InterfaceBO
     {
         return array(
             'id' => $this->id,
-            'statusDoAndamento' => $this->statusDoAndamento->nome(),
-            'dataHora' => $this->dataHora,
+            'status_do_andamento' => $this->statusDoAndamento->nome(),
+            'data_hora' => $this->dataHora,
         );
     }
 

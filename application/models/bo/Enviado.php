@@ -1,5 +1,7 @@
 <?php
 
+include_once('StatusDoAndamento.php');
+
 class Enviado implements StatusDoAndamento
 {
     static $NOME = 'enviado';

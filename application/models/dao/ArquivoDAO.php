@@ -2,146 +2,114 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Arquivo.php');
-include_once('InterfaceCrudDAO.php');
+include_once('application/models/bo/Arquivo.php');
 
-class ArquivoDAO extends CI_Model implements InterfaceCrudDAO
+class ArquivoDAO extends CI_Model
 {
 
     public static $TABELA_DB = 'arquivo';
 
     public function __construct()
     {
-        parent::__construct();
+        $this->load->model('dao/DAO');
     }
 
-    public function criar($arrayList)
+    public function criar($objeto)
     {
-        $this->db->insert(
-            self::$TABELA_DB,
-            $arrayList
+        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+    }
+
+    public function buscarTodos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarTodosDesativados($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
+    public function buscarPorId($arquivoId)
+    {
+        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $arquivoId);
+
+        return $this->toObject($array->result());
+    }
+
+    public function buscarOnde($key, $value)
+    {
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+
+        return $this->criarLista($array->result()[0]);
+    }
+
+    public function atualizar($arquivo)
+    {
+        $this->DAO->atualizar(self::$TABELA_DB, $arquivo->toArray());
+    }
+
+
+    public function deletar($arquivo)
+    {
+        $this->DAO->deletar(self::$TABELA_DB, $arquivo->toArray());
+    }
+
+    public function contar()
+    {
+        return $this->DAO->contar(self::$TABELA_DB);
+    }
+
+    public function contarDesativados()
+    {
+        return $this->DAO->contarDesativados(self::$TABELA_DB);
+    }
+
+    public function toObject($arrayList)
+    {
+        return new Arquivo(
+            (isset($arrayList->id)) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            (isset($arrayList->path)) ? $arrayList->path : (isset($arrayList['path']) ? $arrayList['path'] : null),
+            (isset($arrayList->data_hora)) ? $arrayList->data_hora : (isset($arrayList['data_hora']) ? $arrayList['data_hora'] : null),
+            (isset($arrayList->status)) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
     }
 
-    public function buscar($indiceInicial, $quantidadeMostrar)
+    private function criarLista($array)
     {
+        $listaDeArquivo = array();
 
-        $resultado = $this->db->get(
-            self::$TABELA_DB,
-            $quantidadeMostrar,
-            $indiceInicial
-        );
-
-        $listaDeArquivos = array();
-
-        foreach ($resultado->result() as $linha) {
+        foreach ($array->result() as $linha) {
 
             $arquivo = $this->toObject($linha);
 
-            array_push($listaDeArquivos, $arquivo);
+            array_push($listaDeArquivo, $arquivo);
         }
-        return $listaDeArquivos;
-    }
 
-    public function buscarPorId($objetoId)
-    {
-
-        $resultado = $this->db->get_where(
-            self::$TABELA_DB,
-            array('id' => $objetoId)
-        );
-
-        foreach ($resultado->result() as $linha) {
-
-            return $this->toObject($linha);
-        }
-    }
-
-    public function atualizar($arrayList)
-    {
-
-        $this->db->update(
-            self::$TABELA_DB,
-            $arrayList,
-            array('id' => $arrayList->id)
-        );
-    }
-
-    public function desativar($objetoId)
-    {
-        return $this->db->update(
-            self::$TABELA_DB,
-            array('id' => $objetoId),
-            array('status' => false)
-        );
-    }
-
-    public function ativar($objetoId)
-    {
-        return $this->db->update(
-            self::$TABELA_DB,
-            array('id' => $objetoId),
-            array('status' => true)
-        );
-    }
-
-    public function quantidade()
-    {
-        return $this->db->count_all_results(self::$TABELA_DB);
+        return $listaDeArquivo;
     }
 
     public function buscarArquivosDeUmProcesso($processoId)
     {
-        $resultado = $this->db->get_where(
-            self::$TABELA_DB,
-            array('processo_id' => $processoId)
-        );
+        $array = $this->buscarOnde('processo_id', $processoId);
 
-        $listaDeArquivos = array();
-
-        foreach ($resultado->result() as $linha) {
-
-            $arquivo = $this->toArray($linha);
-            
-            $arquivo = array_push($listaDeArquivos, $arquivo);
-        }
-        return $listaDeArquivos;
+        return $this->criarLista($array);
     }
 
     public function buscarArquivoDoArtefato($processoId, $artefatoId)
     {
+        $whare = array('processo_id' => $processoId, 'artefato_id' => $artefatoId);
 
-
-        $resultado = $this->db
-            ->where(array('processo_id' => $processoId, 'artefato_id' => $artefatoId))
-            //->where('artefato_id',$artefatoId)
-            ->get(self::$TABELA_DB);
-
-        foreach ($resultado->result() as $linha) {
-
-            return $this->toObject($linha);
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, $whare);
+     
+        if (!empty($array->result())) {
+            return $this->toObject($array);
+        } else {
+            return null;
         }
-
-    }
-
-    public function toArray($objeto)
-    {
-        return array(
-            'id' => $objeto->id,
-            'path' => $objeto->path,
-            'data' => $objeto->data,
-            'status' => $objeto->status
-        );
-    }
-
-    public function transformarArrayEmObjeto($arrayList)
-    {
-        return new Arquivo(
-            (isset($arrayList->id)) ? $arrayList->id : null,
-            $arrayList->path,
-            $arrayList->data,
-            $arrayList->status
-        );
     }
 
 }

@@ -64,23 +64,32 @@ status boolean not null
 );
 
 #7
+create table if not exists andamento(
+id int primary key auto_increment not null,
+status_do_andamento enum('enviado','executado','conformado') not null,
+data_hora datetime not null default current_timestamp
+);
+
+#8
 create table if not exists processo(
 id int primary key auto_increment not null,
 objeto varchar(250) not null,
 numero varchar(30) not null unique,
-data datetime not null default current_timestamp,
+data_hora datetime not null default current_timestamp,
 chave varchar(250) not null unique,
 departamento_id int not null,
 lei_id int not null,
 tipo_id int not null,
 completo boolean not null,
+andamento_id int not null,
 status boolean not null,
 foreign key (departamento_id) references departamento(id),
 foreign key (lei_id) references lei(id),
-foreign key (tipo_id) references tipo(id)
+foreign key (tipo_id) references tipo(id),
+foreign key (andamento_id) references andamento(id)
 );
 
-#8
+#9
 create table if not exists artefato(
 id int primary key auto_increment not null,
 ordem int not null,
@@ -88,7 +97,7 @@ nome varchar(250) not null,
 status boolean not null
 );
 
-#9
+#10
 create table if not exists lei_tipo_artefato(
 lei_id int not null,
 tipo_id int not null,
@@ -99,11 +108,11 @@ foreign key (tipo_id) references tipo(id),
 foreign key (artefato_id) references artefato(id)
 );
 
-#10
+#11
 create table if not exists arquivo(
 id int primary key auto_increment not null,
 path varchar(250) not null,
-data datetime not null default current_timestamp,
+data_hora datetime not null default current_timestamp,
 usuario_id int not null,
 processo_id int not null,
 artefato_id int not null,

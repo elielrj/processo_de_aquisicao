@@ -36,7 +36,7 @@ class TabelaProcessoExibir
                         </tr>
                         <tr class='text-left'> 
                             <td>Data de abertura(Nup/Nud): </td>
-                            <td>" . $this->formatarData($processo->data) . "</td> 
+                            <td>" . $this->formatarData($processo->dataHora) . "</td> 
                         </tr>
                         <tr class='text-left'> 
                             <td>Chave para acompanhar: </td>
