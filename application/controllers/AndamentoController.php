@@ -11,6 +11,7 @@ class AndamentoController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('dao/AndamentoDAO');
+        $this->load->model('dao/LeiDAO');
     }
 
     public function index()
@@ -55,16 +56,16 @@ class AndamentoController extends CI_Controller
     public function criar()
     {
 
-        $data = $this->input->post();
+        $data_post =  $this->input->post();
 
         $lei = new lei(
             null,
-            $data['numero'],
-            $data['artigo'],
-            $data['inciso'],
-            $data['data'],
-            $data['modalidade_id'],
-            $data['status']
+            $data_post['numero'],
+            $data_post['artigo'],
+            $data_post['inciso'],
+            $data_post['data'],
+            $data_post['modalidade_id'],
+            $data_post['status']
         );
 
         $this->LeiDAO->create($lei);
@@ -89,16 +90,16 @@ class AndamentoController extends CI_Controller
     public function atualizar()
     {
 
-        $data = $this->input->post();
+        $data_post =  $this->input->post();
 
         $lei = new lei(
-            $data['id'],
-            $data['numero'],
-            $data['artigo'],
-            $data['inciso'],
-            $data['data'],
-            $data['modalidade_id'],
-            $data['status']
+            $data_post['id'],
+            $data_post['numero'],
+            $data_post['artigo'],
+            $data_post['inciso'],
+            $data_post['data'],
+            $data_post['modalidade_id'],
+            $data_post['status']
         );
 
         $this->LeiDAO->update($lei);
@@ -109,7 +110,7 @@ class AndamentoController extends CI_Controller
     public function deletar($id)
     {
 
-        $this->LeiDAO->update($id);
+        $this->LeiDAO->deletar($id);
 
         redirect('leiController');
     }
@@ -117,9 +118,9 @@ class AndamentoController extends CI_Controller
     public function optionsPorModalidadeId()
     {
 
-        $data = $this->input->post();
+        $data_post =  $this->input->post();
 
-        $modalidade_id = $data['modalidade_id'];
+        $modalidade_id = $data_post['modalidade_id'];
 
         $listaDeLeis = $this->LeiDAO->optionsDeLeisPorModalidadeId($modalidade_id);
 

@@ -62,6 +62,7 @@ $route['leis'] = 'LeiController/listar';
 $route['tipos'] = 'TipoDeLicitacaoController/listar';
 $route['ugs'] = 'UgController/listar';
 $route['usuarios'] = 'UsuarioController/listar';
+$route['usuario-novo'] = 'UsuarioController/novo';
 $route['sair'] = 'LoginController/sair';
 $route['modalidades'] = 'ModalidadeController/listar';
 

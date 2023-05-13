@@ -38,7 +38,7 @@ echo form_label($form_label_cpf) . form_input($form_input_cpf) . "</br>";
 
 echo form_label($form_label_senha) . form_input($form_input_senha) . "</br>";
 
-echo form_label($form_label_departamento) . form_dropdown('departamento_id', $departamentos, $form_dropdown_departamento_valor, $form_dropdown_departamento_formatacao) . "</br>";
+echo form_label($form_label_departamento) . form_dropdown('departamento_id', $departamentos, $usuario->departamento->id, $form_dropdown_departamento_formatacao) . "</br>";
 
 echo form_label($form_label_status) . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $form_dropdown_status_valor, $form_dropdown_status_formatacao) . "</br>";
 

@@ -9,6 +9,8 @@ class TipoDeLicitacaoController extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->library('session');
+		
 		$this->load->model('dao/TipoDeLicitacaoDAO');
 	}
 
@@ -60,17 +62,17 @@ class TipoDeLicitacaoController extends CI_Controller
 
 	public function criar()
 	{
-		$data = $this->input->post();
+		$data_post = $this->input->post();
 		
 		$tipoDeLicitacao = new TipoDeLicitacao(
 			null,
-			$data['nome'],
-			$data['lei'],
-			$data['artigo'],
-			$data['inciso'],
-			$data['dataDaLei'],
-			$data['pagina'],
-			$data['status']		
+			$data_post['nome'],
+			$data_post['lei'],
+			$data_post['artigo'],
+			$data_post['inciso'],
+			$this->data->dataMySQL($data_post['dataDaLei']),
+			$data_post['pagina'],
+			$data_post['status']		
 		);
 
 		$this->TipoDeLicitacaoDAO->create($tipoDeLicitacao);
@@ -96,17 +98,17 @@ class TipoDeLicitacaoController extends CI_Controller
 	public function atualizar()
 	{
 
-		$data = $this->input->post();
+		$data_post = $this->input->post();
 		
 		$tipoDeLicitacao = new TipoDeLicitacao(
-			$data['id'],
-			$data['nome'],
-			$data['lei'],
-			$data['artigo'],
-			$data['inciso'],
-			$data['dataDaLei'],
-			$data['pagina'],
-			$data['status']	
+			$data_post['id'],
+			$data_post['nome'],
+			$data_post['lei'],
+			$data_post['artigo'],
+			$data_post['inciso'],
+			$this->data->dataMySQL($data_post['dataDaLei']),
+			$data_post['pagina'],
+			$data_post['status']	
 		);
 
 		$this->TipoDeLicitacaoDAO->update($tipoDeLicitacao);

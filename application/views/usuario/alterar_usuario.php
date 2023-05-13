@@ -22,6 +22,8 @@ $form_input_senha = ['name' => 'senha', 'class' => 'form-control', 'maxlength' =
 $form_submit_enviar = ['class' => 'btn btn-primary btn-lg btn-block'];
 $form_submit_cancelar = "class='btn btn-danger btn-lg btn-block'";
 
+$form_dropdown_status_formatacao = ['class' => 'form-control'];
+
 
 echo "<h1>{$titulo}</h1>";
 
@@ -41,7 +43,7 @@ echo form_label($form_label_senha) . form_input($form_input_senha) . "</br>";
 
 echo form_label($form_label_departamento) . form_dropdown('departamento_id', $departamentos, $usuario->departamento->id, ['class' => 'form-control']) . "</br>";
 
-echo form_label($form_label_status) . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $form_dropdown_status_valor, $form_dropdown_status_formatacao) . "</br>";
+echo form_label($form_label_status) . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $usuario->status, $form_dropdown_status_formatacao) . "</br>";
 
 echo form_submit('enviar', 'Enviar', $form_submit_enviar) . "</br>";
 

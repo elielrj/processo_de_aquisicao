@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class data
+class formatar_data
 {
     public function dataMySQL($data = null)
     {

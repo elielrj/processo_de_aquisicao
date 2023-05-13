@@ -53,12 +53,14 @@ class Lei implements InterfaceBO{
 
     public function toArray()
     {
+        $this->load->helper('data');
+
         return array(
             'id' => isset($this->id) ? $this->id : null,
             'numero' => $this->numero,
             'artigo' => $this->artigo,
             'inciso' => $this->inciso,
-            'data' => $this->data,
+            'data' => $this->data->dataMySQL($this->data),
             'modalidade_id' => $this->modalidade->id,
             'status' => $this->status
         );

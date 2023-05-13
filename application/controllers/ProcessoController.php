@@ -11,6 +11,10 @@ class ProcessoController extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('dao/ProcessoDAO');
+		$this->load->model('dao/DepartamentoDAO');
+		$this->load->model('dao/ModalidadeDAO');
+		$this->load->model('dao/TipoDAO');
+		$this->load->model('dao/LeiDAO');
 	}
 
 	public function index()
@@ -34,7 +38,7 @@ class ProcessoController extends CI_Controller
 
 		$quantidade = $this->ProcessoDAO->contar();
 
-		$botoes = empty($processos) ? '' : $this->botao->paginar('ProcessoController/listar', $indice, $quantidade, $mostrar);
+		$botoes = empty($processos) ? '' : $this->botao->paginar('processos', $indice, $quantidade, $mostrar);
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
@@ -110,19 +114,19 @@ class ProcessoController extends CI_Controller
 	public function criar()
 	{
 
-		$data = $this->input->post();
+		$data_post = $this->input->post();
 
 		$processo = array(
 			'id' => null,
-			'objeto' => $data['objeto'],
-			'numero' => $data['numero'],
-			'data' => ((new DateTime($data['data']))->format('Y-m-d H:m:s')),
+			'objeto' => $data_post['objeto'],
+			'numero' => $data_post['numero'],
+			'data_hora' => $this->data->dataHoraMySQL(),
 			'chave' => uniqid(),
-			'departamento_id' => $data['departamento_id'],
-			'lei_id' => $data['lei_id'],
-			'tipo_id' => $data['tipo_id'],
-			'completo' => $data['completo'],
-			'status' => $data['status']
+			'departamento_id' => $data_post['departamento_id'],
+			'lei_id' => $data_post['lei_id'],
+			'tipo_id' => $data_post['tipo_id'],
+			'completo' => $data_post['completo'],
+			'status' => $data_post['status']
 		);
 
 		$this->ProcessoDAO->criar($processo);
@@ -151,18 +155,18 @@ class ProcessoController extends CI_Controller
 	public function atualizar()
 	{
 
-		$data = $this->input->post();
+		$data_post = $this->input->post();
 
 		$processo = new Processo(
-			$data['id'],
-			$data['objeto'],
-			$data['numero'],
-			((new DateTime($data['data']))->format('Y-d-m H:m:s')),
-			$data['chave'],
-			$this->DepartamentoDAO->buscarPorId($data['departamento_id']),
-			$this->ModalidadeDAO->buscarPorId($data['modalidade_id']),
-			$data['completo'],
-			$data['status']
+			$data_post['id'],
+			$data_post['objeto'],
+			$data_post['numero'],
+			$this->data->dataHoraMySQL(),
+			$data_post['chave'],
+			$this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
+			$this->ModalidadeDAO->buscarPorId($data_post['modalidade_id']),
+			$data_post['completo'],
+			$data_post['status']
 		);
 
 		$this->ProcessoDAO->atualizar($processo);

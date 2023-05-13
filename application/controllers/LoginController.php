@@ -20,10 +20,10 @@ class LoginController extends CI_Controller
     {
         $this->limparValidacao();
 
-        $data = $this->input->post();
+        $data_post = $this->input->post();
 
-        $email = $data['email'];
-        $senha = md5($data['senha']);
+        $email = $data_post['email'];
+        $senha = md5($data_post['senha']);
 
         $this->emailExiste($email)
             ? ($this->senhaEstaCorreta($email, $senha)

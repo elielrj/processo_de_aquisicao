@@ -11,6 +11,7 @@ class UsuarioDAO extends CI_Model
 
     public function __construct()
     {
+        parent::__construct();
         $this->load->model('dao/DAO');
         $this->load->model('dao/DepartamentoDAO');
     }
@@ -87,6 +88,9 @@ class UsuarioDAO extends CI_Model
             isset($arrayList->cpf)
             ? $arrayList->cpf
             : (isset($arrayList['cpf']) ? $arrayList['cpf'] : null),
+            isset($arrayList->senha)
+            ? $arrayList->senha
+            : (isset($arrayList['senha']) ? $arrayList['senha'] : null),
             isset($arrayList->departamento_id)
             ? ($this->DepartamentoDAO->buscarPorId($arrayList->departamento_id))
             : (isset($arrayList['departamento_id']) ? $this->DepartamentoDAO->buscarPorId($arrayList['departamento_id']) : null),

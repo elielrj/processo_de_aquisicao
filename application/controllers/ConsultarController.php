@@ -16,10 +16,10 @@ class ConsultarController extends CI_Controller
     {
         $this->limparValidacao();
 
-        $data = $this->input->post();
+        $data_post =  $this->input->post();
 
-        $numero = $data['numero'];
-        $chave = $data['chave'];
+        $numero = $data_post['numero'];
+        $chave = $data_post['chave'];
 
         $this->numeroExiste($numero)
             ? ($this->chaveEstaCorreta($chave)
@@ -32,7 +32,7 @@ class ConsultarController extends CI_Controller
     {
         $processo = $this->ConsultarDAO->buscarPorNumeroChave($numero, $chave);
 
-        $data = array(
+        $data_post =  array(
             'titulo' => 'Processo: ' . $processo->tipo->nome,
             'tabela' => $this->tabela->processo_imprimir($processo),
             'pagina' => 'consultar/exibir.php',

@@ -47,12 +47,12 @@ class ArtefatoController extends CI_Controller {
 
     public function criar() {
 
-        $data = $this->input->post();
+        $data_post =  $this->input->post();
 
         $artefato = new Artefato(
                 null,
-                $data['nome'],
-                $data['status']
+                $data_post['nome'],
+                $data_post['status']
         );
 
         $this->ArtefatoDAO->create($artefato);
@@ -75,12 +75,12 @@ class ArtefatoController extends CI_Controller {
 
     public function atualizar() {
 
-        $data = $this->input->post();
+        $data_post =  $this->input->post();
 
         $artefato = new Artefato(
-                $data['id'],
-                $data['nome'],
-                $data['status']
+                $data_post['id'],
+                $data_post['nome'],
+                $data_post['status']
         );
 
         $this->ArtefatoDAO->update($artefato);

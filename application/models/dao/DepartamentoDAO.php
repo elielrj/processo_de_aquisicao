@@ -11,6 +11,7 @@ class DepartamentoDAO extends CI_Model
 
     public function __construct()
     {
+        parent::__construct();
         $this->load->model('dao/DAO');
         $this->load->model('dao/UgDAO');
     }
@@ -38,7 +39,9 @@ class DepartamentoDAO extends CI_Model
     {
         $array = $this->DAO->buscarPorId(self::$TABELA_DB, $departamentoId);
 
-        return $this->toObject($array->result()[0]);
+        $departamento = $this->toObject($array->result()[0]);
+
+        return $departamento;
     }
 
     public function buscarOnde($key, $value)

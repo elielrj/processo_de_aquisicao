@@ -55,16 +55,16 @@ class LeiController extends CI_Controller
     public function criar()
     {
 
-        $data = $this->input->post();
+        $data_post = $this->input->post();
 
         $lei = new lei(
             null,
-            $data['numero'],
-            $data['artigo'],
-            $data['inciso'],
-            $data['data'],
-            $data['modalidade_id'],
-            $data['status']
+            $data_post['numero'],
+            $data_post['artigo'],
+            $data_post['inciso'],
+            $this->data->dataHoraBr($data_post['data']),
+            $data_post['modalidade_id'],
+            $data_post['status']
         );
 
         $this->LeiDAO->create($lei);
@@ -89,16 +89,16 @@ class LeiController extends CI_Controller
     public function atualizar()
     {
 
-        $data = $this->input->post();
+        $data_post = $this->input->post();
 
         $lei = new lei(
-            $data['id'],
-            $data['numero'],
-            $data['artigo'],
-            $data['inciso'],
-            $data['data'],
-            $data['modalidade_id'],
-            $data['status']
+            $data_post['id'],
+            $data_post['numero'],
+            $data_post['artigo'],
+            $data_post['inciso'],
+            $this->data->dataHoraBr($data_post['data']),
+            $data_post['modalidade_id'],
+            $data_post['status']
         );
 
         $this->LeiDAO->update($lei);
@@ -117,9 +117,9 @@ class LeiController extends CI_Controller
     public function optionsPorModalidadeId()
     {
 
-        $data = $this->input->post();
+        $data_post = $this->input->post();
 
-        $modalidade_id = $data['modalidade_id'];
+        $modalidade_id = $data_post_post['modalidade_id'];
 
         $listaDeLeis = $this->LeiDAO->optionsDeLeisPorModalidadeId($modalidade_id);
 

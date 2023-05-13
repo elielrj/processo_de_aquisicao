@@ -15,12 +15,10 @@ class Andamento implements StatusDoAndamento, InterfaceBO
         $id = null,
         $statusDoAndamento = null,
         $dataHora = null
-    ) {
-        $this->load->helper('data');
-        
+    ) {       
         $this->id = isset($id) ? $id : null;
         $this->statusDoAndamento = isset($statusDoAndamento) ? $statusDoAndamento : new Enviado();
-        $this->dataHora = isset($dataHora) ? $dataHora : now('America/Sao_Paulo');
+        $this->dataHora = isset($dataHora) ? $dataHora : new DateTime('now',new DateTimeZone('America/Sao_Paulo'));
     }
 
     public function getId()
@@ -54,10 +52,12 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 
     public function toArray()
     {
+        $this->load->helper('data');
+
         return array(
             'id' => $this->id,
             'status_do_andamento' => $this->statusDoAndamento->nome(),
-            'data_hora' => $this->dataHora,
+            'data_hora' => $this->data->dataHoraMySQL($this->dataHora),
         );
     }
 

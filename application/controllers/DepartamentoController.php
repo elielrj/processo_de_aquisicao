@@ -52,13 +52,13 @@ class DepartamentoController extends CI_Controller {
     }
 
     public function criar() {
-        $data = $this->input->post();
+        $data_post =  $this->input->post();
 
         $departamento = new Departamento(
                 null,
-                $data['nome'],
-                $data['sigla'],
-                $data['status']
+                $data_post['nome'],
+                $data_post['sigla'],
+                $data_post['status']
         );
 
         $this->DepartamentoDAO->create($departamento);
@@ -81,13 +81,13 @@ class DepartamentoController extends CI_Controller {
 
     public function atualizar() {
 
-        $data = $this->input->post();
+        $data_post =  $this->input->post();
 
         $departamento = new Departamento(
-                $data['id'],
-                $data['nome'],
-                $data['sigla'],
-                $data['status']
+                $data_post['id'],
+                $data_post['nome'],
+                $data_post['sigla'],
+                $data_post['status']
         );
 
         $this->DepartamentoDAO->update($departamento);

@@ -10,7 +10,9 @@ class UsuarioController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('session');
         $this->load->model('dao/UsuarioDAO');
+        $this->load->model('dao/DepartamentoDAO');
     }
 
     public function index()
@@ -33,7 +35,7 @@ class UsuarioController extends CI_Controller
 
         $usuarios = $this->UsuarioDAO->buscarTodos($indiceInicial, $mostrar);
 
-        $quantidade = $this->UsuarioDAO->quantidade();
+        $quantidade = $this->UsuarioDAO->contar();
 
         $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $mostrar);
 
@@ -108,17 +110,17 @@ class UsuarioController extends CI_Controller
     public function criar()
     {
 
-        $data = $this->input->post();
+        $data_post = $this->input->post();
 
         $usuario = new Usuario(
             null,
-            $data['nome'],
-            $data['sobrenome'],
-            $data['email'],
-            $data['cpf'],
-            md5($data['senha']),
-            $this->DepartamentoDAO->buscarPorId($data['departamento_id']),
-            $data['status']
+            $data_post['nome'],
+            $data_post['sobrenome'],
+            $data_post['email'],
+            $data_post['cpf'],
+            md5($data_post['senha']),
+            $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
+            $data_post['status']
         );
 
         $this->UsuarioDAO->criar($usuario);
@@ -158,17 +160,17 @@ class UsuarioController extends CI_Controller
     public function atualizar()
     {
 
-        $data = $this->input->post();
+        $data_post = $this->input->post();
 
         $usuario = new Usuario(
-            $data['id'],
-            $data['nome'],
-            $data['sobrenome'],
-            $data['email'],
-            $data['cpf'],
-            $data['senha'],
-            $this->DepartamentoDAO->buscarPorId($data['departamento_id']),
-            $data['status']
+            $data_post['id'],
+            $data_post['nome'],
+            $data_post['sobrenome'],
+            $data_post['email'],
+            $data_post['cpf'],
+            $data_post['senha'],
+            $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
+            $data_post['status']
         );
 
         $this->UsuarioDAO->atualizar($usuario);
@@ -178,21 +180,21 @@ class UsuarioController extends CI_Controller
     public function atualizarUsuario()
     {
 
-        $data = $this->input->post();
+        $data_post = $this->input->post();
 
         $usuario = new Usuario(
-            $data['id'],
-            $data['nome'],
-            $data['sobrenome'],
-            $data['email'],
-            $data['cpf'],
-            $data['senha'],
-            $this->DepartamentoDAO->buscarPorId($data['departamento_id']),
-            $data['status']
+            $data_post['id'],
+            $data_post['nome'],
+            $data_post['sobrenome'],
+            $data_post['email'],
+            $data_post['cpf'],
+            $data_post['senha'],
+            $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
+            $data_post['status']
         );
 
         $this->UsuarioDAO->atualizar($usuario);
-        
+
         redirect('ProcessoController');
     }
 
@@ -210,8 +212,8 @@ class UsuarioController extends CI_Controller
         $this->UsuarioDAO->desativar($id);
 
         redirect('UsuarioController');
-    } 
-    
+    }
+
 
 
 }

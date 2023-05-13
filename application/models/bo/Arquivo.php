@@ -42,10 +42,12 @@ class Arquivo implements InterfaceBO{
 
     public function toArray()
     {
+        $this->load->helper('data');
+
         return array(
             'id' => isset($this->id) ? $this->id : null,
             'path' => $this->path,
-            'data_hora' => $this->dataHora,
+            'data_hora' => $this->data->dataHoraMySQL($this->dataHora),
             'usuario_id' => $this->usuarioId,
             'artefato_id' => $this->artefatoId,
             'processo_id' => $this->processoId,
