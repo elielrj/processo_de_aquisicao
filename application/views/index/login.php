@@ -1,29 +1,5 @@
 <form class="user" id="form" action="index.php/LoginController/logar" method="POST">
-    <?php
-    if (isset($_SESSION['email_valido'])):
-        if (!$_SESSION['email_valido']):
 
-            ?>
-            <div class='form-group'>
-                <p>Email inválido!</p>
-            </div>
-
-
-            <?php
-        endif;
-    endif;
-
-    if (isset($_SESSION['senha_valida'])):
-        if (!$_SESSION['senha_valida']):
-            ?>
-            <div class='form-group'>
-                <p>Senha inválida!</p>
-            </div>
-
-            <?php
-        endif;
-    endif;
-    ?>
 
     <hr>
 
@@ -38,11 +14,42 @@
             aria-describedby="emailHelp" placeholder="Digite seu email..." name="email" autofocus required>
     </div>
 
+    <!-- email Errado -->
+    <?php
+    if (isset($_SESSION['email_valido'])):
+        if (!$_SESSION['email_valido']):
+
+            ?>
+            <div class='form-group'>
+                <p>Email inválido!</p>
+            </div>
+
+
+            <?php
+        endif;
+    endif;
+
+    ?>
+
     <!-- senha -->
     <div class="form-group">
         <input type="password" class="form-control form-control-user" id="senha" placeholder="Digite sua senha"
             name="senha" required>
     </div>
+
+    <!-- senha Errada -->
+    <?php
+    if (isset($_SESSION['senha_valida'])):
+        if (!$_SESSION['senha_valida']):
+            ?>
+            <div class='form-group'>
+                <p>Senha inválida!</p>
+            </div>
+
+            <?php
+        endif;
+    endif;
+    ?>
 
 
     <div class="form-group">
