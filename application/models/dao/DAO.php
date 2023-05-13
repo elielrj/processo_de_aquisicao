@@ -2,10 +2,14 @@
 
 class DAO extends CI_Model
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function criar($banco, $array)
     {
-        $this->db->create($banco, $array);
+        $this->db->insert($banco, $array);
     }
 
     public function buscarTodos($banco, $inicio, $fim)
@@ -20,7 +24,7 @@ class DAO extends CI_Model
     {
         return $this->db
             ->where(array('status' => false))
-            ->order_by('id','DSC')
+            ->order_by('id', 'DSC')
             ->get($banco, $inicio, $fim);
     }
 

@@ -8,6 +8,8 @@ class ArquivoController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('dao/ArquivoDAO');
+        $this->load->library('session');
     }
 
     public function index()
@@ -30,7 +32,7 @@ class ArquivoController extends CI_Controller
 
         $arquivos = $this->ArquivoDAO->buscar($indiceInicial, $mostrar);
 
-        $quantidade = $this->ArquivoDAO->quantidade();
+        $quantidade = $this->ArquivoDAO->contar();
 
         $botoes = empty($arquivos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
 
@@ -62,37 +64,19 @@ class ArquivoController extends CI_Controller
 
         $data_post = $this->input->post();
 
-        $arquivo = $_FILES['arquivo'];
+        $file = $_FILES['arquivo'];
 
-        if (isset($arquivo) && isset($data_post)) {
+        if (isset($file) && isset($data_post)) {
 
-            $tmp_name = $_FILES['arquivo']['tmp_name'];
-            $nomeDoArquivo = $_FILES['arquivo']['name'];
-            $novoNomeDoArquivo = uniqid();
-            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-            $path = 'arquivos/' . $data_post['artefato_id'] . "/" . $novoNomeDoArquivo . '.' . $extensao;
+            $arquivo = $this->moverArquivo( $data_post);
 
-            $arquivado = move_uploaded_file($tmp_name, $path);
+            if (isset($arquivo)) {
 
-            if ($arquivado) {
-
-                //todo date
-                $timezone = new DateTimeZone('America/Sao_Paulo');
-                $agora = new DateTime('now', $timezone);
-
-                $arrayList = array(
-                    'id' => null,
-                    'path' => $path,
-                    'data' => $agora->format('Y-m-d H:m:s'),
-                    'usuario_id' => $this->session->id,
-                    'processo_id' => $data_post['processo_id'],
-                    'artefato_id' => $data_post['artefato_id'],
-                    'status' => $data_post['status']
-                );
-
-                $this->ArquivoDAO->criar($arrayList);
+                $this->ArquivoDAO->criar($arquivo);
 
                 redirect('ArquivoController');
+            } else {
+                //todo tratar erro 
             }
         }
     }
@@ -102,39 +86,23 @@ class ArquivoController extends CI_Controller
 
         $data_post = $this->input->post();
 
-        $arquivo = $_FILES['arquivo'];
+        $file = $_FILES['arquivo'];
 
-        if (isset($arquivo) && isset($data_post)) {
+        if (isset($file) && isset($data_post)) {
 
-            $tmp_name = $_FILES['arquivo']['tmp_name'];
-            $nomeDoArquivo = $_FILES['arquivo']['name'];
-            $novoNomeDoArquivo = uniqid();
-            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-            $path = 'arquivos/' . $data_post['artefato_id'] . "/" . $novoNomeDoArquivo . '.' . $extensao;
+            $arquivo = $this->moverArquivo( $data_post);
 
-            $arquivado = move_uploaded_file($tmp_name, $path);
+            if (isset($arquivo)) {
 
-            if ($arquivado) {
-
-                $timezone = new DateTimeZone('America/Sao_Paulo');
-                $agora = new DateTime('now', $timezone);
-
-                $arrayList = array(
-                    'id' => null,
-                    'path' => $path,
-                    'data' => $agora->format('Y-m-d H:m:s'),
-                    'usuario_id' => $this->session->id,
-                    'processo_id' => $data_post['processo_id'],
-                    'artefato_id' => $data_post['artefato_id'],
-                    'status' => $data_post['arquivo_status']
-                );
-
-                $this->ArquivoDAO->criar($arrayList);
+                $this->ArquivoDAO->criar($arquivo);
 
                 redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+            } else {
+                //todo tratar erro 
             }
         }
     }
+
 
     public function alterar($id)
     {
@@ -157,40 +125,20 @@ class ArquivoController extends CI_Controller
 
         $data_post = $this->input->post();
 
-        $arquivo = $_FILES['arquivo'];
+        $file = $_FILES['arquivo'];
 
-        if (isset($arquivo) && isset($data_post)) {
+        if (isset($file) && isset($data_post)) {
 
-            $tmp_name = $_FILES['arquivo']['tmp_name'];
-            $nomeDoArquivo = $_FILES['arquivo']['name'];
-            $novoNomeDoArquivo = $_FILES['arquivo_path'];
-            $extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-            $path = 'arquivos/' . $novoNomeDoArquivo . '.' . $extensao;
+            $arquivo = $this->moverArquivo($data_post);
 
-            $arquivado = move_uploaded_file($tmp_name, $path);
+            if (isset($arquivo)) {
 
-            if ($arquivado) {
-
-                $timezone = new DateTimeZone('America/Sao_Paulo');
-                $agora = new DateTime('now', $timezone);
-
-                $arrayList = array(
-                    'id' => $data_post['id'],
-                    'path' => $path,
-                    'data' => $agora->format('Y-m-d H:m:s'),
-                    'usuario_id' => $this->session->id,
-                    'processo_id' => $data_post['processo_id'],
-                    'artefato_id' => $data_post['artefato_id'],
-                    'status' => $data_post['arquivo_status']
-                );
-
-                $this->ArquivoDAO->criar($arrayList);
+                $this->ArquivoDAO->criar($arquivo);
 
                 redirect('ArquivoController');
+            } else {
+                //todo tratar erro 
             }
-
-
-
         }
     }
 
@@ -199,49 +147,73 @@ class ArquivoController extends CI_Controller
 
         $data_post = $this->input->post();
 
-        $arquivo = $_FILES['arquivo'];
+        $file = $_FILES['arquivo'];
 
-        if (isset($arquivo) && isset($data_post)) {
+        if (isset($file) && isset($data_post)) {
 
-            $tmp_name = $_FILES['arquivo']['tmp_name'];
-            //$nomeDoArquivo = $_FILES['arquivo']['name'];
-            $novoNomeDoArquivo = $data_post['arquivo_path'];
-            //$extensao = strtolower(pathinfo($nomeDoArquivo, PATHINFO_EXTENSION));
-           $path = $novoNomeDoArquivo;
+            $arquivo = $this->moverArquivo($data_post);
 
-            $arquivado = move_uploaded_file($tmp_name, $path);
+            if (isset($arquivo)) {
 
-            if ($arquivado) {
-
-                $timezone = new DateTimeZone('America/Sao_Paulo');
-                $agora = new DateTime('now', $timezone);
-
-                $arrayList = array(
-                    'id' => $data_post['arquivo_id'],
-                    'path' => $path,
-                    'data' => $agora->format('Y-m-d H:m:s'),
-                    'usuario_id' => $this->session->id,
-                    'processo_id' => $data_post['processo_id'],
-                    'artefato_id' => $data_post['artefato_id'],
-                    'status' => $data_post['arquivo_status']
-                );
-
-                $this->ArquivoDAO->atualizar($arrayList);
+                $this->ArquivoDAO->atualizar($arquivo);
 
                 redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+            }else{
+                //todo tratar erro 
             }
-
-
-
         }
     }
 
     public function deletar($id)
     {
-
-        $this->ArquivoDAO->delete($id);
+        $this->ArquivoDAO->deletar($$this->ArquivoDAO->buscarPorId($id));
 
         redirect('ArquivoController');
+    }
+
+    private function toObject($data_post, $path)
+    {
+        $timezone = new DateTimeZone('America/Sao_Paulo');
+        $agora = new DateTime('now', $timezone);
+        
+        return new Arquivo(
+            isset($data_post['id']) ? $data_post['id'] : null,
+            $path,
+            $agora->format('Y-m-d H:m:s'),
+            $_SESSION['id'],
+            $data_post['artefato_id'],
+            $data_post['processo_id'],
+            $data_post['arquivo_status']
+        );
+    }
+
+    private function moverArquivo($data_post)
+    {
+        $tmp_name = $_FILES['arquivo']['tmp_name'];
+  
+        if (empty($data_post['arquivo_path'])) {
+           
+            $nome_do_arquivo = $_FILES['arquivo']['name'];
+
+            $extensao = strtolower(pathinfo($nome_do_arquivo, PATHINFO_EXTENSION));
+
+            $path = 'arquivos/' . $data_post['artefato_id'] . '/' . uniqid() . '.' . $extensao;
+
+        } else {
+
+            $path = $data_post['arquivo_path'];
+
+        }
+
+        $arquivado = move_uploaded_file($tmp_name, $path);
+        
+        if ($arquivado) {
+
+            return $this->toObject($data_post, $path);
+
+        } else {
+            return null;
+        }
     }
 
 }

@@ -10,6 +10,7 @@ class LeiController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('dao/LeiDAO');
     }
 
     public function index()

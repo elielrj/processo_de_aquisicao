@@ -16,6 +16,7 @@ class ArquivoDAO extends CI_Model
 
     public function criar($objeto)
     {
+        var_dump($objeto);
         $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
     }
 
@@ -37,14 +38,14 @@ class ArquivoDAO extends CI_Model
     {
         $array = $this->DAO->buscarPorId(self::$TABELA_DB, $arquivoId);
 
-        return $this->toObject($array->result());
+        return $this->toObject($array->result()[0]);
     }
 
     public function buscarOnde($key, $value)
     {
         $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
-        return $this->criarLista($array->result()[0]);
+        return $this->criarLista($array->result());
     }
 
     public function atualizar($arquivo)
@@ -74,6 +75,9 @@ class ArquivoDAO extends CI_Model
             (isset($arrayList->id)) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
             (isset($arrayList->path)) ? $arrayList->path : (isset($arrayList['path']) ? $arrayList['path'] : null),
             (isset($arrayList->data_hora)) ? $arrayList->data_hora : (isset($arrayList['data_hora']) ? $arrayList['data_hora'] : null),
+            (isset($arrayList->usuario_id)) ? $arrayList->usuario_id : (isset($arrayList['usuario_id']) ? $arrayList['usuario_id'] : null),
+            (isset($arrayList->artefato_id)) ? $arrayList->artefato_id : (isset($arrayList['artefato_id']) ? $arrayList['artefato_id'] : null),
+            (isset($arrayList->processo_id)) ? $arrayList->processo_id : (isset($arrayList['processo_id']) ? $arrayList['processo_id'] : null),
             (isset($arrayList->status)) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
     }
@@ -104,9 +108,9 @@ class ArquivoDAO extends CI_Model
         $whare = array('processo_id' => $processoId, 'artefato_id' => $artefatoId);
 
         $array = $this->DAO->buscarOnde(self::$TABELA_DB, $whare);
-     
+
         if (!empty($array->result())) {
-            return $this->toObject($array);
+            return $this->toObject($array->result()[0]);
         } else {
             return null;
         }
