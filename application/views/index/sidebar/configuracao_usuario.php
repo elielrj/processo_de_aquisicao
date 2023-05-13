@@ -7,9 +7,9 @@
     </a>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Novo:</h6>
+            <h6 class="collapse-header">Atualizar:</h6>
 
-            <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/alterarUsuario/' . $_SESSION['id']); ?>">Atualizar dados</a>
+            <a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/alterarUsuario/' . $_SESSION['id']); ?>">Meus dados</a>
         </div>
     </div>
 </li>

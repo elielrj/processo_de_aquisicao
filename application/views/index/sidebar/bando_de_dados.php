@@ -3,6 +3,24 @@
     Banco de Dados
 </div>
 
+<!-- Nav Item - Pages Collapse collapseAndamento -->
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAndamento" aria-expanded="true"
+        aria-controls="collapseAndamento">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Andamento</span>
+    </a>
+    <div id="collapseAndamento" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Processo de Aquisição</h6>
+            <a class="collapse-item" href="<?php echo base_url('index.php/AndamentoController/listar'); ?>">Listar</a>
+            <a class="collapse-item" href="<?php echo base_url('index.php/AndamentoController/novo'); ?>">Novo</a>
+            <a class="collapse-item" href="<?php echo base_url('index.php/AndamentoController/listar'); ?>">Alterar</a>
+            <a class="collapse-item" href="<?php echo base_url('index.php/AndamentoController/listar'); ?>">Deletar</a>
+        </div>
+    </div>
+</li>
+
 <!-- Nav Item - Pages Collapse Arquivos -->
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArquivos" aria-expanded="true"
@@ -59,6 +77,21 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Processo de Aquisição</h6>
             <a class="collapse-item" href="<?php echo base_url('index.php/leis'); ?>">Lei</a>
+        </div>
+    </div>
+</li>
+
+<!-- Nav Item - Pages Collapse collapseLeiTipoArtefato -->
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLeiTipoArtefato" aria-expanded="true"
+        aria-controls="collapseLeiTipoArtefato">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Lei/Tipo/Artefato</span>
+    </a>
+    <div id="collapseLeiTipoArtefato" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Processo de Aquisição</h6>
+            <a class="collapse-item" href="<?php echo base_url('index.php/usuarios'); ?>">Lei/Tipo/Artefato</a>
         </div>
     </div>
 </li>
@@ -142,17 +175,5 @@
     </div>
 </li>
 
-<!-- Nav Item - Pages Collapse collapseLeiTipoArtefato -->
-<li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLeiTipoArtefato" aria-expanded="true"
-        aria-controls="collapseLeiTipoArtefato">
-        <i class="fas fa-fw fa-cog"></i>
-        <span>Lei/Tipo/Artefato</span>
-    </a>
-    <div id="collapseLeiTipoArtefato" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Processo de Aquisição</h6>
-            <a class="collapse-item" href="<?php echo base_url('index.php/usuarios'); ?>">Lei/Tipo/Artefato</a>
-        </div>
-    </div>
-</li>
+
+

@@ -21,15 +21,6 @@ class Andamento implements StatusDoAndamento, InterfaceBO
         $this->dataHora = isset($dataHora) ? $dataHora : now('America/Sao_Paulo');
     }
 
-    public function nome()
-    {
-        return $this->statusDoAndamento->nome();
-    }
-    public function nivel()
-    {
-        return $this->statusDoAndamento->nivel();
-    }
-
     public function getId()
     {
         return $this->id;
@@ -50,6 +41,15 @@ class Andamento implements StatusDoAndamento, InterfaceBO
         $this->dataHora = $dataHora;
     }
 
+    public function nome()
+    {
+        return $this->statusDoAndamento->nome();
+    }
+    public function nivel()
+    {
+        return $this->statusDoAndamento->nivel();
+    }
+
     public function toArray()
     {
         return array(
@@ -58,8 +58,6 @@ class Andamento implements StatusDoAndamento, InterfaceBO
             'data_hora' => $this->dataHora,
         );
     }
-
-    
 
     public static function selecionarStatus($nome)
     {
@@ -71,8 +69,5 @@ class Andamento implements StatusDoAndamento, InterfaceBO
             return new Conformado();
         }
     }
-
 }
-
-
 ?>
