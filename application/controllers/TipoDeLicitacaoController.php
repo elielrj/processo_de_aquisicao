@@ -1,12 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+include_once('application/models/bo/Tipo.php');
+
 class TipoDeLicitacaoController extends CI_Controller
 {
 
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('dao/TipoDeLicitacaoDAO');
 	}
 
 	public function index()
@@ -28,7 +31,7 @@ class TipoDeLicitacaoController extends CI_Controller
 		$mostrar = 10;
 		$indiceInicial = $indice * $mostrar;
 
-		$tiposDeLicitacoes = $this->TipoDeLicitacaoDAO->retrive($indiceInicial, $mostrar);
+		$tiposDeLicitacoes = $this->TipoDeLicitacaoDAO->buscarTodos($indiceInicial, $mostrar);
 
 		$quantidade = $this->TipoDeLicitacaoDAO->count_rows();
 
@@ -78,7 +81,7 @@ class TipoDeLicitacaoController extends CI_Controller
 	public function alterar($id)
 	{
 
-		$tipoDeLicitacao = $this->TipoDeLicitacaoDAO->retriveId($id);
+		$tipoDeLicitacao = $this->TipoDeLicitacaoDAO->buscarPorId($id);
 
 		$dados = array(
 			'titulo' => 'Alterar Tipo de Licitação',
@@ -113,7 +116,9 @@ class TipoDeLicitacaoController extends CI_Controller
 
 	public function deletar($id)
 	{
-		$this->TipoDeLicitacaoDAO->delete($id);
+		$tipoDeLicitcao = $this->TipoDeLicitacaoDAO->buscarPorId($id);
+
+		$this->TipoDeLicitacaoDAO->deletar($tipoDeLicitcao);
 
 		redirect('TipoDeLicitacaoController');
 	}

@@ -12,6 +12,7 @@ class UsuarioDAO extends CI_Model
     public function __construct()
     {
         $this->load->model('dao/DAO');
+        $this->load->model('dao/DepartamentoDAO');
     }
 
     public function criar($usuario)
@@ -86,9 +87,9 @@ class UsuarioDAO extends CI_Model
             isset($arrayList->cpf)
             ? $arrayList->cpf
             : (isset($arrayList['cpf']) ? $arrayList['cpf'] : null),
-            isset($arrayList->departamento)
-            ? $this->buscarDepartamento($arrayList->departamento)
-            : (isset($arrayList['departamento']) ? $this->buscarDepartamento($arrayList['departamento']) : null),
+            isset($arrayList->departamento_id)
+            ? ($this->DepartamentoDAO->buscarPorId($arrayList->departamento_id))
+            : (isset($arrayList['departamento_id']) ? $this->DepartamentoDAO->buscarPorId($arrayList['departamento_id']) : null),
             isset($arrayList->status)
             ? $arrayList->status
             : (isset($arrayList['status']) ? $arrayList['status'] : null)
@@ -109,8 +110,4 @@ class UsuarioDAO extends CI_Model
         return $listaDeUsuarios;
     }
 
-    private function buscarDepartamento($departamentoId)
-    {
-        return $this->DepartamentoDAO->buscarPorId($departamentoId);
-    }
 }

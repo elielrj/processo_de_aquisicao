@@ -22,9 +22,9 @@ class UgController extends CI_Controller {
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $listaDeUg = $this->UgDAO->buscar($indiceInicial, $mostrar);
+        $listaDeUg = $this->UgDAO->buscarTodos($indiceInicial, $mostrar);
 
-        $quantidade = $this->UgDAO->quantidade();
+        $quantidade = $this->UgDAO->contar();
 
         $botoes = empty($listaDeUg) ? '' : $this->botao->paginar('UgController/listar', $indice, $quantidade, $mostrar);
 

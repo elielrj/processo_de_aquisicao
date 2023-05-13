@@ -37,7 +37,7 @@ class DepartamentoDAO extends CI_Model
     public function buscarPorId($departamentoId)
     {
         $array = $this->DAO->buscarPorId(self::$TABELA_DB, $departamentoId);
-        
+
         return $this->toObject($array->result()[0]);
     }
 
@@ -117,6 +117,6 @@ class DepartamentoDAO extends CI_Model
             }
         }
         return $options;
-    }   
+    }
 
 }

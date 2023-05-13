@@ -26,7 +26,7 @@ class LoginController extends CI_Controller
         $senha = md5($data['senha']);
 
         $this->emailExiste($email)
-            ? ($this->senhaEstaCorreta($email,$senha)
+            ? ($this->senhaEstaCorreta($email, $senha)
                 ? $this->login($email, $senha)
                 : redirect(base_url()))
             : redirect(base_url());
@@ -60,9 +60,9 @@ class LoginController extends CI_Controller
      * @param mixed $senha
      * @return bool
      */
-    private function senhaEstaCorreta($email,$senha)
+    private function senhaEstaCorreta($email, $senha)
     {
-        if ($this->LoginDAO->senhaEstaCorreta($email,$senha)) {
+        if ($this->LoginDAO->senhaEstaCorreta($email, $senha)) {
             $this->senhaValida();
             return true;
         } else {
@@ -100,6 +100,6 @@ class LoginController extends CI_Controller
 
     private function limparValidacao()
     {
-        $this->session->unset_userdata('email_valido','senha_valida','numero_valido','chave_valida');
+        $this->session->unset_userdata('email_valido', 'senha_valida', 'numero_valido', 'chave_valida');
     }
 }

@@ -1,19 +1,12 @@
 <?php
 # FORM LABEL
-$form_label_id = 'id';
-$form_label_nome = 'Nome';
-$form_label_sobrenome = 'Sobrenome';
-$form_label_email = 'Email';
-$form_label_cpf = 'CPF';
-$form_label_senha = 'Senha';
-$form_label_departamento = 'Departamento';
-$form_label_status = 'Status';
+
 
 # FORM OPEN
-$form_open = ['class' => 'form-group'];
+
 
 # FORM INPUT
-$form_input_id = ['name' => 'id', 'class' => 'form-control', 'type' => 'hidden', 'value' => (isset($usuario) ? $usuario->id : '')];
+$form_input_id = ['name' => 'id', 'class' => 'form-control', 'type' => 'hidden', 'value' => (isset($usuario->id) ? $usuario->id : '')];
 $form_input_nome = ['name' => 'nome', 'class' => 'form-control', 'type' => 'text', 'maxlength' => 150, 'value' => (isset($usuario) ? $usuario->nome : '')];
 $form_input_sobrenome = ['name' => 'sobrenome', 'class' => 'form-control', 'type' => 'text', 'maxlength' => 150, 'value' => (isset($usuario) ? $usuario->sobrenome : '')];
 $form_input_email = ['name' => 'email', 'class' => 'form-control', 'type' => 'email', 'maxlength' => 150, 'value' => (isset($usuario) ? $usuario->email : '')];

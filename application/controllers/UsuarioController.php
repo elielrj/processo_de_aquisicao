@@ -10,6 +10,7 @@ class UsuarioController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('dao/UsuarioDAO');
     }
 
     public function index()
@@ -30,7 +31,7 @@ class UsuarioController extends CI_Controller
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $usuarios = $this->UsuarioDAO->buscar($indiceInicial, $mostrar);
+        $usuarios = $this->UsuarioDAO->buscarTodos($indiceInicial, $mostrar);
 
         $quantidade = $this->UsuarioDAO->quantidade();
 
@@ -53,7 +54,7 @@ class UsuarioController extends CI_Controller
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $usuarios = $this->UsuarioDAO->buscarPorUsuariosAtivos($indiceInicial, $mostrar);
+        $usuarios = $this->UsuarioDAO->buscarTodos($indiceInicial, $mostrar);
 
         $quantidade = $this->UsuarioDAO->quantidadeAtivos();
 
@@ -76,9 +77,9 @@ class UsuarioController extends CI_Controller
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $usuarios = $this->UsuarioDAO->buscarPorUsuariosDesativados($indiceInicial, $mostrar);
+        $usuarios = $this->UsuarioDAO->buscarTodosDesativados($indiceInicial, $mostrar);
 
-        $quantidade = $this->UsuarioDAO->quantidadeDesativados();
+        $quantidade = $this->UsuarioDAO->contarDesativados();
 
         $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $mostrar);
 

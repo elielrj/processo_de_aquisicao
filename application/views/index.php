@@ -40,7 +40,7 @@ exit();
 
         <!-- Sidebar -->
         <?php
-    
+
 
         $email = isset($_SESSION['email_valido']) ? $_SESSION['email_valido'] : false;
         $senha = isset($_SESSION['senha_valida']) ? $_SESSION['senha_valida'] : false;
