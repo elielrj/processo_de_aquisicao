@@ -13,7 +13,7 @@
 
             ?>
             <div class='form-group'>
-                <p>Email inválido!</p>
+                <p>Nup/Nud de processo inválido!</p>
             </div>
 
 
@@ -35,7 +35,7 @@
 
             ?>
             <div class='form-group'>
-                <p>Email inválido!</p>
+                <p>Chave de acesso ao processo inválida!</p>
             </div>
 
 
