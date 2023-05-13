@@ -1,25 +1,37 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-
-
-
-class Data{
-
-    public function formatarData($data)
+class data
+{
+    public function dataMySQL($data = null)
     {
-        return form_input(
-            array(
-                'type' => 'datetime',
-                'value' => (new DateTime($data))->format('d-m-Y'),
-                'disabled' => 'disable',
-                'class' => 'text-center'
-            )
-        );
+        return ($this->agora(isset($data)))->format('Y-m-d');
     }
 
-    
+    public function dataBr($data = null)
+    {
+        return ($this->agora(isset($data)))->format('d-m-Y');
+    }
 
+    public function dataHoraMySQL($data = null)
+    {
+        return ($this->agora(isset($data)))->format('Y-m-d H:m:s');
+    }
+
+    public function dataHoraBr($data = null)
+    {
+        return ($this->agora(isset($data)))->format('d-m-Y H:m:s');
+    }
+
+    private function agora($data = 'now')
+    {
+        return new DateTime($data, $this->dateTimeZone());
+    }
+
+    private function dateTimeZone()
+    {
+        return new DateTimeZone('America/Sao_Paulo');
+    }
 }
 
 ?>

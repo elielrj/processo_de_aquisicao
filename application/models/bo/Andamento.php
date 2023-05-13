@@ -16,6 +16,8 @@ class Andamento implements StatusDoAndamento, InterfaceBO
         $statusDoAndamento = null,
         $dataHora = null
     ) {
+        $this->load->helper('data');
+        
         $this->id = isset($id) ? $id : null;
         $this->statusDoAndamento = isset($statusDoAndamento) ? $statusDoAndamento : new Enviado();
         $this->dataHora = isset($dataHora) ? $dataHora : now('America/Sao_Paulo');
