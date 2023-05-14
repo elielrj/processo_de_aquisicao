@@ -2,6 +2,10 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+require_once('application/libraries/DataLibrary.php');
+
+//include_once('tabela/TabelaLei.php');
+
 class TabelaProcesso {
 
     private $ordem;
@@ -126,7 +130,7 @@ class TabelaProcesso {
     public function formatarData($data) {
         return form_input(array(
             'type' => 'datetime',
-            'value' => (new DateTime($data))->format('d-m-Y'),
+            'value' => DataLibrary::dataBr($data),
             'disabled' => 'disable',
             'class' => 'text-center'
         ));
