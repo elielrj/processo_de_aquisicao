@@ -97,7 +97,7 @@ class TabelaProcesso {
 
     private function departamento($departamento) {
 
-        return "<td>{$departamento->nome}</td>";
+        return "<td>{$departamento}</td>";
     }
 
     private function completo($completo) {
@@ -109,24 +109,23 @@ class TabelaProcesso {
             "</p></td>";
     }
     private function status($status) {
-        return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
+        return td_status($status);
     }
 
     private function alterar($id) {
         $link = "index.php/ProcessoController/alterar/{$id}";
-        $value = "<a href='" . base_url($link) . "'>Alterar</a>";
-        return "<td>{$value}</td>";
+
+        return td_alterar($link);
     }
 
     private function excluir($id) {
+
         $link = "index.php/ProcessoController/deletar/{$id}";
 
-        $value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
-
-        return "<td>{$value}</td>";
+        return td_excluir($link);
     }
 
-    //todo data
+
     public function formatarData($data) {
         return form_input(array(
             'type' => 'datetime',
