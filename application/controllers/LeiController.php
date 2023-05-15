@@ -11,6 +11,7 @@ class LeiController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('dao/LeiDAO');
+        $this->load->library('lei_library');
     }
 
     public function index()
@@ -29,15 +30,15 @@ class LeiController extends CI_Controller
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $leis = $this->LeiDAO->buscar($indiceInicial, $mostrar);
+        $leis = $this->LeiDAO->buscarTodos($indiceInicial, $mostrar);
 
-        $quantidade = $this->LeiDAO->quantidade();
+        $quantidade = $this->LeiDAO->contar();
 
         $botoes = empty($leis) ? '' : $this->botao->paginar('leiController/listar', $indice, $quantidade, $mostrar);
 
         $dados = array(
             'titulo' => 'Lista de leis',
-            'tabela' => $this->tabela->lei($leis, $indiceInicial),
+            'tabela' => $this->lei_library->listar($leis, $indiceInicial),
             'pagina' => 'lei/index.php',
             'botoes' => $botoes,
         );

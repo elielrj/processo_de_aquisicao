@@ -56,6 +56,20 @@ function td_data_hora_br($value)
     );
 }
 
+function td_data_br($value)
+{
+    return td_value(
+        form_input(
+            array(
+                'type' => 'datetime',
+                'value' => DataLibrary::dataBr($value),
+                'disabled' => 'disable',
+                'class' => 'text-center'
+            )
+        )
+    );
+}
+
 function from_array_to_table_row($arrayList)
 {
     $line = "<tr class='text-center'>";

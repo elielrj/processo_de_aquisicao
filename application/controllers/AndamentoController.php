@@ -39,7 +39,7 @@ class AndamentoController extends CI_Controller
 
         $dados = array(
             'titulo' => 'Lista de leis',
-            'tabela' => $this->lei_library->lei($leis, $indiceInicial),
+            'tabela' => $this->lei_library->listar($leis, $indiceInicial),
             'pagina' => 'lei/index.php',
             'botoes' => $botoes,
         );

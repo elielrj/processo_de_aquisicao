@@ -8,7 +8,7 @@ class DataLibrary{
         return (DataLibrary::agora($data))->format('Y-m-d');
     }
 
-     public static function  dataBr($data = 'now')
+     public static function dataBr($data = 'now')
     {
         return (DataLibrary::agora($data))->format('d-m-Y');
     }

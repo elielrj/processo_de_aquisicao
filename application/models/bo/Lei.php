@@ -46,7 +46,7 @@ class Lei implements InterfaceBO{
 
         $art = ($this->artigo != "") ? (", Art. " . $this->artigo) : '';
         $inc = ($this->inciso != "") ? (", Inc. " . $this->inciso) : '';
-        $dat = ", de " . (new DateTime($this->data))->format('d-m-Y');//todo data
+        $dat = ", de " . DataLibrary::dataBr($this->data);
 
         return $this->numero . $art . $inc . $dat;
     }
@@ -60,7 +60,7 @@ class Lei implements InterfaceBO{
             'numero' => $this->numero,
             'artigo' => $this->artigo,
             'inciso' => $this->inciso,
-            'data' => $this->data->dataMySQL($this->data),
+            'data' => DataLibrary::dataMySQL($this->data),
             'modalidade_id' => $this->modalidade->id,
             'status' => $this->status
         );

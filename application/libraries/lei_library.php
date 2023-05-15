@@ -1,14 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+require_once('application/libraries/DataLibrary.php');
+
 class lei_library
 {
 
     private $ordem;
+    private $controller = 'LeiController';
 
-    public function lei($leis, $ordem)
+    public function listar($leis, $ordem)
     {
         $this->ordem = $ordem;
+        
         $tabela = $this->linhaDeCabecalho();
 
         foreach ($leis as $lei) {
@@ -21,106 +25,31 @@ class lei_library
 
     private function linhaDeCabecalho()
     {
-        return
-            "<tr class='text-center'> 
-                    <td>Ordem</td>
-                    <td>Número</td>
-                    <td>Artigo</td>
-                    <td>Inciso</td>
-                    <td>Data</td>
-                    <td>Modalidade</td>
-                    <td>Status</td>
-                    <td>Alterar</td>
-                    <td>Excluir</td>               
-                </tr>";
+        return from_array_to_table_row_with_td([
+            'Ordem',
+            'Número',
+            'Artigo',
+            'Inciso',
+            'Data',
+            'Modalidade',
+            'Status',
+            'Alterar',
+            'Excluir'
+        ]);
     }
 
     private function linha($lei)
     {
-
-        return
-            "<tr class='text-center'>" .
-
-            $this->ordem() .
-            $this->numero($lei->numero) .
-            $this->artigo($lei->artigo) .
-            $this->inciso($lei->inciso) .
-            $this->data($lei->data) .
-            $this->modalidade($lei->modalidade->nome) .
-            $this->tipoDeLicitacaoStatus($lei->status) .
-            $this->tipoDeLicitacaoAlterar($lei->id) .
-            $this->tipoDeLicitacaoExcluir($lei->id) .
-
-            "</tr>";
+        return from_array_to_table_row([
+            td_ordem($this->ordem),
+            td_value($lei->numero),
+            td_value($lei->artigo),
+            td_value($lei->inciso),
+            td_data_br($lei->data),
+            td_value($lei->modalidade->nome),
+            td_value($lei->status),
+            td_alterar($this->controller, $lei->id),
+            td_excluir($this->controller, $lei->id),
+        ]);
     }
-
-    private function ordem()
-    {
-        return "<td>{$this->ordem}</td>";
-    }
-
-    private function id($id)
-    {
-        return "<td>{$id}</td>";
-    }
-
-    private function numero($numero)
-    {
-        return "<td>{$numero}</td>";
-    }
-    
-    private function artigo($artigo)
-    {
-        return "<td>{$artigo}</td>";
-    }
-
-    private function inciso($inciso)
-    {
-        return "<td>{$inciso}</td>";
-    }
-
-    private function modalidade($modalidade)
-    {
-        return "<td>{$modalidade}</td>";
-    }
-
-    private function data($data)
-    {
-        return "<td>{$this->formatarData($data)}</td>";
-    }
-    
-    private function tipoDeLicitacaoStatus($status)
-    {
-        return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
-    }
-
-    private function tipoDeLicitacaoAlterar($id)
-    {
-        $link = "index.php/leiController/alterar/{$id}";
-        $value = "<a href='" . base_url($link) . "'>Alterar</a>";
-        return "<td>{$value}</td>";
-    }
-
-    private function tipoDeLicitacaoExcluir($id)
-    {
-        $link = "index.php/leiController/deletar/{$id}";
-
-        $value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
-
-        return "<td>{$value}</td>";
-    }
-
-    //todo data
-    public function formatarData($data)
-    {
-        return form_input(
-            array(
-                'type' => 'datetime',
-                'value' => (new DateTime($data))->format('d-m-Y'),
-                'disabled' => 'disable',
-                'class' => 'text-center'
-            )
-        );
-    }
-
 }
