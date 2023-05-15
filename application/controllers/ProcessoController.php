@@ -15,6 +15,7 @@ class ProcessoController extends CI_Controller
 		$this->load->model('dao/ModalidadeDAO');
 		$this->load->model('dao/TipoDAO');
 		$this->load->model('dao/LeiDAO');
+		$this->load->library('processo_library');
 	}
 
 	public function index()
@@ -42,7 +43,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
-			'tabela' => $this->tabela->processo($processos, $indiceInicial),
+			'tabela' => $this->processo_library->listar($processos, $indiceInicial),
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);

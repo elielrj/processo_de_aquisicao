@@ -5,19 +5,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 include_once('tabela/TabelaArquivo.php');
 include_once('tabela/TabelaArtefato.php');
 include_once('tabela/TabelaDepartamento.php');
-include_once('tabela/TabelaProcesso.php');
 include_once('tabela/TabelaProcessoExibir.php');
 include_once('tabela/TabelaProcessoImprimir.php');
 include_once('tabela/TabelaUg.php');
 include_once('tabela/TabelaUsuario.php');
-include_once('tabela/TabelaLei.php');
 
 class tabela {
 
-    public function processo($processos, $ordem) {
-        $tabelaProcesso = new TabelaProcesso();
-        return $tabelaProcesso->processo($processos, $ordem);
-    }
 
     public function usuario($usuarios, $ordem) {
         $tabelaUsuario = new TabelaUsuario();
@@ -79,8 +73,4 @@ class tabela {
         return $tabelaUg->ug($listaDeUg, $ordem);
     }
 
-    public function lei($lei, $ordem) {
-        $tabelaLei = new TabelaLei();
-        return $tabelaLei->lei($lei, $ordem);
-    }
 }

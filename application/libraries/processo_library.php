@@ -4,19 +4,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once('application/libraries/DataLibrary.php');
 
-//include_once('tabela/TabelaLei.php');
-
-class TabelaProcesso
+class processo_library
 {
-
     private $ordem;
-    private $controller;
+    private $controller = 'ProcessoController';
 
-    public function processo($processos, $ordem)
+    public function listar($processos, $ordem)
     {
         $this->ordem = $ordem;
-
-        $this->controller = 'ProcessoController';
 
         $tabela = $this->linhaDeCabecalhoDoProcesso();
 
