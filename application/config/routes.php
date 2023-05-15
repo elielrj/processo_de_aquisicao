@@ -55,11 +55,14 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['arquivos'] = 'ArquivoController/listar';
+
 $route['processos'] = 'ProcessoController/listar';
+$route['processo-novo'] = 'ProcessoController/novo';
+
 $route['artefatos'] = 'ArtefatoController/listar';
 $route['departamentos'] = 'DepartamentoController/listar';
 $route['leis'] = 'LeiController/listar';
-$route['tipos'] = 'TipoDeLicitacaoController/listar';
+$route['tipos'] = 'TipoController/listar';
 $route['ugs'] = 'UgController/listar';
 $route['usuarios'] = 'UsuarioController/listar';
 $route['usuario-novo'] = 'UsuarioController/novo';

@@ -15,6 +15,7 @@ class ProcessoController extends CI_Controller
 		$this->load->model('dao/ModalidadeDAO');
 		$this->load->model('dao/TipoDAO');
 		$this->load->model('dao/LeiDAO');
+		$this->load->model('dao/UsuarioDAO');
 		$this->load->library('processo_library');
 	}
 
@@ -93,7 +94,7 @@ class ProcessoController extends CI_Controller
 
 	public function novo()
 	{
-
+		
 		$usuarioAtual = $this->UsuarioDAO->buscarPorId($this->session->id);
 
 		$lei_e_modalidade_pre_definido = 1;
@@ -105,7 +106,7 @@ class ProcessoController extends CI_Controller
 			'departamento' => $usuarioAtual->departamento->id,
 			'modalidades' => $this->ModalidadeDAO->options(),
 			'tipos' => $this->TipoDAO->options(),
-			'leis' => $this->LeiDAO->optionsDeLeisPorModalidadeId($lei_e_modalidade_pre_definido),
+			'leis' => $this->LeiDAO->options($lei_e_modalidade_pre_definido),
 			'lei_e_modalidade_pre_definido' => $lei_e_modalidade_pre_definido
 		);
 

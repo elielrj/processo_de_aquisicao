@@ -45,7 +45,7 @@ class LeiDAO extends CI_Model
     {
         $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
-        return $this->criarLista($array->result());
+        return $this->criarLista($array);
     }
 
     public function atualizar($lei)

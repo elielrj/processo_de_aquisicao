@@ -2,7 +2,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('tabela/TabelaArquivo.php');
 include_once('tabela/TabelaArtefato.php');
 include_once('tabela/TabelaDepartamento.php');
 include_once('tabela/TabelaProcessoExibir.php');
@@ -18,10 +17,6 @@ class tabela {
         return $tabelaUsuario->usuario($usuarios, $ordem);
     }
 
-    public function arquivo($arquivos, $ordem) {
-        $tabelaArquivo = new TabelaArquivo();
-        return $tabelaArquivo->arquivo($arquivos, $ordem);
-    }
 
     public function departamento($departamentos, $ordem) {
         $tabelaDepartamento = new TabelaDepartamento();
@@ -47,11 +42,6 @@ class tabela {
         return $tabelaProcessoImprimir->processo_imprimir($processo);
     }
 
-    //todo
-    public function tipoDeLicitacao($tiposDeLicitacoes, $ordem) {
-        $tabelaTipoDeLicitacao = new TabelaTipoDeLicitacao();
-        return $tabelaTipoDeLicitacao->tipoDeLicitacao($tiposDeLicitacoes, $ordem);
-    }
 
     public function artefato($artefatos, $ordem) {
         $tabelaArtefato = new TabelaArtefato();
