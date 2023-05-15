@@ -5,27 +5,27 @@ class DataLibrary{
 
      public static function  dataMySQL($data = 'now')
     {
-        return (DataLibrary::agora(isset($data)))->format('Y-m-d');
+        return (DataLibrary::agora($data))->format('Y-m-d');
     }
 
      public static function  dataBr($data = 'now')
     {
-        return (DataLibrary::agora(isset($data)))->format('d-m-Y');
+        return (DataLibrary::agora($data))->format('d-m-Y');
     }
 
      public static function  dataHoraMySQL($data = 'now')
     {
-        return (DataLibrary::agora(isset($data)))->format('Y-m-d H:m:s');
+        return (DataLibrary::agora($data))->format('Y-m-d H:m:s');
     }
 
      public static function  dataHoraBr($data = 'now')
     {
-        return (DataLibrary::agora(isset($data)))->format('d-m-Y H:m:s');
+        return (DataLibrary::agora($data))->format('d-m-Y H:m:s');
     }
 
-     public static function  agora($data = 'now')
+     public static function  agora($data)
     {
-        return new DateTime('now', DataLibrary::dateTimeZone());
+        return new DateTime($data, DataLibrary::dateTimeZone());
     }
 
      public static function  dateTimeZone()
