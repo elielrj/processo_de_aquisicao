@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once('application/libraries/DataLibrary.php');
 
-class lei_library
+class LeiLibrary
 {
 
     private $ordem;

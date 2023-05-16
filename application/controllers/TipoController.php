@@ -10,7 +10,7 @@ class TipoController extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('session');
-		$this->load->library('tipo_library');
+		$this->load->library('TipoLibrary');
 		$this->load->model('dao/tipoDAO');
 	}
 
@@ -41,7 +41,7 @@ class TipoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de Tipos De Licitacões',
-			'tabela' => $this->tipo_library->listar($tipo, $indiceInicial),
+			'tabela' => $this->TipoLibrary->listar($tipo, $indiceInicial),
 			'pagina' => 'tipo/index.php',
 			'botoes' => $botoes,
 		);

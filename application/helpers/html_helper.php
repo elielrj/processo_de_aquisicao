@@ -94,5 +94,16 @@ function from_array_to_table_row_with_td($arrayList)
 }
 
 
+function br_multiples($value = 1)
+{
+    $count = 1;
+
+    do{
+
+        echo '</br>';
+
+    }while($count <= $value);
+}
+
 
 ?>

@@ -2,12 +2,15 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TabelaDepartamento {
+class DepartamentoLibrary {
 
     private $ordem;
+    private $controller = 'DepartamentoController';
 
     public function departamento($departamentos, $ordem) {
+
         $this->ordem = $ordem;
+
         $tabela = $this->linhaDeCabecalho();
 
         foreach ($departamentos as $departamento) {
@@ -18,47 +21,24 @@ class TabelaDepartamento {
     }
 
     private function linhaDeCabecalho() {
-        return
-                "<tr class='text-center'> 
-                    <td>Ordem</td>
-                    <td>Nome</td>
-                    <td>Sigla</td>
-                    <td>Status</td>
-                    <td>Alterar</td>
-                </tr>";
+        return from_array_to_table_row_with_td([
+            'Ordem',
+            'Nome',
+            'Sigla',
+            'Status',
+            'Alterar',
+            'Excluir'
+        ]);
     }
 
     private function linha($departamento) {
-        return
-                "<tr class='text-center'>" .
-                $this->departamentoOrdem() .
-                $this->departamentoNome($departamento->nome) .
-                $this->departamentoSigla($departamento->sigla) .
-                $this->departamentoStatus($departamento->status) .
-                $this->departamentoAlterar($departamento->id) .
-                "</tr>";
+        return from_array_to_table_row([
+                td_ordem($this->ordem) ,
+                td_value($departamento->nome) ,
+                td_value($departamento->sigla) ,
+                td_status($departamento->status) ,
+                td_alterar($this->controller,$departamento->id) ,
+                td_excluir($this->controller,$departamento->id) ,
+        ]);
     }
-
-    private function departamentoOrdem() {
-        return "<td>{$this->ordem}</td>";
-    }
-
-    private function departamentoNome($nome) {
-        return "<td>{$nome}</td>";
-    }
-
-    private function departamentoSigla($sigla) {
-        return "<td>{$sigla}</td>";
-    }
-
-    private function departamentoStatus($status) {
-        return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
-    }
-
-    private function departamentoAlterar($id) {
-        $link = "index.php/DepartamentoController/alterar/{$id}";
-        $value = "<a href='" . base_url($link) . "'>Alterar</a>";
-        return "<td>{$value}</td>";
-    }
-
 }

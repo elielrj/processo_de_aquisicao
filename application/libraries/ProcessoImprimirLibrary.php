@@ -2,10 +2,11 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TabelaProcessoImprimir
+class ProcessoImprimirLibrary
 {
 
     private $ordem;
+    private $controller = 'ProcessoController';
 
     public function processo_imprimir($processo)
     {
@@ -14,7 +15,7 @@ class TabelaProcessoImprimir
 
         $tabela = $this->processoImpirmirCabecalho($processo);
 
-        $tabela .= "</br></br></br>";
+        $tabela .= br_multiples(3);
 
         $tabela .= $this->processoImprimirListaDeArtefatos($processo);
 
@@ -33,15 +34,15 @@ class TabelaProcessoImprimir
                         </tr>
                         <tr class='text-left'> 
                             <td>Número do Processo (Nup/Nud): </td>
-                            <td>" . $processo->numero . "</td> 
+                            " . td_value($processo->numero) . "
                         </tr>
                         <tr class='text-left'> 
-                            <td>Data de abertura(Nup/Nud): </td>
-                            <td>" . $this->formatarData($processo->dataHora) . "</td> 
-                        </tr>
+                            <td>Data de abertura(Nup/Nud): </td>"
+                             . td_data_br($processo->dataHora) . 
+                        "</tr>
                         <tr class='text-left'> 
                             <td>Chave para acompanhar: </td>
-                            <td>" . $processo->chave . "</td> 
+                            " . td_value($processo->chave) . "
                         </tr>
                         <tr class='text-left'> 
                             <td>Modalidade: </td>
@@ -128,78 +129,8 @@ class TabelaProcessoImprimir
         return "<td>{$this->ordem}</td>";
     }
 
-    private function id($id)
-    {
-        return "<td>{$id}</td>";
-    }
-
-    private function modalidade($modalidade)
-    {
-        return "<td>{$modalidade}</td>";
-    }
-
     private function objeto($objeto, $id)
     {
         return "<td><a href='" . base_url('index.php/ProcessoController/exibir/' . $id) . "'>{$objeto}</a></td>";
-    }
-
-    private function lei($lei)
-    {
-        return "<td>{$lei}</td>";
-    }
-
-    private function numero($numero)
-    {
-        return "<td>{$numero}</td>";
-    }
-
-    private function data($data)
-    {
-        return "<td>{$this->formatarData($data)}</td>";
-    }
-
-    private function chave($chave)
-    {
-        return "<td>{$chave}</td>";
-    }
-
-    private function departamento($departamento)
-    {
-
-        return "<td>{$departamento->nome}</td>";
-    }
-
-    private function status($status)
-    {
-        return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
-    }
-
-    private function alterar($id)
-    {
-        $link = "index.php/ProcessoController/alterar/{$id}";
-        $value = "<a href='" . base_url($link) . "'>Alterar</a>";
-        return "<td>{$value}</td>";
-    }
-
-    private function excluir($id)
-    {
-        $link = "index.php/ProcessoController/deletar/{$id}";
-
-        $value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
-
-        return "<td>{$value}</td>";
-    }
-
-    //todo data
-    public function formatarData($data)
-    {
-        return form_input(
-            array(
-                'type' => 'datetime',
-                'value' => (new DateTime($data))->format('d-m-Y'),
-                'disabled' => 'disable',
-                'class' => 'text-center'
-            )
-        );
     }
 }

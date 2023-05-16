@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once('application/libraries/DataLibrary.php');
 
-class arquivo_library
+class ArquivoLibrary
 {
 
     private $ordem;
@@ -44,8 +44,6 @@ class arquivo_library
             td_excluir($this->controller, $arquivo->id)
         ]);
     }
-
-
 
     private function arquivoPath($path)
     {

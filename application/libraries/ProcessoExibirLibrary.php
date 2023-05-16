@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class TabelaProcessoExibir
+class ProcessoExibirLibrary
 {
 
     private $ordem;
@@ -13,7 +13,7 @@ class TabelaProcessoExibir
 
         $tabela = $this->processoExibirCabecalho($processo);
 
-        $tabela .= "</br></br></br>";
+        $tabela .= br_multiples(3);
 
         $tabela .= $this->processoExibirListarArtefatos($processo);
 
@@ -36,7 +36,7 @@ class TabelaProcessoExibir
                         </tr>
                         <tr class='text-left'> 
                             <td>Data de abertura(Nup/Nud): </td>
-                            <td>" . $this->formatarData($processo->dataHora) . "</td> 
+                            " . td_data_hora_br($processo->dataHora) . "
                         </tr>
                         <tr class='text-left'> 
                             <td>Chave para acompanhar: </td>
@@ -151,68 +151,9 @@ class TabelaProcessoExibir
         }
     }
 
-    private function ordem()
-    {
-        return "<td>{$this->ordem}</td>";
-    }
-
-    private function id($id)
-    {
-        return "<td>{$id}</td>";
-    }
-
-    private function modalidade($modalidade)
-    {
-        return "<td>{$modalidade}</td>";
-    }
-
     private function objeto($objeto, $id)
     {
         return "<td><a href='" . base_url('index.php/ProcessoController/exibir/' . $id) . "'>{$objeto}</a></td>";
-    }
-
-    private function lei($lei)
-    {
-        return "<td>{$lei}</td>";
-    }
-
-    private function numero($numero)
-    {
-        return "<td>{$numero}</td>";
-    }
-
-    private function data($data)
-    {
-        return "<td>{$this->formatarData($data)}</td>";
-    }
-
-    private function chave($chave)
-    {
-        return "<td>{$chave}</td>";
-    }
-
-    private function departamento($departamento)
-    {
-
-        return "<td>{$departamento->nome}</td>";
-    }
-
-    private function status($status)
-    {
-        return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
-    }
-
-    //todo data
-    public function formatarData($data)
-    {
-        return form_input(
-            array(
-                'type' => 'datetime',
-                'value' => (new DateTime($data))->format('d-m-Y'),
-                'disabled' => 'disable',
-                'class' => 'text-center'
-            )
-        );
-    }
+    } 
 
 }

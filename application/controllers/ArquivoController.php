@@ -9,7 +9,7 @@ class ArquivoController extends CI_Controller
     {
         parent::__construct();
         $this->load->library('session');
-        $this->load->library('arquivo_library');
+        $this->load->library('ArquivoLibrary');
         
         $this->load->model('dao/ArquivoDAO');
         $this->load->model('dao/ProcessoDAO');
@@ -42,7 +42,7 @@ class ArquivoController extends CI_Controller
 
         $dados = array(
             'titulo' => 'Lista de arquivos',
-            'tabela' => $this->arquivo_library->listar($arquivos, $indiceInicial),
+            'tabela' => $this->ArquivoLibrary->listar($arquivos, $indiceInicial),
             'pagina' => 'arquivo/index.php',
             'botoes' => $botoes,
         );

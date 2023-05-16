@@ -11,7 +11,7 @@ class LeiController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('dao/LeiDAO');
-        $this->load->library('lei_library');
+        $this->load->library('LeiLibrary');
     }
 
     public function index()
@@ -38,7 +38,7 @@ class LeiController extends CI_Controller
 
         $dados = array(
             'titulo' => 'Lista de leis',
-            'tabela' => $this->lei_library->listar($leis, $indiceInicial),
+            'tabela' => $this->LeiLibrary->listar($leis, $indiceInicial),
             'pagina' => 'lei/index.php',
             'botoes' => $botoes,
         );
