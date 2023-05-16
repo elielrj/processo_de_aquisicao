@@ -42,7 +42,7 @@ class ArquivoController extends CI_Controller
 
         $dados = array(
             'titulo' => 'Lista de arquivos',
-            'tabela' => $this->ArquivoLibrary->listar($arquivos, $indiceInicial),
+            'tabela' => $this->arquivolibrary->listar($arquivos, $indiceInicial),
             'pagina' => 'arquivo/index.php',
             'botoes' => $botoes,
         );

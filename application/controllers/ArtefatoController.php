@@ -7,6 +7,7 @@ class ArtefatoController extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('dao/ArtefatoDAO');
+        $this->load->library('ArtefatoLibrary');
     }
 
     public function index() {
@@ -31,7 +32,7 @@ class ArtefatoController extends CI_Controller {
 
         $dados = array(
             'titulo' => 'Lista de Artefatos',
-            'tabela' => $this->tabela->artefato($artefatos, $indiceInicial),
+            'tabela' => $this->artefatolibrary->listar($artefatos, $indiceInicial),
             'pagina' => 'artefato/index.php',
             'botoes' => $botoes,
         );

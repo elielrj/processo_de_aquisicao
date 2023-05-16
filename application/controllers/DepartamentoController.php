@@ -7,6 +7,7 @@ class DepartamentoController extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('dao/DepartamentoDAO');
+        $this->load->library('DepartamentoLibrary');
     }
 
     public function index() {
@@ -33,7 +34,7 @@ class DepartamentoController extends CI_Controller {
 
         $dados = array(
             'titulo' => 'Lista de Departamentos',
-            'tabela' => $this->tabela->departamento($departamentos, $indiceInicial),
+            'tabela' => $this->departamentolibrary->listar($departamentos, $indiceInicial),
             'pagina' => 'departamento/index.php',
             'botoes' => $botoes,
         );

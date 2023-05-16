@@ -38,7 +38,7 @@ class LeiController extends CI_Controller
 
         $dados = array(
             'titulo' => 'Lista de leis',
-            'tabela' => $this->LeiLibrary->listar($leis, $indiceInicial),
+            'tabela' => $this->leilibrary->listar($leis, $indiceInicial),
             'pagina' => 'lei/index.php',
             'botoes' => $botoes,
         );

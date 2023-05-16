@@ -74,6 +74,9 @@ class UgDAO extends CI_Model
             isset($arrayList->id)
             ? $arrayList->id
             : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->numero)
+            ? $arrayList->numero
+            : (isset($arrayList['numero']) ? $arrayList['numero'] : null),
             isset($arrayList->nome)
             ? $arrayList->nome
             : (isset($arrayList['nome']) ? $arrayList['nome'] : null),

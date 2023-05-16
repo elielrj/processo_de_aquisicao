@@ -7,7 +7,7 @@ class DepartamentoLibrary {
     private $ordem;
     private $controller = 'DepartamentoController';
 
-    public function departamento($departamentos, $ordem) {
+    public function listar($departamentos, $ordem) {
 
         $this->ordem = $ordem;
 

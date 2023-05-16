@@ -47,7 +47,7 @@ class LeiLibrary
             td_value($lei->inciso),
             td_data_br($lei->data),
             td_value($lei->modalidade->nome),
-            td_value($lei->status),
+            td_status($lei->status),
             td_alterar($this->controller, $lei->id),
             td_excluir($this->controller, $lei->id),
         ]);

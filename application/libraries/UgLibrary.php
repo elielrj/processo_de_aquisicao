@@ -7,7 +7,7 @@ class UgLibrary {
     private $ordem;
     private $controller = 'UgController';
 
-    public function ug($listaDeUg, $ordem) {
+    public function listar($listaDeUg, $ordem) {
         
         $this->ordem = $ordem;
 
@@ -33,15 +33,15 @@ class UgLibrary {
     }
 
     private function linha($ug) {
-        return from_array_to_table_row(
-            $this->ordem,
-            td_value($ug->numero) ,
-            td_value($ug->nome) ,
-            td_value($ug->sigla) ,
-            td_status($ug->status),
-            td_alterar($this->controller,$ug->id),
-            td_excluir($this->controller,$ug->id)
-        );
+            return from_array_to_table_row([
+                td_ordem($this->ordem),
+                td_value($ug->numero) ,
+                td_value($ug->nome) ,
+                td_value($ug->sigla) ,
+                td_status($ug->status),
+                td_alterar($this->controller,$ug->id),
+                td_excluir($this->controller,$ug->id)
+        ] );
     }
 
 }

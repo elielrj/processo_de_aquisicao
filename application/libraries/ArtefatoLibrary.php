@@ -7,7 +7,7 @@ class ArtefatoLibrary
     private $ordem;
     private $controller = 'ArtefatoController';
 
-    public function artefato($artefatos, $ordem)
+    public function listar($artefatos, $ordem)
     {
         $this->ordem = $ordem;
 

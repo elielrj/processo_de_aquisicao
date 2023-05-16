@@ -69,6 +69,9 @@ $route['usuario-novo'] = 'UsuarioController/novo';
 $route['sair'] = 'LoginController/sair';
 $route['modalidades'] = 'ModalidadeController/listar';
 
+#lei-tipo-artefato
+$route['leis-tipos-artefatos'] = 'LeiTipoArtefatoController';
+
 
 
 

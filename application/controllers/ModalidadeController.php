@@ -7,6 +7,7 @@ class ModalidadeController extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('dao/ModalidadeDAO');
+        $this->load->library('ArtefatoLibrary');
     }
 
     public function index() {
@@ -31,7 +32,7 @@ class ModalidadeController extends CI_Controller {
 
         $dados = array(
             'titulo' => 'Lista de modalidades',
-            'tabela' => $this->tabela->artefato($modalidades, $indiceInicial),
+            'tabela' => $this->artefatolibrary->listar($modalidades, $indiceInicial),
             'pagina' => 'artefato/index.php',
             'botoes' => $botoes,
         );

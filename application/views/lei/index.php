@@ -1,21 +1,8 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed'); ?>
+defined('BASEPATH') or exit('No direct script access allowed');
 
-<!-- título -->
-<h1>
-    <?php echo $titulo ?>
-</h1>
+view_titulo($titulo); 
 
-<a class="btn btn-primary btn-sm" href="<?php echo base_url('index.php/LeiController/novo') ?>">NOVO</a>
+view_tabela($tabela);
 
-</br></br>
-
-<!-- tabela -->
-<table class=''>
-    <table class="table table-responsive-md table-hover">
-        <?php echo $tabela; ?>
-    </table>
-</table>
-
-<!-- botão na horizontal -->
-<?php echo "<div class='row'>{$botoes}</div>"; ?>
+view_botao($botoes);

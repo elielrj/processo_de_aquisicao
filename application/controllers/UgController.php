@@ -7,6 +7,7 @@ class UgController extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('dao/UgDAO');
+        $this->load->library('UgLibrary');
     }
 
     public function index() {
@@ -31,7 +32,7 @@ class UgController extends CI_Controller {
 
         $dados = array(
             'titulo' => 'Lista de UG',
-            'tabela' => $this->tabela->ug($listaDeUg, $indiceInicial),
+            'tabela' => $this->uglibrary->listar($listaDeUg, $indiceInicial),
             'pagina' => 'ug/index.php',
             'botoes' => $botoes,
         );

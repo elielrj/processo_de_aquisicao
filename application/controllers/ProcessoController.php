@@ -44,7 +44,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
-			'tabela' => $this->ProcessoLibrary->listar($processos, $indiceInicial),
+			'tabela' => $this->processolibrary->listar($processos, $indiceInicial),
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);

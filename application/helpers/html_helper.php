@@ -105,5 +105,26 @@ function br_multiples($value = 1)
     }while($count <= $value);
 }
 
+function view_titulo($titulo)
+{
+    echo "<h1>{$titulo}</h1>";
+}
+
+function view_tabela($tabela)
+{
+    echo 
+        "
+            <table class=''>
+                <table class='table table-responsive-md table-hover'>
+                    $tabela
+                </table>
+            </table>
+        ";
+}
+
+function view_botao($botao)
+{
+    echo "<div class='row'>{$botao}</div>";
+}
 
 ?>

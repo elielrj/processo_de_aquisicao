@@ -13,6 +13,7 @@ class UsuarioController extends CI_Controller
         $this->load->library('session');
         $this->load->model('dao/UsuarioDAO');
         $this->load->model('dao/DepartamentoDAO');
+        $this->load->library('UsuarioLibrary');
     }
 
     public function index()
@@ -41,7 +42,7 @@ class UsuarioController extends CI_Controller
 
         $dados = array(
             'titulo' => 'Lista de Usuários',
-            'tabela' => $this->tabela->usuario($usuarios, $indiceInicial),
+            'tabela' => $this->usuariolibrary->listar($usuarios, $indiceInicial),
             'pagina' => 'usuario/index.php',
             'botoes' => $botoes,
         );

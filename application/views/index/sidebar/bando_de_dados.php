@@ -103,7 +103,7 @@
     <div id="collapseLeiTipoArtefato" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Processo de Aquisição</h6>
-            <a class="collapse-item" href="<?php echo base_url('index.php/usuarios'); ?>">Listar</a>
+            <a class="collapse-item" href="<?php echo base_url('index.php/leis-tipos-artefatos'); ?>">Listar</a>
             <a class="collapse-item" href="<?php echo base_url('index.php/usuarios/novo'); ?>">Novo</a>
             <a class="collapse-item" href="<?php echo base_url('index.php/usuarios/listar'); ?>">Alterar</a>
             <a class="collapse-item" href="<?php echo base_url('index.php/usuarios/listar'); ?>">Deletar</a>
