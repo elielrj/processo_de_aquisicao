@@ -38,4 +38,11 @@ class LeiTipoArtefatoDAO extends CI_Model
     {
         return $this->ArtefatoDAO->buscarPorId($array->artefato_id);
     }
+
+    public function buscarTodos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
 }

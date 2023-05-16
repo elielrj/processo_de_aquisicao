@@ -47,7 +47,7 @@ class LeiTipoArtefatoController extends CI_Controller
             $data_post['status']
         );
 
-        $this->LeiTipoArtefatoDAO->update($lei);
+        $this->LeiTipoArtefatoDAO->atualizar($whare);
 
         redirect('LeiTipoArtefatoController');
     }

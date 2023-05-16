@@ -4,12 +4,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
 
-class Artefato implements InterfaceBO {
+class LeiTipoArtefato implements InterfaceBO {
 
-    private $id;
-    private $ordem;
-    private $nome;
-    private $arquivo;
+    private $lei;
+    private $tipo;
+    private $artefato;
     private $status;
 
     /**
@@ -18,14 +17,14 @@ class Artefato implements InterfaceBO {
      * com a lista de Artefatos
      */
     public function __construct(
-            $id = null,
-            $ordem,
-            $nome,
-            $status = true
+            $lei,
+            $tipo,
+            $artefato,
+            $status
     ) {
-        $this->id = $id;
-        $this->ordem = $ordem;
-        $this->nome = $nome;
+        $this->lei = $lei;
+        $this->tipo= $tipo;
+        $this->artefato = $artefato;
         $this->status = $status;
     }
 
@@ -40,9 +39,9 @@ class Artefato implements InterfaceBO {
     public function toArray()
     {
         return array(
-            'id' => $this->id,
-            'ordem' => $this->ordem,
-            'nome' => $this->nome,
+            'lei_id' => $this->lei->id,
+            'tipo_id' => $this->tipo->id,
+            'artefato_id' => $this->artefato->id,
             'status' => $this->status,
         );
     }
