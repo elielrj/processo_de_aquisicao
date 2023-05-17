@@ -19,7 +19,13 @@ class AndamentoDAO extends CI_Model
         $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
     }
 
-    
+        public function buscarTodosAtivosInativos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodosAtivosInativos(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
     public function buscarPorId($andamentoId)
     {
         $array = $this->DAO->buscarPorId(self::$TABELA_DB, $andamentoId);
@@ -33,6 +39,16 @@ class AndamentoDAO extends CI_Model
         $this->DAO->atualizar(self::$TABELA_DB, $andamento->toArray());
     }
 
+
+    public function deletar($arquivo)
+    {
+        $this->DAO->deletar(self::$TABELA_DB, $arquivo->toArray());
+    }
+
+    public function contarAtivosInativos()
+    {
+        return $this->DAO->contarAtivosInativos(self::$TABELA_DB);
+    }
 
     public static function toObject($arrayList)
     {

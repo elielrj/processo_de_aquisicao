@@ -28,6 +28,12 @@ class DAO extends CI_Model
             ->get($banco, $inicio, $fim);
     }
 
+    public function buscarTodosAtivosInativos($banco, $inicio, $fim)
+    {
+        return $this->db
+            ->order_by('id', 'DSC')
+            ->get($banco, $inicio, $fim);
+    }
 
     public function buscarPorId($banco, $id)
     {
@@ -60,6 +66,12 @@ class DAO extends CI_Model
     {
         return $this->db
             ->where(array('status' => false))
+            ->count_all_results($banco);
+    }
+
+    public function contarAtivosInativos($banco)
+    {
+        return $this->db
             ->count_all_results($banco);
     }
 

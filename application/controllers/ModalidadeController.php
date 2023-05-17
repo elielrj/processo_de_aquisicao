@@ -56,7 +56,7 @@ class ModalidadeController extends CI_Controller {
                 $data_post['status']
         );
 
-        $this->ModalidadeDAO->create($artefato);
+        $this->ModalidadeDAO->criar($artefato);
 
         redirect('ModalidadeController');
     }
@@ -84,14 +84,14 @@ class ModalidadeController extends CI_Controller {
                 $data_post['status']
         );
 
-        $this->ModalidadeDAO->update($artefato);
+        $this->ModalidadeDAO->atualizar($artefato);
 
         redirect('ModalidadeController');
     }
 
     public function deletar($id) {
 
-        $this->ModalidadeDAO->delete($id);
+        $this->ModalidadeDAO->deletar($id);
 
         redirect('ModalidadeController');
     }

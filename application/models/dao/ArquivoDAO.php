@@ -16,7 +16,6 @@ class ArquivoDAO extends CI_Model
 
     public function criar($objeto)
     {
-        var_dump($objeto);
         $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
     }
 

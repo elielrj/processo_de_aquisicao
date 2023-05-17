@@ -4,6 +4,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
 include_once('StatusDoAndamento.php');
+include_once('Enviado.php');
+include_once('Executado.php');
+include_once('Conformado.php');
+
 class Andamento implements StatusDoAndamento, InterfaceBO
 {
 
@@ -16,38 +20,17 @@ class Andamento implements StatusDoAndamento, InterfaceBO
         $statusDoAndamento = null,
         $dataHora = null
     ) {       
-        $this->id = isset($id) ? $id : null;
+        $this->id = $id;
         $this->statusDoAndamento = isset($statusDoAndamento) ? $statusDoAndamento : new Enviado();
         $this->dataHora = isset($dataHora) ? $dataHora : new DateTime('now',new DateTimeZone('America/Sao_Paulo'));
     }
 
-    public function getId()
-    {
-        return $this->id;
+       function __get($key) {
+        return $this->$key;
     }
 
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getDataHora()
-    {
-        return $this->dataHora;
-    }
-
-    public function setDataHora($dataHora)
-    {
-        $this->dataHora = $dataHora;
-    }
-
-    public function nome()
-    {
-        return $this->statusDoAndamento->nome();
-    }
-    public function nivel()
-    {
-        return $this->statusDoAndamento->nivel();
+    function __set($key, $value) {
+        $this->$key = $value;
     }
 
     public function toArray()
@@ -63,13 +46,23 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 
     public static function selecionarStatus($nome)
     {
-        if ($nome == Enviado::$NOME) {
+        if ($nome == Enviado::NOME) {
             return new Enviado();
-        } else if ($nome == Executado::$NOME) {
+        } else if ($nome == Executado::NOME) {
             return new Executado();
-        } else if ($nome == Conformado::$NOME) {
+        } else if ($nome == Conformado::NOME) {
             return new Conformado();
         }
+    }
+
+    public function nome()
+    {
+        return $this->statusDoAndamento->nome();
+    }
+
+    public function nivel()
+    {
+        return $this->statusDoAndamento->nivel();
     }
 }
 ?>

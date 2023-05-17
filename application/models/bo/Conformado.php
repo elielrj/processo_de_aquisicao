@@ -5,17 +5,17 @@ include_once('StatusDoAndamento.php');
 
 class Conformado implements StatusDoAndamento
 {
-    static $NOME = 'conformado';
-    static $NIVEL = 3;
+    const NOME = 'conformado';
+    const NIVEL = 3;
 
     public function nome()
     {
-        return $this->NOME;
+        return Conformado::NOME;
     }
 
     public function nivel()
     {
-        return $this->NIVEL;
+        return Conformado::NIVEL;
     }
 
 }

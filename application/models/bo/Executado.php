@@ -7,17 +7,17 @@ include_once('StatusDoAndamento.php');
 class Executado implements StatusDoAndamento
 {
 
-    static $NOME = 'executado';
-    static $NIVEL = 2;
+    const NOME = 'executado';
+    const NIVEL = 2;
 
     public function nome()
     {
-        return $this->NOME;
+        return Executado::NOME;
     }
 
     public function nivel()
     {
-        return $this->NIVEL;
+        return Executado::NIVEL;
     }
 
 }

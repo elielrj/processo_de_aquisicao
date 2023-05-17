@@ -30,15 +30,15 @@ class AndamentoController extends CI_Controller
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $leis = $this->AndamentoDAO->buscarTodos($indiceInicial, $mostrar);
+        $leis = $this->AndamentoDAO->buscarTodosAtivosInativos($indiceInicial, $mostrar);
 
-        $quantidade = $this->AndamentoDAO->contar();
+        $quantidade = $this->AndamentoDAO->contarAtivosInativos();
 
         $botoes = empty($leis) ? '' : $this->botao->paginar('AndamentoController/listar', $indice, $quantidade, $mostrar);
 
         $dados = array(
             'titulo' => 'Lista de leis',
-            'tabela' => $this->andamentoibrary->listar($leis, $indiceInicial),
+            'tabela' => $this->andamentolibrary->listar($leis, $indiceInicial),
             'pagina' => 'andamento/index.php',
             'botoes' => $botoes,
         );

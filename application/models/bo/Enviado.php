@@ -4,17 +4,17 @@ include_once('StatusDoAndamento.php');
 
 class Enviado implements StatusDoAndamento
 {
-    static $NOME = 'enviado';
-    static $NIVEL = 1;
+    const NOME = 'enviado';
+    const NIVEL = 1;
 
     public function nome()
     {
-        return $this->NOME;
+        return Enviado::NOME;
     }
 
     public function nivel()
     {
-        return $this->NIVEL;
+        return Enviado::NIVEL;
     }
 
 }
