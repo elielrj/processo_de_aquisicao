@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Lei.php');
+require_once('application/models/bo/Andamento.php');
 
 class AndamentoController extends CI_Controller
 {
@@ -11,8 +11,7 @@ class AndamentoController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('dao/AndamentoDAO');
-        $this->load->model('dao/LeiDAO');
-        $this->load->library('LeiLibrary');
+        $this->load->library('AndamentoLibrary');
     }
 
     public function index()
@@ -31,16 +30,16 @@ class AndamentoController extends CI_Controller
         $mostrar = 10;
         $indiceInicial = $indice * $mostrar;
 
-        $leis = $this->LeiDAO->buscarTodos($indiceInicial, $mostrar);
+        $leis = $this->AndamentoDAO->buscarTodos($indiceInicial, $mostrar);
 
-        $quantidade = $this->LeiDAO->contar();
+        $quantidade = $this->AndamentoDAO->contar();
 
-        $botoes = empty($leis) ? '' : $this->botao->paginar('leiController/listar', $indice, $quantidade, $mostrar);
+        $botoes = empty($leis) ? '' : $this->botao->paginar('AndamentoController/listar', $indice, $quantidade, $mostrar);
 
         $dados = array(
             'titulo' => 'Lista de leis',
-            'tabela' => $this->leilibrary->listar($leis, $indiceInicial),
-            'pagina' => 'lei/index.php',
+            'tabela' => $this->andamentoibrary->listar($leis, $indiceInicial),
+            'pagina' => 'andamento/index.php',
             'botoes' => $botoes,
         );
         $this->load->view('index', $dados);
@@ -49,8 +48,8 @@ class AndamentoController extends CI_Controller
     public function novo()
     {
         $this->load->view('index', [
-            'titulo' => 'Nova lei',
-            'pagina' => 'lei/novo.php'
+            'titulo' => 'Nova andamento',
+            'pagina' => 'andamento/novo.php'
         ]);
     }
 
@@ -59,30 +58,26 @@ class AndamentoController extends CI_Controller
 
         $data_post =  $this->input->post();
 
-        $lei = new lei(
+        $andamento = new Andamento(
             null,
-            $data_post['numero'],
-            $data_post['artigo'],
-            $data_post['inciso'],
-            $data_post['data'],
-            $data_post['modalidade_id'],
-            $data_post['status']
+            $data_post['status_do_andamento'],
+            $data_post['data_hora']
         );
 
-        $this->LeiDAO->create($lei);
+        $this->AndamentoDAO->criar($andamento);
 
-        redirect('leiController');
+        redirect('AndamentoController');
     }
 
     public function alterar($id)
     {
 
-        $lei = $this->LeiDAO->buscarId($id);
+        $andamento = $this->AndamentoDAO->buscarId($id);
 
         $dados = [
-            'titulo' => 'Alterar lei',
-            'pagina' => 'lei/alterar.php',
-            'lei' => $lei
+            'titulo' => 'Alterar andamento',
+            'pagina' => 'andamento/alterar.php',
+            'andamento' => $andamento
         ];
 
         $this->load->view('index', $dados);
@@ -93,45 +88,22 @@ class AndamentoController extends CI_Controller
 
         $data_post =  $this->input->post();
 
-        $lei = new lei(
+        $andamento = new Andamento(
             $data_post['id'],
-            $data_post['numero'],
-            $data_post['artigo'],
-            $data_post['inciso'],
-            $data_post['data'],
-            $data_post['modalidade_id'],
-            $data_post['status']
+            $data_post['status_do_andamento'],
+            $data_post['data_hora']
         );
 
-        $this->LeiDAO->update($lei);
+        $this->AndamentoDAO->atualizar($andamento);
 
-        redirect('leiController');
+        redirect('AndamentoController');
     }
 
     public function deletar($id)
     {
 
-        $this->LeiDAO->deletar($id);
+        $this->AndamentoDAO->deletar($id);
 
-        redirect('leiController');
+        redirect('AndamentoController');
     }
-
-    public function optionsPorModalidadeId()
-    {
-
-        $data_post =  $this->input->post();
-
-        $modalidade_id = $data_post['modalidade_id'];
-
-        $listaDeLeis = $this->LeiDAO->optionsDeLeisPorModalidadeId($modalidade_id);
-
-        $options = "<option>Selecione uma Lei</option>";
-
-        foreach($listaDeLeis as $key => $value){
-            $options .= "<option value='{$key}'>{$value}</option>";
-        }
-
-        echo $options;
-    }
-
 }
