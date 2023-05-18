@@ -42,7 +42,8 @@ class DAO extends CI_Model
 
     public function buscarOnde($banco, $array)
     {
-        return $this->db->get_where($banco, $array);
+        return $this->db
+        ->get_where($banco,$array);
     }
 
     public function atualizar($banco, $array)

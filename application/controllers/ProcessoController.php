@@ -60,10 +60,10 @@ class ProcessoController extends CI_Controller
 	public function exibir($id)
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
-
+var_dump($processo);
 		$this->load->view('index', [
 			'titulo' => 'Processo: ' . $processo->tipo->nome,
-			'tabela' => $this->processoexibirlibrary->listar($processo),
+			'tabela' => array(),//$this->processoexibirlibrary->listar($processo),
 			'pagina' => 'processo/exibir.php',
 		]);
 	}
@@ -137,8 +137,8 @@ class ProcessoController extends CI_Controller
 		);
 
 		$processo_id = $this->ProcessoDAO->criar($processo);
-		var_dump('ProcessoController: Processo criado id:  ' . $processo_id);
-		//redirect('ProcessoController/exibir/' . $processo_id);
+
+		redirect("ProcessoController/exibir/{$processo_id}");
 	}
 
 	public function alterar($id)

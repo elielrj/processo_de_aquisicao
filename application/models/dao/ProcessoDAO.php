@@ -27,14 +27,14 @@ class ProcessoDAO extends CI_Model
         $processo = $this->buscarOnde('chave',$processo->chave);
 		
 		$andamento = new Andamento(
-			$processo->id,
+			null,
 			new Enviado(),
-			DataLibrary::dataHoraMySQL()
+			DataLibrary::dataHoraMySQL(),
+            $processo->id
 		);
-var_dump('ProcessoDAO id: ' . $processo->id);
 
 		$this->AndamentoDAO->criar($andamento);
-var_dump('ProcessoDAO: criado andamento');
+
         return $processo->id;
     }
 
@@ -99,8 +99,12 @@ var_dump('ProcessoDAO: criado andamento');
             isset($arrayList->lei_id) ? $this->LeiDAO->buscarPorId($arrayList->lei_id) : (isset($arrayList['lei_id']) ? $this->LeiDAO->buscarPorId($arrayList['lei_id']) : null),
             isset($arrayList->tipo_id) ? $this->TipoDAO->buscarPorId($arrayList->tipo_id) : (isset($arrayList['tipo_id']) ? $this->TipoDAO->buscarPorId($arrayList['tipo_id']) : null),
             isset($arrayList->completo) ? $arrayList->completo : (isset($arrayList['completo']) ? $arrayList['completo'] : null),
-            isset($arrayList->id) ? $this->AndamentoDAO->buscarPorId($arrayList->id) : (isset($arrayList['id']) ? $this->AndamentoDAO->buscarPorId($arrayList['id']) : null),
-            isset($arrayList->status) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
+            isset($arrayList->id) 
+            ? $this->AndamentoDAO->buscarOnde('processo_id',$arrayList->id) 
+            : (isset($arrayList['id']) 
+                ? $this->AndamentoDAO->buscarOnde('processo_id',$arrayList['id']) 
+                : null),
+             isset($arrayList->status) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
        
         /**

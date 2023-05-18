@@ -1,12 +1,9 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed'); ?>
+defined('BASEPATH') or exit('No direct script access allowed'); 
 
-<!-- título -->
-<h1>
-    <?php echo $titulo ?>
-</h1>
+view_titulo($titulo); 
 
-
+?>
 
 <!-- tabela -->
 <table class=''>
@@ -14,4 +11,3 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
         <?php echo $tabela; ?>
     </table>
 </table>
-

@@ -24,25 +24,28 @@ class AndamentoDAO extends CI_Model
         $this->DAO->atualizar(self::$TABELA_DB, $andamento->toArray());
     }
 
-    public function buscarPorId($processo_id)
+    public function buscarOnde($key,$value)
     {
-        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array('processo_id' => $processo_id));
-var_dump('AndamentoDAO->buscarId: ' . $array);
-        return $this->toObject($array->result()[0]);
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+
+        return $this->toObject($array->result());
     }
 
     public static function toObject($arrayList)
     {
         return new Andamento(
-            isset($arrayList->processo_id)
-            ? $arrayList->processo_id
-            : (isset($arrayList['processo_id']) ? $arrayList['processo_id'] : null),
+            isset($arrayList->id)
+            ? $arrayList->id
+            : (isset($arrayList['id']) ? $arrayList['id'] : null),
             isset($arrayList->status_do_andamento)
             ? (Andamento::selecionarStatus($arrayList->status_do_andamento))
             : (isset($arrayList['status_do_andamento']) ? Andamento::selecionarStatus($arrayList['status_do_andamento']) : null),            
             isset($arrayList->data_hora)
             ? (DataLibrary::dataHoraBr($arrayList->data_hora))
-            : (isset($arrayList['data_hora']) ? DataLibrary::dataHoraBr($arrayList['data_hora']) : null)
+            : (isset($arrayList['data_hora']) ? DataLibrary::dataHoraBr($arrayList['data_hora']) : null),
+            isset($arrayList->processo_id)
+            ? $arrayList->processo_id
+            : (isset($arrayList['processo_id']) ? $arrayList['processo_id'] : null)
         );
     }
 

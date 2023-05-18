@@ -82,9 +82,10 @@ foreign key (tipo_id) references tipo(id)
 
 #8
 create table if not exists andamento(
-processo_id int not null,
+id int primary key auto_increment not null,
 status_do_andamento enum('enviado','executado','conformado') not null,
 data_hora datetime not null default current_timestamp,
+processo_id int not null,
 foreign key (processo_id) references processo(id)
 );
 
@@ -98,6 +99,7 @@ status boolean not null
 
 #10
 create table if not exists lei_tipo_artefato(
+id int primary key auto_increment not null,
 lei_id int not null,
 tipo_id int not null,
 artefato_id int not null,
