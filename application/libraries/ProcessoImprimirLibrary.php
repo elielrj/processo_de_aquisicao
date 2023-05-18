@@ -8,7 +8,7 @@ class ProcessoImprimirLibrary
     private $ordem;
     private $controller = 'ProcessoController';
 
-    public function processo_imprimir($processo)
+    public function imprimir($processo)
     {
 
         $this->ordem = 0;

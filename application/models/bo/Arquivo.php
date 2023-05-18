@@ -3,6 +3,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
+include_once('application/libraries/DataLibrary.php');
 
 class Arquivo implements InterfaceBO{
 
@@ -25,7 +26,7 @@ class Arquivo implements InterfaceBO{
     ) {
         $this->id = isset($id) ? $id : null;
         $this->path = $path;
-        $this->dataHora = isset($dataHora) ? $dataHora : now('America/Sao_Paulo');
+        $this->dataHora = isset($dataHora) ? $dataHora : DataLibrary::dataHoraBr();
         $this->usuarioId = $usuarioId;
         $this->artefatoId = $artefatoId;
         $this->processoId = $processoId;
@@ -42,12 +43,10 @@ class Arquivo implements InterfaceBO{
 
     public function toArray()
     {
-        $this->load->helper('data');
-
         return array(
             'id' => isset($this->id) ? $this->id : null,
             'path' => $this->path,
-            'data_hora' => $this->data->dataHoraMySQL($this->dataHora),
+            'data_hora' => DataLibrary::dataHoraMySQL($this->dataHora),
             'usuario_id' => $this->usuarioId,
             'artefato_id' => $this->artefatoId,
             'processo_id' => $this->processoId,

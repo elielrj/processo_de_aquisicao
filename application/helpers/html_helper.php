@@ -98,9 +98,13 @@ function br_multiples($value = 1)
 {
     $count = 1;
 
+    $value = '';
+    
     do{
 
-        echo '</br>';
+        $value.= '</br>';
+
+        $count++;
 
     }while($count <= $value);
 }

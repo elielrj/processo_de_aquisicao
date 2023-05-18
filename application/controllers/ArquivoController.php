@@ -2,6 +2,9 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+include_once('application/libraries/DataLibrary.php');
+include_once('application/models/bo/Arquivo.php');
+
 class ArquivoController extends CI_Controller
 {
 
@@ -177,10 +180,12 @@ class ArquivoController extends CI_Controller
 
     private function toObject($data_post, $path)
     {
+        
+
         return new Arquivo(
             isset($data_post['id']) ? $data_post['id'] : null,
             $path,
-            $this->data->dataHoraBr(),
+           DataLibrary::dataHoraBr(),
             $_SESSION['id'],
             $data_post['artefato_id'],
             $data_post['processo_id'],

@@ -18,7 +18,6 @@ class ProcessoController extends CI_Controller
 		$this->load->model('dao/UsuarioDAO');
 		$this->load->model('dao/AndamentoDAO');
 		$this->load->library('ProcessoLibrary');
-		$this->load->library('ProcessoExibirLibrary');
 		$this->load->library('session');
 		$this->load->library('DataLibrary');
 	}
@@ -60,10 +59,12 @@ class ProcessoController extends CI_Controller
 	public function exibir($id)
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
-var_dump($processo);
+
+		$this->load->library('ProcessoExibirLibrary');
+
 		$this->load->view('index', [
 			'titulo' => 'Processo: ' . $processo->tipo->nome,
-			'tabela' => array(),//$this->processoexibirlibrary->listar($processo),
+			'tabela' => $this->processoexibirlibrary->listar($processo),
 			'pagina' => 'processo/exibir.php',
 		]);
 	}
@@ -72,9 +73,11 @@ var_dump($processo);
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
 
+		 $this->load->library('ProcessoImprimirLibrary');
+
 		$this->load->view('index', [
 			'titulo' => 'Processo: ' . $processo->tipo->nome,
-			'tabela' => $this->tabela->processo_imprimir($processo),
+			'tabela' => $this->processoimprimirlibrary->imprimir($processo),
 			'pagina' => 'processo/visualizar.php',
 		]);
 	}
