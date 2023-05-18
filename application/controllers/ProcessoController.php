@@ -73,11 +73,11 @@ class ProcessoController extends CI_Controller
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
 
-		 $this->load->library('ProcessoImprimirLibrary');
+		 $this->load->library('ProcessoVisualizarLibrary');
 
 		$this->load->view('index', [
 			'titulo' => 'Processo: ' . $processo->tipo->nome,
-			'tabela' => $this->processoimprimirlibrary->imprimir($processo),
+			'tabela' => $this->processovisualizarlibrary->visualizar($processo),
 			'pagina' => 'processo/visualizar.php',
 		]);
 	}
@@ -92,8 +92,9 @@ class ProcessoController extends CI_Controller
 		//'pagina' => 'processo/visualizar.php',
 		]);*/
 
+		 $this->load->library('ProcessoImprimirLibrary');
 
-		$html = $this->tabela->processo_imprimir($processo);
+		$html = $this->ProcessoImprimirLibrary->imprimir($processo);
 
 		$this->imprimir($html);
 
