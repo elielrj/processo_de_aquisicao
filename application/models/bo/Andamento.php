@@ -11,18 +11,18 @@ include_once('Conformado.php');
 class Andamento implements StatusDoAndamento, InterfaceBO
 {
 
-    private $id;
+    private $processo_id;
     private $statusDoAndamento;
     private $dataHora;
 
     public function __construct(
-        $id = null,
+        $processo_id = null,
         $statusDoAndamento = null,
         $dataHora = null
     ) {       
-        $this->id = $id;
+        $this->processo_id = $processo_id;
         $this->statusDoAndamento = isset($statusDoAndamento) ? $statusDoAndamento : new Enviado();
-        $this->dataHora = isset($dataHora) ? $dataHora : new DateTime('now',new DateTimeZone('America/Sao_Paulo'));
+        $this->dataHora = isset($dataHora) ? $dataHora : DataLibrary::dataHoraMySQL();
     }
 
        function __get($key) {
@@ -35,12 +35,10 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 
     public function toArray()
     {
-        $this->load->helper('data');
-
         return array(
-            'id' => isset($this->id) ? $this->id : null,
+            'processo_id' => isset($this->processo_id) ? $this->processo_id : null,
             'status_do_andamento' => $this->statusDoAndamento->nome(),
-            'data_hora' => $this->data->dataHoraMySQL($this->dataHora),
+            'data_hora' => DataLibrary::dataHoraMySQL($this->dataHora),
         );
     }
 

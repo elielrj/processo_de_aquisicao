@@ -45,7 +45,7 @@ class Processo implements InterfaceBO{
         $this->lei = $lei;
         $this->tipo = $tipo;
         $this->completo = $completo;
-        $this->andamento = isset($andamento) ? $andamento : new Enviado();
+        $this->andamento = $andamento;
         $this->status = $status;
     }
 
@@ -69,7 +69,6 @@ class Processo implements InterfaceBO{
             'lei_id' => $this->lei->id,
             'tipo_id' => $this->tipo->id,
             'completo' => $this->completo,
-            'andamento_id' => $this->andamento->nome(),
             'status' => $this->status
         );
     }

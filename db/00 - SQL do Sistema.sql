@@ -64,13 +64,6 @@ status boolean not null
 );
 
 #7
-create table if not exists andamento(
-id int primary key auto_increment not null,
-status_do_andamento enum('enviado','executado','conformado') not null,
-data_hora datetime not null default current_timestamp
-);
-
-#8
 create table if not exists processo(
 id int primary key auto_increment not null,
 objeto varchar(250) not null,
@@ -81,12 +74,18 @@ departamento_id int not null,
 lei_id int not null,
 tipo_id int not null,
 completo boolean not null,
-andamento_id int not null,
 status boolean not null,
 foreign key (departamento_id) references departamento(id),
 foreign key (lei_id) references lei(id),
-foreign key (tipo_id) references tipo(id),
-foreign key (andamento_id) references andamento(id)
+foreign key (tipo_id) references tipo(id)
+);
+
+#8
+create table if not exists andamento(
+processo_id int not null,
+status_do_andamento enum('enviado','executado','conformado') not null,
+data_hora datetime not null default current_timestamp,
+foreign key (processo_id) references processo(id)
 );
 
 #9

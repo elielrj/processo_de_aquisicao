@@ -19,49 +19,30 @@ class AndamentoDAO extends CI_Model
         $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
     }
 
-        public function buscarTodosAtivosInativos($inicial, $final)
-    {
-        $array = $this->DAO->buscarTodosAtivosInativos(self::$TABELA_DB, $inicial, $final);
-
-        return $this->criarLista($array);
-    }
-
-    public function buscarPorId($andamentoId)
-    {
-        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $andamentoId);
-
-        return $this->toObject($array->result()[0]);
-    }
-
-
     public function atualizar($andamento)
     {
         $this->DAO->atualizar(self::$TABELA_DB, $andamento->toArray());
     }
 
-
-    public function deletar($arquivo)
+    public function buscarPorId($processo_id)
     {
-        $this->DAO->deletar(self::$TABELA_DB, $arquivo->toArray());
-    }
-
-    public function contarAtivosInativos()
-    {
-        return $this->DAO->contarAtivosInativos(self::$TABELA_DB);
+        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array('processo_id' => $processo_id));
+var_dump('AndamentoDAO->buscarId: ' . $array);
+        return $this->toObject($array->result()[0]);
     }
 
     public static function toObject($arrayList)
     {
         return new Andamento(
-            isset($arrayList->id)
-            ? $arrayList->id
-            : (isset($arrayList['id']) ? $arrayList['id'] : null),
+            isset($arrayList->processo_id)
+            ? $arrayList->processo_id
+            : (isset($arrayList['processo_id']) ? $arrayList['processo_id'] : null),
             isset($arrayList->status_do_andamento)
             ? (Andamento::selecionarStatus($arrayList->status_do_andamento))
-            : (isset($arrayList['status_do_andamento']) ? Andamento::selecionarStatus($arrayList['status_do_andamento']) : null),
+            : (isset($arrayList['status_do_andamento']) ? Andamento::selecionarStatus($arrayList['status_do_andamento']) : null),            
             isset($arrayList->data_hora)
-            ? $arrayList->data_hora
-            : (isset($arrayList['data_hora']) ? $arrayList['data_hora'] : null)
+            ? (DataLibrary::dataHoraBr($arrayList->data_hora))
+            : (isset($arrayList['data_hora']) ? DataLibrary::dataHoraBr($arrayList['data_hora']) : null)
         );
     }
 

@@ -16,6 +16,7 @@ class ProcessoController extends CI_Controller
 		$this->load->model('dao/TipoDAO');
 		$this->load->model('dao/LeiDAO');
 		$this->load->model('dao/UsuarioDAO');
+		$this->load->model('dao/AndamentoDAO');
 		$this->load->library('ProcessoLibrary');
 		$this->load->library('ProcessoExibirLibrary');
 		$this->load->library('session');
@@ -121,22 +122,23 @@ class ProcessoController extends CI_Controller
 
 		$data_post = $this->input->post();
 
-		$processo = array(
-			'id' => null,
-			'objeto' => $data_post['objeto'],
-			'numero' => $data_post['numero'],
-			'data_hora' => DataLibrary::dataHoraMySQL(),
-			'chave' => uniqid(),
-			'departamento_id' => $this->session->departamento_id,
-			'lei_id' => $data_post['lei_id'],
-			'tipo_id' => $data_post['tipo_id'],
-			'completo' => $data_post['completo'],
-			'status' => true
+		$processo = new Processo(
+			null,
+			$data_post['objeto'],
+			$data_post['numero'],
+			DataLibrary::dataHoraMySQL(),
+			uniqid(),
+			$this->DepartamentoDAO->buscarPorId($this->session->departamento_id),
+			$this->LeiDAO->buscarPorId($data_post['lei_id']),
+			$this->TipoDAO->buscarPorId($data_post['tipo_id']),
+			$data_post['completo'],
+			null,
+			true
 		);
 
-		$this->ProcessoDAO->criar($processo);
-
-		redirect('ProcessoController');
+		$processo_id = $this->ProcessoDAO->criar($processo);
+		var_dump('ProcessoController: Processo criado id:  ' . $processo_id);
+		//redirect('ProcessoController/exibir/' . $processo_id);
 	}
 
 	public function alterar($id)
