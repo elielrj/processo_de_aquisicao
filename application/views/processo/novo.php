@@ -11,10 +11,9 @@ echo "<h1>{$titulo}</h1>" .
 
     form_label('Numero') . form_input(['name' => 'numero', 'class' => 'form-control', 'maxlength' => 20]) . "</br>" .
 
-    form_label('Data do Processo') . form_input(['name' => 'data', 'class' => 'form-control daterange', 'type' => 'date', 'value' => (new DateTime('now', new DateTimeZone('America/Sao_Paulo')))->format('d-m-Y')]) . "</br>" .
- "</br>" .
+    //form_label('Data do Processo') . form_input(['name' => 'data', 'class' => 'form-control daterange', 'type' => 'date', 'value' => (new DateTime('now', new DateTimeZone('America/Sao_Paulo')))->format('d-m-Y')]) . "</br>" .
 
-    form_label('Seção') . form_dropdown('departamento_id', $departamentos, $departamento, ['class' => 'form-control']) . "</br>" .
+    //form_label('Seção') . form_dropdown('departamento_id', $departamentos, $departamento, ['class' => 'form-control']) . "</br>" .
 
     form_label('Tipo de Processo') . form_dropdown('tipo_id', $tipos, '', ['class' => 'form-control']) . "</br>" .
 
@@ -24,7 +23,7 @@ echo "<h1>{$titulo}</h1>" .
 
     form_input(['name' => 'completo', 'class' => 'form-control', 'type' => 'hidden', 'value' => false]) .
     
-    form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']) . "</br>" .
+    //form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']) . "</br>" .
 
     form_submit('enviar', 'Enviar', array('class' => 'btn btn-primary btn-lg btn-block')) . "</br>" .
     "<a href=" . base_url('index.php/ProcessoController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>" .

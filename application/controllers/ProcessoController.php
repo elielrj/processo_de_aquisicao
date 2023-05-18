@@ -17,6 +17,9 @@ class ProcessoController extends CI_Controller
 		$this->load->model('dao/LeiDAO');
 		$this->load->model('dao/UsuarioDAO');
 		$this->load->library('ProcessoLibrary');
+		$this->load->library('ProcessoExibirLibrary');
+		$this->load->library('session');
+		$this->load->library('DataLibrary');
 	}
 
 	public function index()
@@ -59,7 +62,7 @@ class ProcessoController extends CI_Controller
 
 		$this->load->view('index', [
 			'titulo' => 'Processo: ' . $processo->tipo->nome,
-			'tabela' => $this->tabela->processo_exibir($processo),
+			'tabela' => $this->processoexibirlibrary->listar($processo),
 			'pagina' => 'processo/exibir.php',
 		]);
 	}
@@ -122,13 +125,13 @@ class ProcessoController extends CI_Controller
 			'id' => null,
 			'objeto' => $data_post['objeto'],
 			'numero' => $data_post['numero'],
-			'data_hora' => $this->data->dataHoraMySQL(),
+			'data_hora' => DataLibrary::dataHoraMySQL(),
 			'chave' => uniqid(),
-			'departamento_id' => $data_post['departamento_id'],
+			'departamento_id' => $this->session->departamento_id,
 			'lei_id' => $data_post['lei_id'],
 			'tipo_id' => $data_post['tipo_id'],
 			'completo' => $data_post['completo'],
-			'status' => $data_post['status']
+			'status' => true
 		);
 
 		$this->ProcessoDAO->criar($processo);

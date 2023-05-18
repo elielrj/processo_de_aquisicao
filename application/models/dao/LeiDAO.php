@@ -114,6 +114,7 @@ class LeiDAO extends CI_Model
 
         if (isset($modalidadeId)) {
             $leis = $this->buscarLeisPorModalideId($modalidadeId);
+
         } else {
             $leis = $this->buscarTodos(null, null);
         }

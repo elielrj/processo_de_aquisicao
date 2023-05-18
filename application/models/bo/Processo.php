@@ -60,7 +60,7 @@ class Processo implements InterfaceBO{
     public function toArray()
     {
         return array(
-            'id' => $this->id,
+            'id' => isset($this->id) ? $this->id : null,
             'objeto' => $this->objeto,
             'numero' => $this->numero,
             'data_hora' => $this->dataHora,

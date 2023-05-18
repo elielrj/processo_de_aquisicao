@@ -40,7 +40,7 @@ class Artefato implements InterfaceBO {
     public function toArray()
     {
         return array(
-            'id' => $this->id,
+            'id' => isset($this->id) ? $this->id : null,
             'ordem' => $this->ordem,
             'nome' => $this->nome,
             'status' => $this->status,

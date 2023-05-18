@@ -7,7 +7,7 @@ class ProcessoExibirLibrary
 
     private $ordem;
 
-    public function processo_exibir($processo)
+    public function listar($processo)
     {
         $this->ordem = 0;
 

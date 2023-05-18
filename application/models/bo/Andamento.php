@@ -38,7 +38,7 @@ class Andamento implements StatusDoAndamento, InterfaceBO
         $this->load->helper('data');
 
         return array(
-            'id' => $this->id,
+            'id' => isset($this->id) ? $this->id : null,
             'status_do_andamento' => $this->statusDoAndamento->nome(),
             'data_hora' => $this->data->dataHoraMySQL($this->dataHora),
         );

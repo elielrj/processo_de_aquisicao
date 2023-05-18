@@ -120,9 +120,9 @@ class LeiController extends CI_Controller
 
         $data_post = $this->input->post();
 
-        $modalidade_id = $data_post_post['modalidade_id'];
+        $modalidade_id = $data_post['modalidade_id'];
 
-        $listaDeLeis = $this->LeiDAO->optionsDeLeisPorModalidadeId($modalidade_id);
+        $listaDeLeis = $this->LeiDAO->options($modalidade_id);
 
         $options = "<option>Selecione uma Lei</option>";
 

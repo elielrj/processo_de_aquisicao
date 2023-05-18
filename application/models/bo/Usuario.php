@@ -49,7 +49,7 @@ class Usuario implements InterfaceBO
     public function toArray()
     {
         return array(
-            'id' => $this->id,
+            'id' => isset($this->id) ? $this->id : null,
             'nome' => $this->nome,
             'sobrenome' => $this->sobrenome,
             'email' => $this->email,
