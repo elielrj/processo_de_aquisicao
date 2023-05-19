@@ -26,12 +26,12 @@ class ProcessoImprimirLibrary
             if ($artefato->arquivo != null) {
 
                 $listagemDeArtefatos .=
-                    "</br>
-                    <p>" . $this->ordem . " - " . $artefato->nome ."<p>
-                    <div style='height: 1080px; width:100%;'>
-                        <embed src='" . base_url($artefato->arquivo->path) . "' type='application/pdf' width='100%' height='100%'>
-                    </div>
+                    "
+                        <iframe  src='" . base_url($artefato->arquivo->path) . "' type='application/pdf'></iframe>
+                   
                 ";
+
+                "https://stackoverflow.com/questions/69997184/merge-two-pdfs-with-ilovepdf-and-dompdf";
             }
         }
 
@@ -39,6 +39,9 @@ class ProcessoImprimirLibrary
 
         return $listagemDeArtefatos;
     }
+
+//<embed src='" . base_url($artefato->arquivo->path) . "' type='application/pdf' width='100%' height='100%'>
+
 
 
 }

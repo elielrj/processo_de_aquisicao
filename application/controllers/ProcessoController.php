@@ -94,7 +94,7 @@ class ProcessoController extends CI_Controller
 
 		 $this->load->library('ProcessoImprimirLibrary');
 
-		$html = $this->ProcessoImprimirLibrary->imprimir($processo);
+		$html = $this->processoimprimirlibrary->imprimir($processo);
 
 		$this->imprimir($html);
 
