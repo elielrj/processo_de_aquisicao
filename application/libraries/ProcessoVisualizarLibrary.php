@@ -70,7 +70,7 @@ class ProcessoVisualizarLibrary
                 $listagemDeArtefatos .=
                     "</br>
                     <p>" . $this->ordem() . " - " . $artefato->nome ."<p>
-                    <div style='height: 1080px; width:100%;'>
+                    <div style='height: 1080px; width: 100%;'>
                         <embed src='" . base_url($artefato->arquivo->path) . "' type='application/pdf' width='100%' height='100%'>
                     </div>
                 ";

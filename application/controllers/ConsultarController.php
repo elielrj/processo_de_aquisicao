@@ -32,12 +32,14 @@ class ConsultarController extends CI_Controller
     {
         $processo = $this->ConsultarDAO->buscarPorNumeroChave($numero, $chave);
 
+        $this->load->library('ProcessoVisualizarLibrary');
+
         $data_post =  array(
             'titulo' => 'Processo: ' . $processo->tipo->nome,
-            'tabela' => $this->tabela->processo_imprimir($processo),
+            'tabela' => $this->processovisualizarlibrary->visualizar($processo),
             'pagina' => 'consultar/exibir.php',
         );
-        $this->load->view('index', $data);
+        $this->load->view('index', $data_post);
     }
 
     private function numeroExiste($numero)
