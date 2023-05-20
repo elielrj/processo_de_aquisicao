@@ -14,6 +14,7 @@ $form_label_status = 'Status';
 
 $form_input_id = ['name' => 'id', 'class' => 'form-control', 'type' => 'hidden', 'value' => $usuario->id];
 $form_input_nome = ['name' => 'nome', 'class' => 'form-control', 'type' => 'text', 'maxlength' => 150, 'value' => $usuario->nome];
+$form_input_status = ['name' => 'status', 'type' => 'hidden','value' => $usuario->status];
 $form_input_sobrenome = ['name' => 'sobrenome', 'class' => 'form-control', 'type' => 'text', 'maxlength' => 150, 'value' => $usuario->sobrenome];
 $form_input_email = ['name' => 'email', 'class' => 'form-control', 'type' => 'email', 'maxlength' => 150, 'value' => $usuario->email];
 $form_input_cpf = ['name' => 'cpf', 'class' => 'form-control', 'maxlength' => 11, 'value' => $usuario->cpf];
@@ -43,7 +44,7 @@ echo form_label($form_label_senha) . form_input($form_input_senha) . "</br>";
 
 echo form_label($form_label_departamento) . form_dropdown('departamento_id', $departamentos, $usuario->departamento->id, ['class' => 'form-control']) . "</br>";
 
-echo form_label($form_label_status) . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $usuario->status, $form_dropdown_status_formatacao) . "</br>";
+echo form_input($form_input_status);
 
 echo form_submit('enviar', 'Enviar', $form_submit_enviar) . "</br>";
 
