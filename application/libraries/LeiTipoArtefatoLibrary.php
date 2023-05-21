@@ -9,9 +9,9 @@ class LeiTipoArtefatoLibrary
     private $ordem;
     private $controller = 'LeiTipoArtefatoController';
 
-    public function listar($leisTiposArtefatos, $ordem)
+    public function listar($leisTiposArtefatos)
     {
-        $this->ordem = $ordem;
+        $this->ordem = 0;
         
         $tabela = $this->linhaDeCabecalho();
 
@@ -30,7 +30,8 @@ class LeiTipoArtefatoLibrary
             'Lei',
             'Tipo',
             'Artefato',
-            'Status'
+            'Status',
+            'Alterar'
         ]);
     }
 
@@ -42,6 +43,7 @@ class LeiTipoArtefatoLibrary
             td_value($leiTipoArtefato->tipo->nome),
             td_value($leiTipoArtefato->artefato->nome),
             td_status($leiTipoArtefato->status),
+            td_alterar($this->controller,$leiTipoArtefato->id)
         ]);
     }
 }

@@ -22,13 +22,13 @@ class LeiTipoArtefatoController extends CI_Controller
         }
     }
 
-    public function listar($indice = 1)
+    public function listar()
     {
         $leisTiposArtefatos = $this->LeiTipoArtefatoDAO->buscarTodos(null, null);
 
         $dados = array(
             'titulo' => 'Lista de Leis/Tipos/Artefatos',
-            'tabela' => $this->leitipoartefatolibrary->listar($leisTiposArtefatos, 1),
+            'tabela' => $this->leitipoartefatolibrary->listar($leisTiposArtefatos),
             'pagina' => 'leis_tipos_artefatos/index.php',
         );
         $this->load->view('index', $dados);

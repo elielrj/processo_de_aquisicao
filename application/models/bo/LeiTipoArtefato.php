@@ -17,11 +17,13 @@ class LeiTipoArtefato implements InterfaceBO {
      * com a lista de Artefatos
      */
     public function __construct(
+            $id,
             $lei,
             $tipo,
             $artefato,
             $status
     ) {
+        $this->id = $id;
         $this->lei = $lei;
         $this->tipo= $tipo;
         $this->artefato = $artefato;
@@ -39,6 +41,7 @@ class LeiTipoArtefato implements InterfaceBO {
     public function toArray()
     {
         return array(
+            'id' => $this->id,
             'lei_id' => $this->lei->id,
             'tipo_id' => $this->tipo->id,
             'artefato_id' => $this->artefato->id,

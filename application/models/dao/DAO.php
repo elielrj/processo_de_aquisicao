@@ -35,6 +35,13 @@ class DAO extends CI_Model
             ->get($banco, $inicio, $fim);
     }
 
+    public function buscarTodosOrderBy($banco,$order_by, $inicio, $fim)
+    {
+        return $this->db
+            ->order_by($order_by)
+            ->get($banco, $inicio, $fim);
+    }
+
     public function buscarPorId($banco, $id)
     {
         return $this->db->get_where($banco, array('id' => $id));
