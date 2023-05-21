@@ -99,14 +99,14 @@ function br_multiples($value = 1)
     $count = 1;
 
     $value = '';
-    
-    do{
 
-        $value.= '</br>';
+    do {
+
+        $value .= '</br>';
 
         $count++;
 
-    }while($count <= $value);
+    } while ($count <= $value);
 }
 
 function view_titulo($titulo)
@@ -116,7 +116,7 @@ function view_titulo($titulo)
 
 function view_tabela($tabela)
 {
-    echo 
+    echo
         "
             <table class=''>
                 <table class='table table-responsive-md table-hover'>
@@ -130,5 +130,50 @@ function view_botao($botao)
 {
     echo "<div class='row'>{$botao}</div>";
 }
+
+function view_form_open($controller)
+{
+    echo form_open($controller, array('class' => 'form-group'));
+}
+
+function view_input($nameOuId, $type = 'hidden', $value, $maxlength = 250)
+{
+    echo form_input([
+        'name' => $nameOuId,
+        'id' => $nameOuId,
+        'class' => 'form-control',
+        'type' => $type,
+        'value' => $value,
+        'maxlength' => 250
+    ]);
+}
+
+function view_form_submit_enviar()
+{
+    echo form_submit(
+        'enviar',
+        'Enviar',
+        ['class' => 'btn btn-primary btn-lg btn-block']
+    );
+}
+function view_form_submit_cancelar($controller)
+{
+    echo
+        "<a href=" .
+        base_url('index.php/' . $controller) .
+        " class='btn btn-danger btn-lg btn-block'>Cancelar</a>";
+}
+
+function view_dropdown_status($value)
+{
+    echo form_dropdown(
+        'status',
+        [true => 'Ativo', false => 'Inativo'],
+        $value,
+        ['class' => 'form-control']
+    );
+}
+
+
 
 ?>
