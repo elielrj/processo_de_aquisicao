@@ -31,6 +31,13 @@ class AndamentoDAO extends CI_Model
         return $this->toObject($array->result());
     }
 
+    public function buscarTodosAtivosInativos($inicial, $final)
+    {
+        $array = $this->DAO->buscarTodosAtivosInativos(self::$TABELA_DB, $inicial, $final);
+
+        return $this->criarLista($array);
+    }
+
     public static function toObject($arrayList)
     {
         return new Andamento(
@@ -68,6 +75,11 @@ class AndamentoDAO extends CI_Model
         $options = [Enviado::$NOME => Enviado::$NOME];
         $options += [Executado::$NOME => Executado::$NOME];
         $options += [Conformado::$NOME => Conformado::$NOME];
+    }
+
+    public function contarAtivosInativos()
+    {
+        return $this->DAO->contarAtivosInativos(self::$TABELA_DB);
     }
 
 }

@@ -41,7 +41,7 @@ class TipoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de Tipos De Licitacões',
-			'tabela' => $this->TipoLibrary->listar($tipo, $indiceInicial),
+			'tabela' => $this->tipolibrary->listar($tipo, $indiceInicial),
 			'pagina' => 'tipo/index.php',
 			'botoes' => $botoes,
 		);
