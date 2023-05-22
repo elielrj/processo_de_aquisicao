@@ -169,7 +169,7 @@ class UsuarioController extends CI_Controller
             $data_post['sobrenome'],
             $data_post['email'],
             $data_post['cpf'],
-            $data_post['senha'],
+            md5($data_post['senha']),
             $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
             $data_post['status']
         );
@@ -189,7 +189,7 @@ class UsuarioController extends CI_Controller
             $data_post['sobrenome'],
             $data_post['email'],
             $data_post['cpf'],
-            $data_post['senha'],
+            md5($data_post['senha']),
             $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
             $data_post['status']
         );
