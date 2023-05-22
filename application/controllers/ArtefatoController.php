@@ -52,6 +52,7 @@ class ArtefatoController extends CI_Controller {
 
         $artefato = new Artefato(
                 null,
+                $data_post['ordem'],
                 $data_post['nome'],
                 $data_post['status']
         );
@@ -63,7 +64,7 @@ class ArtefatoController extends CI_Controller {
 
     public function alterar($id) {
 
-        $artefato = $this->ArtefatoDAO->buscarId($id);
+        $artefato = $this->ArtefatoDAO->buscarPorId($id);
 
         $dados = [
             'titulo' => 'Alterar Artefato',
@@ -80,11 +81,12 @@ class ArtefatoController extends CI_Controller {
 
         $artefato = new Artefato(
                 $data_post['id'],
+                $data_post['ordem'],
                 $data_post['nome'],
                 $data_post['status']
         );
 
-        $this->ArtefatoDAO->update($artefato);
+        $this->ArtefatoDAO->atualizar($artefato);
 
         redirect('ArtefatoController');
     }

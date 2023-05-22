@@ -94,7 +94,7 @@ function from_array_to_table_row_with_td($arrayList)
 }
 
 
-function br_multiples($value = 1)
+function br_multiples($ate = 1)
 {
     $count = 1;
 
@@ -106,7 +106,9 @@ function br_multiples($value = 1)
 
         $count++;
 
-    } while ($count <= $value);
+    } while ($count <= $ate);
+
+    return $value;
 }
 
 function view_titulo($titulo)
@@ -136,16 +138,21 @@ function view_form_open($controller)
     echo form_open($controller, array('class' => 'form-group'));
 }
 
-function view_input($nameOuId, $type = 'hidden', $value, $maxlength = 250)
+function view_input($label, $name, $id, $type, $value = '', $maxlength = 250)
 {
-    echo form_input([
-        'name' => $nameOuId,
-        'id' => $nameOuId,
-        'class' => 'form-control',
-        'type' => $type,
-        'value' => $value,
-        'maxlength' => 250
-    ]);
+    echo
+        (($type != 'hidden') ? form_label($label) : '') .
+
+        form_input([
+            'name' => $name,
+            'id' => $id,
+            'class' => 'form-control',
+            'type' => $type,
+            'value' => $value,
+            'maxlength' => $maxlength
+        ]);
+        
+    echo (($type != 'hidden') ? br_multiples() : '');
 }
 
 function view_form_submit_enviar()
@@ -164,14 +171,15 @@ function view_form_submit_cancelar($controller)
         " class='btn btn-danger btn-lg btn-block'>Cancelar</a>";
 }
 
-function view_dropdown_status($value)
+function view_dropdown_status($value, $label = 'Status')
 {
-    echo form_dropdown(
+    echo form_label($label) . form_dropdown(
         'status',
         [true => 'Ativo', false => 'Inativo'],
         $value,
         ['class' => 'form-control']
     );
+    echo br_multiples();
 }
 
 

@@ -55,7 +55,7 @@ class DAO extends CI_Model
 
     public function atualizar($banco, $array)
     {
-        $this->db->update($banco, $array);
+        $this->db->update($banco, $array, array('id' => $array['id']));
     }
 
     public function deletar($banco, $array)
