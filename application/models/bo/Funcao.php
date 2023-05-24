@@ -3,26 +3,24 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
+include_once('NivelDeAcesso.php');
 
-class Ug implements InterfaceBO{
+class Funcao implements InterfaceBO, NivelDeAcesso{
 
     private $id;
-    private $numero;
     private $nome;
-    private $sigla;
+    private $nivelDeAcesso;
     private $status;
 
     public function __construct(
             $id,
-            $numero,
             $nome,
-            $sigla,
+            $nivelDeAcesso,
             $status = true
     ) {
         $this->id = $id;
-        $this->numero = $numero;
         $this->nome = $nome;
-        $this->sigla = $sigla;
+        $this->nivelDeAcesso = $nivelDeAcesso;
         $this->status = $status;
     }
 
@@ -34,18 +32,13 @@ class Ug implements InterfaceBO{
         $this->$key = $value;
     }
 
-    public function toString() {
-        return $this->nome . "(" . $this->sigla . " - " . $this->numero . ")";
-    }
-
     public function toArray()
     {
         return array(
             'id' => $this->id,
-           'numero' =>  $this->numero,
-           'nome' =>  $this->nome,
-           'sigla' =>  $this->sigla,
-           'status' =>  $this->status
+            'nome' =>  $this->nome,
+            'nivel_de_acesso' =>  $this->nivelDeAcesso->nivel(),
+            'status' => $this->status
         );
     }
 }

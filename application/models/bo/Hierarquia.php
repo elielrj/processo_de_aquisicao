@@ -4,24 +4,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
 
-class Ug implements InterfaceBO{
+class Hierarquia implements InterfaceBO{
 
     private $id;
-    private $numero;
-    private $nome;
+    private $postoOuGraduacao;
     private $sigla;
     private $status;
 
     public function __construct(
             $id,
-            $numero,
-            $nome,
+            $postoOuGraduacao,
             $sigla,
             $status = true
     ) {
         $this->id = $id;
-        $this->numero = $numero;
-        $this->nome = $nome;
+        $this->postoOuGraduacao = $postoOuGraduacao;
         $this->sigla = $sigla;
         $this->status = $status;
     }
@@ -34,16 +31,11 @@ class Ug implements InterfaceBO{
         $this->$key = $value;
     }
 
-    public function toString() {
-        return $this->nome . "(" . $this->sigla . " - " . $this->numero . ")";
-    }
-
     public function toArray()
     {
         return array(
             'id' => $this->id,
-           'numero' =>  $this->numero,
-           'nome' =>  $this->nome,
+           'posto_ou_graduacao' =>  $this->postoOuGraduacao,
            'sigla' =>  $this->sigla,
            'status' =>  $this->status
         );
