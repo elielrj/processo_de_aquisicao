@@ -14,6 +14,8 @@ class UsuarioDAO extends CI_Model
         parent::__construct();
         $this->load->model('dao/DAO');
         $this->load->model('dao/DepartamentoDAO');
+        $this->load->model('dao/FuncaoDAO');
+        $this->load->model('dao/HierarquiaDAO');
     }
 
     public function criar($usuario)
@@ -98,11 +100,11 @@ class UsuarioDAO extends CI_Model
             ? $arrayList->status
             : (isset($arrayList['status']) ? $arrayList['status'] : null),
             isset($arrayList->hierarquia_id)
-            ? $arrayList->hierarquia_id
-            : (isset($arrayList['hierarquia_id']) ? $arrayList['hierarquia_id'] : null),//todo
+            ? $this->HierarquiaDAO->buscarPorId($arrayList->hierarquia_id)
+            : (isset($arrayList['hierarquia_id']) ? $this->HierarquiaDAO->buscarPorId($arrayList['hierarquia_id']) : null),
             isset($arrayList->funcao_id)
-            ? $arrayList->funcao_id
-            : (isset($arrayList['funcao_id']) ? $arrayList['funcao_id'] : null)//todo
+            ? $this->FuncaoDAO->buscarPorId($arrayList->funcao_id)
+            : (isset($arrayList['funcao_id']) ? $this->FuncaoDAO->buscarPorId($arrayList['funcao_id']) : null)
         );
     }
 
