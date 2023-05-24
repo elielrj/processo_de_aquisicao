@@ -41,4 +41,9 @@ class Funcao implements InterfaceBO, NivelDeAcesso{
             'status' => $this->status
         );
     }
+
+    public function nivel()
+    {
+        return $this->nivelDeAcesso->nivel();
+    }
 }
