@@ -96,7 +96,13 @@ class UsuarioDAO extends CI_Model
             : (isset($arrayList['departamento_id']) ? $this->DepartamentoDAO->buscarPorId($arrayList['departamento_id']) : null),
             isset($arrayList->status)
             ? $arrayList->status
-            : (isset($arrayList['status']) ? $arrayList['status'] : null)
+            : (isset($arrayList['status']) ? $arrayList['status'] : null),
+            isset($arrayList->hierarquia_id)
+            ? $arrayList->hierarquia_id
+            : (isset($arrayList['hierarquia_id']) ? $arrayList['hierarquia_id'] : null),//todo
+            isset($arrayList->funcao_id)
+            ? $arrayList->funcao_id
+            : (isset($arrayList['funcao_id']) ? $arrayList['funcao_id'] : null)//todo
         );
     }
 
