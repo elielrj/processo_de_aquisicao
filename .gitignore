@@ -35,4 +35,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.pdf 
 
 #Astah
-*.asta.loc
+*.asta.lock
