@@ -25,6 +25,22 @@ foreign key (ug_id) references ug(id)
 );
 
 #3
+create table if not exists hierarquia(
+id int primary key auto_increment not null,
+posto_ou_graduacao varchar(250) not null,
+sigla varchar(10) not null,
+status boolean not null
+);
+
+#4
+create table if not exists funcao(
+id int primary key auto_increment not null,
+nome varchar(250) not null,
+nivel_de_acesso enum("ler","escrever","administrar","aprovar","root") not null,
+status boolean not null
+);
+
+#5
 create table if not exists usuario(
 id int primary key auto_increment not null,
 nome varchar(250) not null,
@@ -34,17 +50,21 @@ cpf varchar(11) not null,
 senha varchar(150) not null,
 departamento_id int not null,
 status boolean not null,
-foreign key (departamento_id) references departamento(id)
+hierarquia_id int not null,
+funcao_id int not null,
+foreign key (departamento_id) references departamento(id),
+foreign key (hierarquia_id) references hierarquia(id),
+foreign key (funcao_id) references funcao(id)
 );
 
-#4
+#6
 create table if not exists modalidade(
 id int primary key auto_increment not null,
 nome varchar(150) not null,
 status boolean not null
 );
 
-#5
+#7
 create table if not exists lei(
 id int primary key auto_increment not null,
 numero varchar(150) not null,
@@ -56,14 +76,14 @@ status boolean not null,
 foreign key (modalidade_id) references modalidade(id)
 );
 
-#6
+#8
 create table if not exists tipo(
 id int primary key auto_increment not null,
 nome varchar(250) not null,
 status boolean not null
 );
 
-#7
+#9
 create table if not exists processo(
 id int primary key auto_increment not null,
 objeto varchar(250) not null,
@@ -80,7 +100,7 @@ foreign key (lei_id) references lei(id),
 foreign key (tipo_id) references tipo(id)
 );
 
-#8
+#10
 create table if not exists andamento(
 id int primary key auto_increment not null,
 status_do_andamento enum('enviado','executado','conformado') not null,
@@ -89,7 +109,7 @@ processo_id int not null,
 foreign key (processo_id) references processo(id)
 );
 
-#9
+#11
 create table if not exists artefato(
 id int primary key auto_increment not null,
 ordem int not null,
@@ -97,7 +117,7 @@ nome varchar(250) not null,
 status boolean not null
 );
 
-#10
+#12
 create table if not exists lei_tipo_artefato(
 id int primary key auto_increment not null,
 lei_id int not null,
@@ -109,7 +129,7 @@ foreign key (tipo_id) references tipo(id),
 foreign key (artefato_id) references artefato(id)
 );
 
-#11
+#13
 create table if not exists arquivo(
 id int primary key auto_increment not null,
 path varchar(250) not null,

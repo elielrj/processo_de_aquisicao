@@ -15,6 +15,8 @@ class Usuario implements InterfaceBO
     private $senha;
     private $departamento;
     private $status;
+    private $hierarquia;
+    private $funcao;
 
     public function __construct(
         $id,
@@ -24,7 +26,9 @@ class Usuario implements InterfaceBO
         $cpf,
         $senha,
         $departamento,
-        $status = true
+        $status = true,
+        $hierarquia,
+        $funcao
     ) {
         $this->id = $id;
         $this->nome = $nome;
@@ -34,6 +38,8 @@ class Usuario implements InterfaceBO
         $this->senha = $senha;
         $this->departamento = $departamento;
         $this->status = $status;
+        $this->hierarquia = $hierarquia;
+        $this->funcao = $funcao;
     }
 
     function __get($key)
@@ -57,6 +63,8 @@ class Usuario implements InterfaceBO
             'senha' => $this->senha,
             'departamento_id' => $this->departamento->id,
             'status' => $this->status,
+            'hierarquia_id' => $this->hierarquia->id,
+            'funcao_id' => $this->funcao->id,
         );
     }
 
