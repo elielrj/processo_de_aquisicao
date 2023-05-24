@@ -13,6 +13,8 @@ class UsuarioController extends CI_Controller
         $this->load->library('session');
         $this->load->model('dao/UsuarioDAO');
         $this->load->model('dao/DepartamentoDAO');
+        $this->load->model('dao/FuncaoDAO');
+        $this->load->model('dao/HierarquiaDAO');
         $this->load->library('UsuarioLibrary');
     }
 
@@ -121,7 +123,9 @@ class UsuarioController extends CI_Controller
             $data_post['cpf'],
             md5($data_post['senha']),
             $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-            $data_post['status']
+            $data_post['status'],
+            $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
+            $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
         );
 
         $this->UsuarioDAO->criar($usuario);
@@ -171,7 +175,9 @@ class UsuarioController extends CI_Controller
             $data_post['cpf'],
             md5($data_post['senha']),
             $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-            $data_post['status']
+            $data_post['status'], 
+            $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
+            $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
         );
 
         $this->UsuarioDAO->atualizar($usuario);
@@ -191,7 +197,9 @@ class UsuarioController extends CI_Controller
             $data_post['cpf'],
             md5($data_post['senha']),
             $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-            $data_post['status']
+            $data_post['status'],
+            $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
+            $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
         );
 
         $this->UsuarioDAO->atualizar($usuario);
