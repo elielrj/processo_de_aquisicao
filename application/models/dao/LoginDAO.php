@@ -46,6 +46,8 @@ class LoginDAO extends CI_Model
                     'senha' => $linha->senha,
                     'departamento_id' => $linha->departamento_id,
                     'status' => $linha->status,
+                    'hierarquia_id' => $linha->hierarquia->id,
+                    'funcao_id' => $linha->funcao->id,
                 )
             );
         }
