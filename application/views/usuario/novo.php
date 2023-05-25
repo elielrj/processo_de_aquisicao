@@ -2,48 +2,23 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$form_open = ['class' => 'form-group'];
+view_titulo($titulo);
 
-$form_label_id = 'id';
-$form_label_nome = 'Nome';
-$form_label_sobrenome = 'Sobrenome';
-$form_label_email = 'Email';
-$form_label_cpf = 'CPF';
-$form_label_senha = 'Senha';
-$form_label_departamento = 'Departamento';
-$form_label_status = 'Status';
+view_form_open('UsuarioController/novo');
 
-$form_input_nome = ['name' => 'nome', 'class' => 'form-control', 'type' => 'text', 'maxlength' => 150];
-$form_input_sobrenome = ['name' => 'sobrenome', 'class' => 'form-control', 'type' => 'text', 'maxlength' => 150];
-$form_input_email = ['name' => 'email', 'class' => 'form-control', 'type' => 'email', 'maxlength' => 150];
-$form_input_cpf = ['name' => 'cpf', 'class' => 'form-control', 'maxlength' => 11];
-$form_input_senha = ['name' => 'senha', 'class' => 'form-control', 'maxlength' => 6];
+view_input('Nome','nome','nome','text','',150);
+view_input('Sobrenome','sobrenome','sobrenome','text','',250);
+view_input('Email','emai','email','text','',150);
+view_input('CPF','cpf','cpf','text','',11);
+view_input('Senha','senha','senha','password','',6);
 
-$form_submit_enviar = ['class' => 'btn btn-primary btn-lg btn-block'];
-$form_submit_cancelar = "class='btn btn-danger btn-lg btn-block'";
+view_dropdown('Posto ou Graduação','hierarquia_id',$hierarquias,'');
+view_dropdown('Função','funcao_id',$funcoes,'');
 
-echo "<h1>{$titulo}</h1>";
+view_dropdown_status();
 
-echo form_open('UsuarioController/criar', $form_open);
-
-
-echo form_label($form_label_nome) . form_input($form_input_nome) . "</br>";
-
-echo form_label($form_label_sobrenome) . form_input($form_input_sobrenome) . "</br>";
-
-echo form_label($form_label_email) . form_input($form_input_email) . "</br>";
-
-echo form_label($form_label_cpf) . form_input($form_input_cpf) . "</br>";
-
-echo form_label($form_label_senha) . form_input($form_input_senha) . "</br>";
-
-echo form_label($form_label_departamento) . form_dropdown('departamento_id', $departamentos, '', ['class' => 'form-control']) . "</br>";
-
-echo form_label($form_label_status) . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']) . "</br>";
-
-echo form_submit('enviar', 'Enviar', $form_submit_enviar) . "</br>";
-
-echo "<a href=" . base_url('index.php/UsuarioController') . " {$form_submit_cancelar} >Cancelar</a>";
+view_form_submit_enviar();
+view_form_submit_cancelar('UsuarioController');
 
 echo form_close();
 ?>

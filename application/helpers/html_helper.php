@@ -171,11 +171,22 @@ function view_form_submit_cancelar($controller)
         " class='btn btn-danger btn-lg btn-block'>Cancelar</a>";
 }
 
-function view_dropdown_status($value, $label = 'Status')
+function view_dropdown_status($value = true, $label = 'Status')
 {
     echo form_label($label) . form_dropdown(
         'status',
         [true => 'Ativo', false => 'Inativo'],
+        $value,
+        ['class' => 'form-control']
+    );
+    echo br_multiples();
+}
+
+function view_dropdown($label,$name,$options,$value)
+{
+    echo form_label($label) . form_dropdown(
+        $name,
+        $options,
         $value,
         ['class' => 'form-control']
     );

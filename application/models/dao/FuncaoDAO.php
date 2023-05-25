@@ -105,7 +105,10 @@ class FuncaoDAO extends CI_Model
         return $listaDefuncao;
     }
 
-   /* public function options()
+    /**
+     * Remover busca de Root e Administrador
+    */
+    public function options()
     {
         $funcoes = $this->buscarTodos(null, null);
 
@@ -115,10 +118,16 @@ class FuncaoDAO extends CI_Model
 
             foreach ($funcoes as $funcao) {
 
-                $options += [$funcao->id => $funcao->nome];
+                if(!(
+                    strtolower($funcao->nome) == Root::NOME || 
+                    strtolower($funcao->nome) == Administrar::NOME))
+                    {
+                    $options += [$funcao->id => $funcao->nome];
+                }
+                
             }
         }
         return $options;
-    }*/
+    }
 
 }

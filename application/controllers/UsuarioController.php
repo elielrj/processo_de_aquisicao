@@ -105,6 +105,8 @@ class UsuarioController extends CI_Controller
             'titulo' => 'Novo Usuário',
             'pagina' => 'usuario/novo.php',
             'departamentos' => $this->DepartamentoDAO->options(),
+            'hierarquias' => $this->HierarquiaDAO->options(),
+            'funcoes' => $this->FuncaoDAO->options()
         );
 
         $this->load->view('index', $dados);
@@ -143,6 +145,8 @@ class UsuarioController extends CI_Controller
             'pagina' => 'usuario/alterar.php',
             'usuario' => $usuario,
             'departamentos' => $this->DepartamentoDAO->options(),
+            'hierarquias' => $this->HierarquiaDAO->options(),
+            'funcoes' => $this->FuncaoDAO->options()
         );
 
         $this->load->view('index', $dados);
@@ -152,11 +156,15 @@ class UsuarioController extends CI_Controller
 
         $usuario = $this->UsuarioDAO->buscarPorId($id);
 
+        $options = $this->HierarquiaDAO->options();
+
         $dados = array(
             'titulo' => 'Atualizar dados do usuário: ' . $_SESSION['nome'],
             'pagina' => 'usuario/alterar_usuario.php',
             'usuario' => $usuario,
             'departamentos' => $this->DepartamentoDAO->options(),
+            'hierarquias' => $options,
+            'funcoes' => $this->FuncaoDAO->options()
         );
 
         $this->load->view('index', $dados);

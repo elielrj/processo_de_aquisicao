@@ -100,7 +100,7 @@ class HierarquiaDAO extends CI_Model
         return $listaDeHierarquia;
     }
 
-   /* public function options()
+    public function options()
     {
         $hierarquias = $this->buscarTodos(null, null);
 
@@ -110,10 +110,10 @@ class HierarquiaDAO extends CI_Model
 
             foreach ($hierarquias as $hierarquia) {
 
-                $options += [$hierarquia->id => $hierarquia->nome];
+                $options += [$hierarquia->id => $hierarquia->postoOuGraduacao];
             }
         }
         return $options;
-    }*/
+    }
 
 }
