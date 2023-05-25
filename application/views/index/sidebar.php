@@ -1,5 +1,18 @@
 <!-- Sidebar -->
 
+<?php 
+    
+    $posto_ou_raduacao_e_nome = 
+        (isset($_SESSION['nome']) && isset($_SESSION['hierarquia_sigla'])) 
+            ? ($_SESSION['hierarquia_sigla'] . " " . $_SESSION['nome']) 
+            : ''; 
+
+    $nivel_de_acesso = 
+        isset($_SESSION['funcao_nivel_de_acesso']) 
+            ? $_SESSION['funcao_nivel_de_acesso'] 
+            : ''; 
+    
+?>
 
 
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -10,7 +23,7 @@
             <i class="fas fa-laugh-wink"></i>
         </div>
         <div class="sidebar-brand-text mx-3">
-            <?php echo isset($_SESSION['nome']) ? $_SESSION['nome'] : ''; ?><sup>2</sup>
+            <small><?php echo $posto_ou_raduacao_e_nome ?><sup><em><?php echo strtolower($nivel_de_acesso); ?></em></small></sup>
         </div>
     </a>
 

@@ -46,4 +46,19 @@ class Funcao implements InterfaceBO, NivelDeAcesso{
     {
         return $this->nivelDeAcesso->nivel();
     }
+
+    public static function selecionarNivelDeAcesso($nivel)
+    {
+        if ($nivel == Ler::NIVEL) {
+            return new Ler();
+        } else if ($nivel == Escrever::NIVEL) {
+            return new Escrever();
+        } else if ($nivel == Administrar::NIVEL) {
+            return new Administrar();
+        }else if ($nivel == Aprovar::NIVEL) {
+            return new Aprovar();
+        }else if ($nivel == Root::NIVEL) {
+            return new Root();
+        }
+    }
 }

@@ -12,6 +12,8 @@ class LoginDAO extends CI_Model
     {
        // parent::__construct();
         $this->load->model('dao/DAO');
+        $this->load->model('dao/HierarquiaDAO');
+        $this->load->model('dao/FuncaoDAO');
     }
 
     public function emailExiste($email)
@@ -48,6 +50,8 @@ class LoginDAO extends CI_Model
                     'status' => $linha->status,
                     'hierarquia_id' => $linha->hierarquia_id,
                     'funcao_id' => $linha->funcao_id,
+                    'hierarquia_sigla' => ($this->HierarquiaDAO->buscarPorId($linha->hierarquia_id)->sigla),
+                    'funcao_nivel_de_acesso' => ($this->FuncaoDAO->buscarPorId($linha->funcao_id)->nivelDeAcesso->nivel()),
                 )
             );
         }

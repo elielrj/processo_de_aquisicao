@@ -3,6 +3,11 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('application/models/bo/Funcao.php');
+include_once('application/models/bo/Ler.php');
+include_once('application/models/bo/Escrever.php');
+include_once('application/models/bo/Administrar.php');
+include_once('application/models/bo/Aprovar.php');
+include_once('application/models/bo/Root.php');
 
 class FuncaoDAO extends CI_Model
 {
@@ -78,8 +83,8 @@ class FuncaoDAO extends CI_Model
             ? $arrayList->nome
             : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
             isset($arrayList->nivel_de_acesso)
-            ? $arrayList->nivel_de_acesso
-            : (isset($arrayList['nivel_de_acesso']) ? $arrayList['nivel_de_acesso'] : null),
+            ? Funcao::selecionarNivelDeAcesso($arrayList->nivel_de_acesso)
+            : (isset($arrayList['nivel_de_acesso']) ? Funcao::selecionarNivelDeAcesso($arrayList['nivel_de_acesso']) : null),
             isset($arrayList->status)
             ? $arrayList->status
             : (isset($arrayList['status']) ? $arrayList['status'] : null)
