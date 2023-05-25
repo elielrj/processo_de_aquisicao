@@ -11,7 +11,17 @@
         isset($_SESSION['funcao_nivel_de_acesso']) 
             ? $_SESSION['funcao_nivel_de_acesso'] 
             : ''; 
-    
+
+    include_once('application/models/bo/Administrar.php');
+    include_once('application/models/bo/Root.php');
+
+
+    $acesso_ao_banco = 
+        isset($_SESSION['funcao_nivel_de_acesso']) 
+            ? (
+                ($_SESSION['funcao_nivel_de_acesso'] == Administrar::NOME || 
+                $_SESSION['funcao_nivel_de_acesso'] == Root::NOME) ? true : false)
+            : false;
 ?>
 
 
@@ -29,7 +39,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item active center">
         <a class="nav-link" href="index.html">
             <span>iSALC</span></a>
     </li>
@@ -42,21 +52,18 @@
 
     <?php include_once('sidebar/processo.php'); ?>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
+    
 
-    <?php include_once('sidebar/bando_de_dados.php'); ?>
+    <?php $acesso_ao_banco ? include_once('sidebar/bando_de_dados.php') : ''; ?>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
+
 
     <!-- Heading -->
     <div class="sidebar-heading">Configurações</div>
 
     <?php include_once('sidebar/configuracao_usuario.php'); ?>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
+
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

@@ -13,3 +13,6 @@
         </div>
     </div>
 </li>
+
+<!-- Divider -->
+    <hr class="sidebar-divider">
