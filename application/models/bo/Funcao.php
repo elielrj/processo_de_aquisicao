@@ -42,6 +42,11 @@ class Funcao implements InterfaceBO, NivelDeAcesso{
         );
     }
 
+    public function nome()
+    {
+        return $this->nivelDeAcesso->nome();
+    }
+
     public function nivel()
     {
         return $this->nivelDeAcesso->nivel();
@@ -49,15 +54,15 @@ class Funcao implements InterfaceBO, NivelDeAcesso{
 
     public static function selecionarNivelDeAcesso($nome)
     {
-        if ($nivel == Ler::NIVEL) {
+        if ($nome == Ler::NOME) {
             return new Ler();
-        } else if ($nivel == Escrever::NIVEL) {
+        } else if ($nome == Escrever::NOME) {
             return new Escrever();
-        } else if ($nivel == Administrar::NIVEL) {
+        } else if ($nome == Administrar::NOME) {
             return new Administrar();
-        }else if ($nivel == Aprovar::NIVEL) {
+        }else if ($nome == Aprovar::NOME) {
             return new Aprovar();
-        }else if ($nivel == Root::NIVEL) {
+        }else if ($nome == Root::NOME) {
             return new Root();
         }
     }
