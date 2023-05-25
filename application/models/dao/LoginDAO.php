@@ -51,7 +51,7 @@ class LoginDAO extends CI_Model
                     'hierarquia_id' => $linha->hierarquia_id,
                     'funcao_id' => $linha->funcao_id,
                     'hierarquia_sigla' => ($this->HierarquiaDAO->buscarPorId($linha->hierarquia_id)->sigla),
-                    'funcao_nivel_de_acesso' => ($this->FuncaoDAO->buscarPorId($linha->funcao_id)->nivelDeAcesso->nivel()),
+                    'funcao_nivel_de_acesso' => ($this->FuncaoDAO->buscarPorId($linha->funcao_id)->nivelDeAcesso->nome()),
                 )
             );
         }
