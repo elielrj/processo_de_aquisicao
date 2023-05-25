@@ -37,7 +37,7 @@ class Funcao implements InterfaceBO, NivelDeAcesso{
         return array(
             'id' => $this->id,
             'nome' =>  $this->nome,
-            'nivel_de_acesso' =>  $this->nivelDeAcesso->nivel(),
+            'nivel_de_acesso' =>  $this->nivelDeAcesso->nome(),
             'status' => $this->status
         );
     }
@@ -47,7 +47,7 @@ class Funcao implements InterfaceBO, NivelDeAcesso{
         return $this->nivelDeAcesso->nivel();
     }
 
-    public static function selecionarNivelDeAcesso($nivel)
+    public static function selecionarNivelDeAcesso($nome)
     {
         if ($nivel == Ler::NIVEL) {
             return new Ler();
