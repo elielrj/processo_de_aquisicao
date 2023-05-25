@@ -19,9 +19,7 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-        </div>
+       
         <div class="sidebar-brand-text mx-3">
             <small><?php echo $posto_ou_raduacao_e_nome ?><sup><em><?php echo strtolower($nivel_de_acesso); ?></em></small></sup>
         </div>
@@ -33,8 +31,7 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>iSALC </span></a>
+            <span>iSALC</span></a>
     </li>
 
     <!-- Divider -->
