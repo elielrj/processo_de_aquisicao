@@ -1,7 +1,7 @@
 use processo_de_aquisicao;
 
 INSERT INTO 
-`usuario`(`id`,`nome`,`sobrenome`,`email`, `cpf`, `senha`, `departamento_id`,`status`,`funcao_id`,`hierarquia_id`) 
+`usuario`(`id`,`nome`,`sobrenome`,`email`, `cpf`, `senha`, `departamento_id`,`status`,`hierarquia_id`,`funcao_id`) 
 VALUES 
 (default,'Leitor','de Processos','leitor@leitor','09856260701',md5(123),1,true,1,2),
 (default,'Escritor','de Processos','escritor@escritor','09856260701',md5(123), 2,true,1,1),

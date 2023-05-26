@@ -1,6 +1,6 @@
 use processo_de_aquisicao;
 
-INSERT INTO hierarquia(id, posto_ou_graduacao, sigla, status) values
+INSERT INTO hierarquia(`id`,`posto_ou_graduacao`, `sigla`, `status`) values
 ("1","Marechal","Mar",true),
 ("2","Major","Maj",true),
 ("3","General-de-Exército","Gen Ex ",true),
