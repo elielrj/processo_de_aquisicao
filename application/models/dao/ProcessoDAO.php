@@ -138,7 +138,7 @@ class ProcessoDAO extends CI_Model
         return $listaDeProcesso;
     }
 
-    public function options()
+    /*public function options()
     {
 
         $processos = $this->buscar(null, null);
@@ -153,7 +153,7 @@ class ProcessoDAO extends CI_Model
             }
         }
         return $options;
-    }
+    }*/
 
     public function buscarProcessoPeloNumeroChave($numero, $chave)
     {
