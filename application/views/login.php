@@ -44,14 +44,15 @@
                                     <hr>
 
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">iSALC</h1>
+                                        <h1 class="h4 text-gray-900 mb-1">iSALC</h1>
+                                        <h1 class="h5 text-gray-900 mb-0">Processos de Aquisição</h1>
                                     </div>
 
                                     <hr>
                                     </br>
 
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Consultar</h1>
+                                        <h1 class="h4 text-gray-900 mb-1">Consultar</h1>
                                     </div>
 
                                     <?php

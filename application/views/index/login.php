@@ -5,7 +5,7 @@
 
 
     <div class="text-center">
-        <h1 class="h4 text-gray-900 mb-4">Logar</h1>
+        <h1 class="h4 text-gray-900 mb-1">Logar</h1>
     </div>
 
     <!-- email -->
