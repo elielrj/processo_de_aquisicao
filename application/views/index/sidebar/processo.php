@@ -9,16 +9,10 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Novo:</h6>
             <a class="collapse-item" href="<?php echo base_url('index.php/processo-novo'); ?>">Novo</a>
-            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/novo'); ?>">Alterar</a>
-            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/novo'); ?>">Arquivar</a>
-            
-            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Todos</a>
-            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Empenhos</a>
-            <a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController'); ?>">Pregões</a>
-            
+            <a class="collapse-item" href="<?php echo base_url('index.php/processos'); ?>">Listar</a>
         </div>
     </div>
 </li>
 
 <!-- Divider -->
-    <hr class="sidebar-divider">
+<hr class="sidebar-divider">

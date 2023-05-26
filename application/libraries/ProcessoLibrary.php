@@ -33,10 +33,7 @@ class ProcessoLibrary
             'Lei',
             'Número',
             'Data do Processo',
-            'Seção',
-            'Andamento',
-            'Alterar',
-            'Excluir'
+            'Seção'
         ]);
     }
 
@@ -50,10 +47,7 @@ class ProcessoLibrary
             td_value($processo->lei->modalidade->nome),
             td_value($processo->numero),
             td_data_hora_br($processo->dataHora),
-            td_value($processo->departamento->sigla),
-            td_status_completo($processo->completo),
-            td_alterar($this->controller, $processo->id),
-            td_excluir($this->controller, $processo->id),
+            td_value($processo->departamento->sigla)
         ]);
     }
 
