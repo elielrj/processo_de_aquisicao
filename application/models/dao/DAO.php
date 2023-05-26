@@ -35,10 +35,10 @@ class DAO extends CI_Model
             ->get($banco, $inicio, $fim);
     }
 
-    public function buscarTodosOrderBy($banco,$order_by, $inicio, $fim)
+    public function buscarTodosOrderByData($banco,$inicio, $fim)
     {
         return $this->db
-            ->order_by($order_by)
+            ->order_by('data_hora','DESC')
             ->get($banco, $inicio, $fim);
     }
 

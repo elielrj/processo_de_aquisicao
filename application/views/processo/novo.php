@@ -1,7 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-echo "<h1>{$titulo}</h1>" .
+view_titulo($titulo);
+
+echo 
 
     form_open('ProcessoController/criar', ['class' => 'form-group']) .
 

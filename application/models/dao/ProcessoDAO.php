@@ -40,7 +40,7 @@ class ProcessoDAO extends CI_Model
 
     public function buscarTodos($inicial, $final)
     {
-        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodosOrderByData(self::$TABELA_DB, $inicial, $final);
 
         return $this->criarLista($array);
     }
