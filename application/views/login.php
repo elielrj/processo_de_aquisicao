@@ -47,7 +47,14 @@
                                         <h1 class="h4 text-gray-900 mb-1">iSALC</h1>
                                         <h1 class="h5 text-gray-900 mb-0">Processos de Aquisição</h1>
                                     </div>
-
+                                    <hr>
+                                    <p class="text-center">
+                                        <i>"Art. 19. Os órgãos da Administração com competências regulamentares relativas às atividades 
+                                            de administração de materiais, de obras e serviços e de licitações e contratos deverão: 
+                                            I - instituir instrumentos que permitam, preferencialmente, a centralização dos procedimentos de aquisição e contratação de bens e serviços;"
+                                        </i>
+                                    </p>
+                                    <p class="text-right">Lei 14.133/21</p>
                                     <hr>
                                     </br>
 
