@@ -11,7 +11,6 @@ class ArquivoController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
         $this->load->library('ArquivoLibrary');
         
         $this->load->model('dao/ArquivoDAO');
@@ -96,16 +95,18 @@ class ArquivoController extends CI_Controller
         $file = $_FILES['arquivo'];
 
         if (isset($file) && isset($data_post)) {
-
+            
             $arquivo = $this->moverArquivo($data_post);
-
+            var_dump($arquivo);
             if (isset($arquivo)) {
-
+               
                 $this->ArquivoDAO->criar($arquivo);
-
+                
                 redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+                
             } else {
                 //todo tratar erro 
+                var_dump('caiu no else');
             }
         }
     }
@@ -157,16 +158,17 @@ class ArquivoController extends CI_Controller
         $file = $_FILES['arquivo'];
 
         if (isset($file) && isset($data_post)) {
-
+            
             $arquivo = $this->moverArquivo($data_post);
-
+            
             if (isset($arquivo)) {
-
+                
                 $this->ArquivoDAO->atualizar($arquivo);
-
+                
                 redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+                
             } else {
-                //todo tratar erro 
+                //todo tratar erro                 
             }
         }
     }
@@ -196,7 +198,7 @@ class ArquivoController extends CI_Controller
     private function moverArquivo($data_post)
     {
         $tmp_name = $_FILES['arquivo']['tmp_name'];
-
+        
         if (empty($data_post['arquivo_path'])) {
 
             $nome_do_arquivo = $_FILES['arquivo']['name'];
@@ -211,8 +213,27 @@ class ArquivoController extends CI_Controller
 
         }
 
-        $arquivado = move_uploaded_file($tmp_name, $path);
+        //$arquivado = move_uploaded_file($tmp_name, $path);
+        $arquivado = false;
 
+        $config['upload_path'] = $path;
+        $config['allowed_types'] = 'pdf';
+        $config['max_size'] = 10000;
+
+        $this->load->library('upload', $config);
+
+        if(! $this->upload->do_upload('arquivo'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('arquivo/upload_error', $error);
+
+            $arquivado = false;
+        }else{
+            $arquivado = true;
+        }
+
+       
         if ($arquivado) {
 
             return $this->toObject($data_post, $path);
