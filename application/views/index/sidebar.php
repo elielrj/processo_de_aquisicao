@@ -43,6 +43,8 @@
         <a class="nav-link" href="index.html">
             <span>iSALC</span></a>
     </li>
+    <p><i>"Art. 19. Os órgãos da Administração com competências regulamentares relativas às atividades de administração de materiais, de obras e serviços e de licitações e contratos deverão:
+I - instituir instrumentos que permitam, preferencialmente, a centralização dos procedimentos de aquisição e contratação de bens e serviços;"</i></p>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
