@@ -31,12 +31,25 @@
 
             <div class="col-xl-10 col-lg-12 col-md-9">
 
-                <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card o-hidden px-md-5-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block center">
                                 <img src="<?php echo base_url('img/processo.jpg'); ?>" width="465" height="685">
+                                <p class="text-justify px-md-5">
+                                    <i>"Art. 19. Os órgãos da Administração com competências regulamentares relativas às
+                                        atividades
+                                        de administração de materiais, de obras e serviços e de licitações e contratos
+                                        deverão:
+                                    </i>
+                                </p>
+                                <p class="text-justify px-md-5">
+                                    <i>I - instituir instrumentos que permitam, preferencialmente, a centralização dos
+                                        procedimentos de aquisição e contratação de bens e serviços;"
+                                    </i>
+                                </p>
+                                <p class="text-right px-md-5">Lei 14.133/21</p>
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
@@ -47,14 +60,6 @@
                                         <h1 class="h4 text-gray-900 mb-1">iSALC</h1>
                                         <h1 class="h5 text-gray-900 mb-0">Processos de Aquisição</h1>
                                     </div>
-                                    <hr>
-                                    <p class="text-center">
-                                        <i>"Art. 19. Os órgãos da Administração com competências regulamentares relativas às atividades 
-                                            de administração de materiais, de obras e serviços e de licitações e contratos deverão: 
-                                            I - instituir instrumentos que permitam, preferencialmente, a centralização dos procedimentos de aquisição e contratação de bens e serviços;"
-                                        </i>
-                                    </p>
-                                    <p class="text-right">Lei 14.133/21</p>
                                     <hr>
                                     </br>
 
