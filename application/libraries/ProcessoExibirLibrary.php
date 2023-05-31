@@ -95,7 +95,8 @@ class ProcessoExibirLibrary
                 form_input(['name' => 'arquivo_status', 'type' => 'hidden', 'value' => $this->statusDoArquivo($artefato->arquivo)]) .
                 form_input(['name' => 'arquivo_path', 'type' => 'hidden', 'value' => $this->pathDoArquivo($artefato->arquivo)]) .
                 "<td>" .
-                form_input(['name' => 'arquivo', 'type' => 'file']) . "</td>" .
+                form_input(['name' => 'MAX_FILE_SIZE', 'type' => "hidden", 'value' => "10240"]) .
+                form_input(['name' => 'arquivo', 'type' => 'file', 'accept' => '.pdf']) . "</td>" .
                 "</td>" .
                 "<td>" . form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary']) . "</td>" .
 
