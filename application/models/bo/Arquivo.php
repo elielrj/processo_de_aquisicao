@@ -13,6 +13,7 @@ class Arquivo implements InterfaceBO{
     private $usuarioId;
     private $artefatoId;
     private $processoId;
+    private $nome;
     private $status;
 
     public function __construct(
@@ -22,6 +23,7 @@ class Arquivo implements InterfaceBO{
             $usuarioId,
             $artefatoId,
             $processoId,
+            $nome,
             $status = true
     ) {
         $this->id = isset($id) ? $id : null;
@@ -30,6 +32,7 @@ class Arquivo implements InterfaceBO{
         $this->usuarioId = $usuarioId;
         $this->artefatoId = $artefatoId;
         $this->processoId = $processoId;
+        $this->nome = $nome;
         $this->status = $status;
     }
 
@@ -50,6 +53,7 @@ class Arquivo implements InterfaceBO{
             'usuario_id' => $this->usuarioId,
             'artefato_id' => $this->artefatoId,
             'processo_id' => $this->processoId,
+            'nome' => $this->nome,
             'status' => $this->status,
         );
     }
