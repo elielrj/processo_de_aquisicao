@@ -117,7 +117,7 @@ class ProcessoDAO extends CI_Model
 
         foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 
-            $artefato->arquivo = $this->ArquivoDAO
+            $artefato->arquivos = $this->ArquivoDAO
                 ->buscarArquivoDoArtefato($processo->id, $artefato->id);
         }
 

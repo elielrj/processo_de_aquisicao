@@ -110,7 +110,19 @@ class ArquivoDAO extends CI_Model
         $array = $this->DAO->buscarOnde(self::$TABELA_DB, $whare);
 
         if (!empty($array->result())) {
-            return $this->toObject($array->result()[0]);
+
+            $arquivos = [];
+
+            foreach($array->result() as $linha){
+var_dump($linha);
+                $arquivo = $this->toObject($linha);
+
+                array_push($arquivos,$arquivo);
+
+            }
+
+            return $arquivos;
+
         } else {
             return null;
         }

@@ -9,11 +9,11 @@ class Artefato implements InterfaceBO {
     private $id;
     private $ordem;
     private $nome;
-    private $arquivo;
+    private $arquivos;
     private $status;
 
     /**
-     * O Arquivo não é construindo juntamente com o Artefato, 
+     * Os arquivos não é construindo juntamente com o Artefato, 
      * somente é acrescentado a este Objeto quando o Objeto Processo for criado 
      * com a lista de Artefatos
      */
