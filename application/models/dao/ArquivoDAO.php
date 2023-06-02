@@ -114,7 +114,7 @@ class ArquivoDAO extends CI_Model
             $arquivos = [];
 
             foreach($array->result() as $linha){
-var_dump($linha);
+
                 $arquivo = $this->toObject($linha);
 
                 array_push($arquivos,$arquivo);

@@ -9,7 +9,7 @@ class Artefato implements InterfaceBO {
     private $id;
     private $ordem;
     private $nome;
-    private $arquivos;
+    private $arquivos = array();
     private $status;
 
     /**
