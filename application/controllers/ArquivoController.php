@@ -102,20 +102,28 @@ class ArquivoController extends CI_Controller
 
                 $arquivo = $this->moverArquivo($data_post);
 
+                if (isset($arquivo)) {
+
+                    $this->ArquivoDAO->criar($arquivo);
+
+                    redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+
+                } else {
+                    //todo tratar erro 
+                    var_dump('caiu no else' . '</br>');
+                  //  var_dump($_FILES);
+                  //  var_dump('</br>');
+                    //var_dump($data_post );
+
+                   // var_dump('</br>');
+                   // var_dump($arquivo);
+                }
+
             } catch (Exception $e) {
                 echo 'Exceção capturada: ', $e->getMessage(), "\n";
             }
 
-            if (isset($arquivo)) {
-
-                $this->ArquivoDAO->criar($arquivo);
-
-                redirect('ProcessoController/exibir/' . $data_post['processo_id']);
-
-            } else {
-                //todo tratar erro 
-                var_dump('caiu no else');
-            }
+            
         }
     }
 
@@ -163,6 +171,22 @@ class ArquivoController extends CI_Controller
 
         $data_post = $this->input->post();
 
+        // verifica se é pra criar mais um arquivo ou só atualizar o pdf atual
+       if(isset($data_post['mais_um'])){
+            $this->ArquivoDAO->criar(
+                new Arquivo(
+                    null, 
+                    '', 
+                    null, 
+                    $_SESSION['id'], 
+                    $data_post['artefato_id'], 
+                    $data_post['processo_id'], 
+                    '', 
+                    true));
+
+            redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+       }
+
         $file = $_FILES['arquivo'];
 
         if (isset($file) && isset($data_post)) {
@@ -199,6 +223,7 @@ class ArquivoController extends CI_Controller
             $_SESSION['id'],
             $data_post['artefato_id'],
             $data_post['processo_id'],
+            isset($data_post['arquivo_nome']) ? $data_post['arquivo_nome'] : null,
             $data_post['arquivo_status']
         );
     }
@@ -208,7 +233,7 @@ class ArquivoController extends CI_Controller
         $tmp_name = $_FILES['arquivo']['tmp_name'];
 
         if (empty($data_post['arquivo_path'])) {
-
+            
             $nome_do_arquivo = $_FILES['arquivo']['name'];
 
             $extensao = strtolower(pathinfo($nome_do_arquivo, PATHINFO_EXTENSION));
@@ -221,14 +246,13 @@ class ArquivoController extends CI_Controller
 
         }
 
+
         
 
-        try {
             $arquivado = move_uploaded_file($tmp_name, $path);
-        } catch (Exception $e) {
-            var_dump('Exceção capturada: '. $e->getMessage(). "\n");
-        }
 
+//var_dump($arquivado);
+var_dump($_FILES['arquivo']);
         /* $arquivado = false;
 
          $config['upload_path'] = $path;
@@ -247,6 +271,7 @@ class ArquivoController extends CI_Controller
              $arquivado = true;
          }*/
 
+   
 
         if ($arquivado) {
 

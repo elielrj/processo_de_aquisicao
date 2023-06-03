@@ -9,7 +9,7 @@ class DAO extends CI_Model
 
     public function criar($banco, $array)
     {
-        $this->db->insert($banco, $array);
+        $this->db->insert($banco, $array);    
     }
 
     public function buscarTodos($banco, $inicio, $fim)

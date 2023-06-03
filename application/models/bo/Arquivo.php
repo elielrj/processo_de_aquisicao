@@ -53,7 +53,7 @@ class Arquivo implements InterfaceBO{
             'usuario_id' => $this->usuarioId,
             'artefato_id' => $this->artefatoId,
             'processo_id' => $this->processoId,
-            'nome' => $this->nome,
+            'nome' => isset($this->nome) ? $this->nome : null,
             'status' => $this->status,
         );
     }

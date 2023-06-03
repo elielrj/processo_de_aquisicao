@@ -70,16 +70,16 @@ class ProcessoExibirLibrary
         $listagemDeArtefatos = "<table class='table table-responsive-md table-hover'>";
 
         foreach ($processo->tipo->listaDeArtefatos as $artefato) {
-            
+
             $this->ordem++;
 
 
-            $listagemDeArtefatos .= $this->linkParaArtefato($artefato, $listagemDeArtefatos, $processo );
+            $listagemDeArtefatos .= $this->linkParaArtefato($artefato, $processo);
 
 
 
 
-                      
+
 
         }
 
@@ -89,56 +89,89 @@ class ProcessoExibirLibrary
     }
 
 
-private function linkParaArtefato($artefato, $listagemDeArtefatos,$processo){
+    private function linkParaArtefato($artefato, $processo)
+    {
 
-     $link = "";
-        
-    if(isset($artefato->arquivos)){
+        $link = "";
+
+        $retorno = '';
+
+        if (
+            $artefato->arquivos != null
+        ) {
+            //var_dump($artefato->arquivos);
+            //var_dump("</br>");
+
+            $subindice = 0;
 
             foreach ($artefato->arquivos as $arquivo) {
 
-               
+                if ($arquivo->path == '') {
 
-                    $link = "<a href='" . base_url($arquivo->path) . "'>{$artefato->nome}</a>";//todo por o nome/apelido do arquivo
+                    $link = "{$artefato->nome}"; //todo por o nome/apelido do arquivo
 
-                return $this->linhaDeCadaArquivoDeCadaArtefato($artefato, $processo, $link, $arquivo);
-                
+                } else {
+
+                    $link = "<a href='" . base_url($arquivo->path) . "'>{$artefato->nome}</a>"; //todo por o nome/apelido do arquivo
+
+                }
+
+
+
+                $valorDoSubindice = count($artefato->arquivos);
+
+                if ($valorDoSubindice > 1) {
+                    $subindice++;
+                }
+
+                $retorno .= $this->linhaDeCadaArquivoDeCadaArtefato(
+                    $artefato,
+                    $processo,
+                    $link,
+                    $arquivo,
+                    ($subindice > 0 ? $subindice : null)
+                );
+
 
 
             }
 
-    }else{
+        } else {
             $link = "{$artefato->nome}";
 
-            return $this->linhaDeCadaArquivoDeCadaArtefato($artefato, $processo, $link, $arquivo = null);
+            $retorno .= $this->linhaDeCadaArquivoDeCadaArtefato($artefato, $processo, $link, $arquivo = null);
+        }
+        return $retorno;
+
     }
-        
 
-}
-
-private function linhaDeCadaArquivoDeCadaArtefato($artefato, $processo, $link, $arquivo){
-    return "
+    private function linhaDeCadaArquivoDeCadaArtefato($artefato, $processo, $link, $arquivo, $subindice = null)
+    {
+        // var_dump($arquivo);
+        return "
                     <tr class='text-left'>                    
-                        <td>{$this->ordem}</td> 
+                        <td>" . ($subindice == null ? $this->ordem : ($this->ordem . '.' . $subindice)) . "</td> 
                         <td>{$link}</td>" .
 
-                form_open_multipart('ArquivoController/' . $this->formCriarOuAtualizar($arquivo), ['class' => 'form-control']) .
-                form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($arquivo)]) .
-                form_input(['name' => 'processo_id', 'type' => 'hidden', 'value' => $processo->id]) .
-                form_input(['name' => 'artefato_id', 'type' => 'hidden', 'value' => $artefato->id]) .
-                form_input(['name' => 'arquivo_status', 'type' => 'hidden', 'value' => $this->statusDoArquivo($arquivo)]) .
-                form_input(['name' => 'arquivo_path', 'type' => 'hidden', 'value' => $this->pathDoArquivo($arquivo)]) .
-                "<td>" .
-                form_input(['name' => 'MAX_FILE_SIZE', 'type' => "hidden", 'value' => "10240"]) .
-                form_input(['name' => 'arquivo', 'type' => 'file', 'accept' => '.pdf']) . "</td>" .
-                "</td>" .
-                "<td>" . form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary']) . "</td>" .
+            form_open_multipart('ArquivoController/' . $this->formCriarOuAtualizar($arquivo), ['class' => 'form-control']) .
+            form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($arquivo)]) .
+            form_input(['name' => 'processo_id', 'type' => 'hidden', 'value' => $processo->id]) .
+            form_input(['name' => 'artefato_id', 'type' => 'hidden', 'value' => $artefato->id]) .
+            form_input(['name' => 'arquivo_status', 'type' => 'hidden', 'value' => $this->statusDoArquivo($arquivo)]) .
+            form_input(['name' => 'arquivo_nome', 'type' => 'hidden', 'value' => isset($arquivo->nome) ? $arquivo->nome : '']) .
+            form_input(['name' => 'arquivo_path', 'type' => 'hidden', 'value' => $this->pathDoArquivo($arquivo)]) .
+            "<td>" .
+            //          form_input(['name' => 'MAX_FILE_SIZE', 'type' => "hidden", 'value' => "10240"]) .
+            form_input(['name' => 'arquivo', 'type' => 'file', 'accept' => '.pdf']) . "</td>" .
+            "</td>" .
+            "<td>" . form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary']) . "</td>" .
+            "<td>" . form_submit('mais_um', '+', ['class' => 'btn btn-primary']) . "</td>" .
 
-                form_close() .
+            form_close() .
 
-                "</tr>";  
+            "</tr>";
 
-}
+    }
     public function idDoArquivo($arquivo)
     {
 
@@ -146,6 +179,7 @@ private function linhaDeCadaArquivoDeCadaArtefato($artefato, $processo, $link, $
 
             return $arquivo->id;
         } else {
+
             return null;
         }
     }
@@ -184,6 +218,6 @@ private function linhaDeCadaArquivoDeCadaArtefato($artefato, $processo, $link, $
     private function objeto($objeto, $id)
     {
         return "<td><a href='" . base_url('index.php/ProcessoController/exibir/' . $id) . "'>{$objeto}</a></td>";
-    } 
+    }
 
 }
