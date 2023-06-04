@@ -73,14 +73,7 @@ class ProcessoExibirLibrary
 
             $this->ordem++;
 
-
             $listagemDeArtefatos .= $this->linkParaArtefato($artefato, $processo);
-
-
-
-
-
-
         }
 
         $listagemDeArtefatos .= "</table>";
@@ -150,26 +143,35 @@ class ProcessoExibirLibrary
         // var_dump($arquivo);
         return "
                     <tr class='text-left'>                    
+                        
                         <td>" . ($subindice == null ? $this->ordem : ($this->ordem . '.' . $subindice)) . "</td> 
-                        <td>{$link}</td>" .
+                        
+                        <td title='Visualizar artefato'>{$link}</td>
+                        
+                            <td>" .
+                                form_input(['name' => 'arquivo_nome', 'type' => 'text', 'value' => (isset($arquivo->nome) ? $arquivo->nome : ''), 'placeholder' => 'Descrição']) .
+                            "</td>" .
 
-            form_open_multipart('ArquivoController/' . $this->formCriarOuAtualizar($arquivo), ['class' => 'form-control']) .
-            form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($arquivo)]) .
-            form_input(['name' => 'processo_id', 'type' => 'hidden', 'value' => $processo->id]) .
-            form_input(['name' => 'artefato_id', 'type' => 'hidden', 'value' => $artefato->id]) .
-            form_input(['name' => 'arquivo_status', 'type' => 'hidden', 'value' => $this->statusDoArquivo($arquivo)]) .
-            form_input(['name' => 'arquivo_nome', 'type' => 'hidden', 'value' => isset($arquivo->nome) ? $arquivo->nome : '']) .
-            form_input(['name' => 'arquivo_path', 'type' => 'hidden', 'value' => $this->pathDoArquivo($arquivo)]) .
-            "<td>" .
-            //          form_input(['name' => 'MAX_FILE_SIZE', 'type' => "hidden", 'value' => "10240"]) .
-            form_input(['name' => 'arquivo', 'type' => 'file', 'accept' => '.pdf']) . "</td>" .
-            "</td>" .
-            "<td>" . form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary']) . "</td>" .
-            "<td>" . form_submit('mais_um', '+', ['class' => 'btn btn-primary']) . "</td>" .
+                            form_open_multipart('ArquivoController/alterarArquivoDeUmProcesso', ['class' => 'form-control']) .
+                            form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($arquivo)]) .
+                            form_input(['name' => 'processo_id', 'type' => 'hidden', 'value' => $processo->id]) .
+                            form_input(['name' => 'artefato_id', 'type' => 'hidden', 'value' => $artefato->id]) .
+                            form_input(['name' => 'arquivo_status', 'type' => 'hidden', 'value' => $this->statusDoArquivo($arquivo)]) .
+                            form_input(['name' => 'arquivo_path', 'type' => 'hidden', 'value' => $this->pathDoArquivo($arquivo)]) .
 
-            form_close() .
+                            "<td>" . form_input(['name' => 'arquivo', 'type' => 'file', 'accept' => '.pdf']) . "</td>" .
 
-            "</tr>";
+                        "</td>" .
+                            
+                        "<td>" . form_submit('enviar', 'Upload', ['class' => 'btn btn-primary', 'title' => 'Sobe um novo ou atualiza o arquivo para este artefato do processo']) . "</td>" .
+                        
+                        "<td>" . form_submit('mais_um', '+', ['class' => 'btn btn-primary', 'title' => 'Incluir mais arquivo para este artefato']) . "</td>" .
+                        
+                        "<td>" . form_submit('menos_um', '-', ['class' => 'btn btn-primary', 'title' => 'Excluir artefato']) . "</td>" .
+
+                        form_close() .
+
+                    "</tr>";
 
     }
     public function idDoArquivo($arquivo)
@@ -181,17 +183,6 @@ class ProcessoExibirLibrary
         } else {
 
             return null;
-        }
-    }
-
-    public function formCriarOuAtualizar($arquivo)
-    {
-
-        if ($arquivo == null) {
-
-            return 'criarApartirDeUmProcesso';
-        } else {
-            return 'atualizarApartirDeUmProcesso';
         }
     }
 

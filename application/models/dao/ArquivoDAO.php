@@ -77,7 +77,7 @@ class ArquivoDAO extends CI_Model
             (isset($arrayList->usuario_id)) ? $arrayList->usuario_id : (isset($arrayList['usuario_id']) ? $arrayList['usuario_id'] : null),
             (isset($arrayList->artefato_id)) ? $arrayList->artefato_id : (isset($arrayList['artefato_id']) ? $arrayList['artefato_id'] : null),
             (isset($arrayList->processo_id)) ? $arrayList->processo_id : (isset($arrayList['processo_id']) ? $arrayList['processo_id'] : null),
-            (isset($arrayList->nome)) ? $arrayList->nome : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
+            (isset($arrayList->nome)) ? $arrayList->nome : (isset($arrayList['nome']) ? $arrayList['nome'] : ''),
             (isset($arrayList->status)) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
         );
     }

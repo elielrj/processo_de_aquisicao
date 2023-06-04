@@ -60,7 +60,7 @@ class DAO extends CI_Model
 
     public function deletar($banco, $array)
     {
-        $this->db->update($banco, $array);
+        $this->db->delete($banco, $array);
     }
 
     public function contar($banco)

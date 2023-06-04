@@ -87,47 +87,6 @@ class ArquivoController extends CI_Controller
         }
     }
 
-    public function criarApartirDeUmProcesso()
-    {
-
-        $data_post = $this->input->post();
-
-        $file = $_FILES['arquivo'];
-
-        if (isset($file) && isset($data_post)) {
-
-
-
-            try {
-
-                $arquivo = $this->moverArquivo($data_post);
-
-                if (isset($arquivo)) {
-
-                    $this->ArquivoDAO->criar($arquivo);
-
-                    redirect('ProcessoController/exibir/' . $data_post['processo_id']);
-
-                } else {
-                    //todo tratar erro 
-                    var_dump('caiu no else' . '</br>');
-                  //  var_dump($_FILES);
-                  //  var_dump('</br>');
-                    //var_dump($data_post );
-
-                   // var_dump('</br>');
-                   // var_dump($arquivo);
-                }
-
-            } catch (Exception $e) {
-                echo 'Exceção capturada: ', $e->getMessage(), "\n";
-            }
-
-            
-        }
-    }
-
-
     public function alterar($id)
     {
 
@@ -166,43 +125,88 @@ class ArquivoController extends CI_Controller
         }
     }
 
-    public function atualizarApartirDeUmProcesso()
+    public function alterarArquivoDeUmProcesso()
     {
 
         $data_post = $this->input->post();
 
-        // verifica se é pra criar mais um arquivo ou só atualizar o pdf atual
-       if(isset($data_post['mais_um'])){
-            $this->ArquivoDAO->criar(
-                new Arquivo(
-                    null, 
-                    '', 
-                    null, 
-                    $_SESSION['id'], 
-                    $data_post['artefato_id'], 
-                    $data_post['processo_id'], 
-                    '', 
-                    true));
+        if (isset($data_post['mais_um'])) {
 
-            redirect('ProcessoController/exibir/' . $data_post['processo_id']);
-       }
+            //verifica se foi apontado um arquivo para
+            // já adiciona-lo a listagem
+            if (isset($_FILES['arquivo'])) {
 
-        $file = $_FILES['arquivo'];
+                $arquivo = $this->moverArquivo($data_post, true);
 
-        if (isset($file) && isset($data_post)) {
+                if (isset($arquivo)) {
 
-            $arquivo = $this->moverArquivo($data_post);
+                    $this->ArquivoDAO->criar($arquivo);
 
-            if (isset($arquivo)) {
+                }
 
-                $this->ArquivoDAO->atualizar($arquivo);
-
-                redirect('ProcessoController/exibir/' . $data_post['processo_id']);
-
+                //se não tiver sido aponado um arquivo, 
+                //ele só adiciona um novo artefato vazio, sem path
             } else {
-                //todo tratar erro                 
+                $this->ArquivoDAO->criar(
+                    new Arquivo(
+                        null,
+                        '',
+                        null,
+                        $_SESSION['id'],
+                        $data_post['artefato_id'],
+                        $data_post['processo_id'],
+                        '',
+                        true
+                    )
+                );
+            }
+
+        } else if (isset($data_post['menos_um'])) {
+
+            $arquivo_para_deletar = $this->ArquivoDAO->buscarPorId($data_post['arquivo_id']);
+
+            $this->ArquivoDAO->deletar($arquivo_para_deletar);
+
+        } else if (isset($data_post['enviar'])) {
+
+            if (isset($_FILES)) {
+
+                $arquivo = $this->moverArquivo($data_post);
+                //var_dump($arquivo);
+                if (isset($arquivo)) {
+
+                    //verifica se é pra atualizar o arquivo
+                    if (
+                        $data_post['arquivo_path'] == '' &&
+                        $data_post['arquivo_id'] > 0
+                    ) {
+
+                        $this->ArquivoDAO->atualizar($arquivo);
+                        //var_dump('caiu no atualizar');
+                        //var_dump('</br>');
+                        //verifica se é pra inserir um novo arquivo
+                    } else if (
+                        $data_post['arquivo_path'] == '' &&
+                        $data_post['arquivo_id'] == null
+                    ) {
+                        $this->ArquivoDAO->criar($arquivo);
+                        //var_dump('caiu no criar');
+                        //var_dump('</br>');
+                    }
+
+                } else {
+                    //todo tratar erro, exibir mensagem de erro na tela 
+                    var_dump('caiu no else' . '</br>');
+
+                    //redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+                }
             }
         }
+        //var_dump($data_post['arquivo_path']);
+        //var_dump('</br>');
+        //var_dump($data_post['arquivo_id']);
+        
+        redirect('ProcessoController/exibir/' . $data_post['processo_id']);
     }
 
     public function deletar($id)
@@ -212,28 +216,29 @@ class ArquivoController extends CI_Controller
         redirect('ArquivoController');
     }
 
-    private function toObject($data_post, $path)
+    private function toObject($data_post, $path, $criarUmNovoArquivo)
     {
-
-
         return new Arquivo(
-            isset($data_post['id']) ? $data_post['id'] : null,
+            $criarUmNovoArquivo ? null : (isset($data_post['arquivo_id']) ? $data_post['arquivo_id'] : null),
             $path,
             DataLibrary::dataHoraBr(),
             $_SESSION['id'],
             $data_post['artefato_id'],
             $data_post['processo_id'],
-            isset($data_post['arquivo_nome']) ? $data_post['arquivo_nome'] : null,
+            isset($data_post['arquivo_nome']) ? $data_post['arquivo_nome'] : '',
             $data_post['arquivo_status']
         );
     }
 
-    private function moverArquivo($data_post)
+    private function moverArquivo($data_post, $criarUmNovoArquivo = false)
     {
         $tmp_name = $_FILES['arquivo']['tmp_name'];
 
-        if (empty($data_post['arquivo_path'])) {
-            
+        if (
+            empty($data_post['arquivo_path']) ||
+            $criarUmNovoArquivo
+        ) {
+
             $nome_do_arquivo = $_FILES['arquivo']['name'];
 
             $extensao = strtolower(pathinfo($nome_do_arquivo, PATHINFO_EXTENSION));
@@ -247,12 +252,12 @@ class ArquivoController extends CI_Controller
         }
 
 
-        
 
-            $arquivado = move_uploaded_file($tmp_name, $path);
 
-//var_dump($arquivado);
-var_dump($_FILES['arquivo']);
+        $arquivado = move_uploaded_file($tmp_name, $path);
+
+        //var_dump($arquivado);
+        //var_dump($_FILES['arquivo']);
         /* $arquivado = false;
 
          $config['upload_path'] = $path;
@@ -271,11 +276,11 @@ var_dump($_FILES['arquivo']);
              $arquivado = true;
          }*/
 
-   
+
 
         if ($arquivado) {
 
-            return $this->toObject($data_post, $path);
+            return $this->toObject($data_post, $path, $criarUmNovoArquivo);
 
         } else {
             return null;
