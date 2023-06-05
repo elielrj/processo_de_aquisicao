@@ -51,7 +51,7 @@
     endif;
     ?>
 
-
+<!--
     <div class="form-group">
         <div class="custom-control custom-checkbox small">
             <input type="checkbox" class="custom-control-input" id="customCheck" checked>
@@ -59,14 +59,16 @@
             </label>
         </div>
     </div>
-
+-->
     <!--  Botão Login -->
     <input class="form-group btn btn-primary btn-user btn-block" type="submit" value="Login">
 
     <!--  LOGIN WITH TOKEN -->
+<!--
     <a href="index.html" class="btn btn-facebook btn-user btn-block">
         <i class="fab fa-facebook-f fa-fw"></i> Login com Token
     </a>
+
 
     <hr>
 
@@ -77,4 +79,5 @@
     <div class="text-center">
         <a class="small" href="criarUsuario.php">Criar conta!</a>
     </div>
+-->
 </form>

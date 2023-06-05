@@ -35,8 +35,8 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block center">
-                                <img src="<?php echo base_url('img/processo.jpg'); ?>" width="465" height="685">
+                            <div class="col-lg-6 d-none d-lg-block text-center">
+                                <img src="<?php echo base_url('img/processo.jpg'); ?>" width="300" height="400">
                                 <p class="text-justify px-md-5">
                                     <i>"Art. 19. Os órgãos da Administração com competências regulamentares relativas às
                                         atividades
