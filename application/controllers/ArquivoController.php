@@ -1,4 +1,5 @@
 <?php
+use function PHPUnit\Framework\isEmpty;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -134,7 +135,10 @@ class ArquivoController extends CI_Controller
 
             //verifica se foi apontado um arquivo para
             // já adiciona-lo a listagem
-            if (isset($_FILES['arquivo'])) {
+            if (
+                sizeof($_FILES['arquivo']) > 0 &&
+                $_FILES['arquivo']['temp_name'] != ''
+                ) {
 
                 $arquivo = $this->moverArquivo($data_post, true);
 
@@ -169,10 +173,13 @@ class ArquivoController extends CI_Controller
 
         } else if (isset($data_post['enviar'])) {
 
-            if (isset($_FILES)) {
-
+            if (
+                isset($_FILES['arquivo']) &&
+                !empty($_FILES['arquivo']['tmp_name'])
+            ) {
+                
                 $arquivo = $this->moverArquivo($data_post);
-                //var_dump($arquivo);
+
                 if (isset($arquivo)) {
 
                     //verifica se é pra atualizar o arquivo
@@ -182,16 +189,14 @@ class ArquivoController extends CI_Controller
                     ) {
 
                         $this->ArquivoDAO->atualizar($arquivo);
-                        //var_dump('caiu no atualizar');
-                        //var_dump('</br>');
+                       
                         //verifica se é pra inserir um novo arquivo
                     } else if (
                         $data_post['arquivo_path'] == '' &&
                         $data_post['arquivo_id'] == null
                     ) {
                         $this->ArquivoDAO->criar($arquivo);
-                        //var_dump('caiu no criar');
-                        //var_dump('</br>');
+                      
                     }
 
                 } else {
@@ -200,13 +205,18 @@ class ArquivoController extends CI_Controller
 
                     //redirect('ProcessoController/exibir/' . $data_post['processo_id']);
                 }
+            }else if(!empty($data_post['arquivo_id'])){
+
+                $arquivo_para_atualizar = $this->ArquivoDAO->buscarPorId($data_post['arquivo_id']);
+
+                $arquivo_para_atualizar->nome = $data_post['arquivo_nome'];
+
+                $this->ArquivoDAO->atualizar($arquivo_para_atualizar);
+
             }
         }
-        //var_dump($data_post['arquivo_path']);
-        //var_dump('</br>');
-        //var_dump($data_post['arquivo_id']);
         
-        redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+       redirect('ProcessoController/exibir/' . $data_post['processo_id']);
     }
 
     public function deletar($id)
@@ -235,7 +245,7 @@ class ArquivoController extends CI_Controller
         $tmp_name = $_FILES['arquivo']['tmp_name'];
 
         if (
-            empty($data_post['arquivo_path']) ||
+            ($data_post['arquivo_path'] == '') ||
             $criarUmNovoArquivo
         ) {
 
@@ -256,7 +266,6 @@ class ArquivoController extends CI_Controller
 
         $arquivado = move_uploaded_file($tmp_name, $path);
 
-        //var_dump($arquivado);
         //var_dump($_FILES['arquivo']);
         /* $arquivado = false;
 

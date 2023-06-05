@@ -65,15 +65,47 @@ class ProcessoVisualizarLibrary
 
             ++$this->ordem;
 
-            if ($artefato->arquivo != null) {
+            if ($artefato->arquivos != null) {
 
-                $listagemDeArtefatos .=
-                    "</br>
-                    <p>" . $this->ordem() . " - " . $artefato->nome ."<p>
-                    <div style='height: 1080px; width: 100%;'>
-                        <embed src='" . base_url($artefato->arquivo->path) . "' type='application/pdf' width='100%' height='100%'>
-                    </div>
-                ";
+                $subindice = 0;
+                $valorDoSubindice = count($artefato->arquivos);
+
+                foreach($artefato->arquivos as $arquivo){
+
+                    
+
+                    if ($valorDoSubindice > 1) {
+                        $subindice++;
+                    }
+
+                    if($arquivo->path != '' && $arquivo->path !=  null){
+
+                        $listagemDeArtefatos .=
+                                            "</br>
+                                            <p>" . 
+                                                $this->ordem() . ($subindice > 0 ? ('.' . $subindice) : '') . " - " . 
+                                                $artefato->nome . ' - Descrição do anexo: '. $arquivo->nome .
+                                            "<p>
+                                            <div style='height: 1080px; width: 100%;'>
+                                                <embed src='" . base_url($arquivo->path) . "' type='application/pdf' width='100%' height='100%'>
+                                            </div>
+                                        ";
+                    }else{
+                        $listagemDeArtefatos .=
+                            "</br>
+                                            <p>" . 
+                                                $this->ordem() . ($subindice > 0 ? ('.' . $subindice) : '') . " - " . 
+                                                $artefato->nome . ' - Descrição do anexo: ' . $arquivo->nome . 
+                                            "<p>
+                                            <div>
+                                                <p>Aquivo não foi subido para o processo.</p>
+                                            </div>
+                                        ";
+                    }
+
+                }
+
+                
             }
         }
 

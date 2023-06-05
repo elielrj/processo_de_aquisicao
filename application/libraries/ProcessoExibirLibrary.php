@@ -92,11 +92,10 @@ class ProcessoExibirLibrary
         if (
             $artefato->arquivos != null
         ) {
-            //var_dump($artefato->arquivos);
-            //var_dump("</br>");
 
             $subindice = 0;
-
+            $valorDoSubindice = count($artefato->arquivos);
+            
             foreach ($artefato->arquivos as $arquivo) {
 
                 if ($arquivo->path == '') {
@@ -111,7 +110,7 @@ class ProcessoExibirLibrary
 
 
 
-                $valorDoSubindice = count($artefato->arquivos);
+                
 
                 if ($valorDoSubindice > 1) {
                     $subindice++;
@@ -146,13 +145,15 @@ class ProcessoExibirLibrary
                         
                         <td>" . ($subindice == null ? $this->ordem : ($this->ordem . '.' . $subindice)) . "</td> 
                         
-                        <td title='Visualizar artefato'>{$link}</td>
+                        <td title='Visualizar artefato'>{$link}</td>" .
                         
-                            <td>" .
-                                form_input(['name' => 'arquivo_nome', 'type' => 'text', 'value' => (isset($arquivo->nome) ? $arquivo->nome : ''), 'placeholder' => 'Descrição']) .
+                            form_open_multipart('ArquivoController/alterarArquivoDeUmProcesso', ['class' => 'form-control']) .
+
+                            "<td>" .
+                                form_input(['name' => 'arquivo_nome', 'type' => 'text', 'value' => (isset($arquivo) ? $arquivo->nome : ''), 'placeholder' => 'Descrição']) .
                             "</td>" .
 
-                            form_open_multipart('ArquivoController/alterarArquivoDeUmProcesso', ['class' => 'form-control']) .
+                            
                             form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($arquivo)]) .
                             form_input(['name' => 'processo_id', 'type' => 'hidden', 'value' => $processo->id]) .
                             form_input(['name' => 'artefato_id', 'type' => 'hidden', 'value' => $artefato->id]) .
@@ -163,7 +164,7 @@ class ProcessoExibirLibrary
 
                         "</td>" .
                             
-                        "<td>" . form_submit('enviar', 'Upload', ['class' => 'btn btn-primary', 'title' => 'Sobe um novo ou atualiza o arquivo para este artefato do processo']) . "</td>" .
+                        "<td>" . form_submit('enviar', 'Upload/Atualizar', ['class' => 'btn btn-primary', 'title' => 'Sobe um novo ou atualiza o arquivo para este artefato do processo']) . "</td>" .
                         
                         "<td>" . form_submit('mais_um', '+', ['class' => 'btn btn-primary', 'title' => 'Incluir mais arquivo para este artefato']) . "</td>" .
                         
