@@ -210,7 +210,7 @@ class UsuarioController extends CI_Controller
             $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
         );
 
-        $this->UsuarioDAO->atualizar($usuario);
+        $this->UsuarioDAO->atualizar($usuario);//todo realizar a atualização das sessions
 
         redirect('ProcessoController');
     }

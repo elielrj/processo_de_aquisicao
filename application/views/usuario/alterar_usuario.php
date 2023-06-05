@@ -8,12 +8,14 @@ view_form_open('UsuarioController/atualizarUsuario');
 view_input('Id','id','id','hidden',$usuario->id,150);
 view_input('Nome','nome','nome','text',$usuario->nome,150);
 view_input('Sobrenome','sobrenome','sobrenome','text',$usuario->sobrenome,250);
-view_input('Email','emai','email','text', $usuario->email,150);
+view_input('Email','email','email','text', $usuario->email,150);
 view_input('CPF','cpf','cpf','text',$usuario->cpf,11);
 view_input('Senha','senha','senha','password',$usuario->senha,6);
 
 view_dropdown('Posto ou Graduação','hierarquia_id',$hierarquias,$usuario->hierarquia->id);
 view_dropdown('Função','funcao_id',$funcoes,$usuario->funcao->id);
+
+view_dropdown('Departamento', 'departamento_id', $departamentos, $_SESSION['departamento_id']);
 
 view_dropdown_status();
 
