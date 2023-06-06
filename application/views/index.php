@@ -31,6 +31,10 @@ exit();
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url(); ?>css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- ícones para site -->
+    <?php include_once('index/icones.php'); ?>
+    <!-- fim de ícones -->
+
 </head>
 
 <body id="page-top">

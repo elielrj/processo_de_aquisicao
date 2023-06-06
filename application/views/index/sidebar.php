@@ -1,27 +1,27 @@
 <!-- Sidebar -->
 
-<?php 
-    
-    $posto_ou_raduacao_e_nome = 
-        (isset($_SESSION['nome']) && isset($_SESSION['hierarquia_sigla'])) 
-            ? ($_SESSION['hierarquia_sigla'] . " " . $_SESSION['nome']) 
-            : ''; 
+<?php
 
-    $nivel_de_acesso = 
-        isset($_SESSION['funcao_nivel_de_acesso']) 
-            ? $_SESSION['funcao_nivel_de_acesso'] 
-            : ''; 
+$posto_ou_raduacao_e_nome =
+    (isset($_SESSION['nome']) && isset($_SESSION['hierarquia_sigla']))
+    ? ($_SESSION['hierarquia_sigla'] . " " . $_SESSION['nome'])
+    : '';
 
-    include_once('application/models/bo/Administrar.php');
-    include_once('application/models/bo/Root.php');
+$nivel_de_acesso =
+    isset($_SESSION['funcao_nivel_de_acesso'])
+    ? $_SESSION['funcao_nivel_de_acesso']
+    : '';
+
+include_once('application/models/bo/Administrar.php');
+include_once('application/models/bo/Root.php');
 
 
-    $acesso_ao_banco = 
-        isset($_SESSION['funcao_nivel_de_acesso']) 
-            ? (
-                ($_SESSION['funcao_nivel_de_acesso'] == Administrar::NOME || 
-                $_SESSION['funcao_nivel_de_acesso'] == Root::NOME) ? true : false)
-            : false;
+$acesso_ao_banco =
+    isset($_SESSION['funcao_nivel_de_acesso'])
+    ? (
+        ($_SESSION['funcao_nivel_de_acesso'] == Administrar::NOME ||
+            $_SESSION['funcao_nivel_de_acesso'] == Root::NOME) ? true : false)
+    : false;
 ?>
 
 
@@ -29,9 +29,13 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-       
+
         <div class="sidebar-brand-text mx-3">
-            <small><?php echo $posto_ou_raduacao_e_nome ?><sup><em><?php echo strtolower($nivel_de_acesso); ?></em></small></sup>
+            <small>
+                <?php echo $posto_ou_raduacao_e_nome ?><sup><em>
+                        <?php echo strtolower($nivel_de_acesso); ?>
+                    </em>
+            </small></sup>
         </div>
     </a>
 
@@ -41,9 +45,14 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active center">
         <a class="nav-link" href="index.html">
-            <span>iSALC</span></a>
+            <span>
+                <img src="<?php echo base_url(); ?>icones_da_pagina/favicon-32x32.png" alt="Bootstrap" width="32"
+                    height="32">
+                iSALC
+            </span>
+        </a>
     </li>
-   
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -52,7 +61,7 @@
 
     <?php include_once('sidebar/processo.php'); ?>
 
-    
+
 
     <?php $acesso_ao_banco ? include_once('sidebar/bando_de_dados.php') : ''; ?>
 

@@ -20,6 +20,10 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- ícones para site -->
+    <?php include_once('index/icones.php'); ?>
+    <!-- fim de ícones -->
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -57,9 +61,22 @@
                                     <hr>
 
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-1">iSALC</h1>
-                                        <h1 class="h5 text-gray-900 mb-0">Processos de Aquisição</h1>
+                                       
+                                            <div class="col-xs-1">
+                                            <img src="<?php echo base_url(); ?>icones_da_pagina/favicon-32x32.png" alt="Bootstrap" width="32" height="32">
+                                            </div>
+                                            
+                                            <div class="col-xs-1">
+                                                <h1 class="h4 text-gray-900 mb-1">iSALC</h1>
+                                            </div>
+                                      
+
+                                        <div class="col-xs-1">
+                                            <h1 class="h5 text-gray-900 mb-0">Processos de Aquisição</h1>
+                                        </div>
+
                                     </div>
+
                                     <hr>
                                     </br>
 
