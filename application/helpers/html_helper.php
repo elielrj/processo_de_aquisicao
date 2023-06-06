@@ -33,7 +33,7 @@ function td_status_completo($status)
         "</p></td>";
 }
 
-function td_value($value)
+function td_value($value,$title = '')
 {
     return "<td>{$value}</td>";
 }
@@ -138,6 +138,11 @@ function view_form_open($controller)
     echo form_open($controller, array('class' => 'form-group'));
 }
 
+function view_form_open_multipart($controller)
+{
+    return form_open_multipart($controller, array('class' => 'form-control'));
+}
+
 function view_input($label, $name, $id, $type, $value = '', $maxlength = 250)
 {
     echo
@@ -153,6 +158,22 @@ function view_input($label, $name, $id, $type, $value = '', $maxlength = 250)
         ]);
         
     echo (($type != 'hidden') ? br_multiples() : '');
+}
+
+function view_input_placeholder($name,$value = '', $placeholder = '')
+{
+    return 
+        td_value(
+            form_input([
+                'name' => $name,
+                'class' => 'form-control',
+                'type' => 'text',
+                'value' => $value,
+                'maxlength' => 150,
+                'placeholder' => $placeholder
+            ])
+        );
+
 }
 
 function view_form_submit_enviar()
@@ -193,6 +214,9 @@ function view_dropdown($label,$name,$options,$value)
     echo br_multiples();
 }
 
-
+function estaSetado($value)
+{
+    return isset($value);
+}
 
 ?>

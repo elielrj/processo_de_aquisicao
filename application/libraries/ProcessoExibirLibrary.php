@@ -141,20 +141,21 @@ class ProcessoExibirLibrary
     {
         // var_dump($arquivo);
         return "
-                    <tr class='text-left'>                    
+                    <tr class='text-left'>" .                   
                         
-                        <td>" . ($subindice == null ? $this->ordem : ($this->ordem . '.' . $subindice)) . "</td> 
+                        td_value($this->numeroDeOrdemComValorDeSubIndiceSeForOCaso($subindice)) . 
                         
-                        <td title='Visualizar artefato'>{$link}</td>" .
+                         td_value($link,'Visualizar artefato') .
                         
-                            form_open_multipart('ArquivoController/alterarArquivoDeUmProcesso', ['class' => 'form-control']) .
+                         view_form_open_multipart('ArquivoController/alterarArquivoDeUmProcesso').
 
-                            "<td>" .
-                                form_input(['name' => 'arquivo_nome', 'type' => 'text', 'value' => (isset($arquivo) ? $arquivo->nome : ''), 'placeholder' => 'Descrição']) .
-                            "</td>" .
+                        view_input_placeholder('arquivo_nome', $this->nomeDoArquivo($arquivo),'Descrição').
+                            //"<td>" .
+                             //   form_input(['name' => 'arquivo_nome', 'type' => 'text', 'value' => (isset($arquivo) ? $arquivo->nome : ''), 'placeholder' => 'Descrição']) .
+                            //"</td>" .
 
-                            
-                            form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($arquivo)]) .
+                            view_input('Id do Arquivo','arquivo_id','arquivo_id','hidden', $this->idDoArquivo($arquivo)).
+                            //form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($arquivo)]) .
                             form_input(['name' => 'processo_id', 'type' => 'hidden', 'value' => $processo->id]) .
                             form_input(['name' => 'artefato_id', 'type' => 'hidden', 'value' => $artefato->id]) .
                             form_input(['name' => 'arquivo_status', 'type' => 'hidden', 'value' => $this->statusDoArquivo($arquivo)]) .
@@ -210,6 +211,20 @@ class ProcessoExibirLibrary
     private function objeto($objeto, $id)
     {
         return "<td><a href='" . base_url('index.php/ProcessoController/exibir/' . $id) . "'>{$objeto}</a></td>";
+    }
+
+    private function numeroDeOrdemComValorDeSubIndiceSeForOCaso($subindice)
+    {
+        return $subindice == null
+            ? $this->ordem
+            : ($this->ordem . '.' . $subindice);
+    }
+
+    private function nomeDoArquivo($arquivo)
+    {
+        return estaSetado($arquivo) 
+            ? $arquivo->nome 
+            : '';
     }
 
 }
