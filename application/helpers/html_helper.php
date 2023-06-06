@@ -33,7 +33,7 @@ function td_status_completo($status)
         "</p></td>";
 }
 
-function td_value($value,$title = '')
+function td_value($value, $title = '')
 {
     return "<td>{$value}</td>";
 }
@@ -156,13 +156,33 @@ function view_input($label, $name, $id, $type, $value = '', $maxlength = 250)
             'value' => $value,
             'maxlength' => $maxlength
         ]);
-        
+
     echo (($type != 'hidden') ? br_multiples() : '');
 }
 
-function view_input_placeholder($name,$value = '', $placeholder = '')
+function view_input_name_value_type($name, $value = '', $type = 'hidden')
 {
-    return 
+    return form_input([
+        'name' => $name,
+        'type' => $type,
+        'value' => $value
+    ]);
+}
+
+function formulario_par_subir_arquivo($name = 'arquivo')
+{
+    return form_input([
+        'name' => $name,
+        'type' => 'file',
+        'accept' => '.pdf'
+    ]);
+}
+
+
+
+function view_input_placeholder($name, $value = '', $placeholder = '')
+{
+    return
         td_value(
             form_input([
                 'name' => $name,
@@ -192,6 +212,23 @@ function view_form_submit_cancelar($controller)
         " class='btn btn-danger btn-lg btn-block'>Cancelar</a>";
 }
 
+function view_form_submit_button($name, $value, $title)
+{
+    return form_submit(
+        $name,
+        $value,
+        [
+            'class' => 'btn btn-primary',
+            'title' => $title
+        ]
+    );
+}
+
+function tr_view($value, $class = 'text-left')
+{
+    return "<tr class={$class}>{$value}</tr>";
+}
+
 function view_dropdown_status($value = true, $label = 'Status')
 {
     echo form_label($label) . form_dropdown(
@@ -203,7 +240,7 @@ function view_dropdown_status($value = true, $label = 'Status')
     echo br_multiples();
 }
 
-function view_dropdown($label,$name,$options,$value)
+function view_dropdown($label, $name, $options, $value)
 {
     echo form_label($label) . form_dropdown(
         $name,

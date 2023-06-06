@@ -95,7 +95,7 @@ class ProcessoExibirLibrary
 
             $subindice = 0;
             $valorDoSubindice = count($artefato->arquivos);
-            
+
             foreach ($artefato->arquivos as $arquivo) {
 
                 if ($arquivo->path == '') {
@@ -110,7 +110,7 @@ class ProcessoExibirLibrary
 
 
 
-                
+
 
                 if ($valorDoSubindice > 1) {
                     $subindice++;
@@ -139,42 +139,22 @@ class ProcessoExibirLibrary
 
     private function linhaDeCadaArquivoDeCadaArtefato($artefato, $processo, $link, $arquivo, $subindice = null)
     {
-        // var_dump($arquivo);
-        return "
-                    <tr class='text-left'>" .                   
-                        
-                        td_value($this->numeroDeOrdemComValorDeSubIndiceSeForOCaso($subindice)) . 
-                        
-                         td_value($link,'Visualizar artefato') .
-                        
-                         view_form_open_multipart('ArquivoController/alterarArquivoDeUmProcesso').
-
-                        view_input_placeholder('arquivo_nome', $this->nomeDoArquivo($arquivo),'Descrição').
-                            //"<td>" .
-                             //   form_input(['name' => 'arquivo_nome', 'type' => 'text', 'value' => (isset($arquivo) ? $arquivo->nome : ''), 'placeholder' => 'Descrição']) .
-                            //"</td>" .
-
-                            view_input('Id do Arquivo','arquivo_id','arquivo_id','hidden', $this->idDoArquivo($arquivo)).
-                            //form_input(['name' => 'arquivo_id', 'type' => 'hidden', 'value' => $this->idDoArquivo($arquivo)]) .
-                            form_input(['name' => 'processo_id', 'type' => 'hidden', 'value' => $processo->id]) .
-                            form_input(['name' => 'artefato_id', 'type' => 'hidden', 'value' => $artefato->id]) .
-                            form_input(['name' => 'arquivo_status', 'type' => 'hidden', 'value' => $this->statusDoArquivo($arquivo)]) .
-                            form_input(['name' => 'arquivo_path', 'type' => 'hidden', 'value' => $this->pathDoArquivo($arquivo)]) .
-
-                            "<td>" . form_input(['name' => 'arquivo', 'type' => 'file', 'accept' => '.pdf']) . "</td>" .
-
-                        "</td>" .
-                            
-                        "<td>" . form_submit('enviar', 'Upload/Atualizar', ['class' => 'btn btn-primary', 'title' => 'Sobe um novo ou atualiza o arquivo para este artefato do processo']) . "</td>" .
-                        
-                        "<td>" . form_submit('mais_um', '+', ['class' => 'btn btn-primary', 'title' => 'Incluir mais arquivo para este artefato']) . "</td>" .
-                        
-                        "<td>" . form_submit('menos_um', '-', ['class' => 'btn btn-primary', 'title' => 'Excluir artefato']) . "</td>" .
-
-                        form_close() .
-
-                    "</tr>";
-
+        $line = '';
+        $line .= td_value($this->numeroDeOrdemComValorDeSubIndiceSeForOCaso($subindice));
+        $line .= td_value($link, 'Visualizar artefato');
+        $line .= view_form_open_multipart('ArquivoController/alterarArquivoDeUmProcesso');
+        $line .= view_input_placeholder('arquivo_nome', $this->nomeDoArquivo($arquivo), 'Descrição');
+        $line .= view_input_name_value_type('arquivo_id', $this->idDoArquivo($arquivo));
+        $line .= view_input_name_value_type('processo_id', $processo->id);
+        $line .= view_input_name_value_type('artefato_id', $artefato->id);
+        $line .= view_input_name_value_type('arquivo_status', $this->statusDoArquivo($arquivo));
+        $line .= view_input_name_value_type('arquivo_path', $this->pathDoArquivo($arquivo));
+        $line .= td_value(formulario_par_subir_arquivo());
+        $line .= td_value(view_form_submit_button('enviar', 'Upload/Atualizar', 'Sobe um novo ou atualiza o arquivo para este artefato do processo'));
+        $line .= td_value(view_form_submit_button('mais_um', '+', 'Incluir mais arquivo para este artefato'));
+        $line .= td_value(view_form_submit_button('menos_um', '-', 'Excluir artefato'));
+        $line .= form_close();
+        return tr_view($line);
     }
     public function idDoArquivo($arquivo)
     {
@@ -222,8 +202,8 @@ class ProcessoExibirLibrary
 
     private function nomeDoArquivo($arquivo)
     {
-        return estaSetado($arquivo) 
-            ? $arquivo->nome 
+        return estaSetado($arquivo)
+            ? $arquivo->nome
             : '';
     }
 
