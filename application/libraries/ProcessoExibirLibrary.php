@@ -108,10 +108,6 @@ class ProcessoExibirLibrary
 
                 }
 
-
-
-
-
                 if ($valorDoSubindice > 1) {
                     $subindice++;
                 }

@@ -4,6 +4,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
+require_once('PDFMerger/PDFMerger.php');
+
+use PDFMerger\PDFMerger;
+
 class ProcessoController extends CI_Controller
 {
 
@@ -92,11 +96,11 @@ class ProcessoController extends CI_Controller
 		//'pagina' => 'processo/visualizar.php',
 		]);*/
 
-		 $this->load->library('ProcessoImprimirLibrary');
+		 //$this->load->library('ProcessoImprimirLibrary');
 
-		$html = $this->processoimprimirlibrary->imprimir($processo);
+		//$html = $this->processoimprimirlibrary->imprimir($processo);
 
-		$this->imprimir($html);
+		$this->imprimir($processo->tipo->listaDeArtefatos);
 
 	}
 
@@ -193,17 +197,17 @@ class ProcessoController extends CI_Controller
 		redirect('ProcessoController');
 	}
 
-	public function imprimir($html)
+	public function imprimir($listaDeArtefatos)
 	{
-
+/*
 		$dompdf = new Dompdf();
 
-		/*
+	
 		$dados = [
 		'tabela' => $this->tabela->processo(null, null),
 		'titulo' => 'Lista de Processos',
 		'botoes' => []
-		];*/
+		];
 
 		//$pagina_html = $this->load->view('processo/index.php',$dados);
 
@@ -212,6 +216,28 @@ class ProcessoController extends CI_Controller
 		$dompdf->setPaper('A4', 'portrait');
 		$dompdf->render();
 		$dompdf->stream();
+*/
+		include 'PDFMerger.php';
+
+		$pdf = new PDFMerger;
+
+		foreach($listaDeArtefatos->$artefato as $artefato)
+		{
+
+			if ($artefato->arquivo != null) 
+			{
+				foreach($artefato->arquivos as $arquivo)
+				{
+					$pdf->addPDF($arquivo->path);
+				}
+			}
+		}		
+
+
+		$pdf->merge('file', 'samplepdfs/TEST2.pdf'); // generate the file
+
+		$pdf->merge('download', 'samplepdfs/test.pdf'); // force download
+
 	}
 
 }
