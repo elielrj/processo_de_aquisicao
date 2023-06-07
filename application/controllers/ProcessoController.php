@@ -5,8 +5,8 @@ require 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
 require_once('PDFMerger/PDFMerger.php');
-
 use PDFMerger\PDFMerger;
+
 
 class ProcessoController extends CI_Controller
 {
@@ -217,26 +217,31 @@ class ProcessoController extends CI_Controller
 		$dompdf->render();
 		$dompdf->stream();
 */
-		include 'PDFMerger.php';
+
+		//require_once('PDFMerger/PDFMerger.php');
+
+		//include 'PDFMerger/PDFMerger.php';
 
 		$pdf = new PDFMerger;
 
-		foreach($listaDeArtefatos->$artefato as $artefato)
+		foreach($listaDeArtefatos as $artefato)
 		{
 
-			if ($artefato->arquivo != null) 
+			if ($artefato->arquivos != null) 
 			{
 				foreach($artefato->arquivos as $arquivo)
 				{
-					$pdf->addPDF($arquivo->path);
+					if(isset($arquivo->path))
+						$pdf->addPDF($arquivo->path);
+					var_dump($arquivo->path);
 				}
 			}
-		}		
+		}
 
+		$pdf->merge('file', 'samplepdfs/TEST2.pdf');
+		//$pdf->merge('browser', 'arquivos/merged.pdf'); // generate the file
 
-		$pdf->merge('file', 'samplepdfs/TEST2.pdf'); // generate the file
-
-		$pdf->merge('download', 'samplepdfs/test.pdf'); // force download
+		//$pdf->merge('file', 'arquivos/test.pdf'); // force download
 
 	}
 
