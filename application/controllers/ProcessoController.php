@@ -230,6 +230,11 @@ class ProcessoController extends CI_Controller
 			}
 		}
 
-		$pdf->merge('download', $processo->numero.'.pdf');
+		$nomeDoArquivo = 
+			'Processo de ' . $processo->tipo->nome . 
+			' Lei' . $processo->lei->toString() . 
+			' Numero ' . $processo->numero;
+
+		$pdf->merge('download', $nomeDoArquivo.'.pdf');
 	}
 }
