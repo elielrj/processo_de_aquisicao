@@ -4,8 +4,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
-require_once('PDFMerger/PDFMerger.php');
+
+
+//include_once 'vendor/PDFMerger/PDFMerger.php';
+require_once('vendor/PDFMerger/PDFMerger.php');
 use PDFMerger\PDFMerger;
+
+//$pdf = new PDFMerger;
 
 
 class ProcessoController extends CI_Controller
@@ -77,7 +82,7 @@ class ProcessoController extends CI_Controller
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
 
-		 $this->load->library('ProcessoVisualizarLibrary');
+		$this->load->library('ProcessoVisualizarLibrary');
 
 		$this->load->view('index', [
 			'titulo' => 'Processo: ' . $processo->tipo->nome,
@@ -90,23 +95,23 @@ class ProcessoController extends CI_Controller
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
 		/*
-		$html = $this->load->view('index/processo/visualizar.php', [
-		'titulo' => 'Processo: '. $processo->tipo->nome ,
-		'tabela' => $this->tabela->processo_imprimir($processo),
-		//'pagina' => 'processo/visualizar.php',
-		]);*/
+											$html = $this->load->view('index/processo/visualizar.php', [
+											'titulo' => 'Processo: '. $processo->tipo->nome ,
+											'tabela' => $this->tabela->processo_imprimir($processo),
+											//'pagina' => 'processo/visualizar.php',
+											]);*/
 
-		 //$this->load->library('ProcessoImprimirLibrary');
+		//$this->load->library('ProcessoImprimirLibrary');
 
 		//$html = $this->processoimprimirlibrary->imprimir($processo);
 
-		$this->imprimir($processo->tipo->listaDeArtefatos);
+		$this->imprimir($processo);
 
 	}
 
 	public function novo()
 	{
-		
+
 		$usuarioAtual = $this->UsuarioDAO->buscarPorId($this->session->id);
 
 		$lei_e_modalidade_pre_definido = 1;
@@ -197,52 +202,34 @@ class ProcessoController extends CI_Controller
 		redirect('ProcessoController');
 	}
 
-	public function imprimir($listaDeArtefatos)
+
+	/**
+	 * Summary of imprimir
+	 * imprimir todo os arquivos em pdf do processoem um único arquivo,
+	 * com o auxilio da biblioteca PDFMerger
+	 * @param mixed $processo
+	 * @return void
+	 */
+	private function imprimir($processo)
 	{
-/*
-		$dompdf = new Dompdf();
-
-	
-		$dados = [
-		'tabela' => $this->tabela->processo(null, null),
-		'titulo' => 'Lista de Processos',
-		'botoes' => []
-		];
-
-		//$pagina_html = $this->load->view('processo/index.php',$dados);
-
-		$dompdf->loadHtml($html);
-
-		$dompdf->setPaper('A4', 'portrait');
-		$dompdf->render();
-		$dompdf->stream();
-*/
-
-		//require_once('PDFMerger/PDFMerger.php');
-
-		//include 'PDFMerger/PDFMerger.php';
+		include_once 'vendor/PDFMerger/PDFMerger.php';
 
 		$pdf = new PDFMerger;
 
-		foreach($listaDeArtefatos as $artefato)
-		{
+		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 
-			if ($artefato->arquivos != null) 
-			{
-				foreach($artefato->arquivos as $arquivo)
-				{
-					if(isset($arquivo->path))
-						$pdf->addPDF($arquivo->path);
-					var_dump($arquivo->path);
+			if ($artefato->arquivos != null) {
+
+				foreach ($artefato->arquivos as $arquivo) {
+
+					if ($arquivo->path != '' && $arquivo->path != null) {
+						$pdf->addPDF($arquivo->path, 'all');
+
+					}
 				}
 			}
 		}
 
-		$pdf->merge('file', 'samplepdfs/TEST2.pdf');
-		//$pdf->merge('browser', 'arquivos/merged.pdf'); // generate the file
-
-		//$pdf->merge('file', 'arquivos/test.pdf'); // force download
-
+		$pdf->merge('download', $processo->numero.'.pdf');
 	}
-
 }
