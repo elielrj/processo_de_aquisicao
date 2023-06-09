@@ -69,3 +69,9 @@ Acknowledgement
 
 The CodeIgniter team would like to thank EllisLab, all the
 contributors to the CodeIgniter project and you, the CodeIgniter user.
+
+
+***************
+FPDI
+***************
+O projeto faz uso da bilbioteca: https://github.com/Setasign/FPDI
