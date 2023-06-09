@@ -36,3 +36,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 #Astah
 *.asta.lock
+
+#Pasta PDFMerger
+/vendo/PDFMerger*
