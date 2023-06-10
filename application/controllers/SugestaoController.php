@@ -47,7 +47,7 @@ class SugestaoController extends CI_Controller
 	public function novo()
 	{
 		$dados = array(
-			'titulo' => 'Novo Tipo de Licitação',
+			'titulo' => 'Sugestão para o sistema',
 			'pagina' => 'sugestao/novo.php',
 		);
 
