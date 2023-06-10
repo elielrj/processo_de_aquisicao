@@ -144,6 +144,12 @@ foreign key (processo_id) references processo(id),
 foreign key (artefato_id) references artefato(id)
 );
 
+#14
+create table if not exists sugestao(
+    id int primary key auto_increment not null,
+    mensagem varchar(250) not null,
+    visualizado boolean not null
+);
 
 
 
