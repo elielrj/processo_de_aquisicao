@@ -21,13 +21,7 @@ class ArquivoController extends CI_Controller
 
     public function index()
     {
-        if (!isset($this->session->email)) {
-
-            header("Location:" . base_url());
-
-        } else {
-            $this->listar();
-        }
+        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
     public function listar($indice = 1)
@@ -138,7 +132,7 @@ class ArquivoController extends CI_Controller
             if (
                 sizeof($_FILES['arquivo']) > 0 &&
                 $_FILES['arquivo']['temp_name'] != ''
-                ) {
+            ) {
 
                 $arquivo = $this->moverArquivo($data_post, true);
 
@@ -177,7 +171,7 @@ class ArquivoController extends CI_Controller
                 isset($_FILES['arquivo']) &&
                 !empty($_FILES['arquivo']['tmp_name'])
             ) {
-                
+
                 $arquivo = $this->moverArquivo($data_post);
 
                 if (isset($arquivo)) {
@@ -189,14 +183,14 @@ class ArquivoController extends CI_Controller
                     ) {
 
                         $this->ArquivoDAO->atualizar($arquivo);
-                       
+
                         //verifica se é pra inserir um novo arquivo
                     } else if (
                         $data_post['arquivo_path'] == '' &&
                         $data_post['arquivo_id'] == null
                     ) {
                         $this->ArquivoDAO->criar($arquivo);
-                      
+
                     }
 
                 } else {
@@ -205,7 +199,7 @@ class ArquivoController extends CI_Controller
 
                     //redirect('ProcessoController/exibir/' . $data_post['processo_id']);
                 }
-            }else if(!empty($data_post['arquivo_id'])){
+            } else if (!empty($data_post['arquivo_id'])) {
 
                 $arquivo_para_atualizar = $this->ArquivoDAO->buscarPorId($data_post['arquivo_id']);
 
@@ -215,8 +209,8 @@ class ArquivoController extends CI_Controller
 
             }
         }
-        
-       redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+
+        redirect('ProcessoController/exibir/' . $data_post['processo_id']);
     }
 
     public function deletar($id)

@@ -2,23 +2,23 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class ArtefatoController extends CI_Controller {
+class ArtefatoController extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('dao/ArtefatoDAO');
         $this->load->library('ArtefatoLibrary');
     }
 
-    public function index() {
-        if (!isset($this->session->email)) {
-            header("Location:" . base_url());
-        } else {
-            $this->listar();
-        }
+    public function index()
+    {
+        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
-    public function listar($indice = 1) {
+    public function listar($indice = 1)
+    {
         $indice--;
 
         $mostrar = 10;
@@ -39,22 +39,24 @@ class ArtefatoController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function novo() {
+    public function novo()
+    {
         $this->load->view('index', [
             'titulo' => 'Novo Artefato',
             'pagina' => 'artefato/novo.php'
         ]);
     }
 
-    public function criar() {
+    public function criar()
+    {
 
-        $data_post =  $this->input->post();
+        $data_post = $this->input->post();
 
         $artefato = new Artefato(
-                null,
-                $data_post['ordem'],
-                $data_post['nome'],
-                $data_post['status']
+            null,
+            $data_post['ordem'],
+            $data_post['nome'],
+            $data_post['status']
         );
 
         $this->ArtefatoDAO->create($artefato);
@@ -62,7 +64,8 @@ class ArtefatoController extends CI_Controller {
         redirect('ArtefatoController');
     }
 
-    public function alterar($id) {
+    public function alterar($id)
+    {
 
         $artefato = $this->ArtefatoDAO->buscarPorId($id);
 
@@ -75,15 +78,16 @@ class ArtefatoController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function atualizar() {
+    public function atualizar()
+    {
 
-        $data_post =  $this->input->post();
+        $data_post = $this->input->post();
 
         $artefato = new Artefato(
-                $data_post['id'],
-                $data_post['ordem'],
-                $data_post['nome'],
-                $data_post['status']
+            $data_post['id'],
+            $data_post['ordem'],
+            $data_post['nome'],
+            $data_post['status']
         );
 
         $this->ArtefatoDAO->atualizar($artefato);
@@ -91,7 +95,8 @@ class ArtefatoController extends CI_Controller {
         redirect('ArtefatoController');
     }
 
-    public function deletar($id) {
+    public function deletar($id)
+    {
 
         $this->ArtefatoDAO->delete($id);
 

@@ -16,11 +16,7 @@ class AndamentoController extends CI_Controller
 
     public function index()
     {
-        if (!isset($this->session->email)) {
-            header("Location:" . base_url());
-        } else {
-            $this->listar();
-        }
+        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
     public function listar($indice = 1)
@@ -56,7 +52,7 @@ class AndamentoController extends CI_Controller
     public function criar()
     {
 
-        $data_post =  $this->input->post();
+        $data_post = $this->input->post();
 
         $andamento = new Andamento(
             null,
@@ -86,7 +82,7 @@ class AndamentoController extends CI_Controller
     public function atualizar()
     {
 
-        $data_post =  $this->input->post();
+        $data_post = $this->input->post();
 
         $andamento = new Andamento(
             $data_post['id'],

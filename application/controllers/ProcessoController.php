@@ -15,6 +15,7 @@ use PDFMerger\PDFMerger;
 
 class ProcessoController extends CI_Controller
 {
+	static $controller = 'ProcessoController';
 
 	public function __construct()
 	{
@@ -33,11 +34,7 @@ class ProcessoController extends CI_Controller
 
 	public function index()
 	{
-		if (!isset($this->session->email)) {
-			header("Location:" . base_url());
-		} else {
-			$this->listar();
-		}
+		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
 	}
 
 
@@ -95,11 +92,11 @@ class ProcessoController extends CI_Controller
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
 		/*
-											$html = $this->load->view('index/processo/visualizar.php', [
-											'titulo' => 'Processo: '. $processo->tipo->nome ,
-											'tabela' => $this->tabela->processo_imprimir($processo),
-											//'pagina' => 'processo/visualizar.php',
-											]);*/
+												  $html = $this->load->view('index/processo/visualizar.php', [
+												  'titulo' => 'Processo: '. $processo->tipo->nome ,
+												  'tabela' => $this->tabela->processo_imprimir($processo),
+												  //'pagina' => 'processo/visualizar.php',
+												  ]);*/
 
 		//$this->load->library('ProcessoImprimirLibrary');
 
@@ -230,11 +227,11 @@ class ProcessoController extends CI_Controller
 			}
 		}
 
-		$nomeDoArquivo = 
-			'Processo de ' . $processo->tipo->nome . 
-			' Lei' . $processo->lei->toString() . 
+		$nomeDoArquivo =
+			'Processo de ' . $processo->tipo->nome .
+			' Lei' . $processo->lei->toString() .
 			' Numero ' . $processo->numero;
 
-		$pdf->merge('download', $nomeDoArquivo.'.pdf');
+		$pdf->merge('download', $nomeDoArquivo . '.pdf');
 	}
 }

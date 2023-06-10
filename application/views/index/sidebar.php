@@ -83,7 +83,7 @@ $acesso_ao_banco =
     <div class="sidebar-card d-none d-lg-flex">
         <img class="sidebar-card-illustration mb-2" src=<?php echo base_url('img/sugestao.png') ?> alt="...">
         <p class="text-center mb-2"><strong>Sugestão</strong> deixe aqui sua sugestão para que possamos melhorar!</p>
-        <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Sugestão!</a>
+        <a class="btn btn-success btn-sm" href="<?php echo base_url('index.php/SugestaoController/novo') ?>">Sugestão!</a>
     </div>
 
 </ul>

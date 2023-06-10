@@ -16,11 +16,7 @@ class LeiController extends CI_Controller
 
     public function index()
     {
-        if (!isset($this->session->email)) {
-            header("Location:" . base_url());
-        } else {
-            $this->listar();
-        }
+        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
     public function listar($indice = 1)
@@ -126,7 +122,7 @@ class LeiController extends CI_Controller
 
         $options = "<option>Selecione uma Lei</option>";
 
-        foreach($listaDeLeis as $key => $value){
+        foreach ($listaDeLeis as $key => $value) {
             $options .= "<option value='{$key}'>{$value}</option>";
         }
 

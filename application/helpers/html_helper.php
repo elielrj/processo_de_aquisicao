@@ -165,8 +165,26 @@ function view_input_name_value_type($name, $value = '', $type = 'hidden')
     return form_input([
         'name' => $name,
         'type' => $type,
-        'value' => $value
+        'value' => $value,
+        'class' => 'form-control'
     ]);
+}
+function view_text_area($label, $name, $id, $type, $value = '', $maxlength = 250)
+{
+    echo 
+
+        (($type != 'hidden') ? form_label($label) : '') .
+
+        form_input([
+            'name' => $name,
+            'id' => $id,
+            'class' => 'form-control',
+            'type' => $type,
+            'value' => $value,
+            'maxlength' => $maxlength
+        ]) .
+
+        (($type != 'hidden') ? br_multiples() : '');
 }
 
 function formulario_par_subir_arquivo($name = 'arquivo')

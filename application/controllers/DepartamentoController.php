@@ -2,25 +2,23 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class DepartamentoController extends CI_Controller {
+class DepartamentoController extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('dao/DepartamentoDAO');
         $this->load->library('DepartamentoLibrary');
     }
 
-    public function index() {
-        if (!isset($this->session->email)) {
-
-            header("Location:" . base_url());
-            
-        } else {
-            $this->listar();
-        }
+    public function index()
+    {
+        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
-    public function listar($indice = 1) {
+    public function listar($indice = 1)
+    {
         $indice--;
 
         $mostrar = 10;
@@ -42,7 +40,8 @@ class DepartamentoController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function novo() {
+    public function novo()
+    {
 
         $dados = array(
             'titulo' => 'Nova Seção',
@@ -52,14 +51,15 @@ class DepartamentoController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function criar() {
-        $data_post =  $this->input->post();
+    public function criar()
+    {
+        $data_post = $this->input->post();
 
         $departamento = new Departamento(
-                null,
-                $data_post['nome'],
-                $data_post['sigla'],
-                $data_post['status']
+            null,
+            $data_post['nome'],
+            $data_post['sigla'],
+            $data_post['status']
         );
 
         $this->DepartamentoDAO->create($departamento);
@@ -67,7 +67,8 @@ class DepartamentoController extends CI_Controller {
         redirect('DepartamentoController');
     }
 
-    public function alterar($id) {
+    public function alterar($id)
+    {
 
         $departamento = $this->DepartamentoDAO->buscarPorId($id);
 
@@ -80,15 +81,16 @@ class DepartamentoController extends CI_Controller {
         $this->load->view('index', $dados);
     }
 
-    public function atualizar() {
+    public function atualizar()
+    {
 
-        $data_post =  $this->input->post();
+        $data_post = $this->input->post();
 
         $departamento = new Departamento(
-                $data_post['id'],
-                $data_post['nome'],
-                $data_post['sigla'],
-                $data_post['status']
+            $data_post['id'],
+            $data_post['nome'],
+            $data_post['sigla'],
+            $data_post['status']
         );
 
         $this->DepartamentoDAO->update($departamento);
@@ -96,7 +98,8 @@ class DepartamentoController extends CI_Controller {
         redirect('DepartamentoController');
     }
 
-    public function deletar($id) {
+    public function deletar($id)
+    {
         $this->DepartamentoDAO->delete($id);
 
         redirect('DepartamentoController');

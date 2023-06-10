@@ -95,7 +95,13 @@ $autoload['drivers'] = array();
   |
   |	$autoload['helper'] = array('url', 'file');
  */
-$autoload['helper'] = array('form', 'url', 'date','html_helper');
+$autoload['helper'] = array(
+  'form', 
+  'url', 
+  'date',
+  'html_helper',
+  'verificador_de_usuario_helper'
+);
 
 /*
   | -------------------------------------------------------------------

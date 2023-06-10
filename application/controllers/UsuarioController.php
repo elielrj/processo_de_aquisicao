@@ -20,13 +20,7 @@ class UsuarioController extends CI_Controller
 
     public function index()
     {
-        if (!isset($this->session->email)) {
-
-            header("Location:" . base_url());
-
-        } else {
-            $this->listar();
-        }
+        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
     public function listar($indice = 1)
@@ -183,7 +177,7 @@ class UsuarioController extends CI_Controller
             $data_post['cpf'],
             md5($data_post['senha']),
             $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-            $data_post['status'], 
+            $data_post['status'],
             $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
             $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
         );
@@ -210,7 +204,7 @@ class UsuarioController extends CI_Controller
             $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
         );
 
-        $this->UsuarioDAO->atualizar($usuario);//todo realizar a atualização das sessions
+        $this->UsuarioDAO->atualizar($usuario); //todo realizar a atualização das sessions
 
         redirect('ProcessoController');
     }

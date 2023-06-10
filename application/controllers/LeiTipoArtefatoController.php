@@ -15,11 +15,7 @@ class LeiTipoArtefatoController extends CI_Controller
 
     public function index()
     {
-        if (!isset($this->session->email)) {
-            header("Location:" . base_url());
-        } else {
-            $this->listar();
-        }
+        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
     public function listar()

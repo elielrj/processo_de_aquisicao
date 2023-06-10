@@ -2,23 +2,23 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UgController extends CI_Controller {
+class UgController extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('dao/UgDAO');
         $this->load->library('UgLibrary');
     }
 
-    public function index() {
-        if (!isset($this->session->email)) {
-            header("Location:" . base_url());
-        } else {
-            $this->listar();
-        }
+    public function index()
+    {
+        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
-    public function listar($indice = 1) {
+    public function listar($indice = 1)
+    {
         $indice--;
 
         $mostrar = 10;
