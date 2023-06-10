@@ -150,6 +150,8 @@ class UsuarioController extends CI_Controller
 
         $usuario = $this->UsuarioDAO->buscarPorId($id);
 
+        $this->removerSenha($usuario);
+
         $options = $this->HierarquiaDAO->options();
 
         $dados = array(
@@ -158,7 +160,6 @@ class UsuarioController extends CI_Controller
             'usuario' => $usuario,
             'departamentos' => $this->DepartamentoDAO->options(),
             'hierarquias' => $options,
-            'funcoes' => $this->FuncaoDAO->options()
         );
 
         $this->load->view('index', $dados);
@@ -191,20 +192,27 @@ class UsuarioController extends CI_Controller
 
         $data_post = $this->input->post();
 
+        $senha = $data_post['senha'] === ''
+            ? $_SESSION['senha']
+            : md5($data_post['senha']);
+
         $usuario = new Usuario(
             $data_post['id'],
             $data_post['nome'],
             $data_post['sobrenome'],
             $data_post['email'],
             $data_post['cpf'],
-            md5($data_post['senha']),
+            $senha,
             $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
             $data_post['status'],
             $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
             $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
         );
 
-        $this->UsuarioDAO->atualizar($usuario); //todo realizar a atualização das sessions
+        $this->UsuarioDAO->atualizar($usuario);
+
+        $this->load->model('dao/LoginDAO');
+        $this->LoginDAO->buscarDadosDoUsuarioLogado($usuario->email, $usuario->senha);
 
         redirect('ProcessoController');
     }
@@ -225,6 +233,10 @@ class UsuarioController extends CI_Controller
         redirect('UsuarioController');
     }
 
+    private function removerSenha($usuario)
+    {
+        $usuario->senha = '';
+    }
 
 
 }

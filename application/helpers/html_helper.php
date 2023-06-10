@@ -143,7 +143,7 @@ function view_form_open_multipart($controller)
     return form_open_multipart($controller, array('class' => 'form-control'));
 }
 
-function view_input($label, $name, $id, $type, $value = '', $maxlength = 250)
+function view_input($label, $name, $id, $type, $value = '', $maxlength = 250,$placeholder = '')
 {
     echo
         (($type != 'hidden') ? form_label($label) : '') .
@@ -154,7 +154,8 @@ function view_input($label, $name, $id, $type, $value = '', $maxlength = 250)
             'class' => 'form-control',
             'type' => $type,
             'value' => $value,
-            'maxlength' => $maxlength
+            'maxlength' => $maxlength,
+            'placeholder' => $placeholder
         ]);
 
     echo (($type != 'hidden') ? br_multiples() : '');
