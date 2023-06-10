@@ -7,110 +7,104 @@ include_once('application/models/bo/Modalidade.php');
 class ModalidadeDAO extends CI_Model
 {
 
-    public static $TABELA_DB = 'modalidade';
+	public static $TABELA_DB = 'modalidade';
 
-    public function __construct()
-    {
-        $this->load->model('dao/DAO');
-    }
+	public function __construct()
+	{
+		$this->load->model('dao/DAO');
+	}
 
-    public function criar($objeto)
-    {
-        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
-    }
+	public function criar($objeto)
+	{
+		$this->DAO->criar(self::$TABELA_DB, $objeto->array());
+	}
 
-    public function buscarTodos($inicial, $final)
-    {
-        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+	public function buscarTodos($inicial, $final): array
+	{
+		$array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
 
-        return $this->criarLista($array);
-    }
+		return $this->criarLista($array);
+	}
 
-    public function buscarTodosDesativados($inicial, $final)
-    {
-        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+	public function buscarTodosDesativados($inicial, $final): array
+	{
+		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
 
-        return $this->criarLista($array);
-    }
+		return $this->criarLista($array);
+	}
 
-    public function buscarPorId($modalidadeId)
-    {
-        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $modalidadeId);
+	public function buscarPorId($modalidadeId): Modalidade
+	{
+		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $modalidadeId);
 
-        return $this->toObject($array->result()[0]);
-    }
+		return $this->toObject($array->result()[0]);
+	}
 
-    public function buscarOnde($key, $value)
-    {
-        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+	public function buscarOnde($key, $value): array
+	{
+		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
-        return $this->criarLista($array->result());
-    }
+		return $this->criarLista($array->result());
+	}
 
-    public function atualizar($modalidade)
-    {
-        $this->DAO->atualizar(self::$TABELA_DB, $modalidade->toArray());
-    }
+	public function atualizar($modalidade)
+	{
+		$this->DAO->atualizar(self::$TABELA_DB, $modalidade->array());
+	}
 
 
-    public function deletar($modalidade)
-    {
-        $this->DAO->deletar(self::$TABELA_DB, $modalidade->toArray());
-    }
+	public function deletar($modalidade)
+	{
+		$this->DAO->deletar(self::$TABELA_DB, $modalidade->array());
+	}
 
-    public function contar()
-    {
-        return $this->DAO->contar(self::$TABELA_DB);
-    }
+	public function contar()
+	{
+		return $this->DAO->contar(self::$TABELA_DB);
+	}
 
-    public function contarDesativados()
-    {
-        return $this->DAO->contarDesativados(self::$TABELA_DB);
-    }
+	public function contarDesativados()
+	{
+		return $this->DAO->contarDesativados(self::$TABELA_DB);
+	}
 
-    private function toObject($arrayList)
-    {
-        return new Modalidade(
-            isset($arrayList->id)
-            ? $arrayList->id
-            : (isset($arrayList['id']) ? $arrayList['id'] : null),
-            isset($arrayList->nome)
-            ? $arrayList->nome
-            : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
-            isset($arrayList->status)
-            ? $arrayList->status
-            : (isset($arrayList['status']) ? $arrayList['status'] : null)
-        );
-    }
+	private function toObject($arrayList)
+	{
+		return new Modalidade(
+			$arrayList->id ?? ($arrayList['id'] ?? null),
+			$arrayList->nome ?? ($arrayList['nome'] ?? null),
+			$arrayList->status ?? ($arrayList['status'] ?? null)
+		);
+	}
 
-    private function criarLista($array)
-    {
-        $listaDeModalidade = array();
+	private function criarLista($array): array
+	{
+		$listaDeModalidade = array();
 
-        foreach ($array->result() as $linha) {
+		foreach ($array->result() as $linha) {
 
-            $modalidade = $this->toObject($linha);
+			$modalidade = $this->toObject($linha);
 
-            array_push($listaDeModalidade, $modalidade);
-        }
+			$listaDeModalidade[] = $modalidade;
+		}
 
-        return $listaDeModalidade;
-    }
+		return $listaDeModalidade;
+	}
 
-    public function options()
-    {
-        $modalidades = $this->buscarTodos(null, null);
+	public function options()
+	{
+		$modalidades = $this->buscarTodos(null, null);
 
-        $options = [];
+		$options = [];
 
-        if (isset($modalidades)) {
+		if (isset($modalidades)) {
 
-            foreach ($modalidades as $modalidade) {
+			foreach ($modalidades as $modalidade) {
 
-                $options += [$modalidade->id => $modalidade->nome];
-            }
-        }
-        return $options;
-    }
+				$options += [$modalidade->id => $modalidade->nome];
+			}
+		}
+		return $options;
+	}
 
 }

@@ -2,13 +2,9 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+interface StatusDoAndamento
+{
+	public function nome();
 
-interface StatusDoAndamento{
-
-    public function nome();
-    public function nivel();
-
+	public function nivel();
 }
-
-
-?>

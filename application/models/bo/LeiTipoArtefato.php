@@ -38,8 +38,8 @@ class LeiTipoArtefato implements InterfaceBO {
         $this->$key = $value;
     }
 
-    public function toArray()
-    {
+    public function array(): array
+	{
         return array(
             'id' => $this->id,
             'lei_id' => $this->lei->id,

@@ -4,18 +4,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
-
-
-//include_once 'vendor/PDFMerger/PDFMerger.php';
 require_once('vendor/PDFMerger/PDFMerger.php');
 use PDFMerger\PDFMerger;
 
-//$pdf = new PDFMerger;
-
-
 class ProcessoController extends CI_Controller
 {
-	static $controller = 'ProcessoController';
+	static string $controller = 'ProcessoController';
 
 	public function __construct()
 	{
@@ -32,13 +26,13 @@ class ProcessoController extends CI_Controller
 		$this->load->library('DataLibrary');
 	}
 
-	public function index()
+	public function index(): void
 	{
 		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
 	}
 
 
-	function listar($indice = 1)
+	function listar($indice = 1): void
 	{
 		$indice--;
 
@@ -207,7 +201,7 @@ class ProcessoController extends CI_Controller
 	 * @param mixed $processo
 	 * @return void
 	 */
-	private function imprimir($processo)
+	private function imprimir($processo): void
 	{
 		include_once 'vendor/PDFMerger/PDFMerger.php';
 

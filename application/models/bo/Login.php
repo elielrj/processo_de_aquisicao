@@ -28,8 +28,8 @@ class Login implements InterfaceBO
         $this->$key = $value;
     }
 
-    public function toArray()
-    {
+    public function array(): array
+	{
         return array(
             'email' => $this->email,
             'senha' => md5($this->senha),

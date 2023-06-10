@@ -51,8 +51,8 @@ class Lei implements InterfaceBO{
         return $this->numero . $art . $inc . $dat;
     }
 
-    public function toArray()
-    {
+    public function array(): array
+	{
         $this->load->helper('data');
 
         return array(

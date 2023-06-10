@@ -94,7 +94,7 @@ function from_array_to_table_row_with_td($arrayList)
 }
 
 
-function br_multiples($ate = 1)
+function br_multiples($ate = 1): string
 {
     $count = 1;
 

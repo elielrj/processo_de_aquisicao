@@ -52,8 +52,8 @@ class Usuario implements InterfaceBO
         $this->$key = $value;
     }
 
-    public function toArray()
-    {
+    public function array(): array
+	{
         return array(
             'id' => isset($this->id) ? $this->id : null,
             'nome' => $this->nome,

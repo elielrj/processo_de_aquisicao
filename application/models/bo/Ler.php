@@ -7,14 +7,14 @@ class Ler implements NivelDeAcesso
     const NIVEL = 4;
     const NOME = 'ler';
 
-    public function nome()
-    {
+    public function nome(): string
+	{
         return Ler::NOME;
     }
     
 
-    public function nivel()
-    {
+    public function nivel(): int
+	{
         return Ler::NIVEL;
     }
 

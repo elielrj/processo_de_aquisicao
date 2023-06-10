@@ -38,8 +38,8 @@ class Ug implements InterfaceBO{
         return $this->nome . "(" . $this->sigla . " - " . $this->numero . ")";
     }
 
-    public function toArray()
-    {
+    public function array(): array
+	{
         return array(
             'id' => $this->id,
            'numero' =>  $this->numero,

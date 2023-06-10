@@ -33,8 +33,8 @@ class Tipo implements InterfaceBO{
         $this->$key = $value;
     }
 
-    public function toArray()
-    {
+    public function array(): array
+	{
         return array(
             'id' => $this->id,
             'nome' => $this->nome,

@@ -2,10 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-    interface InterfaceBO{
-
-        public function toArray();
-
-    }
-
-?>
+interface InterfaceBO
+{
+	public function array() : array;
+}

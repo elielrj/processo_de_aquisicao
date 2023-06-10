@@ -17,7 +17,7 @@ class Modalidade implements InterfaceBO
         $nome,
         $status = true
     ) {
-        $this->id = isset($id) ? $id : null;
+        $this->id = $id ?? null;
         $this->nome = $nome;
         $this->status = $status;
     }
@@ -32,10 +32,10 @@ class Modalidade implements InterfaceBO
         $this->$key = $value;
     }
 
-    public function toArray()
-    {
+    public function array(): array
+	{
         return array(
-            'id' => isset($this->id) ? $this->id : null,
+            'id' => $this->id ?? null,
             'nome' => $this->nome,
             'status' => $this->status,
         );

@@ -11,60 +11,64 @@ include_once('Conformado.php');
 class Andamento implements StatusDoAndamento, InterfaceBO
 {
 
-    private $id;
-    private $statusDoAndamento;
-    private $dataHora;
-    private $processo_id;
+	private $id;
+	private $statusDoAndamento;
+	private $dataHora;
+	private $processo_id;
 
-    public function __construct(
-        $id = null,
-        $statusDoAndamento = null,
-        $dataHora = null,
-        $processo_id
-    ) {       
-        $this->id = $id;
-        $this->statusDoAndamento = isset($statusDoAndamento) ? $statusDoAndamento : new Enviado();
-        $this->dataHora = isset($dataHora) ? $dataHora : DataLibrary::dataHoraMySQL();
-        $this->processo_id = $processo_id;
-    }
+	public function __construct(
+		$id,
+		$statusDoAndamento,
+		$dataHora,
+		$processo_id
+	)
+	{
+		$this->id = $id;
+		$this->statusDoAndamento = $statusDoAndamento ?? new Enviado();
+		$this->dataHora = $dataHora ?? DataLibrary::dataHoraMySQL();
+		$this->processo_id = $processo_id;
+	}
 
-       function __get($key) {
-        return $this->$key;
-    }
+	function __get($key)
+	{
+		return $this->$key;
+	}
 
-    function __set($key, $value) {
-        $this->$key = $value;
-    }
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
 
-    public function toArray()
-    {
-        return array(
-            'id' => isset($this->id) ? $this->id: null,
-            'status_do_andamento' => $this->statusDoAndamento->nome(),
-            'data_hora' => DataLibrary::dataHoraMySQL($this->dataHora),
-            'processo_id' => $this->processo_id
-        );
-    }
+	public function array(): array
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'status_do_andamento' => $this->statusDoAndamento->nome(),
+			'data_hora' => DataLibrary::dataHoraMySQL($this->dataHora),
+			'processo_id' => $this->processo_id
+		);
+	}
 
-    public static function selecionarStatus($nome)
-    {
-        if ($nome == Enviado::NOME) {
-            return new Enviado();
-        } else if ($nome == Executado::NOME) {
-            return new Executado();
-        } else if ($nome == Conformado::NOME) {
-            return new Conformado();
-        }
-    }
+	public static function selecionarStatus($nome)
+	{
+		if ($nome == Enviado::NOME) {
+			return new Enviado();
+		} else if ($nome == Executado::NOME) {
+			return new Executado();
+		} else if ($nome == Conformado::NOME) {
+			return new Conformado();
+		}
+	}
 
-    public function nome()
-    {
-        return $this->statusDoAndamento->nome();
-    }
+	public function nome(): string
+	{
+		return $this->statusDoAndamento->nome();
+	}
 
-    public function nivel()
-    {
-        return $this->statusDoAndamento->nivel();
-    }
+	public function nivel(): int
+	{
+		return $this->statusDoAndamento->nivel();
+	}
 }
+
 ?>

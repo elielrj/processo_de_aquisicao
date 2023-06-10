@@ -4,20 +4,16 @@ include_once('NivelDeAcesso.php');
 
 class Root implements NivelDeAcesso
 {
-    const NIVEL = 4;
-    const NOME = 'root';
+	const NIVEL = 4;
+	const NOME = 'root';
 
-    public function nome()
-    {
-        return Root::NOME;
-    }
-    
+	public function nome(): string
+	{
+		return Root::NOME;
+	}
 
-    public function nivel()
-    {
-        return Root::NIVEL;
-    }
-
+	public function nivel(): int
+	{
+		return Root::NIVEL;
+	}
 }
-
-?>
