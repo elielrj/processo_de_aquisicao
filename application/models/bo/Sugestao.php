@@ -8,16 +8,19 @@ class Sugestao implements InterfaceBO{
 
     private $id;
     private $mensagem;
-    private $visualizado;
+    private $status;
+    private $usuario_id;
 
     public function __construct(
             $id,
             $mensagem,
-            $visualizado
+            $status,
+            $usuario_id
     ) {
         $this->id = $id;
         $this->mensagem = $mensagem;
-        $this->visualizado = $visualizado;
+        $this->status = $status;
+        $this->usuario_id = $usuario_id;
     }
 
     function __get($key) {
@@ -33,7 +36,8 @@ class Sugestao implements InterfaceBO{
         return array(
             'id' => $this->id,
            'mensagem' =>  $this->mensagem,
-           'visualizado' =>  $this->visualizado
+           'status' =>  $this->status,
+           'usuario_id' => $this->usuario_id
         );
     }
 }

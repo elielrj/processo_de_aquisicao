@@ -148,7 +148,9 @@ foreign key (artefato_id) references artefato(id)
 create table if not exists sugestao(
     id int primary key auto_increment not null,
     mensagem varchar(250) not null,
-    visualizado boolean not null
+    visualizado boolean not null,
+    usuario_id int not null,
+    foreign key (usuario_id) references usuario(id)
 );
 
 
