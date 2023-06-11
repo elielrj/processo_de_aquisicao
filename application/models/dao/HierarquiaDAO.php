@@ -16,7 +16,7 @@ class HierarquiaDAO extends CI_Model
 
     public function criar($objeto)
     {
-        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+        $this->DAO->criar(self::$TABELA_DB, $objeto->array());
     }
 
     public function buscarTodos($inicial, $final)
@@ -49,13 +49,13 @@ class HierarquiaDAO extends CI_Model
 
     public function atualizar($hierarquia)
     {
-        $this->DAO->atualizar(self::$TABELA_DB, $hierarquia->toArray());
+        $this->DAO->atualizar(self::$TABELA_DB, $hierarquia->array());
     }
 
 
     public function deletar($hierarquia)
     {
-        $this->DAO->deletar(self::$TABELA_DB, $hierarquia->toArray());
+        $this->DAO->deletar(self::$TABELA_DB, $hierarquia->array());
     }
 
     public function contar()

@@ -16,7 +16,7 @@ class ArtefatoDAO extends CI_Model
 
     public function criar($objeto)
     {
-        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+        $this->DAO->criar(self::$TABELA_DB, $objeto->array());
     }
 
     public function buscarTodos($inicial, $final)
@@ -49,13 +49,13 @@ class ArtefatoDAO extends CI_Model
 
     public function atualizar($artefato)
     {
-        $this->DAO->atualizar(self::$TABELA_DB, $artefato->toArray());
+        $this->DAO->atualizar(self::$TABELA_DB, $artefato->array());
     }
 
 
     public function deletar($artefato)
     {
-        $this->DAO->deletar(self::$TABELA_DB, $artefato->toArray());
+        $this->DAO->deletar(self::$TABELA_DB, $artefato->array());
     }
 
     public function contar()

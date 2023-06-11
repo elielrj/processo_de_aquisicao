@@ -130,8 +130,8 @@ class ArquivoController extends CI_Controller
             //verifica se foi apontado um arquivo para
             // já adiciona-lo a listagem
             if (
-                sizeof($_FILES['arquivo']) > 0 &&
-                $_FILES['arquivo']['temp_name'] != ''
+                count($_FILES['arquivo']) > 0 &&
+                isset($_FILES['arquivo']['temp_name'])
             ) {
 
                 $arquivo = $this->moverArquivo($data_post, true);

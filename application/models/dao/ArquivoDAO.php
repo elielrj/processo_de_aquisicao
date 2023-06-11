@@ -16,7 +16,7 @@ class ArquivoDAO extends CI_Model
 
     public function criar($objeto)
     {
-        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+        $this->DAO->criar(self::$TABELA_DB, $objeto->array());
     }
 
     public function buscarTodos($inicial, $final)
@@ -49,13 +49,13 @@ class ArquivoDAO extends CI_Model
 
     public function atualizar($arquivo)
     {
-        $this->DAO->atualizar(self::$TABELA_DB, $arquivo->toArray());
+        $this->DAO->atualizar(self::$TABELA_DB, $arquivo->array());
     }
 
 
     public function deletar($arquivo)
     {
-        $this->DAO->deletar(self::$TABELA_DB, $arquivo->toArray());
+        $this->DAO->deletar(self::$TABELA_DB, $arquivo->array());
     }
 
     public function contar()

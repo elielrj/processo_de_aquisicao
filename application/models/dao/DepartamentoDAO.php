@@ -18,7 +18,7 @@ class DepartamentoDAO extends CI_Model
 
     public function criar($objeto)
     {
-        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+        $this->DAO->criar(self::$TABELA_DB, $objeto->array());
     }
 
     public function buscarTodos($inicial, $final)
@@ -53,13 +53,13 @@ class DepartamentoDAO extends CI_Model
 
     public function atualizar($departamento)
     {
-        $this->DAO->atualizar(self::$TABELA_DB, $departamento->toArray());
+        $this->DAO->atualizar(self::$TABELA_DB, $departamento->array());
     }
 
 
     public function deletar($departamento)
     {
-        $this->DAO->deletar(self::$TABELA_DB, $departamento->toArray());
+        $this->DAO->deletar(self::$TABELA_DB, $departamento->array());
     }
 
     public function contar()

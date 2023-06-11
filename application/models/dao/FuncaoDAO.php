@@ -21,7 +21,7 @@ class FuncaoDAO extends CI_Model
 
     public function criar($objeto)
     {
-        $this->DAO->criar(self::$TABELA_DB, $objeto->toArray());
+        $this->DAO->criar(self::$TABELA_DB, $objeto->array());
     }
 
     public function buscarTodos($inicial, $final)
@@ -54,13 +54,13 @@ class FuncaoDAO extends CI_Model
 
     public function atualizar($funcao)
     {
-        $this->DAO->atualizar(self::$TABELA_DB, $funcao->toArray());
+        $this->DAO->atualizar(self::$TABELA_DB, $funcao->array());
     }
 
 
     public function deletar($funcao)
     {
-        $this->DAO->deletar(self::$TABELA_DB, $funcao->toArray());
+        $this->DAO->deletar(self::$TABELA_DB, $funcao->array());
     }
 
     public function contar()

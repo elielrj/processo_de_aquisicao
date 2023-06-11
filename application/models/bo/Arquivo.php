@@ -28,9 +28,9 @@ class Arquivo implements InterfaceBO
 		$status = true
 	)
 	{
-		$this->id = isset($id) ? $id : null;
+		$this->id = $id ?? null;
 		$this->path = $path;
-		$this->dataHora = isset($dataHora) ? $dataHora : DataLibrary::dataHoraBr();
+		$this->dataHora = $dataHora ?? DataLibrary::dataHoraBr();
 		$this->usuarioId = $usuarioId;
 		$this->artefatoId = $artefatoId;
 		$this->processoId = $processoId;
@@ -51,13 +51,13 @@ class Arquivo implements InterfaceBO
 	public function array(): array
 	{
 		return array(
-			'id' => isset($this->id) ? $this->id : null,
+			'id' => $this->id ?? null,
 			'path' => $this->path,
 			'data_hora' => DataLibrary::dataHoraMySQL($this->dataHora),
 			'usuario_id' => $this->usuarioId,
 			'artefato_id' => $this->artefatoId,
 			'processo_id' => $this->processoId,
-			'nome' => isset($this->nome) ? $this->nome : '',
+			'nome' => $this->nome ?? '',
 			'status' => $this->status,
 		);
 	}
