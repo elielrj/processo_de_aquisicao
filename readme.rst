@@ -75,3 +75,8 @@ contributors to the CodeIgniter project and you, the CodeIgniter user.
 FPDI
 ***************
 O projeto faz uso da bilbioteca: https://github.com/Setasign/FPDI
+
+***************
+PDFMerger
+***************
+O projeto faz uso da bilbioteca: https://github.com/myokyawhtun/PDFMerger
