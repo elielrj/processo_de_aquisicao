@@ -45,7 +45,10 @@ class LeiController extends CI_Controller
     {
         $this->load->view('index', [
             'titulo' => 'Nova lei',
-            'pagina' => 'lei/novo.php'
+            'pagina' => 'lei/novo.php',
+			'options_lei' => $this->LeiDAO->options(),
+			'options_tipo' => $this->TipoDAO->options(),
+			'options_artefato' => $this->ArtefatoDAO->options()
         ]);
     }
 

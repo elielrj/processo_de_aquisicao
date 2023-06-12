@@ -60,7 +60,9 @@ $route['arquivo-listar'] = 'ArquivoController/listar';
 $route['processo-listar'] = 'ProcessoController/listar';
 $route['processo-novo'] = 'ProcessoController/novo';
 
-$route['artefatos'] = 'ArtefatoController/listar';
+$route['artefato-listar'] = 'ArtefatoController/listar';
+$route['artefato-novo'] = 'ArtefatoController/novo';
+
 //ANDAMENTO
 $route['andamento-listar'] = 'AndamentoController/listar';
 
@@ -71,7 +73,10 @@ $route['departamento-novo'] = 'DepartamentoController/novo';
 $route['departamento-criar'] = 'DepartamentoController/criar';
 $route['departamento-atualizar'] = 'DepartamentoController/atualizar';
 
-$route['leis'] = 'LeiController/listar';
+//LEI
+$route['lei-listar'] = 'LeiController/listar';
+$route['lei-novo'] = 'LeiController/novo';
+
 $route['tipos'] = 'TipoController/listar';
 $route['ugs'] = 'UgController/listar';
 
@@ -86,7 +91,9 @@ $route['sair'] = 'LoginController/sair';
 $route['modalidades'] = 'ModalidadeController/listar';
 
 #lei-tipo-artefato
-$route['leis-tipos-artefatos'] = 'LeiTipoArtefatoController';
+$route['lei-tipo-artefato-listar'] = 'LeiTipoArtefatoController/listar';
+$route['lei-tipo-artefato-novo'] = 'LeiTipoArtefatoController/novo';
+$route['lei-tipo-artefato-criar'] = 'LeiTipoArtefatoController/criar';
 
 
 

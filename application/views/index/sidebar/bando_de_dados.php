@@ -42,11 +42,9 @@
 	</a>
 	<div id="collapseArtefatos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
-			<h6 class="collapse-header">Processo de Aquisição</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/artefatos'); ?>">Listar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/artefatos/novo'); ?>">Novo</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/artefatos/listar'); ?>">Alterar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/artefatos/listar'); ?>">Deletar</a>
+			<h6 class="collapse-header">Artefatos de processos</h6>
+			<a class="collapse-item" href="<?php echo base_url('index.php/artefato-listar'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/artefato-novo'); ?>">Novo</a>
 		</div>
 	</div>
 </li>
@@ -77,11 +75,9 @@
 	</a>
 	<div id="collapseLeis" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
-			<h6 class="collapse-header">Processo de Aquisição</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/leis'); ?>">Listar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/leis/novo'); ?>">Novo</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/leis/listar'); ?>">Alterar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/leis/listar'); ?>">Deletar</a>
+			<h6 class="collapse-header">Leis dos Processos</h6>
+			<a class="collapse-item" href="<?php echo base_url('index.php/lei-listar'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/lei-novo'); ?>">Novo</a>
 		</div>
 	</div>
 </li>
@@ -97,10 +93,8 @@
 	<div id="collapseLeiTipoArtefato" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
 			<h6 class="collapse-header">Processo de Aquisição</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/leis-tipos-artefatos'); ?>">Listar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/usuarios/novo'); ?>">Novo</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/usuarios/listar'); ?>">Alterar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/usuarios/listar'); ?>">Deletar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/lei-tipo-artefato-listar'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/lei-tipo-artefato-novo'); ?>">Novo</a>
 		</div>
 	</div>
 </li>

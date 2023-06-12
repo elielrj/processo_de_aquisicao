@@ -6,6 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class LeiTipoArtefatoController extends CI_Controller
 {
 
+	public static $leiTipoArtefatoController = 'LeiTipoArtefatoController';
     public function __construct()
     {
         parent::__construct();
@@ -18,7 +19,7 @@ class LeiTipoArtefatoController extends CI_Controller
         usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
-    public function listar()
+    public function listar() : void
     {
         $leisTiposArtefatos = $this->LeiTipoArtefatoDAO->buscarTodos(null, null);
 
@@ -30,7 +31,7 @@ class LeiTipoArtefatoController extends CI_Controller
         $this->load->view('index', $dados);
     }
 
-    public function atualizar()
+    public function atualizar() : void
     {
 
         $data_post = $this->input->post();
@@ -47,6 +48,14 @@ class LeiTipoArtefatoController extends CI_Controller
 
         redirect('LeiTipoArtefatoController');
     }
+
+	public function novo(): void
+	{
+		$this->load->view('index', [
+			'titulo' => 'Nova LeiTipoArtefato',
+			'pagina' => 'lei_tipo_artefato/novo.php'
+		]);
+	}
 
 
 }
