@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 view_titulo($titulo);
 
-view_form_open('UsuarioController/atualizar');
+view_form_open('usuario-atualizar');
 
 view_input('Id','id','id','hidden',$usuario->id,150);
 view_input('Nome','nome','nome','text',$usuario->nome,150);

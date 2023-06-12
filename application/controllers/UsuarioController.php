@@ -145,10 +145,10 @@ class UsuarioController extends CI_Controller
 
         $this->load->view('index', $dados);
     }
-    public function alterarUsuario($id)
+    public function alterarUsuario()
     {
 
-        $usuario = $this->UsuarioDAO->buscarPorId($id);
+        $usuario = $this->UsuarioDAO->buscarPorId($_SESSION['id']);
 
         $this->removerSenha($usuario);
 

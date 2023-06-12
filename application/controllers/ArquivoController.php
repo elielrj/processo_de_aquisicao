@@ -10,6 +10,8 @@ include_once('application/models/bo/Arquivo.php');
 class ArquivoController extends CI_Controller
 {
 
+	public static $arquivoController = 'ArquivoController';
+
 	public function __construct()
 	{
 		parent::__construct();

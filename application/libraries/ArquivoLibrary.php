@@ -7,7 +7,6 @@ class ArquivoLibrary
 {
 
     private $ordem;
-    private $controller = 'ArquivoController';
 
     public function listar($arquivos, $ordem)
     {
@@ -21,32 +20,40 @@ class ArquivoLibrary
         return $tabela;
     }
 
-    private function linhaDeCabecalhoDoArquivo()
-    {
+    private function linhaDeCabecalhoDoArquivo(): string
+	{
         return from_array_to_table_row_with_td([
             'Ordem',
             'Path',
-            'Data do Upload',
+			'Data do Upload',
+			'Nome',
             'Status',
+			'Processo',
+			'Usuário',
+			'Artefato',
             'Alterar',
             'Excluir'
         ]);
     }
 
-    private function linhaDoArquivo($arquivo)
-    {
+    private function linhaDoArquivo($arquivo): string
+	{
         return from_array_to_table_row([
             td_ordem($this->ordem),
             $this->arquivoPath($arquivo->path),
             td_data_hora_br($arquivo->dataHora),
+			td_value($arquivo->nome),
             td_status($arquivo->status),
-            td_alterar($this->controller, $arquivo->id),
-            td_excluir($this->controller, $arquivo->id)
+			td_value($arquivo->processoId),
+			td_value($arquivo->usuarioId),
+			td_value($arquivo->artefatoId),
+            td_alterar(ArquivoController::$arquivoController, $arquivo->id),
+            td_excluir(ArquivoController::$arquivoController, $arquivo->id)
         ]);
     }
 
-    private function arquivoPath($path)
-    {
+    private function arquivoPath($path): string
+	{
         $value = "<a href='" . base_url($path) . "'>{$path}</a>";
 
         return td_value($value);

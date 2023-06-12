@@ -27,11 +27,8 @@
 	</a>
 	<div id="collapseArquivos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
-			<h6 class="collapse-header">Processo de Aquisição</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/arquivos'); ?>">Listar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/arquivos/novo'); ?>">Novo</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/arquivos/listar'); ?>">Alterar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/arquivos/listar'); ?>">Deletar</a>
+			<h6 class="collapse-header">Arquivos dos processos</h6>
+			<a class="collapse-item" href="<?php echo base_url('index.php/arquivo-listar'); ?>">Listar</a>
 		</div>
 	</div>
 </li>

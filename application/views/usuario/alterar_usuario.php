@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 view_titulo($titulo);
 
-view_form_open('UsuarioController/atualizarUsuario');
+view_form_open('usuario-atualizar-usuario');
 
 view_input('Id','id','id','hidden',$usuario->id,150);
 view_input('Nome','nome','nome','text',$usuario->nome,150);
@@ -24,7 +24,7 @@ view_dropdown('Departamento', 'departamento_id', $departamentos, $_SESSION['depa
 view_input('', 'status', '', 'hidden', $value = $usuario->id);
 
 view_form_submit_enviar();
-view_form_submit_cancelar('processos');
+view_form_submit_cancelar('processo-listar');
 
 echo form_close();
 ?>

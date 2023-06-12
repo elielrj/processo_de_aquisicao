@@ -54,7 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 
-$route['arquivos'] = 'ArquivoController/listar';
+$route['arquivo-listar'] = 'ArquivoController/listar';
 
 //PROCESSO
 $route['processo-listar'] = 'ProcessoController/listar';
@@ -78,7 +78,9 @@ $route['ugs'] = 'UgController/listar';
 //USUÁRIO
 $route['usuario-listar'] = 'UsuarioController/listar';
 $route['usuario-novo'] = 'UsuarioController/novo';
-$route['usuario-alterar-usuario'] = 'UsuarioController/alterarUsuario/';
+$route['usuario-atualizar'] = 'UsuarioController/atualizar';
+$route['usuario-atualizar-usuario'] = 'UsuarioController/atualizarUsuario';
+$route['usuario-alterar-usuario'] = 'UsuarioController/alterarUsuario';
 
 $route['sair'] = 'LoginController/sair';
 $route['modalidades'] = 'ModalidadeController/listar';
