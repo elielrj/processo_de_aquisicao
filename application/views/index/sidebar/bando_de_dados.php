@@ -189,7 +189,7 @@
 	<div id="collapseUsuario" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
 			<h6 class="collapse-header">Processo de Aquisição</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/usuarios'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/usuario-listar'); ?>">Listar</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/usuario-novo'); ?>">Novo</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/listarAtivos'); ?>">Desativar</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/listarDesativados'); ?>">Ativar</a>

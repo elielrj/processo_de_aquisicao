@@ -74,8 +74,12 @@ $route['departamento-atualizar'] = 'DepartamentoController/atualizar';
 $route['leis'] = 'LeiController/listar';
 $route['tipos'] = 'TipoController/listar';
 $route['ugs'] = 'UgController/listar';
-$route['usuarios'] = 'UsuarioController/listar';
+
+//USUÁRIO
+$route['usuario-listar'] = 'UsuarioController/listar';
 $route['usuario-novo'] = 'UsuarioController/novo';
+$route['usuario-alterar-usuario'] = 'UsuarioController/alterarUsuario/';
+
 $route['sair'] = 'LoginController/sair';
 $route['modalidades'] = 'ModalidadeController/listar';
 
