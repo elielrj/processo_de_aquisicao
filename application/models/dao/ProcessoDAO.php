@@ -108,7 +108,7 @@ class ProcessoDAO extends CI_Model
 		);
 
 		/**
-		 * LeiTipoArtefatoDAO vai buscar na tabela lei_tipo_artefato todo os artefatos
+		 * LeiTipoArtefatoDAO vai buscar na tabela lei_tipo_artefato todos os artefatos
 		 * (entre artefatos, tipos e lei), tem que ser passado os parâmetros lei_id e processo_id
 		 */
 		$processo->tipo->listaDeArtefatos =

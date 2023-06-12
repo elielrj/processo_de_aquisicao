@@ -1,4 +1,5 @@
 <?php
+
 use function PHPUnit\Framework\isEmpty;
 
 defined('BASEPATH') or exit('No direct script access allowed');
@@ -9,285 +10,283 @@ include_once('application/models/bo/Arquivo.php');
 class ArquivoController extends CI_Controller
 {
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->library('ArquivoLibrary');
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->library('ArquivoLibrary');
 
-        $this->load->model('dao/ArquivoDAO');
-        $this->load->model('dao/ProcessoDAO');
-        $this->load->model('dao/ArtefatoDAO');
-    }
+		$this->load->model('dao/ArquivoDAO');
+		$this->load->model('dao/ProcessoDAO');
+		$this->load->model('dao/ArtefatoDAO');
+	}
 
-    public function index()
-    {
-        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
-    }
+	public function index()
+	{
+		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
+	}
 
-    public function listar($indice = 1)
-    {
-        $indice--;
+	public function listar($indice = 1)
+	{
+		$indice--;
 
-        $mostrar = 10;
-        $indiceInicial = $indice * $mostrar;
+		$mostrar = 10;
+		$indiceInicial = $indice * $mostrar;
 
-        $arquivos = $this->ArquivoDAO->buscarTodos($indiceInicial, $mostrar);
+		$arquivos = $this->ArquivoDAO->buscarTodos($indiceInicial, $mostrar);
 
-        $quantidade = $this->ArquivoDAO->contar();
+		$quantidade = $this->ArquivoDAO->contar();
 
-        $botoes = empty($arquivos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
+		$botoes = empty($arquivos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
 
-        $dados = array(
-            'titulo' => 'Lista de arquivos',
-            'tabela' => $this->arquivolibrary->listar($arquivos, $indiceInicial),
-            'pagina' => 'arquivo/index.php',
-            'botoes' => $botoes,
-        );
+		$dados = array(
+			'titulo' => 'Lista de arquivos',
+			'tabela' => $this->arquivolibrary->listar($arquivos, $indiceInicial),
+			'pagina' => 'arquivo/index.php',
+			'botoes' => $botoes,
+		);
 
-        $this->load->view('index', $dados);
-    }
+		$this->load->view('index', $dados);
+	}
 
-    public function novo()
-    {
+	public function novo()
+	{
 
-        $dados = array(
-            'titulo' => 'Novo arquivo',
-            'pagina' => 'arquivo/novo.php',
-            'processos' => $this->ProcessoDAO->options(),
-            'artefatos' => $this->ArtefatoDAO->options()
-        );
+		$dados = array(
+			'titulo' => 'Novo arquivo',
+			'pagina' => 'arquivo/novo.php',
+			'processos' => $this->ProcessoDAO->options(),
+			'artefatos' => $this->ArtefatoDAO->options()
+		);
 
-        $this->load->view('index', $dados);
-    }
+		$this->load->view('index', $dados);
+	}
 
-    public function criar()
-    {
+	public function criar()
+	{
 
-        $data_post = $this->input->post();
+		$data_post = $this->input->post();
 
-        $file = $_FILES['arquivo'];
+		$file = $_FILES['arquivo'];
 
-        if (isset($file) && isset($data_post)) {
+		if (isset($file) && isset($data_post)) {
 
-            $arquivo = $this->moverArquivo($data_post);
+			$arquivo = $this->moverArquivo($data_post);
 
-            if (isset($arquivo)) {
+			if (isset($arquivo)) {
 
-                $this->ArquivoDAO->criar($arquivo);
+				$this->ArquivoDAO->criar($arquivo);
 
-                redirect('ArquivoController');
-            } else {
-                //todo tratar erro 
-            }
-        }
-    }
+				redirect('ArquivoController');
+			} else {
+				echo "<script>alert('Não foi possível mover o arquivo para o banco de dados! Tente novamente!')</script>";
+			}
+		}
+	}
 
-    public function alterar($id)
-    {
+	public function alterar($id)
+	{
 
-        $arquivo = $this->ArquivoDAO->buscarPorId($id);
+		$arquivo = $this->ArquivoDAO->buscarPorId($id);
 
-        $dados = array(
-            'titulo' => 'Alterar Arquivo',
-            'pagina' => 'arquivo/alterar.php',
-            'arquivo' => $arquivo,
-            'processos' => $this->ProcessoDAO->options(),
-            'artefatos' => $this->ArtefatoDAO->options()
-        );
+		$dados = array(
+			'titulo' => 'Alterar Arquivo',
+			'pagina' => 'arquivo/alterar.php',
+			'arquivo' => $arquivo,
+			'processos' => $this->ProcessoDAO->options(),
+			'artefatos' => $this->ArtefatoDAO->options()
+		);
 
-        $this->load->view('index', $dados);
-    }
+		$this->load->view('index', $dados);
+	}
 
-    public function atualizar()
-    {
+	public function atualizar()
+	{
 
-        $data_post = $this->input->post();
+		$data_post = $this->input->post();
 
-        $file = $_FILES['arquivo'];
+		$file = $_FILES['arquivo'];
 
-        if (isset($file) && isset($data_post)) {
+		if (isset($file) && isset($data_post)) {
 
-            $arquivo = $this->moverArquivo($data_post);
+			$arquivo = $this->moverArquivo($data_post);
 
-            if (isset($arquivo)) {
+			if (isset($arquivo)) {
 
-                $this->ArquivoDAO->criar($arquivo);
+				$this->ArquivoDAO->criar($arquivo);
 
-                redirect('ArquivoController');
-            } else {
-                //todo tratar erro 
-            }
-        }
-    }
+				redirect('ArquivoController');
+			} else {
+				echo "<script>alert('Não foi possível atualizar o arquivo no banco de dados! Tente novamente!')</script>";
+			}
+		}
+	}
 
-    public function alterarArquivoDeUmProcesso()
-    {
+	public function alterarArquivoDeUmProcesso()
+	{
 
-        $data_post = $this->input->post();
+		$data_post = $this->input->post();
 
-        if (isset($data_post['mais_um'])) {
+		if (isset($data_post['mais_um'])) {
 
-            //verifica se foi apontado um arquivo para
-            // já adiciona-lo a listagem
-            if (
-                count($_FILES['arquivo']) > 0 &&
-                isset($_FILES['arquivo']['temp_name'])
-            ) {
+			//verifica se foi apontado um arquivo para
+			// já adiciona-lo a listagem
+			if (
+				count($_FILES['arquivo']) > 0 &&
+				isset($_FILES['arquivo']['temp_name'])
+			) {
 
-                $arquivo = $this->moverArquivo($data_post, true);
+				$arquivo = $this->moverArquivo($data_post, true);
 
-                if (isset($arquivo)) {
+				if (isset($arquivo)) {
 
-                    $this->ArquivoDAO->criar($arquivo);
+					$this->ArquivoDAO->criar($arquivo);
 
-                }
+				}
 
-                //se não tiver sido aponado um arquivo, 
-                //ele só adiciona um novo artefato vazio, sem path
-            } else {
-                $this->ArquivoDAO->criar(
-                    new Arquivo(
-                        null,
-                        '',
-                        null,
-                        $_SESSION['id'],
-                        $data_post['artefato_id'],
-                        $data_post['processo_id'],
-                        '',
-                        true
-                    )
-                );
-            }
+				//se não tiver sido aponado um arquivo,
+				//ele só adiciona um novo artefato vazio, sem path
+			} else {
+				$this->ArquivoDAO->criar(
+					new Arquivo(
+						null,
+						'',
+						null,
+						$_SESSION['id'],
+						$data_post['artefato_id'],
+						$data_post['processo_id'],
+						'',
+						true
+					)
+				);
+			}
 
-        } else if (isset($data_post['menos_um'])) {
+		} else if (isset($data_post['menos_um'])) {
 
-            $arquivo_para_deletar = $this->ArquivoDAO->buscarPorId($data_post['arquivo_id']);
+			$arquivo_para_deletar = $this->ArquivoDAO->buscarPorId($data_post['arquivo_id']);
 
-            $this->ArquivoDAO->deletar($arquivo_para_deletar);
+			$this->ArquivoDAO->deletar($arquivo_para_deletar);
 
-        } else if (isset($data_post['enviar'])) {
+		} else if (isset($data_post['enviar'])) {
 
-            if (
-                isset($_FILES['arquivo']) &&
-                !empty($_FILES['arquivo']['tmp_name'])
-            ) {
+			if (
+				isset($_FILES['arquivo']) &&
+				!empty($_FILES['arquivo']['tmp_name'])
+			) {
 
-                $arquivo = $this->moverArquivo($data_post);
+				$arquivo = $this->moverArquivo($data_post);
 
-                if (isset($arquivo)) {
+				if (isset($arquivo)) {
 
-                    //verifica se é pra atualizar o arquivo
-                    if (
-                        $data_post['arquivo_path'] == '' &&
-                        $data_post['arquivo_id'] > 0
-                    ) {
+					//verifica se é pra atualizar o arquivo
+					if (
+						$data_post['arquivo_path'] == '' &&
+						$data_post['arquivo_id'] > 0
+					) {
 
-                        $this->ArquivoDAO->atualizar($arquivo);
+						$this->ArquivoDAO->atualizar($arquivo);
 
-                        //verifica se é pra inserir um novo arquivo
-                    } else if (
-                        $data_post['arquivo_path'] == '' &&
-                        $data_post['arquivo_id'] == null
-                    ) {
-                        $this->ArquivoDAO->criar($arquivo);
+						//verifica se é pra inserir um novo arquivo
+					} else if (
+						$data_post['arquivo_path'] == '' &&
+						$data_post['arquivo_id'] == null
+					) {
+						$this->ArquivoDAO->criar($arquivo);
 
-                    }
+					}
 
-                } else {
-                    //todo tratar erro, exibir mensagem de erro na tela 
-                    var_dump('caiu no else' . '</br>');
+				} else {
 
-                    //redirect('ProcessoController/exibir/' . $data_post['processo_id']);
-                }
-            } else if (!empty($data_post['arquivo_id'])) {
+					echo "<script>alert('Não foi possível fazer o Upload do arquivo! Tente novamente!')</script>";
+					//redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+				}
+			} else if (!empty($data_post['arquivo_id'])) {
 
-                $arquivo_para_atualizar = $this->ArquivoDAO->buscarPorId($data_post['arquivo_id']);
+				$arquivo_para_atualizar = $this->ArquivoDAO->buscarPorId($data_post['arquivo_id']);
 
-                $arquivo_para_atualizar->nome = $data_post['arquivo_nome'];
+				$arquivo_para_atualizar->nome = $data_post['arquivo_nome'];
 
-                $this->ArquivoDAO->atualizar($arquivo_para_atualizar);
+				$this->ArquivoDAO->atualizar($arquivo_para_atualizar);
 
-            }
-        }
+			}
+		}
 
-        redirect('ProcessoController/exibir/' . $data_post['processo_id']);
-    }
+		redirect('ProcessoController/exibir/' . $data_post['processo_id']);
 
-    public function deletar($id)
-    {
-        $this->ArquivoDAO->deletar($$this->ArquivoDAO->buscarPorId($id));
 
-        redirect('ArquivoController');
-    }
+	}
 
-    private function toObject($data_post, $path, $criarUmNovoArquivo)
-    {
-        return new Arquivo(
-            $criarUmNovoArquivo ? null : (isset($data_post['arquivo_id']) ? $data_post['arquivo_id'] : null),
-            $path,
-            DataLibrary::dataHoraBr(),
-            $_SESSION['id'],
-            $data_post['artefato_id'],
-            $data_post['processo_id'],
-            isset($data_post['arquivo_nome']) ? $data_post['arquivo_nome'] : '',
-            $data_post['arquivo_status']
-        );
-    }
+	public function deletar($id)
+	{
+		$this->ArquivoDAO->deletar($$this->ArquivoDAO->buscarPorId($id));
 
-    private function moverArquivo($data_post, $criarUmNovoArquivo = false)
-    {
-        $tmp_name = $_FILES['arquivo']['tmp_name'];
+		redirect('ArquivoController');
+	}
 
-        if (
-            ($data_post['arquivo_path'] == '') ||
-            $criarUmNovoArquivo
-        ) {
+	private function toObject($data_post, $path, $criarUmNovoArquivo)
+	{
+		return new Arquivo(
+			$criarUmNovoArquivo ? null : (isset($data_post['arquivo_id']) ? $data_post['arquivo_id'] : null),
+			$path,
+			DataLibrary::dataHoraBr(),
+			$_SESSION['id'],
+			$data_post['artefato_id'],
+			$data_post['processo_id'],
+			isset($data_post['arquivo_nome']) ? $data_post['arquivo_nome'] : '',
+			$data_post['arquivo_status']
+		);
+	}
 
-            $nome_do_arquivo = $_FILES['arquivo']['name'];
+	private function moverArquivo($data_post, $criarUmNovoArquivo = false)
+	{
+		$tmp_name = $_FILES['arquivo']['tmp_name'];
 
-            $extensao = strtolower(pathinfo($nome_do_arquivo, PATHINFO_EXTENSION));
+		if (
+			($data_post['arquivo_path'] == '') ||
+			$criarUmNovoArquivo
+		) {
 
-            $path = 'arquivos/' . $data_post['artefato_id'] . '/' . uniqid() . '.' . $extensao;
+			$nome_do_arquivo = $_FILES['arquivo']['name'];
 
-        } else {
+			$extensao = strtolower(pathinfo($nome_do_arquivo, PATHINFO_EXTENSION));
 
-            $path = $data_post['arquivo_path'];
+			$path = 'arquivos/' . $data_post['artefato_id'] . '/' . uniqid() . '.' . $extensao;
 
-        }
+		} else {
 
+			$path = $data_post['arquivo_path'];
 
+		}
 
 
-        $arquivado = move_uploaded_file($tmp_name, $path);
+		$arquivado = move_uploaded_file($tmp_name, $path);
 
-        //var_dump($_FILES['arquivo']);
-        /* $arquivado = false;
+		//var_dump($_FILES['arquivo']);
+		/* $arquivado = false;
 
-         $config['upload_path'] = $path;
-         $config['allowed_types'] = 'pdf';
-         $config['max_size'] = 10000;
+		 $config['upload_path'] = $path;
+		 $config['allowed_types'] = 'pdf';
+		 $config['max_size'] = 10000;
 
-         $this->load->library('upload', $config);
+		 $this->load->library('upload', $config);
 
-         if (!$this->upload->do_upload('arquivo')) {
-             $error = array('error' => $this->upload->display_errors());
+		 if (!$this->upload->do_upload('arquivo')) {
+			 $error = array('error' => $this->upload->display_errors());
 
-             $this->load->view('arquivo/upload_error', $error);
+			 $this->load->view('arquivo/upload_error', $error);
 
-             $arquivado = false;
-         } else {
-             $arquivado = true;
-         }*/
+			 $arquivado = false;
+		 } else {
+			 $arquivado = true;
+		 }*/
 
 
+		if ($arquivado) {
 
-        if ($arquivado) {
+			return $this->toObject($data_post, $path, $criarUmNovoArquivo);
 
-            return $this->toObject($data_post, $path, $criarUmNovoArquivo);
-
-        } else {
-            return null;
-        }
-    }
+		} else {
+			return null;
+		}
+	}
 
 }

@@ -20,7 +20,7 @@ class AndamentoController extends CI_Controller
 		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
 	}
 
-	public function listar($indice = 1)
+	public function listar($indice = 1): void
 	{
 		$indice--;
 
@@ -31,10 +31,10 @@ class AndamentoController extends CI_Controller
 
 		$quantidade = $this->AndamentoDAO->contarAtivosInativos();
 
-		$botoes = empty($leis) ? '' : $this->botao->paginar('AndamentoController/listar', $indice, $quantidade, $mostrar);
+		$botoes = empty($leis) ? '' : $this->botao->paginar(self::$andamentoController . '/listar', $indice, $quantidade, $mostrar);
 
 		$dados = array(
-			'titulo' => 'Lista de leis',
+			'titulo' => 'Lista de andamentos',
 			'tabela' => $this->andamentolibrary->listar($leis, $indiceInicial),
 			'pagina' => 'andamento/index.php',
 			'botoes' => $botoes,
@@ -42,15 +42,7 @@ class AndamentoController extends CI_Controller
 		$this->load->view('index', $dados);
 	}
 
-	public function novo()
-	{
-		$this->load->view('index', [
-			'titulo' => 'Nova andamento',
-			'pagina' => 'andamento/novo.php'
-		]);
-	}
-
-	public function criar()
+	public function criar(): void
 	{
 		$andamento = new Andamento(
 			null,
@@ -64,20 +56,7 @@ class AndamentoController extends CI_Controller
 		redirect(self::$andamentoController);
 	}
 
-	public function alterar($id)
-	{
-		$andamento = $this->AndamentoDAO->buscarId($id);
-
-		$dados = [
-			'titulo' => 'Alterar andamento',
-			'pagina' => 'andamento/alterar.php',
-			'andamento' => $andamento
-		];
-
-		$this->load->view('index', $dados);
-	}
-
-	public function atualizar()
+	public function atualizar(): void
 	{
 		$andamento = new Andamento(
 			$this->input->post()('id'),
@@ -87,13 +66,6 @@ class AndamentoController extends CI_Controller
 		);
 
 		$this->AndamentoDAO->atualizar($andamento);
-
-		redirect(self::$andamentoController);
-	}
-
-	public function deletar($id)
-	{
-		$this->AndamentoDAO->deletar($id);
 
 		redirect(self::$andamentoController);
 	}

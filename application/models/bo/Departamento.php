@@ -46,7 +46,7 @@ class Departamento implements InterfaceBO
 	public function array(): array
 	{
 		return array(
-			'id' => isset($this->id) ? $this->id : null,
+			'id' => $this->id ?? null,
 			'nome' => $this->nome,
 			'sigla' => $this->sigla,
 			'ug_id' => $this->ug->id,

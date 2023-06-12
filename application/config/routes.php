@@ -60,7 +60,13 @@ $route['processos'] = 'ProcessoController/listar';
 $route['processo-novo'] = 'ProcessoController/novo';
 
 $route['artefatos'] = 'ArtefatoController/listar';
-$route['departamentos'] = 'DepartamentoController/listar';
+
+//DEPARTAMENTO
+$route['departamento-listar'] = 'DepartamentoController/listar';
+$route['departamento-novo'] = 'DepartamentoController/novo';
+$route['departamento-criar'] = 'DepartamentoController/criar';
+$route['departamento-atualizar'] = 'DepartamentoController/atualizar';
+
 $route['leis'] = 'LeiController/listar';
 $route['tipos'] = 'TipoController/listar';
 $route['ugs'] = 'UgController/listar';

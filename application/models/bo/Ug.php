@@ -41,7 +41,7 @@ class Ug implements InterfaceBO{
     public function array(): array
 	{
         return array(
-            'id' => $this->id,
+            'id' => $this->id ?? null,
            'numero' =>  $this->numero,
            'nome' =>  $this->nome,
            'sigla' =>  $this->sigla,

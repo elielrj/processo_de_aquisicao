@@ -34,7 +34,7 @@ class Sugestao implements InterfaceBO{
     public function array(): array
 	{
         return array(
-            'id' => $this->id,
+            'id' => $this->id ?? null,
            'mensagem' =>  $this->mensagem,
            'status' =>  $this->status,
            'usuario_id' => $this->usuario_id

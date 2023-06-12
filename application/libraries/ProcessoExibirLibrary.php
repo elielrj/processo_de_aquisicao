@@ -100,11 +100,11 @@ class ProcessoExibirLibrary
 
                 if ($arquivo->path == '') {
 
-                    $link = "{$artefato->nome}"; //todo por o nome/apelido do arquivo
+                    $link = "{$artefato->nome}";
 
                 } else {
 
-                    $link = "<a href='" . base_url($arquivo->path) . "'>{$artefato->nome}</a>"; //todo por o nome/apelido do arquivo
+                    $link = "<a href='" . base_url($arquivo->path) . "'>{$artefato->nome}</a>";
 
                 }
 

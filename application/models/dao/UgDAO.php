@@ -96,7 +96,7 @@ class UgDAO extends CI_Model
 	public function options(): array
 	{
 
-		$ugs = $this->retrive(null, null);
+		$ugs = $this->buscarTodos(null, null);
 
 		$options = [];
 

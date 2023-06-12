@@ -196,7 +196,7 @@ class ProcessoController extends CI_Controller
 
 	/**
 	 * Summary of imprimir
-	 * imprimir todo os arquivos em pdf do processoem um único arquivo,
+	 * imprimir todos os arquivos em pdf do processoem um único arquivo,
 	 * com o auxilio da biblioteca PDFMerger
 	 * @param mixed $processo
 	 * @return void
