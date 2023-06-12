@@ -13,7 +13,7 @@
 	<div id="collapseAndamento" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
 			<h6 class="collapse-header">Andamento dos processos</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/AndamentoController/listar'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/andamento-listar'); ?>">Listar</a>
 		</div>
 	</div>
 </li>

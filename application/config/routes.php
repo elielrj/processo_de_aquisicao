@@ -60,6 +60,9 @@ $route['processos'] = 'ProcessoController/listar';
 $route['processo-novo'] = 'ProcessoController/novo';
 
 $route['artefatos'] = 'ArtefatoController/listar';
+//ANDAMENTO
+$route['andamento-listar'] = 'AndamentoController/listar';
+
 
 //DEPARTAMENTO
 $route['departamento-listar'] = 'DepartamentoController/listar';
