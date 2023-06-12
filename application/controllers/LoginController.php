@@ -36,7 +36,7 @@ class LoginController extends CI_Controller
     {
         $this->LoginDAO->buscarDadosDoUsuarioLogado($email, $senha);
 
-        redirect('processos');
+        redirect('processo-listar');
     }
 
     private function emailExiste($email)

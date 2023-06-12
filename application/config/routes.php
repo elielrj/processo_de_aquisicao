@@ -56,7 +56,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['arquivos'] = 'ArquivoController/listar';
 
-$route['processos'] = 'ProcessoController/listar';
+//PROCESSO
+$route['processo-listar'] = 'ProcessoController/listar';
 $route['processo-novo'] = 'ProcessoController/novo';
 
 $route['artefatos'] = 'ArtefatoController/listar';

@@ -9,7 +9,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Novo:</h6>
             <a class="collapse-item" href="<?php echo base_url('index.php/processo-novo'); ?>">Novo</a>
-            <a class="collapse-item" href="<?php echo base_url('index.php/processos'); ?>">Listar</a>
+            <a class="collapse-item" href="<?php echo base_url('index.php/processo-listar'); ?>">Listar</a>
         </div>
     </div>
 </li>
