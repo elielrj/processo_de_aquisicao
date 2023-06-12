@@ -9,7 +9,7 @@ use PDFMerger\PDFMerger;
 
 class ProcessoController extends CI_Controller
 {
-	static string $controller = 'ProcessoController';
+	public static $controller = 'ProcessoController';
 
 	public function __construct()
 	{

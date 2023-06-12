@@ -6,7 +6,7 @@ include_once('application/models/bo/Usuario.php');
 
 class UsuarioDAO extends CI_Model
 {
-	public static string $TABELA_DB = 'usuario';
+	public static  $TABELA_DB = 'usuario';
 
 	public function __construct()
 	{

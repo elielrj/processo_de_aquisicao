@@ -7,7 +7,7 @@ include_once('application/models/bo/Ug.php');
 class UgDAO extends CI_Model
 {
 
-	public static string $TABELA_DB = 'ug';
+	public static $TABELA_DB = 'ug';
 
 	public function __construct()
 	{

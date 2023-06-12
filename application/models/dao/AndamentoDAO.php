@@ -7,12 +7,12 @@ include_once('application/models/bo/Andamento.php');
 class AndamentoDAO extends CI_Model
 {
 
-	public static string $TABELA_DB = 'andamento';
+	public static  $TABELA_DB = 'andamento';
 
-	public static string $id = 'id';
-	public static string $statusDoAndamento = 'status_do_andamento';
-	public static string $dataHora = 'data_hora';
-	public static string $processo_id = 'processo_id';
+	public static  $id = 'id';
+	public static  $statusDoAndamento = 'status_do_andamento';
+	public static  $dataHora = 'data_hora';
+	public static  $processo_id = 'processo_id';
 
 	public function __construct()
 	{
