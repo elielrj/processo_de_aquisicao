@@ -62,7 +62,7 @@ class AndamentoController extends CI_Controller
 			$this->input->post()('id'),
 			$this->input->post('status_do_andamento'),
 			$this->input->post('data_hora'),
-			$this->input->post('processo_id'),
+			$this->input->post('processo_id')
 		);
 
 		$this->AndamentoDAO->atualizar($andamento);
