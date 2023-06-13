@@ -15,7 +15,7 @@ class AndamentoController extends CI_Controller
 		$this->load->library('AndamentoLibrary');
 	}
 
-	public function index(): void
+	public function index()
 	{
 		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
 	}
@@ -42,7 +42,7 @@ class AndamentoController extends CI_Controller
 		$this->load->view('index', $dados);
 	}
 
-	public function criar(): void
+	public function criar()
 	{
 		$andamento = new Andamento(
 			null,
@@ -56,7 +56,7 @@ class AndamentoController extends CI_Controller
 		redirect(self::$andamentoController);
 	}
 
-	public function atualizar(): void
+	public function atualizar()
 	{
 		$andamento = new Andamento(
 			$this->input->post()('id'),

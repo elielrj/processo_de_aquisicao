@@ -38,7 +38,7 @@ class Ug implements InterfaceBO{
         return $this->nome . "(" . $this->sigla . " - " . $this->numero . ")";
     }
 
-    public function array(): array
+    public function array()
 	{
         return array(
             'id' => $this->id ?? null,

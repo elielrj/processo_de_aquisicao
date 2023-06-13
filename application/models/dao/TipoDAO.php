@@ -91,7 +91,7 @@ class TipoDAO extends CI_Model
 		return $listaDeTipo;
 	}
 
-	public function options(): array
+	public function options()
 	{
 
 		$tipos = $this->buscarTodos(null, null);

@@ -5,7 +5,7 @@ function usuarioPossuiSessaoAberta()
 	return isset($_SESSION['email']);
 }
 
-function redirecionarParaPaginaInicial(): void
+function redirecionarParaPaginaInicial()
 {
 	header("Location:" . base_url());
 }

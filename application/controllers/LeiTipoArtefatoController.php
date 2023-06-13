@@ -49,7 +49,7 @@ class LeiTipoArtefatoController extends CI_Controller
         redirect('LeiTipoArtefatoController');
     }
 
-	public function novo(): void
+	public function novo()
 	{
 		$this->load->view('index', [
 			'titulo' => 'Nova LeiTipoArtefato',

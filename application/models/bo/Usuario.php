@@ -52,10 +52,10 @@ class Usuario implements InterfaceBO
         $this->$key = $value;
     }
 
-    public function array(): array
+    public function array()
 	{
         return array(
-            'id' => isset($this->id) ? $this->id : null,
+            'id' => $this->id ?? null,
             'nome' => $this->nome,
             'sobrenome' => $this->sobrenome,
             'email' => $this->email,

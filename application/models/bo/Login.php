@@ -28,7 +28,7 @@ class Login implements InterfaceBO
         $this->$key = $value;
     }
 
-    public function array(): array
+    public function array()
 	{
         return array(
             'email' => $this->email,

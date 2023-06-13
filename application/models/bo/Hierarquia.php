@@ -35,10 +35,10 @@ class Hierarquia implements InterfaceBO
 		$this->$key = $value;
 	}
 
-	public function array(): array
+	public function array()
 	{
 		return array(
-			'id' => $this->id,
+			'id' => ($this->id ?? null),
 			'posto_ou_graduacao' => $this->postoOuGraduacao,
 			'sigla' => $this->sigla,
 			'status' => $this->status

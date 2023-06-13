@@ -7,12 +7,12 @@ class Root implements NivelDeAcesso
 	const NIVEL = 4;
 	const NOME = 'root';
 
-	public function nome(): string
+	public function nome()
 	{
 		return Root::NOME;
 	}
 
-	public function nivel(): int
+	public function nivel()
 	{
 		return Root::NIVEL;
 	}

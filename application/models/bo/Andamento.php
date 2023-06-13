@@ -39,7 +39,7 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 		$this->$key = $value;
 	}
 
-	public function array(): array
+	public function array()
 	{
 		return array(
 			'id' => $this->id ?? null,
@@ -60,12 +60,12 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 		}
 	}
 
-	public function nome(): string
+	public function nome()
 	{
 		return $this->statusDoAndamento->nome();
 	}
 
-	public function nivel(): int
+	public function nivel()
 	{
 		return $this->statusDoAndamento->nivel();
 	}

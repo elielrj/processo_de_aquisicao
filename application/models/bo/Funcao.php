@@ -36,7 +36,7 @@ class Funcao implements InterfaceBO, NivelDeAcesso
 		$this->$key = $value;
 	}
 
-	public function array(): array
+	public function array()
 	{
 		return array(
 			'id' => $this->id,

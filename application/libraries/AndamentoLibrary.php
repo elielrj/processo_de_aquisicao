@@ -23,7 +23,7 @@ class AndamentoLibrary
 		return $tabela;
 	}
 
-	private function linhaDeCabelho(): string
+	private function linhaDeCabelho()
 	{
 		return from_array_to_table_row_with_td([
 			'Id',

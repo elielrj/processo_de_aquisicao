@@ -29,14 +29,14 @@ class AndamentoDAO extends CI_Model
 		$this->DAO->atualizar(self::$TABELA_DB, $andamento->array());
 	}
 
-	public function buscarOnde($key, $value): Andamento
+	public function buscarOnde($key, $value)
 	{
 		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
 		return $this->toObject($array->result());
 	}
 
-	public function buscarTodosAtivosInativos($inicial, $final): array
+	public function buscarTodosAtivosInativos($inicial, $final)
 	{
 		$array = $this->DAO->buscarTodosAtivosInativos(self::$TABELA_DB, $inicial, $final);
 

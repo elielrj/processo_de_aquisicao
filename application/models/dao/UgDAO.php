@@ -93,7 +93,7 @@ class UgDAO extends CI_Model
 		return $listaDeUg;
 	}
 
-	public function options(): array
+	public function options()
 	{
 
 		$ugs = $this->buscarTodos(null, null);

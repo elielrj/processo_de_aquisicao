@@ -16,14 +16,14 @@ class LoginDAO extends CI_Model
 		$this->load->model('dao/FuncaoDAO');
 	}
 
-	public function emailExiste($email): bool
+	public function emailExiste($email)
 	{
 		$array = $this->DAO->buscarOnde(LoginDAO::$TABELA_DB, array('email' => $email));
 
 		return ($array->num_rows() == 1);
 	}
 
-	public function senhaEstaCorreta($email, $senha): bool
+	public function senhaEstaCorreta($email, $senha)
 	{
 		$array = $this->DAO->buscarOnde(LoginDAO::$TABELA_DB, array('email' => $email, 'senha' => $senha));
 

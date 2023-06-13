@@ -26,13 +26,13 @@ class ProcessoController extends CI_Controller
 		$this->load->library('DataLibrary');
 	}
 
-	public function index(): void
+	public function index()
 	{
 		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
 	}
 
 
-	function listar($indice = 1): void
+	function listar($indice = 1)
 	{
 		$indice--;
 
@@ -201,7 +201,7 @@ class ProcessoController extends CI_Controller
 	 * @param mixed $processo
 	 * @return void
 	 */
-	private function imprimir($processo): void
+	private function imprimir($processo)
 	{
 		include_once 'vendor/PDFMerger/PDFMerger.php';
 

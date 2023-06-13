@@ -7,13 +7,13 @@ class Administrar implements NivelDeAcesso
     const NIVEL = 4;
     const NOME = 'administrador';
 
-    public function nome(): string
+    public function nome()
 	{
         return Administrar::NOME;
     }
     
 
-    public function nivel(): int
+    public function nivel()
 	{
         return Administrar::NIVEL;
     }

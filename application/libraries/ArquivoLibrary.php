@@ -20,7 +20,7 @@ class ArquivoLibrary
         return $tabela;
     }
 
-    private function linhaDeCabecalhoDoArquivo(): string
+    private function linhaDeCabecalhoDoArquivo()
 	{
         return from_array_to_table_row_with_td([
             'Ordem',
@@ -36,7 +36,7 @@ class ArquivoLibrary
         ]);
     }
 
-    private function linhaDoArquivo($arquivo): string
+    private function linhaDoArquivo($arquivo)
 	{
         return from_array_to_table_row([
             td_ordem($this->ordem),
@@ -52,7 +52,7 @@ class ArquivoLibrary
         ]);
     }
 
-    private function arquivoPath($path): string
+    private function arquivoPath($path)
 	{
         $value = "<a href='" . base_url($path) . "'>{$path}</a>";
 
