@@ -6,7 +6,7 @@ require_once('application/models/bo/Andamento.php');
 
 class AndamentoController extends CI_Controller
 {
-	public static string $andamentoController = 'AndamentoController';
+	public static $andamentoController = 'AndamentoController';
 
 	public function __construct()
 	{
