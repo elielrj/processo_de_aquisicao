@@ -150,6 +150,7 @@ create table if not exists sugestao(
     mensagem varchar(250) not null,
     visualizado boolean not null,
     usuario_id int not null,
+    status boolean not null,
     foreign key (usuario_id) references usuario(id)
 );
 

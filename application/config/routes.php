@@ -96,7 +96,8 @@ $route['lei-tipo-artefato-listar'] = 'LeiTipoArtefatoController/listar';
 $route['lei-tipo-artefato-novo'] = 'LeiTipoArtefatoController/novo';
 $route['lei-tipo-artefato-criar'] = 'LeiTipoArtefatoController/criar';
 
-
+//SUGESTÃO
+$route['sugestao-criar'] = 'SugestaoController/criar';
 
 
 

@@ -67,7 +67,7 @@ class SugestaoController extends CI_Controller
 
 		$this->SugestaoDAO->criar($sugestao);
 
-		redirect('processos');
+		redirect('processo-listar');
 	}
 
 	public function alterar($id)

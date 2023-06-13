@@ -111,8 +111,6 @@
 			<h6 class="collapse-header">Processo de Aquisição</h6>
 			<a class="collapse-item" href="<?php echo base_url('index.php/modalidades'); ?>">Listar</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/modalidades/novo'); ?>">Novo</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/modalidades/listar'); ?>">Alterar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/modalidades/listar'); ?>">Deletar</a>
 		</div>
 	</div>
 </li>
@@ -145,8 +143,6 @@
 			<h6 class="collapse-header">Processo de Aquisição</h6>
 			<a class="collapse-item" href="<?php echo base_url('index.php/tipos'); ?>">Listar</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/tipos/novo'); ?>">Novo</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/tipos/listar'); ?>">Alterar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/tipos/listar'); ?>">Deletar</a>
 		</div>
 	</div>
 </li>
@@ -161,11 +157,8 @@
 	<div id="collapseUg" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
 			<h6 class="collapse-header">Processo de Aquisição</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/ugs'); ?>">Ug</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/ugs'); ?>">Listar</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/ugs/novo'); ?>">Novo</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/ugs/listar'); ?>">Alterar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/ugs/listar'); ?>">Deletar</a>
 		</div>
 	</div>
 </li>
@@ -179,11 +172,9 @@
 	</a>
 	<div id="collapseUsuario" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
-			<h6 class="collapse-header">Processo de Aquisição</h6>
+			<h6 class="collapse-header">Usuário do Sistema</h6>
 			<a class="collapse-item" href="<?php echo base_url('index.php/usuario-listar'); ?>">Listar</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/usuario-novo'); ?>">Novo</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/listarAtivos'); ?>">Desativar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/UsuarioController/listarDesativados'); ?>">Ativar</a>
 		</div>
 	</div>
 </li>
