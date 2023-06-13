@@ -56,9 +56,13 @@ class UsuarioDAO extends CI_Model
 	}
 
 
-	public function deletar($usuario)
+	public function deletar($usuario_id)
 	{
-		$this->DAO->deletar(self::$TABELA_DB, $usuario->array());
+		$usuario = $this->buscarPorId($usuario_id);
+
+		$usuario->status = false;
+
+		$this->DAO->atualizar(self::$TABELA_DB, $usuario->array());
 	}
 
 	public function contar()

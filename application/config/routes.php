@@ -83,6 +83,7 @@ $route['ugs'] = 'UgController/listar';
 //USUÁRIO
 $route['usuario-listar'] = 'UsuarioController/listar';
 $route['usuario-novo'] = 'UsuarioController/novo';
+$route['usuario-criar'] = 'UsuarioController/criar';
 $route['usuario-atualizar'] = 'UsuarioController/atualizar';
 $route['usuario-atualizar-usuario'] = 'UsuarioController/atualizarUsuario';
 $route['usuario-alterar-usuario'] = 'UsuarioController/alterarUsuario';

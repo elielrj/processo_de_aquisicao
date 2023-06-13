@@ -5,6 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class UsuarioController extends CI_Controller
 {
 
+	public static $usuarioController = 'UsuarioController';
     private $usuarioDAO;
 
     public function __construct()
@@ -225,10 +226,10 @@ class UsuarioController extends CI_Controller
         redirect('UsuarioController');
     }
 
-    public function desativar($id)
+    public function deletar($id)
     {
 
-        $this->UsuarioDAO->desativar($id);
+        $this->UsuarioDAO->deletar($id);
 
         redirect('UsuarioController');
     }
