@@ -38,7 +38,7 @@ class ProcessoDAO extends CI_Model
 		return $processo->id;
 	}
 
-	public function buscarTodos($inicial, $final): array
+	public function buscarTodos($inicial, $final)
 	{
 		$array = $this->DAO->buscarTodosOrderByData(self::$TABELA_DB, $inicial, $final);
 
@@ -46,21 +46,21 @@ class ProcessoDAO extends CI_Model
 	}
 
 
-	public function buscarTodosDesativados($inicial, $final): array
+	public function buscarTodosDesativados($inicial, $final)
 	{
 		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
-	public function buscarPorId($processoId): Processo
+	public function buscarPorId($processoId)
 	{
 		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $processoId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
-	public function buscarOnde($key, $value): Processo
+	public function buscarOnde($key, $value)
 	{
 		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 

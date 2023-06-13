@@ -19,7 +19,7 @@ class LeiTipoArtefatoController extends CI_Controller
         usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
-    public function listar() : void
+    public function listar()
     {
         $leisTiposArtefatos = $this->LeiTipoArtefatoDAO->buscarTodos(null, null);
 
@@ -31,7 +31,7 @@ class LeiTipoArtefatoController extends CI_Controller
         $this->load->view('index', $dados);
     }
 
-    public function atualizar() : void
+    public function atualizar()
     {
 
         $data_post = $this->input->post();

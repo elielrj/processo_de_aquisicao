@@ -19,28 +19,28 @@ class UgDAO extends CI_Model
 		$this->DAO->criar(self::$TABELA_DB, $objeto->array());
 	}
 
-	public function buscarTodos($inicial, $final): array
+	public function buscarTodos($inicial, $final)
 	{
 		$array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
-	public function buscarTodosDesativados($inicial, $final): array
+	public function buscarTodosDesativados($inicial, $final)
 	{
 		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
-	public function buscarPorId($ugId): Ug
+	public function buscarPorId($ugId)
 	{
 		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $ugId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
-	public function buscarOnde($key, $value): array
+	public function buscarOnde($key, $value)
 	{
 		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
@@ -79,7 +79,7 @@ class UgDAO extends CI_Model
 		);
 	}
 
-	private function criarLista($array): array
+	private function criarLista($array)
 	{
 		$listaDeUg = array();
 

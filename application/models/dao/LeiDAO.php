@@ -84,7 +84,7 @@ class LeiDAO extends CI_Model
 		);
 	}
 
-	private function criarLista($array): array
+	private function criarLista($array)
 	{
 		$listaDeLei = array();
 
@@ -98,7 +98,7 @@ class LeiDAO extends CI_Model
 		return $listaDeLei;
 	}
 
-	public function options($modalidadeId = null): array
+	public function options($modalidadeId = null)
 	{
 		$leis = array();
 
@@ -121,7 +121,7 @@ class LeiDAO extends CI_Model
 		return $options;
 	}
 
-	private function buscarLeisPorModalideId($modalidadeId): array
+	private function buscarLeisPorModalideId($modalidadeId)
 	{
 		return $this->buscarOnde('modalidade_id', $modalidadeId);
 	}

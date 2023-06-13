@@ -57,7 +57,7 @@ class AndamentoDAO extends CI_Model
 		);
 	}
 
-	private function criarLista($array): array
+	private function criarLista($array)
 	{
 		$listaDeAndamento = array();
 

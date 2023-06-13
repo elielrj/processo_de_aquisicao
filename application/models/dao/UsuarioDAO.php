@@ -22,28 +22,28 @@ class UsuarioDAO extends CI_Model
 		$this->DAO->criar(self::$TABELA_DB, $usuario->array());
 	}
 
-	public function buscarTodos($inicial, $final): array
+	public function buscarTodos($inicial, $final)
 	{
 		$array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
-	public function buscarTodosDesativados($inicial, $final): array
+	public function buscarTodosDesativados($inicial, $final)
 	{
 		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
-	public function buscarPorId($usuarioId): Usuario
+	public function buscarPorId($usuarioId)
 	{
 		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $usuarioId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
-	public function buscarOnde($key, $value): array
+	public function buscarOnde($key, $value)
 	{
 		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
@@ -75,7 +75,7 @@ class UsuarioDAO extends CI_Model
 		return $this->DAO->contarDesativados(self::$TABELA_DB);
 	}
 
-	public function toObject($arrayList): Usuario
+	public function toObject($arrayList)
 	{
 		return new Usuario(
 			$arrayList->id ?? ($arrayList['id'] ?? null),
@@ -97,7 +97,7 @@ class UsuarioDAO extends CI_Model
 		);
 	}
 
-	private function criarLista($array): array
+	private function criarLista($array)
 	{
 		$listaDeUsuarios = array();
 

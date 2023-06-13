@@ -20,7 +20,7 @@ class AndamentoController extends CI_Controller
 		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
 	}
 
-	public function listar($indice = 1): void
+	public function listar($indice = 1)
 	{
 		$indice--;
 
