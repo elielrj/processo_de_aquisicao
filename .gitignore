@@ -39,3 +39,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 #Pasta PDFMerger
 /vendo/PDFMerger*
+
+#Ignorar Configurações de databsase
+/application/config/database.php
