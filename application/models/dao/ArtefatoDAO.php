@@ -19,9 +19,9 @@ class ArtefatoDAO extends CI_Model
         $this->DAO->criar(self::$TABELA_DB, $objeto->array());
     }
 
-    public function buscarTodos($inicial, $final)
+    public function buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base)
     {
-        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $qtd_de_itens_para_exibir,$indice_no_data_base); //($qtd_de_itens_para_exibir,$indice_no_data_base)
 
         return $this->criarLista($array);
     }

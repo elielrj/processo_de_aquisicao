@@ -2,9 +2,11 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 require 'vendor/autoload.php';
+
 use Dompdf\Dompdf;
 
 require_once('vendor/PDFMerger/PDFMerger.php');
+
 use PDFMerger\PDFMerger;
 
 class ProcessoController extends CI_Controller
@@ -41,9 +43,14 @@ class ProcessoController extends CI_Controller
 
 		$processos = $this->ProcessoDAO->buscarTodos($indiceInicial, $mostrar);
 
-		$quantidade = $this->ProcessoDAO->contar();
+		$params = [
+			'controller' => 'ProcessoController',
+			'quantidae_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar()
+		];
 
-		$botoes = empty($processos) ? '' : $this->botao->paginar('processos', $indice, $quantidade, $mostrar);
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
