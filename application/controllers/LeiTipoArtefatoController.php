@@ -19,14 +19,30 @@ class LeiTipoArtefatoController extends CI_Controller
         usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
     }
 
-    public function listar()
+    public function listar($indice = 1)
     {
-        $leisTiposArtefatos = $this->LeiTipoArtefatoDAO->buscarTodos(null, null);
+		$indice--;
 
-        $dados = array(
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
+
+        $leisTiposArtefatos = $this->LeiTipoArtefatoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
+
+		$params = [
+			'controller' => 'LeiTipoArtefatoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->LeiTipoArtefatoDAO->contar()
+		];
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($leisTiposArtefatos) ? '' : $this->criadordebotoes->listar($indice);
+
+
+		$dados = array(
             'titulo' => 'Lista de Leis/Tipos/Artefatos',
-            'tabela' => $this->leitipoartefatolibrary->listar($leisTiposArtefatos),
-            'pagina' => 'leis_tipos_artefatos/index.php',
+            'tabela' => $this->leitipoartefatolibrary->listar($leisTiposArtefatos,$indice_no_data_base),
+            'pagina' => 'lei_tipo_artefato/index.php',
+			'botoes' => $botoes,
         );
         $this->load->view('index', $dados);
     }
