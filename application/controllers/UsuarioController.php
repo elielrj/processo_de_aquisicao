@@ -28,18 +28,24 @@ class UsuarioController extends CI_Controller
     {
         $indice--;
 
-        $mostrar = 10;
-        $indiceInicial = $indice * $mostrar;
+        $qtd_de_itens_para_exibir = 10;
+        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $usuarios = $this->UsuarioDAO->buscarTodos($indiceInicial, $mostrar);
+        $usuarios = $this->UsuarioDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
-        $quantidade = $this->UsuarioDAO->contar();
+		$params = [
+			'controller' => 'ArquivoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->UsuarioDAO->contar()
+		];
 
-        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $mostrar);
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+        $botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
 
         $dados = array(
             'titulo' => 'Lista de Usuários',
-            'tabela' => $this->usuariolibrary->listar($usuarios, $indiceInicial),
+            'tabela' => $this->usuariolibrary->listar($usuarios, $indice_no_data_base),
             'pagina' => 'usuario/index.php',
             'botoes' => $botoes,
         );
@@ -51,18 +57,18 @@ class UsuarioController extends CI_Controller
     {
         $indice--;
 
-        $mostrar = 10;
-        $indiceInicial = $indice * $mostrar;
+        $qtd_de_itens_para_exibir = 10;
+        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $usuarios = $this->UsuarioDAO->buscarTodos($indiceInicial, $mostrar);
+        $usuarios = $this->UsuarioDAO->buscarTodos($indice_no_data_base, $qtd_de_itens_para_exibir);
 
         $quantidade = $this->UsuarioDAO->quantidadeAtivos();
 
-        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $mostrar);
+        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $qtd_de_itens_para_exibir);
 
         $dados = array(
             'titulo' => 'Lista de Usuários',
-            'tabela' => $this->tabela->usuario($usuarios, $indiceInicial),
+            'tabela' => $this->tabela->usuario($usuarios, $indice_no_data_base),
             'pagina' => 'usuario/index.php',
             'botoes' => $botoes,
         );
@@ -74,18 +80,18 @@ class UsuarioController extends CI_Controller
     {
         $indice--;
 
-        $mostrar = 10;
-        $indiceInicial = $indice * $mostrar;
+        $qtd_de_itens_para_exibir = 10;
+        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $usuarios = $this->UsuarioDAO->buscarTodosDesativados($indiceInicial, $mostrar);
+        $usuarios = $this->UsuarioDAO->buscarTodosDesativados($indice_no_data_base, $qtd_de_itens_para_exibir);
 
         $quantidade = $this->UsuarioDAO->contarDesativados();
 
-        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $mostrar);
+        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $qtd_de_itens_para_exibir);
 
         $dados = array(
             'titulo' => 'Lista de Usuários',
-            'tabela' => $this->tabela->usuario($usuarios, $indiceInicial),
+            'tabela' => $this->tabela->usuario($usuarios, $indice_no_data_base),
             'pagina' => 'usuario/index.php',
             'botoes' => $botoes,
         );
