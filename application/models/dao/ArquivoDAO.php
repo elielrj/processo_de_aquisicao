@@ -71,14 +71,14 @@ class ArquivoDAO extends CI_Model
     public function toObject($arrayList)
     {
         return new Arquivo(
-            (isset($arrayList->id)) ? $arrayList->id : (isset($arrayList['id']) ? $arrayList['id'] : null),
-            (isset($arrayList->path)) ? $arrayList->path : (isset($arrayList['path']) ? $arrayList['path'] : null),
-            (isset($arrayList->data_hora)) ? $arrayList->data_hora : (isset($arrayList['data_hora']) ? $arrayList['data_hora'] : null),
-            (isset($arrayList->usuario_id)) ? $arrayList->usuario_id : (isset($arrayList['usuario_id']) ? $arrayList['usuario_id'] : null),
-            (isset($arrayList->artefato_id)) ? $arrayList->artefato_id : (isset($arrayList['artefato_id']) ? $arrayList['artefato_id'] : null),
-            (isset($arrayList->processo_id)) ? $arrayList->processo_id : (isset($arrayList['processo_id']) ? $arrayList['processo_id'] : null),
-            (isset($arrayList->nome)) ? $arrayList->nome : (isset($arrayList['nome']) ? $arrayList['nome'] : ''),
-            (isset($arrayList->status)) ? $arrayList->status : (isset($arrayList['status']) ? $arrayList['status'] : null)
+            $arrayList->id ?? ($arrayList['id'] ?? null),
+			$arrayList->path ?? ($arrayList['path'] ?? null),
+			$arrayList->data_hora ?? ($arrayList['data_hora'] ?? null),
+			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null),
+			$arrayList->artefato_id ?? ($arrayList['artefato_id'] ?? null),
+			$arrayList->processo_id ?? ($arrayList['processo_id'] ?? null),
+			$arrayList->nome ?? ($arrayList['nome'] ?? ''),
+			$arrayList->status ?? ($arrayList['status'] ?? null)
         );
     }
 
@@ -90,7 +90,7 @@ class ArquivoDAO extends CI_Model
 
             $arquivo = $this->toObject($linha);
 
-            array_push($listaDeArquivo, $arquivo);
+            $listaDeArquivo[] = $arquivo;
         }
 
         return $listaDeArquivo;
