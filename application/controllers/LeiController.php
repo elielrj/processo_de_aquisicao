@@ -23,18 +23,24 @@ class LeiController extends CI_Controller
     {
         $indice--;
 
-        $mostrar = 10;
-        $indiceInicial = $indice * $mostrar;
+        $qtd_de_itens_para_exibir = 10;
+        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $leis = $this->LeiDAO->buscarTodos($indiceInicial, $mostrar);
+        $leis = $this->LeiDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
-        $quantidade = $this->LeiDAO->contar();
+		$params = [
+			'controller' => 'LeiController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->LeiDAO->contar()
+		];
 
-        $botoes = empty($leis) ? '' : $this->botao->paginar('leiController/listar', $indice, $quantidade, $mostrar);
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+        $botoes = empty($leis) ? '' : $this->criadordebotoes->listar($indice);
 
         $dados = array(
             'titulo' => 'Lista de leis',
-            'tabela' => $this->leilibrary->listar($leis, $indiceInicial),
+            'tabela' => $this->leilibrary->listar($leis, $indice_no_data_base),
             'pagina' => 'lei/index.php',
             'botoes' => $botoes,
         );
