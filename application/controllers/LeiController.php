@@ -81,7 +81,7 @@ class LeiController extends CI_Controller
     public function alterar($id)
     {
 
-        $lei = $this->LeiDAO->buscarId($id);
+        $lei = $this->LeiDAO->buscarPorId($id);
 
         $dados = [
             'titulo' => 'Alterar lei',

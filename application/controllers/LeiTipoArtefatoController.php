@@ -73,5 +73,24 @@ class LeiTipoArtefatoController extends CI_Controller
 		]);
 	}
 
+	public function alterar($id)
+	{
 
+		$leiTipoArtefato = $this->LeiTipoArtefatoDAO->buscarPorId($id);
+
+		$this->load->model('dao/LeiDAO');
+		$this->load->model('dao/TipoDAO');
+		$this->load->model('dao/ArtefatoDAO');
+
+		$dados = [
+			'titulo' => 'Alterar lei',
+			'pagina' => 'lei_tipo_artefato/alterar.php',
+			'leiTipoArtefato' => $leiTipoArtefato,
+			'options_lei' => $this->LeiDAO->options(),
+			'options_tipo' => $this->TipoDAO->options(),
+			'options_artefato' => $this->ArtefatoDAO->options(),
+		];
+
+		$this->load->view('index', $dados);
+	}
 }

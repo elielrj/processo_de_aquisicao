@@ -8,7 +8,7 @@ include_once('application/models/bo/LeiTipoArtefato.php');
 class LeiTipoArtefatoDAO extends CI_Model
 {
 
-	public static $TABEL_DB_LE_TIPO_ARTEFATO = 'lei_tipo_artefato';
+	public static $TABELA_DB = 'lei_tipo_artefato';
 
 	public function __construct()
 	{
@@ -20,7 +20,7 @@ class LeiTipoArtefatoDAO extends CI_Model
 
 	public function buscarListaDeArtefatos($lei_id, $tipo_id)
 	{
-		$array = $this->DAO->buscarOnde(self::$TABEL_DB_LE_TIPO_ARTEFATO, array('lei_id' => $lei_id, 'tipo_id' => $tipo_id));
+		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array('lei_id' => $lei_id, 'tipo_id' => $tipo_id));
 
 		return $this->criarListaDeArtefatos($array);
 	}
@@ -66,13 +66,20 @@ class LeiTipoArtefatoDAO extends CI_Model
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosOrderBy(self::$TABEL_DB_LE_TIPO_ARTEFATO, 'lei_id', $inicial, $final);
+		$array = $this->DAO->buscarTodosOrderBy(self::$TABELA_DB, 'lei_id', $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
+	public function buscarPorId($leiTipoArtefatoId)
+	{
+		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $leiTipoArtefatoId);
+
+		return $this->toObject($array->result()[0]);
+	}
+
 	public function contar()
 	{
-		return $this->DAO->contar(self::$TABEL_DB_LE_TIPO_ARTEFATO);
+		return $this->DAO->contar(self::$TABELA_DB);
 	}
 }
