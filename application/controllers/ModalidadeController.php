@@ -21,18 +21,24 @@ class ModalidadeController extends CI_Controller
     {
         $indice--;
 
-        $mostrar = 10;
-        $indiceInicial = $indice * $mostrar;
+        $qtd_de_itens_para_exibir = 10;
+        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $modalidades = $this->ModalidadeDAO->buscarTodos($indiceInicial, $mostrar);
+        $modalidades = $this->ModalidadeDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
-        $quantidade = $this->ModalidadeDAO->contar();
+		$params = [
+			'controller' => 'ArquivoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->ModalidadeDAO->contar()
+		];
 
-        $botoes = empty($modalidades) ? '' : $this->botao->paginar('ModalidadeController/listar', $indice, $quantidade, $mostrar);
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+        $botoes = empty($modalidades) ? '' : $this->criadordebotoes->listar($indice);
 
         $dados = array(
             'titulo' => 'Lista de modalidades',
-            'tabela' => $this->artefatolibrary->listar($modalidades, $indiceInicial),
+            'tabela' => $this->artefatolibrary->listar($modalidades, $indice_no_data_base),
             'pagina' => 'artefato/index.php',
             'botoes' => $botoes,
         );
