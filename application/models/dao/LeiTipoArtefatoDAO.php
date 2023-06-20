@@ -70,4 +70,9 @@ class LeiTipoArtefatoDAO extends CI_Model
 
 		return $this->criarLista($array);
 	}
+
+	public function contar()
+	{
+		return $this->DAO->contar(self::$TABEL_DB_LE_TIPO_ARTEFATO);
+	}
 }
