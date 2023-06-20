@@ -42,3 +42,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 #Ignorar Configurações de databsase
 /application/config/database.php
+
+# Excel / Workbench
+db/*.xlsx
+db/*.mwb*
