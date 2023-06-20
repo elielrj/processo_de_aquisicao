@@ -24,18 +24,24 @@ class TipoController extends CI_Controller
 	{
 		$indice--;
 
-		$mostrar = 10;
-		$indiceInicial = $indice * $mostrar;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$tipo = $this->tipoDAO->buscarTodos($indiceInicial, $mostrar);
+		$tipo = $this->tipoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
-		$quantidade = $this->tipoDAO->contar();
+		$params = [
+			'controller' => 'ArquivoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->tipoDAO->contar()
+		];
 
-		$botoes = empty($tipo) ? '' : $this->botao->paginar('TipoController/listar', $indice, $quantidade, $mostrar);
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($tipo) ? '' : $this->criadordebotoes->listar($indice);
 
 		$dados = array(
 			'titulo' => 'Lista de Tipos De Licitacões',
-			'tabela' => $this->tipolibrary->listar($tipo, $indiceInicial),
+			'tabela' => $this->tipolibrary->listar($tipo, $indice_no_data_base),
 			'pagina' => 'tipo/index.php',
 			'botoes' => $botoes,
 		);
