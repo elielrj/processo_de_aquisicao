@@ -22,20 +22,25 @@ class DepartamentoController extends CI_Controller
 	{
 		$indice--;
 
-		$mostrar = 10;
-		$indiceInicial = $indice * $mostrar;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$departamentos = $this->DepartamentoDAO->buscarTodos($indiceInicial, $mostrar);
+		$departamentos = $this->DepartamentoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
-		$quantidade = $this->DepartamentoDAO->contar();
+		$params = [
+			'controller' => 'DepartamentoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->DepartamentoDAO->contar()
+		];
 
-		$botoes = empty($departamentos) ? '' : $this->botao->paginar('DepartamentoController/listar', $indice, $quantidade, $mostrar);
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($departamentos) ? '' : $this->criadordebotoes->listar($indice);
 
 		$this->load->library('DepartamentoLibrary');
 
 		$dados = array(
 			'titulo' => 'Lista de Departamentos',
-			'tabela' => $this->departamentolibrary->listar($departamentos, $indiceInicial),
+			'tabela' => $this->departamentolibrary->listar($departamentos, $indice_no_data_base),
 			'pagina' => 'departamento/index.php',
 			'botoes' => $botoes,
 		);
