@@ -24,18 +24,24 @@ class AndamentoController extends CI_Controller
 	{
 		$indice--;
 
-		$mostrar = 10;
-		$indiceInicial = $indice * $mostrar;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$leis = $this->AndamentoDAO->buscarTodosAtivosInativos($indiceInicial, $mostrar);
+		$leis = $this->AndamentoDAO->buscarTodosAtivosInativos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
-		$quantidade = $this->AndamentoDAO->contarAtivosInativos();
+		$params = [
+			'controller' => 'AndamentoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->AndamentoDAO->contarAtivosInativos()
+		];
 
-		$botoes = empty($leis) ? '' : $this->botao->paginar(self::$andamentoController . '/listar', $indice, $quantidade, $mostrar);
+		$this->load->library('CriadorDeBotoes', $params);
+
+
+		$botoes = empty($leis) ? '' : $this->criadordebotoes->listar($indice);
 
 		$dados = array(
 			'titulo' => 'Lista de andamentos',
-			'tabela' => $this->andamentolibrary->listar($leis, $indiceInicial),
+			'tabela' => $this->andamentolibrary->listar($leis, $indice_no_data_base),
 			'pagina' => 'andamento/index.php',
 			'botoes' => $botoes,
 		);
