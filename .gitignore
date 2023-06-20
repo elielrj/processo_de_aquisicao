@@ -40,9 +40,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #Pasta PDFMerger
 /vendo/PDFMerger*
 
-#Ignorar Configurações de databsase
+#Ignorar Configurações de database
 /application/config/database.php
+#Ignorar Configurações do base_url()
+/application/config/config.php
 
-# Excel / Workbench
-db/*.xlsx
-db/*.mwb*
