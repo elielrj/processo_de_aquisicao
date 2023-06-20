@@ -15,7 +15,7 @@ class CriadorDeBotoes
 	public function __construct($array)
 	{
 		$this->controller = $array['controller'];
-		$this->quantidae_de_registros_no_banco_de_dados = $array['quantidae_de_registros_no_banco_de_dados'];
+		$this->quantidae_de_registros_no_banco_de_dados = $array['quantidade_de_registros_no_banco_de_dados'];
 	}
 
 	public function listar($botao_atual, $quantidae_de_itens_por_botao_para_mostrar = 10)
