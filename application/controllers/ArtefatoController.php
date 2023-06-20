@@ -28,7 +28,7 @@ class ArtefatoController extends CI_Controller
 
 		$params = [
 			'controller' => 'ArtefatoController',
-			'quantidae_de_registros_no_banco_de_dados' => $this->ArtefatoDAO->contar()
+			'quantidade_de_registros_no_banco_de_dados' => $this->ArtefatoDAO->contar()
 		];
 
 		$this->load->library('CriadorDeBotoes', $params);

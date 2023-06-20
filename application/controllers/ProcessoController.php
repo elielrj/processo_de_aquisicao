@@ -38,14 +38,14 @@ class ProcessoController extends CI_Controller
 	{
 		$indice--;
 
-		$mostrar = 10;
-		$indiceInicial = $indice * $mostrar;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$processos = $this->ProcessoDAO->buscarTodos($indiceInicial, $mostrar);
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
 		$params = [
 			'controller' => 'ProcessoController',
-			'quantidae_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar()
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar()
 		];
 
 		$this->load->library('CriadorDeBotoes', $params);
@@ -54,7 +54,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
-			'tabela' => $this->processolibrary->listar($processos, $indiceInicial),
+			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
