@@ -1,6 +1,6 @@
 use processo_de_aquisicao;
 
-drop table lei_tipo_artefato;
+#drop table lei_tipo_artefato;
 
 #12
 create table if not exists lei_tipo_artefato(
