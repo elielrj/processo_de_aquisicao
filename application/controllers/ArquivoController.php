@@ -31,18 +31,23 @@ class ArquivoController extends CI_Controller
 	{
 		$indice--;
 
-		$mostrar = 10;
-		$indiceInicial = $indice * $mostrar;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$arquivos = $this->ArquivoDAO->buscarTodos($indiceInicial, $mostrar);
+		$arquivos = $this->ArquivoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
-		$quantidade = $this->ArquivoDAO->contar();
+		$params = [
+			'controller' => 'ArquivoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->ArquivoDAO->contar()
+		];
 
-		$botoes = empty($arquivos) ? '' : $this->botao->paginar('arquivo/listar', $indice, $quantidade, $mostrar);
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($arquivos) ? '' : $this->criadordebotoes->listar($indice);
 
 		$dados = array(
 			'titulo' => 'Lista de arquivos',
-			'tabela' => $this->arquivolibrary->listar($arquivos, $indiceInicial),
+			'tabela' => $this->arquivolibrary->listar($arquivos, $indice_no_data_base),
 			'pagina' => 'arquivo/index.php',
 			'botoes' => $botoes,
 		);
