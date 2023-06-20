@@ -55,6 +55,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['arquivo-listar'] = 'ArquivoController/listar';
+$route['arquivo-atualizar'] = 'ArquivoController/atualizar';
+$route['arquivo-deletar'] = 'ArquivoController/deletar';
 
 //PROCESSO
 $route['processo-listar'] = 'ProcessoController/listar';
