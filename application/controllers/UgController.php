@@ -21,18 +21,24 @@ class UgController extends CI_Controller
     {
         $indice--;
 
-        $mostrar = 10;
-        $indiceInicial = $indice * $mostrar;
+        $qtd_de_itens_para_exibir = 10;
+        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $listaDeUg = $this->UgDAO->buscarTodos($indiceInicial, $mostrar);
+        $listaDeUg = $this->UgDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
-        $quantidade = $this->UgDAO->contar();
+		$params = [
+			'controller' => 'ArquivoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->UgDAO->contar()
+		];
 
-        $botoes = empty($listaDeUg) ? '' : $this->botao->paginar('UgController/listar', $indice, $quantidade, $mostrar);
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+        $botoes = empty($listaDeUg) ? '' : $this->criadordebotoes->listar($indice);
 
         $dados = array(
             'titulo' => 'Lista de UG',
-            'tabela' => $this->uglibrary->listar($listaDeUg, $indiceInicial),
+            'tabela' => $this->uglibrary->listar($listaDeUg, $indice_no_data_base),
             'pagina' => 'ug/index.php',
             'botoes' => $botoes,
         );
