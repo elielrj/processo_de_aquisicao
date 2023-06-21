@@ -26,7 +26,7 @@ echo
     form_input(['name' => 'completo', 'class' => 'form-control', 'type' => 'hidden', 'value' => false]);
 
 view_form_submit_enviar();
-view_form_submit_cancelar('processos');
+view_form_submit_cancelar('processo-listar');
 
 echo form_close();
 ?>
