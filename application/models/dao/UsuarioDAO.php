@@ -79,8 +79,8 @@ class UsuarioDAO extends CI_Model
 	{
 		return new Usuario(
 			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->nome ?? ($arrayList['nome'] ?? null),
-			$arrayList->sobrenome ?? ($arrayList['sobrenome'] ?? null),
+			$arrayList->nome_de_guerra ?? ($arrayList['nome_de_guerra'] ?? null),
+			$arrayList->nome_completo ?? ($arrayList['nome_completo'] ?? null),
 			$arrayList->email ?? ($arrayList['email'] ?? null),
 			$arrayList->cpf ?? ($arrayList['cpf'] ?? null),
 			$arrayList->senha ?? ($arrayList['senha'] ?? null),

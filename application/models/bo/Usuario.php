@@ -8,8 +8,8 @@ class Usuario implements InterfaceBO
 {
 
     private $id;
-    private $nome;
-    private $sobrenome;
+    private $nomeDeGuerra;
+    private $nomeCompleto;
     private $email;
     private $cpf;
     private $senha;
@@ -20,8 +20,8 @@ class Usuario implements InterfaceBO
 
     public function __construct(
         $id,
-        $nome,
-        $sobrenome,
+        $nomeDeGuerra,
+        $nomeCompleto,
         $email,
         $cpf,
         $senha,
@@ -31,8 +31,8 @@ class Usuario implements InterfaceBO
         $funcao
     ) {
         $this->id = $id;
-        $this->nome = $nome;
-        $this->sobrenome = $sobrenome;
+        $this->nomeDeGuerra = $nomeDeGuerra;
+        $this->nomeCompleto = $nomeCompleto;
         $this->email = $email;
         $this->cpf = $cpf;
         $this->senha = $senha;
@@ -56,8 +56,8 @@ class Usuario implements InterfaceBO
 	{
         return array(
             'id' => $this->id ?? null,
-            'nome' => $this->nome,
-            'sobrenome' => $this->sobrenome,
+            'nome_de_guerra' => $this->nomeDeGuerra,
+            'nome_completo' => $this->nomeCompleto,
             'email' => $this->email,
             'cpf' => $this->cpf,
             'senha' => $this->senha,

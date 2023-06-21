@@ -120,8 +120,8 @@ class UsuarioController extends CI_Controller
 
         $usuario = new Usuario(
             null,
-            $data_post['nome'],
-            $data_post['sobrenome'],
+            $data_post['nome_de_guerra'],
+            $data_post['nome_completo'],
             $data_post['email'],
             $data_post['cpf'],
             md5($data_post['senha']),
@@ -140,6 +140,8 @@ class UsuarioController extends CI_Controller
     {
 
         $usuario = $this->UsuarioDAO->buscarPorId($id);
+
+		$this->removerSenha($usuario);
 
         $dados = array(
             'titulo' => 'Alterar Usuário',
@@ -177,13 +179,17 @@ class UsuarioController extends CI_Controller
 
         $data_post = $this->input->post();
 
+		$senha = $data_post['senha'] === ''
+			? $_SESSION['senha']
+			: md5($data_post['senha']);
+
         $usuario = new Usuario(
             $data_post['id'],
-            $data_post['nome'],
-            $data_post['sobrenome'],
+			$data_post['nome_de_guerra'],
+			$data_post['nome_completo'],
             $data_post['email'],
             $data_post['cpf'],
-            md5($data_post['senha']),
+            $senha,
             $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
             $data_post['status'],
             $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
@@ -205,8 +211,8 @@ class UsuarioController extends CI_Controller
 
         $usuario = new Usuario(
             $data_post['id'],
-            $data_post['nome'],
-            $data_post['sobrenome'],
+			$data_post['nome_de_guerra'],
+			$data_post['nome_completo'],
             $data_post['email'],
             $data_post['cpf'],
             $senha,

@@ -6,8 +6,8 @@ view_titulo($titulo);
 
 view_form_open('usuario-criar');
 
-view_input('Nome','nome','nome','text','',150);
-view_input('Sobrenome','sobrenome','sobrenome','text','',250);
+view_input('Nome de Guerra','nome_de_guerra','nome_de_guerra','text','',150);
+view_input('Nome Completo','nome_completo','nome_completo','text','',250);
 view_input('Email','email','email','text','',150);
 view_input('CPF','cpf','cpf','text','',11);
 view_input('Senha','senha','senha','password','',6);
