@@ -21,6 +21,8 @@ class UsuarioLibrary {
     private function linhaDeCabecalhoDoUsuario() {
         return from_array_to_table_row_with_td([
             'Ordem',
+			'Nome de Guerra',
+			'Nome Completo',
             'Email',
             'CPF',
             'Senha',
@@ -34,6 +36,8 @@ class UsuarioLibrary {
     private function linhaDoUsuario($usuario) {
         return from_array_to_table_row([
             td_ordem($this->ordem) ,
+            td_value($usuario->nomeDeGuerra) ,
+            td_value($usuario->nomeCompleto) ,
             td_value($usuario->email) ,
             td_value($usuario->cpf) ,
             td_value($usuario->senha) ,
