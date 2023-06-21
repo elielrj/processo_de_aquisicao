@@ -164,7 +164,7 @@ class UsuarioController extends CI_Controller
         $options = $this->HierarquiaDAO->options();
 
         $dados = array(
-            'titulo' => 'Atualizar dados do usuário: ' . $_SESSION['nome'],
+            'titulo' => 'Atualizar dados do usuário: ' . $_SESSION['nome_de_guerra'],
             'pagina' => 'usuario/alterar_usuario.php',
             'usuario' => $usuario,
             'departamentos' => $this->DepartamentoDAO->options(),

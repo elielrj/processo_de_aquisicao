@@ -2,9 +2,9 @@
 
 <?php
 
-$posto_ou_raduacao_e_nome =
-	(isset($_SESSION['nome']) && isset($_SESSION['hierarquia_sigla']))
-		? ($_SESSION['hierarquia_sigla'] . " " . $_SESSION['nome'])
+$posto_ou_raduacao_e_nome_de_guerra =
+	(isset($_SESSION['nome_de_guerra']) && isset($_SESSION['hierarquia_sigla']))
+		? ($_SESSION['hierarquia_sigla'] . " " . $_SESSION['nome_de_guerra'])
 		: '';
 
 $nivel_de_acesso = 	$_SESSION['funcao_nivel_de_acesso'] ?? '';
@@ -25,11 +25,11 @@ $acesso_ao_banco =
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url('index.php/usuario-alterar-usuario') ?>">
 
 		<div class="sidebar-brand-text mx-3">
 			<small>
-				<?php echo $posto_ou_raduacao_e_nome ?><sup><em>
+				<?php echo $posto_ou_raduacao_e_nome_de_guerra ?><sup><em>
 						<?php echo strtolower($nivel_de_acesso); ?>
 					</em>
 			</small></sup>
@@ -46,7 +46,7 @@ $acesso_ao_banco =
 			<p class="text-center p-0 m-1">Versão 1.0.0.0</p>
 		</div>
 
-		<a class="nav-link" href="index.html">
+		<a class="nav-link" href="<?php echo base_url('index.php/processo-listar') ?>">
             <span>
                 <img src="<?php echo base_url(); ?>icones_da_pagina/favicon-32x32.png" alt="Bootstrap" width="32"
 					 height="32">

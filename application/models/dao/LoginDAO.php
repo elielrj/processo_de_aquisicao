@@ -41,8 +41,8 @@ class LoginDAO extends CI_Model
 			$this->session->set_userdata(
 				array(
 					'id' => $linha->id,
-					'nome' => $linha->nome,
-					'sobrenome' => $linha->sobrenome,
+					'nome_de_guerra' => $linha->nome_de_guerra,
+					'nome_completo' => $linha->nome_completo,
 					'email' => $linha->email,
 					'cpf' => $linha->cpf,
 					'senha' => $linha->senha,
