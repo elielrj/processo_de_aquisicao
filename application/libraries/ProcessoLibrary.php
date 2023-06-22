@@ -29,11 +29,14 @@ class ProcessoLibrary
         return from_array_to_table_row_with_td([
             'Ordem',
             'Objeto',
-            'Tipo de Processo',
+            'Tipo',
             'Lei',
             'Número',
-            'Data do Processo',
-            'Seção'
+            'Data',
+            'Seção',
+			'Andamento',
+			'Modificado às',
+			'Status'
         ]);
     }
 
@@ -46,8 +49,11 @@ class ProcessoLibrary
             td_value($processo->tipo->nome),
             td_value($processo->lei->modalidade->nome),
             td_value($processo->numero),
-            td_data_hora_br($processo->dataHora),
-            td_value($processo->departamento->sigla)
+            td_data_br($processo->dataHora),
+            td_value($processo->departamento->sigla),
+			td_value($processo->andamento->nome()),
+			td_data_hora_br($processo->andamento->dataHora),
+			td_status_completo($processo->completo)
         ]);
     }
 

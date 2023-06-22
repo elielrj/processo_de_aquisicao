@@ -51,6 +51,14 @@ class ProcessoExibirLibrary
                             <td>" . $processo->lei->toString() . "</td> 
                         </tr>
                         <tr class='text-left'> 
+                            <td>Andamento: </td>
+                            <td>" . ucfirst($processo->andamento->nome()) . "</td> 
+                        </tr>
+                        <tr class='text-left'>" .
+                            td_value('Status do Processo:') .
+							td_status_completo($processo->completo) .
+                        "</tr>
+                        <tr class='text-left'> 
                             <td>Processo: </td>
                             <td>" . "<a href=" . base_url('index.php/ProcessoController/visualizarProcesso/' .
                 $processo->id) . " class='btn btn-primary btn-lg btn-block' >Visualização completa</a>" . "</td> 
