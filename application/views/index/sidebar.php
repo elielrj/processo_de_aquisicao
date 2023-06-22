@@ -14,11 +14,11 @@ include_once('application/models/bo/Root.php');
 
 
 $acesso_ao_banco =
-	isset($_SESSION['funcao_nivel_de_acesso'])
-		? (
-	($_SESSION['funcao_nivel_de_acesso'] == Administrar::NOME ||
-		$_SESSION['funcao_nivel_de_acesso'] == Root::NOME) ? true : false)
-		: false;
+	isset($_SESSION['funcao_nivel_de_acesso']) &&
+		(
+			$_SESSION['funcao_nivel_de_acesso'] == Administrar::NOME ||
+			$_SESSION['funcao_nivel_de_acesso'] == Root::NOME
+		);
 ?>
 
 
