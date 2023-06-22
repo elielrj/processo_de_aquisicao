@@ -29,7 +29,7 @@ function td_status_completo($status)
         "<td><p style='color:" . ($status ? 'green' : 'red') . "'>" .
         ($status
             ? 'Finalizado'
-            : 'Pendente...') .
+            : 'Pendente') .
         "</p></td>";
 }
 
