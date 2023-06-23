@@ -99,12 +99,13 @@ class ProcessoDAO extends CI_Model
 			isset($arrayList->lei_id) ? $this->LeiDAO->buscarPorId($arrayList->lei_id) : (isset($arrayList['lei_id']) ? $this->LeiDAO->buscarPorId($arrayList['lei_id']) : null),
 			isset($arrayList->tipo_id) ? $this->TipoDAO->buscarPorId($arrayList->tipo_id) : (isset($arrayList['tipo_id']) ? $this->TipoDAO->buscarPorId($arrayList['tipo_id']) : null),
 			$arrayList->completo ?? ($arrayList['completo'] ?? null),
+			$arrayList->status ?? ($arrayList['status'] ?? null),
 			isset($arrayList->id)
 				? $this->AndamentoDAO->buscarOnde('processo_id', $arrayList->id)
 				: (isset($arrayList['id'])
 				? $this->AndamentoDAO->buscarOnde('processo_id', $arrayList['id'])
-				: null),
-			$arrayList->status ?? ($arrayList['status'] ?? null)
+				: null)
+
 		);
 
 		/**

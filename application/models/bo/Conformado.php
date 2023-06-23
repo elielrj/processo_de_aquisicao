@@ -3,7 +3,7 @@
 include_once('StatusDoAndamento.php');
 
 
-class Conformado implements StatusDoAndamento
+class Conformado implements Status
 {
 	const NOME = 'conformado';
 	const NIVEL = 4;

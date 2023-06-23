@@ -3,9 +3,12 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
+include_once('Criado.php');
 include_once('Enviado.php');
+include_once('Aprovado.php');
 include_once('Executado.php');
 include_once('Conformado.php');
+include_once('Arquivado.php');
 
 
 class Processo implements InterfaceBO{
@@ -19,22 +22,22 @@ class Processo implements InterfaceBO{
     private $lei;
     private $tipo;
     private $completo;
-    private $andamento;
+    private $listaDeAndamento;
     private $status;
 
     
     public function __construct(
-            $id,
-            $objeto,
-            $numero,
-            $dataHora,
-            $chave,
-            $departamento,
-            $lei,
-            $tipo,
-            $completo = false,
-            $andamento = null,
-            $status = true
+		$id,
+		$objeto,
+		$numero,
+		$dataHora,
+		$chave,
+		$departamento,
+		$lei,
+		$tipo,
+		$completo = false,
+		$status = true,
+		$listaDeAndamento = []
     ) {
         $this->id = $id;
         $this->objeto = $objeto;
@@ -45,9 +48,9 @@ class Processo implements InterfaceBO{
         $this->lei = $lei;
         $this->tipo = $tipo;
         $this->completo = $completo;
-        $this->andamento = $andamento;
-        $this->status = $status;
-    }
+		$this->status = $status;
+		$this->listaDeAndamento = $listaDeAndamento;
+	}
 
     function __get($key) {
         return $this->$key;

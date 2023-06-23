@@ -4,7 +4,7 @@
 include_once('StatusDoAndamento.php');
 
 
-class Executado implements StatusDoAndamento
+class Executado implements Status
 {
 	const NOME = 'executado';
 	const NIVEL = 3;

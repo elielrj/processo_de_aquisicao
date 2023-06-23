@@ -3,7 +3,7 @@
 include_once('StatusDoAndamento.php');
 
 
-class Arquivado implements StatusDoAndamento
+class Arquivado implements Status
 {
 	const NOME = 'arquivado';
 	const NIVEL = 5;

@@ -7,12 +7,12 @@ include_once('application/models/bo/Andamento.php');
 class AndamentoDAO extends CI_Model
 {
 
-	public static  $TABELA_DB = 'andamento';
+	public static $TABELA_DB = 'andamento';
 
-	public static  $id = 'id';
-	public static  $statusDoAndamento = 'status_do_andamento';
-	public static  $dataHora = 'data_hora';
-	public static  $processo_id = 'processo_id';
+	public static $id = 'id';
+	public static $statusDoAndamento = 'status_do_andamento';
+	public static $dataHora = 'data_hora';
+	public static $processo_id = 'processo_id';
 
 	public function __construct()
 	{
@@ -33,7 +33,14 @@ class AndamentoDAO extends CI_Model
 	{
 		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
 
-		return $this->toObject($array->result());
+		$listaDeAndamento = [];
+
+		foreach ($array->result() as $andamento) {
+
+			$listaDeAndamento[] = $this->toObject($andamento);
+		}
+
+		return $listaDeAndamento;
 	}
 
 	public function buscarTodosAtivosInativos($inicial, $final)
@@ -47,9 +54,9 @@ class AndamentoDAO extends CI_Model
 	{
 		return new Andamento(
 			$arrayList->id ?? ($arrayList['id'] ?? null),
-			isset($arrayList->status_do_andamento)
-				? (Andamento::selecionarStatus($arrayList->status_do_andamento))
-				: (isset($arrayList['status_do_andamento']) ? Andamento::selecionarStatus($arrayList['status_do_andamento']) : null),
+			isset($arrayList->status)
+				? (Andamento::selecionarStatus($arrayList->status))
+				: (isset($arrayList['status']) ? Andamento::selecionarStatus($arrayList['status']) : null),
 			isset($arrayList->data_hora)
 				? (DataLibrary::dataHoraBr($arrayList->data_hora))
 				: (isset($arrayList['data_hora']) ? DataLibrary::dataHoraBr($arrayList['data_hora']) : null),
@@ -73,9 +80,12 @@ class AndamentoDAO extends CI_Model
 
 	public function options()
 	{
-		$options = [Enviado::$NOME => Enviado::$NOME];
+		$options = [Criado::$NOME => Criado::$NOME];
+		$options += [Enviado::$NOME => Enviado::$NOME];
+		$options += [Aprovado::$NOME => Aprovado::$NOME];
 		$options += [Executado::$NOME => Executado::$NOME];
 		$options += [Conformado::$NOME => Conformado::$NOME];
+		$options += [Arquivado::$NOME => Arquivado::$NOME];
 	}
 
 	public function contarAtivosInativos()

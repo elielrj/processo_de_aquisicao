@@ -2,7 +2,7 @@
 
 include_once('StatusDoAndamento.php');
 
-class Enviado implements StatusDoAndamento
+class Enviado implements Status
 {
 	const NOME = 'enviado';
 	const NIVEL = 1;
