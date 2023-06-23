@@ -58,16 +58,17 @@ class Funcao implements InterfaceBO, NivelDeAcesso
 
 	public static function selecionarNivelDeAcesso($nome)
 	{
-		if ($nome == Ler::NOME) {
-			return new Ler();
-		} else if ($nome == Escrever::NOME) {
-			return new Escrever();
-		} else if ($nome == Administrar::NOME) {
-			return new Administrar();
-		} else if ($nome == Aprovar::NOME) {
-			return new Aprovar();
-		} else if ($nome == Root::NOME) {
-			return new Root();
+		switch ($nome) {
+			case Leitor::NOME:
+				return new Leitor();
+			case Escritor::NOME:
+				return new Escritor();
+			case Aprovador::NOME:
+				return new Aprovador();
+			case Administrador::NOME:
+				return new Administrador();
+			case Root::NOME:
+				return new Root();
 		}
 	}
 }

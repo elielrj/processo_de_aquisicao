@@ -1,7 +1,7 @@
 <?php
 
 
-include_once('StatusDoAndamento.php');
+include_once('Status.php');
 
 
 class Criado implements Status

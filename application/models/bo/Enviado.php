@@ -1,6 +1,6 @@
 <?php
 
-include_once('StatusDoAndamento.php');
+include_once('Status.php');
 
 class Enviado implements Status
 {
