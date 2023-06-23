@@ -60,10 +60,10 @@ class DAO extends CI_Model
 			->get_where($banco, $array);
 	}
 
-	public function buscarOndeOrderByData($banco, $array)
+	public function buscarOndeOrderById($banco, $array)
 	{
 		return $this->db
-			->order_by('data_hora', 'DESC')
+			->order_by('id', 'DESC')
 			->get_where($banco, $array);
 	}
 

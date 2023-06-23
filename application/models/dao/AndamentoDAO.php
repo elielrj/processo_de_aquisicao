@@ -9,11 +9,6 @@ class AndamentoDAO extends CI_Model
 
 	public static $TABELA_DB = 'andamento';
 
-	public static $id = 'id';
-	public static $statusDoAndamento = 'status_do_andamento';
-	public static $dataHora = 'data_hora';
-	public static $processo_id = 'processo_id';
-
 	public function __construct()
 	{
 		$this->load->model('dao/DAO');
@@ -37,7 +32,7 @@ class AndamentoDAO extends CI_Model
 	 */
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOndeOrderByData(self::$TABELA_DB, array($key => $value));
+		$array = $this->DAO->buscarOndeOrderById(self::$TABELA_DB, array($key => $value));
 
 		$listaDeAndamento = [];
 
@@ -97,6 +92,68 @@ class AndamentoDAO extends CI_Model
 	public function contarAtivosInativos()
 	{
 		return $this->DAO->contarAtivosInativos(self::$TABELA_DB);
+	}
+
+	public function processoEnviado($processo_id)
+	{
+		$andamento = new Andamento(
+			null,
+			new Enviado(),
+			DataLibrary::dataHoraMySQL(),
+			$processo_id
+		);
+
+		$this->AndamentoDAO->criar($andamento);
+		return;
+	}
+
+	public function processoAprovado($processo_id)
+	{
+		$andamento = new Andamento(
+			null,
+			new Aprovado(),
+			DataLibrary::dataHoraMySQL(),
+			$processo_id
+		);
+
+		$this->AndamentoDAO->criar($andamento);
+	}
+
+	public function processoExecutado($processo_id)
+	{
+		$andamento = new Andamento(
+			null,
+			new Executado(),
+			DataLibrary::dataHoraMySQL(),
+			$processo_id
+		);
+
+		$this->AndamentoDAO->criar($andamento);
+	}
+	public function processoConformado($processo_id)
+	{
+		$andamento = new Andamento(
+			null,
+			new Conformado(),
+			DataLibrary::dataHoraMySQL(),
+			$processo_id
+		);
+
+		$this->AndamentoDAO->criar($andamento);
+
+	}
+
+	public function processoArquivar($processo_id)
+	{
+		$andamento = new Andamento(
+			null,
+			new Arquivado(),
+			DataLibrary::dataHoraMySQL(),
+			$processo_id
+		);
+
+		$this->AndamentoDAO->criar($andamento);
+
 	}
 
 }

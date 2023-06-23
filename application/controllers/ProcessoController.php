@@ -76,6 +76,46 @@ class ProcessoController extends CI_Controller
 		]);
 	}
 
+	public function enviarProcesso($processo_id)
+	{
+		$this->AndamentoDAO->processoEnviado($processo_id);
+
+		redirect('ProcessoController/exibir/'.$processo_id);
+	}
+
+	public function aprovarProcesso($processo_id)
+	{
+		$this->AndamentoDAO->processoAprovado($processo_id);
+
+		 redirect('ProcessoController/exibir/'.$processo_id);
+	}
+
+	public function executarProcesso($processo_id)
+	{
+		$this->AndamentoDAO->processoExecutado($processo_id);
+
+		redirect('ProcessoController/exibir/'.$processo_id);
+	}
+
+	public function conformarProcesso($processo_id)
+	{
+		$this->AndamentoDAO->processoConformado($processo_id);
+
+		redirect('ProcessoController/exibir/'.$processo_id);
+	}
+	public function arquivarProcesso($processo_id)
+	{
+		$this->AndamentoDAO->processoArquivar($processo_id);
+
+		$processo = $this->ProcessoDAO->buscarPorId($processo_id);
+
+		$processo->completo = true;
+
+		$this->ProcessoDAO->atualizar($processo);
+
+		redirect('ProcessoController/exibir/'.$processo_id);
+	}
+
 	public function visualizarProcesso($id)
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
@@ -143,7 +183,7 @@ class ProcessoController extends CI_Controller
 			$this->LeiDAO->buscarPorId($data_post['lei_id']),
 			$this->TipoDAO->buscarPorId($data_post['tipo_id']),
 			$data_post['completo'],
-			null,
+			true,
 			true
 		);
 

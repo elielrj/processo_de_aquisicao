@@ -27,7 +27,7 @@ class AndamentoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$leis = $this->AndamentoDAO->buscarTodosAtivosInativos($qtd_de_itens_para_exibir,$indice_no_data_base);
+		$leis = $this->AndamentoDAO->buscarTodosAtivosInativos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
 			'controller' => 'AndamentoController',
@@ -52,9 +52,9 @@ class AndamentoController extends CI_Controller
 	{
 		$andamento = new Andamento(
 			null,
-			$this->input->post(AndamentoDAO::$statusDoAndamento),
-			$this->input->post(AndamentoDAO::$dataHora),
-			$this->input->post(AndamentoDAO::$processo_id)
+			$this->input->post('status'),
+			$this->input->post('data_hora'),
+			$this->input->post('processo_id')
 		);
 
 		$this->AndamentoDAO->criar($andamento);
@@ -66,7 +66,7 @@ class AndamentoController extends CI_Controller
 	{
 		$andamento = new Andamento(
 			$this->input->post('id'),
-			$this->input->post('status_do_andamento'),
+			$this->input->post('status'),
 			$this->input->post('data_hora'),
 			$this->input->post('processo_id')
 		);

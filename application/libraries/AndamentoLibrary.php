@@ -27,7 +27,7 @@ class AndamentoLibrary
 	{
 		return from_array_to_table_row_with_td([
 			'Id',
-			'Status do andamento',
+			'Status',
 			'Data/Hora',
 			'Processo Id'
 		]);
