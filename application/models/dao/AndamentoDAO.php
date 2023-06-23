@@ -46,7 +46,7 @@ class AndamentoDAO extends CI_Model
 
 	public function buscarTodosAtivosInativos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosAtivosInativos(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodosAtivosInativosOrderByProcessoId(self::$TABELA_DB, $inicial, $final);
 
 		return $this->criarLista($array);
 	}

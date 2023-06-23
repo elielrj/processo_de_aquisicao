@@ -35,6 +35,13 @@ class DAO extends CI_Model
 			->get($banco, $inicio, $fim);
 	}
 
+	public function buscarTodosAtivosInativosOrderByProcessoId($banco, $inicio, $fim)
+	{
+		return $this->db
+			->order_by('processo_id', 'DSC')
+			->get($banco, $inicio, $fim);
+	}
+
 	public function buscarTodosOrderByData($banco, $inicio, $fim)
 	{
 		return $this->db
