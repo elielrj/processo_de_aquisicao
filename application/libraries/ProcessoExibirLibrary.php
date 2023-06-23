@@ -2,6 +2,14 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+include_once('application/models/bo/Leitor.php');
+include_once('application/models/bo/Escritor.php');
+include_once('application/models/bo/Aprovador.php');
+include_once('application/models/bo/Executor.php');
+include_once('application/models/bo/Conformador.php');
+include_once('application/models/bo/Administrador.php');
+include_once('application/models/bo/Root.php');
+
 class ProcessoExibirLibrary
 {
 
@@ -55,21 +63,21 @@ class ProcessoExibirLibrary
 							<td>" . ucfirst($processo->listaDeAndamento[0]->nome()) . "</td>
 						</tr>
                         <tr class='text-left'>" .
-							td_value('Status do Processo:') .
-							td_status_completo($processo->completo) .
-						"</tr>
+			td_value('Status do Processo:') .
+			td_status_completo($processo->completo) .
+			"</tr>
                         <tr class='text-left'> 
                             <td>Processo: </td>
                             <td>" . "<a href=" . base_url('index.php/ProcessoController/visualizarProcesso/' .
-								$processo->id) . " class='btn btn-primary btn-lg btn-block' >Visualização completa</a>" .
-							"</td> 
+				$processo->id) . " class='btn btn-primary btn-lg btn-block' >Visualização completa</a>" .
+			"</td> 
                         </tr>
                         <tr class='text-left'> 
                             <td>Processo: </td>
                             <td>" . "<a href=" . base_url('index.php/ProcessoController/imprimirProcesso/' .
-									$processo->id) . " class='btn btn-primary btn-lg btn-block' >
+				$processo->id) . " class='btn btn-primary btn-lg btn-block' >
                             		Imprimir todo processo</a>" .
-							"</td> 
+			"</td> 
                         </tr>
                         <tr>" . $this->despachar($processo) . "</tr>
                     </table>
@@ -221,36 +229,82 @@ class ProcessoExibirLibrary
 		$href = '';
 		$nome = '';
 
+		$nivel_de_acesso = $_SESSION['funcao_nivel_de_acesso'];
+
+		$nivelDeAcesso = Funcao::selecionarNivelDeAcesso($nivel_de_acesso);
+
+
 		switch ($processo->listaDeAndamento[0]->nome()) {
 			case Criado::NOME:
 			{
-				$href = base_url('index.php/ProcessoController/enviarProcesso/' . $processo->id);
-				$nome = 'Enviar';
-				break;
+				if (
+					$nivelDeAcesso->nivel() == Escritor::NIVEL||
+					$nivelDeAcesso->nivel() == Root::NIVEL
+				) {
+					$href = base_url('index.php/ProcessoController/enviarProcesso/' . $processo->id);
+					$nome = 'Enviar';
+					break;
+				} else {
+					return '';
+				}
+
 			}
 			case Enviado::NOME:
 			{
-				$href = base_url('index.php/ProcessoController/aprovarProcesso/' . $processo->id);
-				$nome = 'Aprovar';
-				break;
+				if (
+					$nivelDeAcesso->nivel() == Aprovador::NIVEL||
+					$nivelDeAcesso->nivel() == Root::NIVEL
+				) {
+					$href = base_url('index.php/ProcessoController/aprovarProcesso/' . $processo->id);
+					$nome = 'Aprovar';
+					break;
+				} else {
+					return '';
+				}
+
 			}
 			case Aprovado::NOME:
 			{
-				$href = base_url('index.php/ProcessoController/executarProcesso/' . $processo->id);
-				$nome = 'Executado';
-				break;
+				if (
+					$nivelDeAcesso->nivel() == Executor::NIVEL||
+					$nivelDeAcesso->nivel() == Root::NIVEL
+				) {
+					$href = base_url('index.php/ProcessoController/executarProcesso/' . $processo->id);
+					$nome = 'Executado';
+					break;
+				} else {
+					return '';
+				}
+
 			}
 			case Executado::NOME:
 			{
-				$href = base_url('index.php/ProcessoController/conformarProcesso/' . $processo->id);
-				$nome = 'Conformado';
-				break;
+				if (
+					$nivelDeAcesso->nivel() == Conformador::NIVEL||
+					$nivelDeAcesso->nivel() == Root::NIVEL
+
+				) {
+					$href = base_url('index.php/ProcessoController/conformarProcesso/' . $processo->id);
+					$nome = 'Conformado';
+					break;
+				} else {
+					return '';
+				}
+
 			}
 			case Conformado::NOME:
 			{
-				$href = base_url('index.php/ProcessoController/arquivarProcesso/' . $processo->id);
-				$nome = 'Arquivar';
-				break;
+				if (
+					$nivelDeAcesso->nivel() == Conformador::NIVEL ||
+					$nivelDeAcesso->nivel() == Root::NIVEL
+				) {
+					$href = base_url('index.php/ProcessoController/arquivarProcesso/' . $processo->id);
+					$nome = 'Arquivar';
+					break;
+				} else {
+					return '';
+				}
+
 			}
 			case Arquivado::NOME:
 			{

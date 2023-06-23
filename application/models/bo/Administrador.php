@@ -5,7 +5,7 @@ include_once('NivelDeAcesso.php');
 class Administrador implements NivelDeAcesso
 {
 	const NOME = 'administrador';
-	const NIVEL = 3;
+	const NIVEL = 5;
 
 	public function nome()
 	{

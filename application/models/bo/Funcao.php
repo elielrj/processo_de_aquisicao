@@ -4,6 +4,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
 include_once('NivelDeAcesso.php');
+include_once('Leitor.php');
+include_once('Escritor.php');
+include_once('Aprovador.php');
+include_once('Executor.php');
+include_once('Conformador.php');
+include_once('Administrador.php');
+include_once('Root.php');
 
 class Funcao implements InterfaceBO, NivelDeAcesso
 {
@@ -65,6 +72,10 @@ class Funcao implements InterfaceBO, NivelDeAcesso
 				return new Escritor();
 			case Aprovador::NOME:
 				return new Aprovador();
+			case Executor::NOME:
+				return new Executor();
+			case Conformador::NOME:
+				return new Conformador();
 			case Administrador::NOME:
 				return new Administrador();
 			case Root::NOME:
