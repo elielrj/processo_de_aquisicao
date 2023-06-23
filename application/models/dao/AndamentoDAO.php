@@ -29,9 +29,15 @@ class AndamentoDAO extends CI_Model
 		$this->DAO->atualizar(self::$TABELA_DB, $andamento->array());
 	}
 
+	/**
+	 * @param $key
+	 * @param $value
+	 * @return array
+	 * Devolve uma lista de Objetos de Andamento em Ordem descrescente por DataTime
+	 */
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+		$array = $this->DAO->buscarOndeOrderByData(self::$TABELA_DB, array($key => $value));
 
 		$listaDeAndamento = [];
 

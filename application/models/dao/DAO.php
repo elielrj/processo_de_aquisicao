@@ -2,91 +2,99 @@
 
 class DAO extends CI_Model
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    public function criar($banco, $array)
-    {
-        $this->db->insert($banco, $array);    
-    }
+	public function criar($banco, $array)
+	{
+		$this->db->insert($banco, $array);
+	}
 
-    public function buscarTodos($banco, $inicio, $fim)
-    {
-        return $this->db
-            ->where(array('status' => true))
-            ->order_by('id', 'DSC')
-            ->get($banco, $inicio, $fim);
-    }
+	public function buscarTodos($banco, $inicio, $fim)
+	{
+		return $this->db
+			->where(array('status' => true))
+			->order_by('id', 'DSC')
+			->get($banco, $inicio, $fim);
+	}
 
-    public function buscarTodosDesativados($banco, $inicio, $fim)
-    {
-        return $this->db
-            ->where(array('status' => false))
-            ->order_by('id', 'DSC')
-            ->get($banco, $inicio, $fim);
-    }
+	public function buscarTodosDesativados($banco, $inicio, $fim)
+	{
+		return $this->db
+			->where(array('status' => false))
+			->order_by('id', 'DSC')
+			->get($banco, $inicio, $fim);
+	}
 
-    public function buscarTodosAtivosInativos($banco, $inicio, $fim)
-    {
-        return $this->db
-            ->order_by('id', 'DSC')
-            ->get($banco, $inicio, $fim);
-    }
+	public function buscarTodosAtivosInativos($banco, $inicio, $fim)
+	{
+		return $this->db
+			->order_by('id', 'DSC')
+			->get($banco, $inicio, $fim);
+	}
 
-    public function buscarTodosOrderByData($banco,$inicio, $fim)
-    {
-        return $this->db
-            ->order_by('data_hora','DESC')
-            ->get($banco, $inicio, $fim);
-    }
-	public function buscarTodosOrderBy($banco,$order_by,$inicio, $fim)
-    {
-        return $this->db
-            ->order_by($order_by,'ASC')
-            ->get($banco, $inicio, $fim);
-    }
+	public function buscarTodosOrderByData($banco, $inicio, $fim)
+	{
+		return $this->db
+			->order_by('data_hora', 'DESC')
+			->get($banco, $inicio, $fim);
+	}
 
-    public function buscarPorId($banco, $id)
-    {
-        return $this->db->get_where($banco, array('id' => $id));
-    }
+	public function buscarTodosOrderBy($banco, $order_by, $inicio, $fim)
+	{
+		return $this->db
+			->order_by($order_by, 'ASC')
+			->get($banco, $inicio, $fim);
+	}
 
-    public function buscarOnde($banco, $array)
-    {
-        return $this->db
-        ->get_where($banco,$array);
-    }
+	public function buscarPorId($banco, $id)
+	{
+		return $this->db->get_where($banco, array('id' => $id));
+	}
 
-    public function atualizar($banco, $array)
-    {
-        $this->db->update($banco, $array, array('id' => $array['id']));
-    }
+	public function buscarOnde($banco, $array)
+	{
+		return $this->db
+			->get_where($banco, $array);
+	}
 
-    public function deletar($banco, $array)
-    {
-        $this->db->delete($banco, $array);
-    }
+	public function buscarOndeOrderByData($banco, $array)
+	{
+		return $this->db
+			->order_by('data_hora', 'DESC')
+			->get_where($banco, $array);
+	}
 
-    public function contar($banco)
-    {
-        return $this->db
-            ->where(array('status' => true))
-            ->count_all_results($banco);
-    }
+	public function atualizar($banco, $array)
+	{
+		$this->db->update($banco, $array, array('id' => $array['id']));
+	}
 
-    public function contarDesativados($banco)
-    {
-        return $this->db
-            ->where(array('status' => false))
-            ->count_all_results($banco);
-    }
+	public function deletar($banco, $array)
+	{
+		$this->db->delete($banco, $array);
+	}
 
-    public function contarAtivosInativos($banco)
-    {
-        return $this->db
-            ->count_all_results($banco);
-    }
+	public function contar($banco)
+	{
+		return $this->db
+			->where(array('status' => true))
+			->count_all_results($banco);
+	}
+
+	public function contarDesativados($banco)
+	{
+		return $this->db
+			->where(array('status' => false))
+			->count_all_results($banco);
+	}
+
+	public function contarAtivosInativos($banco)
+	{
+		return $this->db
+			->count_all_results($banco);
+	}
 
 }

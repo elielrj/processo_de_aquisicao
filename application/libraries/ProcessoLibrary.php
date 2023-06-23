@@ -51,8 +51,8 @@ class ProcessoLibrary
             td_value($processo->numero),
             td_data_br($processo->dataHora),
             td_value($processo->departamento->sigla),
-			td_value(ucfirst($processo->andamento->nome())),
-			td_data_hora_br($processo->andamento->dataHora),
+			td_value(ucfirst($processo->listaDeAndamento[0]->nome())),
+			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
 			td_status_completo($processo->completo)
         ]);
     }
