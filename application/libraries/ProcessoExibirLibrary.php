@@ -52,7 +52,7 @@ class ProcessoExibirLibrary
                         </tr>
                         <tr class='text-left'> 
                             <td>Andamento: </td>
-                            <td>" . ucfirst($processo->andamento->nome()) . "</td> 
+                            <td>" . ucfirst($processo->listaDeAndamento[0]->nome()) . "</td> 
                         </tr>
                         <tr class='text-left'>" .
                             td_value('Status do Processo:') .

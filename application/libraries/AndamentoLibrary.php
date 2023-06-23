@@ -37,7 +37,7 @@ class AndamentoLibrary
 	{
 		return from_array_to_table_row([
 			td_value($andamento->id),
-			td_value($andamento->statusDoAndamento->nome()),
+			td_value($andamento->status->nome()),
 			td_data_hora_br($andamento->dataHora),
 			td_value($andamento->processo_id)
 		]);

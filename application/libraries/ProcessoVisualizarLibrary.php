@@ -38,8 +38,8 @@ class ProcessoVisualizarLibrary
                         </tr>
                         <tr class='text-left'> 
                             <td>Data de abertura(Nup/Nud): </td>"
-                             . td_data_br($processo->dataHora) . 
-                        "</tr>
+							. td_data_br($processo->dataHora) .
+						"</tr>
                         <tr class='text-left'> 
                             <td>Chave para acompanhar: </td>
                             " . td_value($processo->chave) . "
@@ -52,6 +52,14 @@ class ProcessoVisualizarLibrary
                             <td>Amparo legal: </td>
                             <td>" . $processo->lei->toString() . "</td> 
                         </tr>
+                        <tr class='text-left'> 
+                            <td>Andamento: </td>
+                            <td>" . ucfirst($processo->listaDeAndamento[0]->nome()) . "</td> 
+                        </tr>
+                        <tr class='text-left'>" .
+							td_value('Status do Processo:') .
+							td_status_completo($processo->completo) .
+           				 "</tr>
                     </table>
                 ";
     }

@@ -11,11 +11,11 @@ class Criado implements Status
 
 	public function nome(): string
 	{
-		return Executado::NOME;
+		return Criado::NOME;
 	}
 
 	public function nivel(): int
 	{
-		return Executado::NIVEL;
+		return Criado::NIVEL;
 	}
 }
