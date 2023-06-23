@@ -4,9 +4,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
 include_once('StatusDoAndamento.php');
-include_once('Enviado.php');
-include_once('Executado.php');
-include_once('Conformado.php');
+include_once('Criado.php');  //Nível 0
+include_once('Enviado.php');  //Nível 1
+include_once('Aprovado.php');  //Nível 2
+include_once('Executado.php');  //Nível 3
+include_once('Conformado.php');  //Nível 4
+include_once('Arquivado.php');  //Nível 5
 
 class Andamento implements StatusDoAndamento, InterfaceBO
 {
@@ -23,9 +26,9 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 		$processo_id
 	)
 	{
-		$this->id = $id;
-		$this->statusDoAndamento = $statusDoAndamento ?? new Enviado();
-		$this->dataHora = $dataHora ?? DataLibrary::dataHoraMySQL();
+		$this->id = $id ?? null;
+		$this->statusDoAndamento = $statusDoAndamento;
+		$this->dataHora = $dataHora;
 		$this->processo_id = $processo_id;
 	}
 
@@ -51,12 +54,19 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 
 	public static function selecionarStatus($nome)
 	{
-		if ($nome == Enviado::NOME) {
-			return new Enviado();
-		} else if ($nome == Executado::NOME) {
-			return new Executado();
-		} else if ($nome == Conformado::NOME) {
-			return new Conformado();
+		switch ($nome) {
+			case Criado::NOME:
+				return new Criado();
+			case Enviado::NOME:
+				return new Enviado();
+			case Aprovado::NOME:
+				return new Aprovado();
+			case Executado::NOME:
+				return new Executado();
+			case Conformado::NOME:
+				return new Conformado();
+			case Arquivado::NOME:
+				return new Arquivado();
 		}
 	}
 

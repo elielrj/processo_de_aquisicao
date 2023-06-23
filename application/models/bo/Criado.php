@@ -4,10 +4,10 @@
 include_once('StatusDoAndamento.php');
 
 
-class Executado implements StatusDoAndamento
+class Criado implements StatusDoAndamento
 {
-	const NOME = 'executado';
-	const NIVEL = 3;
+	const NOME = 'criado';
+	const NIVEL = 0;
 
 	public function nome(): string
 	{

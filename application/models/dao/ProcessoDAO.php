@@ -28,7 +28,7 @@ class ProcessoDAO extends CI_Model
 
 		$andamento = new Andamento(
 			null,
-			new Enviado(),
+			new Criado(),
 			DataLibrary::dataHoraMySQL(),
 			$processo->id
 		);
