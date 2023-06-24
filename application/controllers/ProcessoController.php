@@ -83,13 +83,20 @@ class ProcessoController extends CI_Controller
 		redirect('ProcessoController/exibir/'.$processo_id);
 	}
 
-	public function aprovarProcesso($processo_id)
+	public function aprovarProcessoFiscAdm($processo_id)
 	{
-		$this->AndamentoDAO->processoAprovado($processo_id);
+		$this->AndamentoDAO->processoAprovadoFiscAdm($processo_id);
 
 		 redirect('ProcessoController/exibir/'.$processo_id);
 	}
 
+
+	public function aprovarProcessoOd($processo_id)
+	{
+		$this->AndamentoDAO->processoAprovadoOd($processo_id);
+
+		redirect('ProcessoController/exibir/'.$processo_id);
+	}
 	public function executarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoExecutado($processo_id);

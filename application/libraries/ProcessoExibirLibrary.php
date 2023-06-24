@@ -61,24 +61,24 @@ class ProcessoExibirLibrary
                         </tr>
                         <tr class='text-left'> 
                         	<td>Andamento:</td>
-							<td>" . ucfirst($processo->listaDeAndamento[0]->nome()) . "</td>
+							<td>" . ucwords(str_replace('_', ' ', str_replace('_od', ' OD', $processo->listaDeAndamento[0]->nome()))) . "</td>
 						</tr>
                         <tr class='text-left'>" .
-			td_value('Status do Processo:') .
-			td_status_completo($processo->completo) .
-			"</tr>
+            td_value('Status do Processo:') .
+            td_status_completo($processo->completo) .
+            "</tr>
                         <tr class='text-left'> 
                             <td>Processo: </td>
                             <td>" . "<a href=" . base_url('index.php/ProcessoController/visualizarProcesso/' .
-				$processo->id) . " class='btn btn-primary btn-lg btn-block' >Visualização completa</a>" .
-			"</td> 
+                $processo->id) . " class='btn btn-primary btn-lg btn-block' >Visualização completa</a>" .
+            "</td> 
                         </tr>
                         <tr class='text-left'> 
                             <td>Processo: </td>
                             <td>" . "<a href=" . base_url('index.php/ProcessoController/imprimirProcesso/' .
-				$processo->id) . " class='btn btn-primary btn-lg btn-block' >
+                $processo->id) . " class='btn btn-primary btn-lg btn-block' >
                             		Imprimir todo processo</a>" .
-			"</td> 
+            "</td> 
                         </tr>
                         <tr>" . $this->despachar($processo) . "</tr>
                     </table>
@@ -239,11 +239,11 @@ class ProcessoExibirLibrary
 			case Criado::NOME:
 			{
 				if (
-					$nivelDeAcesso->nivel() == Escritor::NIVEL||
+					$nivelDeAcesso->nivel() == Escritor::NIVEL ||
 					$nivelDeAcesso->nivel() == Root::NIVEL
 				) {
 					$href = base_url('index.php/ProcessoController/enviarProcesso/' . $processo->id);
-					$nome = 'Enviar';
+					$nome = 'Enviar para aprovação do Fisc Adm';
 					break;
 				} else {
 					return '';
@@ -253,25 +253,39 @@ class ProcessoExibirLibrary
 			case Enviado::NOME:
 			{
 				if (
-					$nivelDeAcesso->nivel() == Aprovador::NIVEL||
+					$nivelDeAcesso->nivel() == AprovadorFiscAdm::NIVEL ||
 					$nivelDeAcesso->nivel() == Root::NIVEL
 				) {
-					$href = base_url('index.php/ProcessoController/aprovarProcesso/' . $processo->id);
-					$nome = 'Aprovar';
+					$href = base_url('index.php/ProcessoController/aprovarProcessoFiscAdm/' . $processo->id);
+					$nome = 'Aprovar como Fisc Adm e enviar ao OD';
 					break;
 				} else {
 					return '';
 				}
 
 			}
-			case Aprovado::NOME:
+			case AprovadoFiscAdm::NOME:
 			{
 				if (
-					$nivelDeAcesso->nivel() == Executor::NIVEL||
+					$nivelDeAcesso->nivel() == AprovadorOd::NIVEL ||
+					$nivelDeAcesso->nivel() == Root::NIVEL
+				) {
+					$href = base_url('index.php/ProcessoController/aprovarProcessoOd/' . $processo->id);
+					$nome = 'Aprovar como OD e enviar a SALC';
+					break;
+				} else {
+					return '';
+				}
+
+			}
+			case AprovadoOd::NOME:
+			{
+				if (
+					$nivelDeAcesso->nivel() == Executor::NIVEL ||
 					$nivelDeAcesso->nivel() == Root::NIVEL
 				) {
 					$href = base_url('index.php/ProcessoController/executarProcesso/' . $processo->id);
-					$nome = 'Executado';
+					$nome = 'Executado na SALC e enviar a Conf Doc';
 					break;
 				} else {
 					return '';
@@ -281,12 +295,12 @@ class ProcessoExibirLibrary
 			case Executado::NOME:
 			{
 				if (
-					$nivelDeAcesso->nivel() == Conformador::NIVEL||
+					$nivelDeAcesso->nivel() == Conformador::NIVEL ||
 					$nivelDeAcesso->nivel() == Root::NIVEL
 
 				) {
 					$href = base_url('index.php/ProcessoController/conformarProcesso/' . $processo->id);
-					$nome = 'Conformado';
+					$nome = 'Dar a Conformidade no Processo';
 					break;
 				} else {
 					return '';
@@ -300,7 +314,7 @@ class ProcessoExibirLibrary
 					$nivelDeAcesso->nivel() == Root::NIVEL
 				) {
 					$href = base_url('index.php/ProcessoController/arquivarProcesso/' . $processo->id);
-					$nome = 'Arquivar';
+					$nome = 'Arquivar o Processo';
 					break;
 				} else {
 					return '';
@@ -315,7 +329,7 @@ class ProcessoExibirLibrary
 
 		return
 			"<td>Despachar:</td>
-			<td><a class='btn btn-danger btn-lg btn-block' href={$href}>" . ucfirst($nome) . "</a></td>";
+			<td><a class='btn btn-danger btn-lg btn-block' href={$href}>" . $nome . "</a></td>";
 	}
 
 }
