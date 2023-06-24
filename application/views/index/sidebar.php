@@ -9,8 +9,8 @@ $posto_ou_raduacao_e_nome_de_guerra =
 
 $nivel_de_acesso = 	$_SESSION['funcao_nivel_de_acesso'] ?? '';
 
-include_once('application/models/bo/Administrador.php');
-include_once('application/models/bo/Root.php');
+include_once('application/models/bo/nivel_de_acesso/Administrador.php');
+include_once('application/models/bo/nivel_de_acesso/Root.php');
 
 
 $acesso_ao_banco =

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/libraries/DataLibrary.php');
+require_once('DataLibrary.php');
 
 class ProcessoLibrary
 {

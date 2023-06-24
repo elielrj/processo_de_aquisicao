@@ -2,13 +2,14 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/models/bo/Leitor.php');
-include_once('application/models/bo/Escritor.php');
-include_once('application/models/bo/Aprovador.php');
-include_once('application/models/bo/Executor.php');
-include_once('application/models/bo/Conformador.php');
-include_once('application/models/bo/Administrador.php');
-include_once('application/models/bo/Root.php');
+include_once('application/models/bo/nivel_de_acesso/Leitor.php');
+include_once('application/models/bo/nivel_de_acesso/Escritor.php');
+include_once('application/models/bo/nivel_de_acesso/AprovadorFiscAdm.php');
+include_once('application/models/bo/nivel_de_acesso/AprovadorOd.php');
+include_once('application/models/bo/nivel_de_acesso/Executor.php');
+include_once('application/models/bo/nivel_de_acesso/Conformador.php');
+include_once('application/models/bo/nivel_de_acesso/Administrador.php');
+include_once('application/models/bo/nivel_de_acesso/Root.php');
 
 class ProcessoExibirLibrary
 {
