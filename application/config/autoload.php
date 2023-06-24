@@ -144,18 +144,4 @@ $autoload['language'] = array();
   |
   |	$autoload['model'] = array('first_model' => 'first');
  */
-$autoload['model'] = array(
-  /*
-    'dao/UgDAO',
-    'dao/DepartamentoDAO',
-    'dao/UsuarioDAO',
-    'dao/LeiDAO',
-    'dao/ArtefatoDAO',
-    'dao/ModalidadeDAO',
-    'dao/LeiTipoArtefatoDAO',
-    'dao/ProcessoDAO',
-    'dao/ArquivoDAO',
-    'dao/TipoDAO',
-    'dao/ConsultarDAO',
-    */
-);
+$autoload['model'] = array();
