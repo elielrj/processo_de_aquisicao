@@ -5,7 +5,7 @@ include_once('NivelDeAcesso.php');
 class Executor implements NivelDeAcesso
 {
 	const NOME = 'executor';
-	const NIVEL = 3;
+	const NIVEL = 4;
 
 	public function nome(): string
 	{

@@ -5,7 +5,7 @@ include_once('NivelDeAcesso.php');
 class Conformador implements NivelDeAcesso
 {
 	const NOME = 'conformador';
-	const NIVEL = 4;
+	const NIVEL = 5;
 
 	public function nome(): string
 	{

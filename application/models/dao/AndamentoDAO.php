@@ -3,6 +3,13 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('application/models/bo/Andamento.php');
+include_once('application/models/bo/status_do_andamento/Criado.php');
+include_once('application/models/bo/status_do_andamento/Enviado.php');
+include_once('application/models/bo/status_do_andamento/AprovadoFiscAdm.php');
+include_once('application/models/bo/status_do_andamento/AprovadoOd.php');
+include_once('application/models/bo/status_do_andamento/Executado.php');
+include_once('application/models/bo/status_do_andamento/Conformado.php');
+include_once('application/models/bo/status_do_andamento/Arquivado.php');
 
 class AndamentoDAO extends CI_Model
 {
@@ -55,9 +62,9 @@ class AndamentoDAO extends CI_Model
 	{
 		return new Andamento(
 			$arrayList->id ?? ($arrayList['id'] ?? null),
-			isset($arrayList->status)
-				? (Andamento::selecionarStatus($arrayList->status))
-				: (isset($arrayList['status']) ? Andamento::selecionarStatus($arrayList['status']) : null),
+			isset($arrayList->status_do_andamento)
+				? (Andamento::selecionarStatus($arrayList->status_do_andamento))
+				: (isset($arrayList['status_do_andamento']) ? Andamento::selecionarStatus($arrayList['status_do_andamento']) : null),
 			isset($arrayList->data_hora)
 				? (DataLibrary::dataHoraBr($arrayList->data_hora))
 				: (isset($arrayList['data_hora']) ? DataLibrary::dataHoraBr($arrayList['data_hora']) : null),
@@ -83,7 +90,7 @@ class AndamentoDAO extends CI_Model
 	{
 		$options = [Criado::$NOME => Criado::$NOME];
 		$options += [Enviado::$NOME => Enviado::$NOME];
-		$options += [Aprovado::$NOME => Aprovado::$NOME];
+		$options += [AprovadoFiscAdm::$NOME => AprovadoFiscAdm::$NOME];
 		$options += [Executado::$NOME => Executado::$NOME];
 		$options += [Conformado::$NOME => Conformado::$NOME];
 		$options += [Arquivado::$NOME => Arquivado::$NOME];
@@ -107,11 +114,23 @@ class AndamentoDAO extends CI_Model
 		return;
 	}
 
-	public function processoAprovado($processo_id)
+	public function processoAprovadoFiscAdm($processo_id)
 	{
 		$andamento = new Andamento(
 			null,
-			new Aprovado(),
+			new AprovadoFiscAdm(),
+			DataLibrary::dataHoraMySQL(),
+			$processo_id
+		);
+
+		$this->AndamentoDAO->criar($andamento);
+	}
+
+	public function processoAprovadoOd($processo_id)
+	{
+		$andamento = new Andamento(
+			null,
+			new AprovadoOd(),
 			DataLibrary::dataHoraMySQL(),
 			$processo_id
 		);

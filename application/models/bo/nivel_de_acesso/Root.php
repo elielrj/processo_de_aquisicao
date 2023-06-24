@@ -5,7 +5,7 @@ include_once('NivelDeAcesso.php');
 class Root implements NivelDeAcesso
 {
 	const NOME = 'root';
-	const NIVEL = 6;
+	const NIVEL = 7;
 
 	public function nome()
 	{

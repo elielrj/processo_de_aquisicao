@@ -1,8 +1,8 @@
 <?php
 
-include_once('Status.php');
+include_once('StatusDoAndamento.php');
 
-class Enviado implements Status
+class Enviado implements StatusDoAndamento
 {
 	const NOME = 'enviado';
 	const NIVEL = 1;

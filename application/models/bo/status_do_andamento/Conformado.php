@@ -1,12 +1,12 @@
 <?php
 
-include_once('Status.php');
+include_once('StatusDoAndamento.php');
 
 
-class Conformado implements Status
+class Conformado implements StatusDoAndamento
 {
 	const NOME = 'conformado';
-	const NIVEL = 4;
+	const NIVEL = 5;
 
 	public function nome(): string
 	{

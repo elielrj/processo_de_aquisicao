@@ -1,10 +1,10 @@
 <?php
 
 
-include_once('Status.php');
+include_once('StatusDoAndamento.php');
 
 
-class Criado implements Status
+class Criado implements StatusDoAndamento
 {
 	const NOME = 'criado';
 	const NIVEL = 0;

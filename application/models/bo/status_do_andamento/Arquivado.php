@@ -1,12 +1,12 @@
 <?php
 
-include_once('Status.php');
+include_once('StatusDoAndamento.php');
 
 
-class Arquivado implements Status
+class Arquivado implements StatusDoAndamento
 {
 	const NOME = 'arquivado';
-	const NIVEL = 5;
+	const NIVEL = 6;
 
 	public function nome(): string
 	{

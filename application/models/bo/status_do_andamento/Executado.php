@@ -1,13 +1,13 @@
 <?php
 
 
-include_once('Status.php');
+include_once('StatusDoAndamento.php');
 
 
-class Executado implements Status
+class Executado implements StatusDoAndamento
 {
 	const NOME = 'executado';
-	const NIVEL = 3;
+	const NIVEL = 4;
 
 	public function nome(): string
 	{

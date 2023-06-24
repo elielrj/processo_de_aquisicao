@@ -3,14 +3,15 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
-include_once('NivelDeAcesso.php');
-include_once('Leitor.php');
-include_once('Escritor.php');
-include_once('Aprovador.php');
-include_once('Executor.php');
-include_once('Conformador.php');
-include_once('Administrador.php');
-include_once('Root.php');
+include_once('nivel_de_acesso/NivelDeAcesso.php');
+include_once('nivel_de_acesso/Leitor.php');
+include_once('nivel_de_acesso/Escritor.php');
+include_once('nivel_de_acesso/AprovadorFiscAdm.php');
+include_once('nivel_de_acesso/AprovadorOd.php');
+include_once('nivel_de_acesso/Executor.php');
+include_once('nivel_de_acesso/Conformador.php');
+include_once('nivel_de_acesso/Administrador.php');
+include_once('nivel_de_acesso/Root.php');
 
 class Funcao implements InterfaceBO, NivelDeAcesso
 {
@@ -70,8 +71,10 @@ class Funcao implements InterfaceBO, NivelDeAcesso
 				return new Leitor();
 			case Escritor::NOME:
 				return new Escritor();
-			case Aprovador::NOME:
-				return new Aprovador();
+			case AprovadorFiscAdm::NOME:
+				return new AprovadorFiscAdm();
+			case AprovadorOd::NOME:
+				return new AprovadorOd();
 			case Executor::NOME:
 				return new Executor();
 			case Conformador::NOME:

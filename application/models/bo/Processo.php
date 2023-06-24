@@ -3,12 +3,13 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
-include_once('Criado.php');
-include_once('Enviado.php');
-include_once('Aprovado.php');
-include_once('Executado.php');
-include_once('Conformado.php');
-include_once('Arquivado.php');
+include_once('status_do_andamento/Criado.php');
+include_once('status_do_andamento/Enviado.php');
+include_once('status_do_andamento/AprovadoFiscAdm.php');
+include_once('status_do_andamento/AprovadoOd.php');
+include_once('status_do_andamento/Executado.php');
+include_once('status_do_andamento/Conformado.php');
+include_once('status_do_andamento/Arquivado.php');
 
 
 class Processo implements InterfaceBO

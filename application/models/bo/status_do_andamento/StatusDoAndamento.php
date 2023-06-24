@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-interface Status
+interface StatusDoAndamento
 {
 	public function nome();
 
