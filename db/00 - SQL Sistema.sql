@@ -106,7 +106,10 @@ id int primary key auto_increment not null,
 status_do_andamento enum('criado','enviado','aprovado_fisc_adm','aprovado_od','executado','conformado','arquivado') not null,
 data_hora datetime not null default current_timestamp,
 processo_id int not null,
-foreign key (processo_id) references processo(id)
+usuario_id int not null,
+status boolean not null,
+foreign key (processo_id) references processo(id),
+foreign key (usuario_id) references usuario(id)
 );
 
 #11

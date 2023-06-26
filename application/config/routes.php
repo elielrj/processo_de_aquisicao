@@ -79,7 +79,9 @@ $route['departamento-atualizar'] = 'DepartamentoController/atualizar';
 $route['lei-listar'] = 'LeiController/listar';
 $route['lei-novo'] = 'LeiController/novo';
 
-$route['tipos'] = 'TipoController/listar';
+$route['tipo-listar'] = 'TipoController/listar';
+$route['tipo-novo'] = 'TipoController/novo';
+
 $route['ugs'] = 'UgController/listar';
 
 //USUÁRIO
@@ -91,7 +93,8 @@ $route['usuario-atualizar-usuario'] = 'UsuarioController/atualizarUsuario';
 $route['usuario-alterar-usuario'] = 'UsuarioController/alterarUsuario';
 
 $route['sair'] = 'LoginController/sair';
-$route['modalidades'] = 'ModalidadeController/listar';
+$route['modalidade-listar'] = 'ModalidadeController/listar';
+$route['modalidade-novo'] = 'ModalidadeController/novo';
 
 #lei-tipo-artefato
 $route['lei-tipo-artefato-listar'] = 'LeiTipoArtefatoController/listar';

@@ -54,7 +54,9 @@ class AndamentoController extends CI_Controller
 			null,
 			$this->input->post('status'),
 			$this->input->post('data_hora'),
-			$this->input->post('processo_id')
+			$this->input->post('processo_id'),
+			$_SESSION['id'],
+			true//todo
 		);
 
 		$this->AndamentoDAO->criar($andamento);
@@ -68,7 +70,9 @@ class AndamentoController extends CI_Controller
 			$this->input->post('id'),
 			$this->input->post('status'),
 			$this->input->post('data_hora'),
-			$this->input->post('processo_id')
+			$this->input->post('processo_id'),
+			$_SESSION['id'],
+			true//todo
 		);
 
 		$this->AndamentoDAO->atualizar($andamento);

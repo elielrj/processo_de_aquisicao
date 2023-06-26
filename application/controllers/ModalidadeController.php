@@ -9,7 +9,7 @@ class ModalidadeController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('dao/ModalidadeDAO');
-        $this->load->library('ArtefatoLibrary');
+        $this->load->library('ModalidadeLibrary');
     }
 
     public function index()
@@ -38,8 +38,8 @@ class ModalidadeController extends CI_Controller
 
         $dados = array(
             'titulo' => 'Lista de modalidades',
-            'tabela' => $this->artefatolibrary->listar($modalidades, $indice_no_data_base),
-            'pagina' => 'artefato/index.php',
+            'tabela' => $this->modalidadelibrary->listar($modalidades, $indice_no_data_base),
+            'pagina' => 'modalidade/index.php',
             'botoes' => $botoes,
         );
         $this->load->view('index', $dados);
@@ -48,8 +48,8 @@ class ModalidadeController extends CI_Controller
     public function novo()
     {
         $this->load->view('index', [
-            'titulo' => 'Novo Artefato',
-            'pagina' => 'artefato/novo.php'
+            'titulo' => 'Novo Modalidade',
+            'pagina' => 'modalidade/novo.php'
         ]);
     }
 
@@ -58,13 +58,13 @@ class ModalidadeController extends CI_Controller
 
         $data_post = $this->input->post();
 
-        $artefato = new Artefato(
+        $modalidade = new Modalidade(
             null,
             $data_post['nome'],
             $data_post['status']
         );
 
-        $this->ModalidadeDAO->criar($artefato);
+        $this->ModalidadeDAO->criar($modalidade);
 
         redirect('ModalidadeController');
     }
@@ -72,12 +72,12 @@ class ModalidadeController extends CI_Controller
     public function alterar($id)
     {
 
-        $artefato = $this->ModalidadeDAO->buscarId($id);
+        $modalidade = $this->ModalidadeDAO->buscarId($id);
 
         $dados = [
             'titulo' => 'Alterar modalidade',
-            'pagina' => 'artefato/alterar.php',
-            'artefato' => $artefato
+            'pagina' => 'modalidade/alterar.php',
+            'modalidade' => $modalidade
         ];
 
         $this->load->view('index', $dados);
@@ -88,13 +88,13 @@ class ModalidadeController extends CI_Controller
 
         $data_post = $this->input->post();
 
-        $artefato = new Artefato(
+        $modalidade = new Modalidade(
             $data_post['id'],
             $data_post['nome'],
             $data_post['status']
         );
 
-        $this->ModalidadeDAO->atualizar($artefato);
+        $this->ModalidadeDAO->atualizar($modalidade);
 
         redirect('ModalidadeController');
     }

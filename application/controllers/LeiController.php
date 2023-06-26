@@ -11,6 +11,8 @@ class LeiController extends CI_Controller
     {
         parent::__construct();
         $this->load->model('dao/LeiDAO');
+        $this->load->model('dao/TipoDAO');
+        $this->load->model('dao/ArtefatoDAO');
         $this->load->library('LeiLibrary');
     }
 

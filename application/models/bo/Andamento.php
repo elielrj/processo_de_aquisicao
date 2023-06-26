@@ -19,18 +19,24 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 	private $statusDoAndamento;
 	private $dataHora;
 	private $processo_id;
+	private $usuario_id;
+	private $status;
 
 	public function __construct(
 		$id,
 		$statusDoAndamento,
 		$dataHora,
-		$processo_id
+		$processo_id,
+		$usuario_id,
+		$status
 	)
 	{
 		$this->id = $id ?? null;
 		$this->statusDoAndamento = $statusDoAndamento;
 		$this->dataHora = $dataHora;
 		$this->processo_id = $processo_id;
+		$this->usuario_id = $usuario_id;
+		$this->status = $status;
 	}
 
 	function __get($key)
@@ -49,7 +55,9 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 			'id' => $this->id ?? null,
 			'status_do_andamento' => $this->statusDoAndamento->nome(),
 			'data_hora' => DataLibrary::dataHoraMySQL($this->dataHora),
-			'processo_id' => $this->processo_id
+			'processo_id' => $this->processo_id,
+			'usuario_id' => $this->usuario_id,
+			'status' => $this->status,
 		);
 	}
 

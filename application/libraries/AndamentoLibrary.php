@@ -29,7 +29,9 @@ class AndamentoLibrary
 			'Id',
 			'Status',
 			'Data/Hora',
-			'Processo Id'
+			'Processo Id',
+			'Usuario ID',
+			'Status'
 		]);
 	}
 
@@ -39,7 +41,9 @@ class AndamentoLibrary
 			td_value($andamento->id),
 			td_value($andamento->statusDoAndamento->nome()),
 			td_data_hora_br($andamento->dataHora),
-			td_value($andamento->processo_id)
+			td_value($andamento->processo_id),
+			td_value($andamento->usuario_id),
+			td_value($andamento->status)
 		]);
 	}
 }

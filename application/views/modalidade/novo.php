@@ -25,4 +25,8 @@ echo "<h1>{$titulo}</h1>" .
     "<a href=" . base_url('index.php/ModalidadeController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
 
 echo form_close();
+
+//todo refazer
+
 ?>
+

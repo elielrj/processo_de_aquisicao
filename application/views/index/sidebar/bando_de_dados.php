@@ -109,8 +109,8 @@
 	<div id="collapseModalidade" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
 			<h6 class="collapse-header">Processo de Aquisição</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/modalidades'); ?>">Listar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/modalidades/novo'); ?>">Novo</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/modalidade-listar'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/modalidade-novo'); ?>">Novo</a>
 		</div>
 	</div>
 </li>
@@ -141,8 +141,8 @@
 	<div id="collapseTipo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
 			<h6 class="collapse-header">Processo de Aquisição</h6>
-			<a class="collapse-item" href="<?php echo base_url('index.php/tipos'); ?>">Listar</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/tipos/novo'); ?>">Novo</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/tipo-listar'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/tipo-novo'); ?>">Novo</a>
 		</div>
 	</div>
 </li>

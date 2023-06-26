@@ -68,7 +68,9 @@ class AndamentoDAO extends CI_Model
 			isset($arrayList->data_hora)
 				? (DataLibrary::dataHoraBr($arrayList->data_hora))
 				: (isset($arrayList['data_hora']) ? DataLibrary::dataHoraBr($arrayList['data_hora']) : null),
-			$arrayList->processo_id ?? ($arrayList['processo_id'] ?? null)
+			$arrayList->processo_id ?? ($arrayList['processo_id'] ?? null),
+			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null),
+			$arrayList->status ?? ($arrayList['status'] ?? null),
 		);
 	}
 
@@ -107,7 +109,9 @@ class AndamentoDAO extends CI_Model
 			null,
 			new Enviado(),
 			DataLibrary::dataHoraMySQL(),
-			$processo_id
+			$processo_id,
+			$_SESSION['id'],
+			true
 		);
 
 		$this->AndamentoDAO->criar($andamento);
@@ -120,7 +124,9 @@ class AndamentoDAO extends CI_Model
 			null,
 			new AprovadoFiscAdm(),
 			DataLibrary::dataHoraMySQL(),
-			$processo_id
+			$processo_id,
+			$_SESSION['id'],
+			true
 		);
 
 		$this->AndamentoDAO->criar($andamento);
@@ -132,7 +138,9 @@ class AndamentoDAO extends CI_Model
 			null,
 			new AprovadoOd(),
 			DataLibrary::dataHoraMySQL(),
-			$processo_id
+			$processo_id,
+			$_SESSION['id'],
+			true
 		);
 
 		$this->AndamentoDAO->criar($andamento);
@@ -144,7 +152,9 @@ class AndamentoDAO extends CI_Model
 			null,
 			new Executado(),
 			DataLibrary::dataHoraMySQL(),
-			$processo_id
+			$processo_id,
+			$_SESSION['id'],
+			true
 		);
 
 		$this->AndamentoDAO->criar($andamento);
@@ -155,7 +165,9 @@ class AndamentoDAO extends CI_Model
 			null,
 			new Conformado(),
 			DataLibrary::dataHoraMySQL(),
-			$processo_id
+			$processo_id,
+			$_SESSION['id'],
+			true
 		);
 
 		$this->AndamentoDAO->criar($andamento);
@@ -168,7 +180,9 @@ class AndamentoDAO extends CI_Model
 			null,
 			new Arquivado(),
 			DataLibrary::dataHoraMySQL(),
-			$processo_id
+			$processo_id,
+			$_SESSION['id'],
+			true
 		);
 
 		$this->AndamentoDAO->criar($andamento);
