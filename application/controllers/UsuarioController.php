@@ -62,9 +62,16 @@ class UsuarioController extends CI_Controller
 
         $usuarios = $this->UsuarioDAO->buscarTodos($indice_no_data_base, $qtd_de_itens_para_exibir);
 
-        $quantidade = $this->UsuarioDAO->quantidadeAtivos();
+		$params = [
+			'controller' => 'DepartamentoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->UsuarioDAO->quantidadeAtivos()
+		];
 
-        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $qtd_de_itens_para_exibir);
+		$this->load->library('CriadorDeBotoes', $params);
+
+        $quantidade =
+
+        $botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
 
         $dados = array(
             'titulo' => 'Lista de Usuários',
