@@ -34,7 +34,7 @@ class UsuarioController extends CI_Controller
         $usuarios = $this->UsuarioDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
 		$params = [
-			'controller' => 'ArquivoController',
+			'controller' => 'UsuarioController',
 			'quantidade_de_registros_no_banco_de_dados' => $this->UsuarioDAO->contar()
 		];
 
@@ -63,7 +63,7 @@ class UsuarioController extends CI_Controller
         $usuarios = $this->UsuarioDAO->buscarTodos($indice_no_data_base, $qtd_de_itens_para_exibir);
 
 		$params = [
-			'controller' => 'DepartamentoController',
+			'controller' => 'UsuarioController',
 			'quantidade_de_registros_no_banco_de_dados' => $this->UsuarioDAO->quantidadeAtivos()
 		];
 

@@ -27,7 +27,7 @@ class UgController extends CI_Controller
         $listaDeUg = $this->UgDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
 		$params = [
-			'controller' => 'ArquivoController',
+			'controller' => 'UgController',
 			'quantidade_de_registros_no_banco_de_dados' => $this->UgDAO->contar()
 		];
 
