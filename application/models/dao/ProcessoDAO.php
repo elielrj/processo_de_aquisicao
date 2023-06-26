@@ -31,7 +31,8 @@ class ProcessoDAO extends CI_Model
 			new Criado(),
 			DataLibrary::dataHoraMySQL(),
 			$processo->id,
-			$_SESSION['id']
+			$_SESSION['id'],
+			true
 		);
 
 		$this->AndamentoDAO->criar($andamento);
