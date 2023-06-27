@@ -9,7 +9,7 @@
 		<div class="bg-white py-2 collapse-inner rounded">
 			<h6 class="collapse-header">Opções:</h6>
 			<?php if (
-				$_SESSION['funcao_nivel_de_acesso'] === Executor::NOME ||
+				$_SESSION['funcao_nivel_de_acesso'] === Escritor::NOME ||
 				$_SESSION['funcao_nivel_de_acesso'] === Root::NOME
 			): ?>
 				<a class="collapse-item" href="<?php echo base_url('index.php/processo-novo'); ?>">Novo</a>

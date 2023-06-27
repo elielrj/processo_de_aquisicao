@@ -15,9 +15,14 @@ class ProcessoExibirLibrary
 {
 
 	private $ordem;
+	private $atualizar;
 
 	public function listar($processo)
 	{
+		//$this->atualizar = false;
+
+			$this->atualizar = $this->verificarPerfil($processo);
+
 		$this->ordem = 0;
 
 		$tabela = $this->processoExibirCabecalho($processo);
@@ -166,9 +171,9 @@ class ProcessoExibirLibrary
 		$line .= view_input_name_value_type('arquivo_status', $this->statusDoArquivo($arquivo));
 		$line .= view_input_name_value_type('arquivo_path', $this->pathDoArquivo($arquivo));
 		$line .= td_value(formulario_par_subir_arquivo());
-		$line .= td_value(view_form_submit_button('enviar', 'Upload/Atualizar', 'Sobe um novo ou atualiza o arquivo para este artefato do processo'));
-		$line .= td_value(view_form_submit_button('mais_um', '+', 'Incluir mais arquivo para este artefato',false) );
-		$line .= td_value(view_form_submit_button('menos_um', '-', 'Excluir artefato'));
+		$line .= td_value(view_form_submit_button('enviar', 'Upload/Atualizar', 'Sobe um novo ou atualiza o arquivo para este artefato do processo',!$this->atualizar));
+		$line .= td_value(view_form_submit_button('mais_um', '+', 'Incluir mais arquivo para este artefato',!$this->atualizar) );
+		$line .= td_value(view_form_submit_button('menos_um', '-', 'Excluir artefato',!$this->atualizar));
 		$line .= form_close();
 		return tr_view($line);
 	}
@@ -330,6 +335,19 @@ class ProcessoExibirLibrary
 		return
 			"<td>Despachar:</td>
 			<td><a class='btn btn-danger btn-lg btn-block' href={$href}>" . $nome . "</a></td>";
+	}
+
+	private function verificarPerfil($processo){
+
+		if($_SESSION['departamento_id'] == $processo->departamento->id){
+			return true;
+		}else if($_SESSION['funcao_nivel_de_acesso'] == Executor::NOME){
+			return true;
+		}else if($_SESSION['funcao_nivel_de_acesso'] == Root::NOME){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }
