@@ -70,7 +70,7 @@ class AndamentoDAO extends CI_Model
 				: (isset($arrayList['data_hora']) ? DataLibrary::dataHoraBr($arrayList['data_hora']) : null),
 			$arrayList->processo_id ?? ($arrayList['processo_id'] ?? null),
 			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null),
+			$arrayList->status ?? ($arrayList['status'] ?? null)
 		);
 	}
 
