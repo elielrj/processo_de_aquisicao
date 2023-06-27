@@ -231,15 +231,29 @@ function view_form_submit_cancelar($controller)
         " class='btn btn-danger btn-lg btn-block'>Cancelar</a>";
 }
 
-function view_form_submit_button($name, $value, $title)
+function view_form_submit_button($name, $value, $title, $disabled = false)
 {
+	$array = [];
+
+	if($disabled){
+
+		$array =  [
+			'class' => 'btn btn-primary',
+			'title' => $title,
+			'disabled'=>'disabled'
+		];
+
+	}else{
+		$array =  [
+			'class' => 'btn btn-primary',
+			'title' => $title,
+		];
+	}
+
     return form_submit(
         $name,
         $value,
-        [
-            'class' => 'btn btn-primary',
-            'title' => $title
-        ]
+        $array
     );
 }
 

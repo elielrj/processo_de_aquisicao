@@ -167,7 +167,7 @@ class ProcessoExibirLibrary
 		$line .= view_input_name_value_type('arquivo_path', $this->pathDoArquivo($arquivo));
 		$line .= td_value(formulario_par_subir_arquivo());
 		$line .= td_value(view_form_submit_button('enviar', 'Upload/Atualizar', 'Sobe um novo ou atualiza o arquivo para este artefato do processo'));
-		$line .= td_value(view_form_submit_button('mais_um', '+', 'Incluir mais arquivo para este artefato'));
+		$line .= td_value(view_form_submit_button('mais_um', '+', 'Incluir mais arquivo para este artefato',false) );
 		$line .= td_value(view_form_submit_button('menos_um', '-', 'Excluir artefato'));
 		$line .= form_close();
 		return tr_view($line);
