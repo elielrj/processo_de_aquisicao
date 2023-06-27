@@ -51,7 +51,7 @@ class ProcessoLibrary
             td_value($processo->numero),
             td_data_hora_br($processo->dataHora),
             td_value($processo->departamento->sigla),
-			td_value(ucfirst($processo->listaDeAndamento[0]->nome())),
+			td_value(ucfirst(str_replace('_od',' OD', str_replace('_fisc_adm',' Fisc Adm',$processo->listaDeAndamento[0]->nome())))),
 			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
 			td_status_completo($processo->completo)
         ]);
