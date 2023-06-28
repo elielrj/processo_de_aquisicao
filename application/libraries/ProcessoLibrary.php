@@ -78,11 +78,16 @@ class ProcessoLibrary
 				 */
 				if ($artefato->id == 63) {
 
-					if (count($artefato->arquivos) > 0) {
+					if (empty($artefato->arquivos)) {
 
-						$path = base_url($artefato->arquivos[(count($artefato->arquivos) - 1)]->path);
+						$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
 
-						return "<td><a href='" . $path . "'>NE</a></td>";
+						if ($path != '') {
+
+							return "<td><a href='" . base_url($path) . "'>NE</a></td>";
+						}else{
+							$path = '-';
+						}
 					}
 				}
 			}

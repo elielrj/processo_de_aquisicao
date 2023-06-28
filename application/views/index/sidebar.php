@@ -62,17 +62,17 @@ $acesso_ao_banco =
 	<!-- Heading -->
 	<div class="sidebar-heading">Processos</div>
 
-	<?php include_once('sidebar/processo.php'); ?>
+	<?php require('sidebar/processo.php'); ?>
 
 
 
-	<?php $acesso_ao_banco ? include_once('sidebar/banco_de_dados.php') : ''; ?>
+	<?php $acesso_ao_banco ? require('sidebar/banco_de_dados.php') : ''; ?>
 
 
 	<!-- Heading -->
 	<div class="sidebar-heading">Configurações</div>
 
-	<?php include_once('sidebar/configuracao_usuario.php'); ?>
+	<?php require('sidebar/configuracao_usuario.php'); ?>
 
 
 	<!-- Sidebar Toggler (Sidebar) -->
