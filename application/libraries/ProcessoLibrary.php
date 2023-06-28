@@ -83,8 +83,6 @@ class ProcessoLibrary
 						$path = base_url($artefato->arquivos[(count($artefato->arquivos) - 1)]->path);
 
 						return "<td><a href='" . $path . "'>NE</a></td>";
-					} else {
-						return "<td>-</td>";
 					}
 				}
 			}

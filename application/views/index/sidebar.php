@@ -43,7 +43,7 @@ $acesso_ao_banco =
 	<li class="nav-item active center">
 
 		<div class="sidebar-card d-nome d-lg-flex p-1">
-			<p class="text-center p-0 m-1">Versão 2.2.0</p>
+			<p class="text-center p-0 m-1">Versão 2.3.0</p>
 		</div>
 
 		<a class="nav-link" href="<?php echo base_url('index.php/processo-listar') ?>">
