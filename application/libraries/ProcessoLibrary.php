@@ -78,7 +78,7 @@ class ProcessoLibrary
 				 */
 				if ($artefato->id == 63) {
 
-					if (empty($artefato->arquivos)) {
+					if ($artefato->arquivos != array()) {
 
 						$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
 
