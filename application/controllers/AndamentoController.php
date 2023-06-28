@@ -27,7 +27,7 @@ class AndamentoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$leis = $this->AndamentoDAO->buscarTodosAtivosInativos($qtd_de_itens_para_exibir, $indice_no_data_base);
+		$andamento = $this->AndamentoDAO->buscarTodosAtivosInativos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
 			'controller' => 'AndamentoController',
@@ -37,11 +37,11 @@ class AndamentoController extends CI_Controller
 		$this->load->library('CriadorDeBotoes', $params);
 
 
-		$botoes = empty($leis) ? '' : $this->criadordebotoes->listar($indice);
+		$botoes = empty($andamento) ? '' : $this->criadordebotoes->listar($indice);
 
 		$dados = array(
 			'titulo' => 'Lista de andamentos',
-			'tabela' => $this->andamentolibrary->listar($leis, $indice_no_data_base),
+			'tabela' => $this->andamentolibrary->listar($andamento, $indice_no_data_base),
 			'pagina' => 'andamento/index.php',
 			'botoes' => $botoes,
 		);

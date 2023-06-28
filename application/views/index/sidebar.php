@@ -66,7 +66,7 @@ $acesso_ao_banco =
 
 
 
-	<?php $acesso_ao_banco ? include_once('sidebar/bando_de_dados.php') : ''; ?>
+	<?php $acesso_ao_banco ? include_once('sidebar/banco_de_dados.php') : ''; ?>
 
 
 	<!-- Heading -->

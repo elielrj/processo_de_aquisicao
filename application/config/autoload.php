@@ -62,7 +62,6 @@ $autoload['packages'] = array();
 $autoload['libraries'] = array(
     'database',
     'session',
-    'botao',
     'upload',
 );
 

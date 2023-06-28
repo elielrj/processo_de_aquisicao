@@ -82,7 +82,8 @@ $route['lei-novo'] = 'LeiController/novo';
 $route['tipo-listar'] = 'TipoController/listar';
 $route['tipo-novo'] = 'TipoController/novo';
 
-$route['ugs'] = 'UgController/listar';
+$route['ug-novo'] = 'UgController/novo';
+$route['ug-listar'] = 'UgController/listar';
 
 //USUÁRIO
 $route['usuario-listar'] = 'UsuarioController/listar';

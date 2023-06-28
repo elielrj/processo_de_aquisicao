@@ -16,7 +16,7 @@ class DAO extends CI_Model
 	{
 		return $this->db
 			->where(array('status' => true))
-			->order_by('id', 'DSC')
+			->order_by('id', 'DESC')
 			->get($banco, $inicio, $fim);
 	}
 
@@ -24,21 +24,21 @@ class DAO extends CI_Model
 	{
 		return $this->db
 			->where(array('status' => false))
-			->order_by('id', 'DSC')
+			->order_by('id', 'DESC')
 			->get($banco, $inicio, $fim);
 	}
 
 	public function buscarTodosAtivosInativos($banco, $inicio, $fim)
 	{
 		return $this->db
-			->order_by('id', 'DSC')
+			->order_by('id', 'DESC')
 			->get($banco, $inicio, $fim);
 	}
 
 	public function buscarTodosAtivosInativosOrderByProcessoId($banco, $inicio, $fim)
 	{
 		return $this->db
-			->order_by('processo_id', 'DSC')
+			->order_by('processo_id', 'DESC')
 			->get($banco, $inicio, $fim);
 	}
 

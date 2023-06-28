@@ -69,7 +69,6 @@ class UsuarioController extends CI_Controller
 
 		$this->load->library('CriadorDeBotoes', $params);
 
-        $quantidade =
 
         $botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
 
