@@ -36,7 +36,8 @@ class ProcessoLibrary
             'Seção',
 			'Andamento',
 			'Modificado às',
-			'Status'
+			'Status',
+			'NE'
         ]);
     }
 
@@ -53,7 +54,8 @@ class ProcessoLibrary
             td_value($processo->departamento->sigla),
 			td_value(ucfirst(str_replace('_od',' OD', str_replace('_fisc_adm',' Fisc Adm',$processo->listaDeAndamento[0]->nome())))),
 			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
-			td_status_completo($processo->completo)
+			td_status_completo($processo->completo),
+			td_value($this->exibirNotaDeEmpenho($processo))
         ]);
     }
 
@@ -63,4 +65,16 @@ class ProcessoLibrary
             base_url('index.php/ProcessoController/exibir/' . $id)
             . "'>{$objeto}</a></td>";
     }
+
+	private function exibirNotaDeEmpenho($processo){
+
+		$arquivo_ne = ' - ';
+
+		foreach ($processo->tipo->listaDeArtefatos as $artefato){
+			if($artefato->id == 65){
+				$arquivo_ne =  $artefato->arquivo[(count($artefato->arquivo)-1)];
+			}
+		}
+		return $arquivo_ne;
+	}
 }
