@@ -72,7 +72,7 @@ class ProcessoLibrary
 
 		foreach ($processo->tipo->listaDeArtefatos as $artefato){
 			if($artefato->id == 63){
-				$arquivo_ne =  isset($artefato->arquivo) ? $artefato->arquivo[(count($artefato->arquivo)-1)] : ' - ';
+				$arquivo_ne =  isset($artefato->arquivo) ? $artefato->arquivo[(count($artefato->arquivo)-1)]->path : ' - ';
 			}
 		}
 		return $arquivo_ne;
