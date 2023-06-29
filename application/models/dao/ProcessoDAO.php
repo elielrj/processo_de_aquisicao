@@ -11,6 +11,7 @@ class ProcessoDAO extends CI_Model
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->load->model('dao/DAO');
 		$this->load->model('dao/DepartamentoDAO');
 		$this->load->model('dao/LeiDAO');
@@ -79,9 +80,9 @@ class ProcessoDAO extends CI_Model
 		$this->DAO->deletar(self::$TABELA_DB, $processo->array());
 	}
 
-	public function contar()
+	public function contar($where=[])
 	{
-		return $this->DAO->contar(self::$TABELA_DB);
+		return $this->DAO->contar(self::$TABELA_DB,$where);
 	}
 
 	public function contarProcessosPorSetorDemandante()

@@ -63,6 +63,68 @@ class ProcessoController extends CI_Controller
 
 	}
 
+	function listarTodosProcessosIncompleto($indice = 1)
+	{
+		$indice--;
+
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
+
+		$where = array('completo'=>false);
+
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base, $where);
+
+		$params = [
+			'controller' => 'ProcessoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
+		];
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
+
+		$dados = array(
+			'titulo' => 'Lista de processos',
+			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'pagina' => 'processo/index.php',
+			'botoes' => $botoes,
+		);
+
+		$this->load->view('index', $dados);
+
+	}
+
+	function listarTodosProcessosCompleto($indice = 1)
+	{
+		$indice--;
+
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
+
+		$where = array('completo'=>true);
+
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base, $where);
+
+		$params = [
+			'controller' => 'ProcessoController',
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
+		];
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
+
+		$dados = array(
+			'titulo' => 'Lista de processos',
+			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'pagina' => 'processo/index.php',
+			'botoes' => $botoes,
+		);
+
+		$this->load->view('index', $dados);
+
+	}
+
 	function listarPorSetorDemandante($indice = 1)
 	{
 		$indice--;
