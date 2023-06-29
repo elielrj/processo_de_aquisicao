@@ -164,13 +164,13 @@ class ProcessoExibirLibrary
 		$line .= td_value($this->numeroDeOrdemComValorDeSubIndiceSeForOCaso($subindice));
 		$line .= td_value($link, 'Visualizar artefato');
 		$line .= view_form_open_multipart('ArquivoController/alterarArquivoDeUmProcesso');
-		$line .= view_input_placeholder('arquivo_nome', $this->nomeDoArquivo($arquivo), 'Descrição');
+		$line .= view_input_placeholder('arquivo_nome', $this->nomeDoArquivo($arquivo), 'Descrição',!$this->atualizar);
 		$line .= view_input_name_value_type('arquivo_id', $this->idDoArquivo($arquivo));
 		$line .= view_input_name_value_type('processo_id', $processo->id);
 		$line .= view_input_name_value_type('artefato_id', $artefato->id);
 		$line .= view_input_name_value_type('arquivo_status', $this->statusDoArquivo($arquivo));
 		$line .= view_input_name_value_type('arquivo_path', $this->pathDoArquivo($arquivo));
-		$line .= td_value(formulario_par_subir_arquivo());
+		$line .= td_value(formulario_par_subir_arquivo('arquivo',!$this->atualizar));
 		$line .= td_value(view_form_submit_button('enviar', 'Upload/Atualizar', 'Sobe um novo ou atualiza o arquivo para este artefato do processo',!$this->atualizar));
 		$line .= td_value(view_form_submit_button('mais_um', '+', 'Incluir mais arquivo para este artefato',!$this->atualizar) );
 		$line .= td_value(view_form_submit_button('menos_um', '-', 'Excluir artefato',!$this->atualizar));

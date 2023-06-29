@@ -72,7 +72,7 @@ function td_data_br($value)
 
 function from_array_to_table_row($arrayList)
 {
-    $line = "<tr class='text-center'>";
+    $line = "<tr class='text-center col-md-1'>";
 
     foreach ($arrayList as $value) {
         $line .= $value;
@@ -188,29 +188,61 @@ function view_text_area($label, $name, $id, $type, $value = '', $maxlength = 250
         (($type != 'hidden') ? br_multiples() : '');
 }
 
-function formulario_par_subir_arquivo($name = 'arquivo')
+function formulario_par_subir_arquivo($name = 'arquivo',$disabled = false)
 {
-    return form_input([
-        'name' => $name,
-        'type' => 'file',
-        'accept' => '.pdf'
-    ]);
+	$array = [];
+
+	if($disabled){
+
+		$array =  [
+			'name' => $name,
+			'type' => 'file',
+			'accept' => '.pdf',
+			'disabled'=>'disabled'
+		];
+
+	}else{
+		$array =  [
+			'name' => $name,
+			'type' => 'file',
+			'accept' => '.pdf'
+		];
+	}
+
+    return form_input($array);
 }
 
 
 
-function view_input_placeholder($name, $value = '', $placeholder = '')
+function view_input_placeholder($name, $value = '', $placeholder = '', $disabled=false)
 {
+	$array = [];
+
+	if($disabled){
+
+		$array =  [
+			'name' => $name,
+			'class' => 'form-control',
+			'type' => 'text',
+			'value' => $value,
+			'maxlength' => 150,
+			'placeholder' => $placeholder,
+			'disabled'=>'disabled'
+		];
+
+	}else{
+		$array =  [
+			'name' => $name,
+			'class' => 'form-control',
+			'type' => 'text',
+			'value' => $value,
+			'maxlength' => 150,
+			'placeholder' => $placeholder
+		];
+	}
     return
         td_value(
-            form_input([
-                'name' => $name,
-                'class' => 'form-control',
-                'type' => 'text',
-                'value' => $value,
-                'maxlength' => 150,
-                'placeholder' => $placeholder
-            ])
+            form_input($array)
         );
 
 }

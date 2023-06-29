@@ -61,7 +61,7 @@ class ProcessoLibrary
 
 	private function objeto($objeto, $id)
 	{
-		return "<td><a href='" .
+		return "<td class='col-md-3'><a  href='" .
 			base_url('index.php/ProcessoController/exibir/' . $id)
 			. "'>{$objeto}</a></td>";
 	}
