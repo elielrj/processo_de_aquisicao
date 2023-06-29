@@ -60,6 +60,7 @@ $route['arquivo-deletar'] = 'ArquivoController/deletar';
 
 //PROCESSO
 $route['processo-listar'] = 'ProcessoController/listar';
+$route['processo-listar-por-sc'] = 'ProcessoController/listarPorSetorDemandante';
 $route['processo-novo'] = 'ProcessoController/novo';
 
 $route['artefato-listar'] = 'ArtefatoController/listar';

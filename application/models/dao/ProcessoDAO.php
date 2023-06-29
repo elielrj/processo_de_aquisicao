@@ -40,9 +40,9 @@ class ProcessoDAO extends CI_Model
 		return $processo->id;
 	}
 
-	public function buscarTodos($inicial, $final)
+	public function buscarTodos($inicial, $final, $where = [])
 	{
-		$array = $this->DAO->buscarTodosOrderByData(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodosOrderByData(self::$TABELA_DB, $inicial, $final, $where);
 
 		return $this->criarLista($array);
 	}
@@ -82,6 +82,13 @@ class ProcessoDAO extends CI_Model
 	public function contar()
 	{
 		return $this->DAO->contar(self::$TABELA_DB);
+	}
+
+	public function contarProcessosPorSetorDemandante()
+	{
+		$where = ['departamento_id' => $_SESSION['departamento_id']];
+
+		return $this->DAO->contar(self::$TABELA_DB, $where);
 	}
 
 	public function contarDesativados()

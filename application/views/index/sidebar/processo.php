@@ -18,7 +18,8 @@ include_once('application/models/bo/nivel_de_acesso/Escritor.php');
 			): ?>
 				<a class="collapse-item" href="<?php echo base_url('index.php/processo-novo'); ?>">Novo</a>
 			<?php endif; ?>
-			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar'); ?>">Listar Todos</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-por-sc'); ?>">Listar por Sç</a>
 		</div>
 	</div>
 </li>

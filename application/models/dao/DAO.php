@@ -42,10 +42,11 @@ class DAO extends CI_Model
 			->get($banco, $inicio, $fim);
 	}
 
-	public function buscarTodosOrderByData($banco, $inicio, $fim)
+	public function buscarTodosOrderByData($banco, $inicio, $fim,$where = [])
 	{
 		return $this->db
 			->order_by('data_hora', 'DESC')
+			->where($where)
 			->get($banco, $inicio, $fim);
 	}
 
@@ -84,10 +85,10 @@ class DAO extends CI_Model
 		$this->db->delete($banco, $array);
 	}
 
-	public function contar($banco)
+	public function contar($banco, $where = ['status' => true])
 	{
 		return $this->db
-			->where(array('status' => true))
+			->where($where)
 			->count_all_results($banco);
 	}
 
