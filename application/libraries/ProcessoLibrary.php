@@ -8,6 +8,7 @@ class ProcessoLibrary
 {
 	private $ordem;
 	private $controller = 'ProcessoController';
+	private $nome_do_arquivo = '';
 
 	public function listar($processos, $ordem)
 	{
@@ -44,10 +45,12 @@ class ProcessoLibrary
 
 	private function linhaDoProcesso($processo)
 	{
+		$exibir_nota_de_empenho = $this->exibirNotaDeEmpenho($processo);
+
 		return from_array_to_table_row([
 			td_ordem($this->ordem),
 			$this->objeto($processo->objeto, $processo->id),
-			td_value($processo->tipo->nome),
+			td_value($processo->tipo->nome . ' ' . $this->nome_do_arquivo),
 			td_value($processo->lei->modalidade->nome),
 			td_value($processo->numero),
 			td_data_hora_br($processo->dataHora),
@@ -55,7 +58,7 @@ class ProcessoLibrary
 			td_value(ucfirst(str_replace('_od', ' OD', str_replace('_fisc_adm', ' Fisc Adm', $processo->listaDeAndamento[0]->nome())))),
 			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
 			td_status_completo($processo->completo),
-			$this->exibirNotaDeEmpenho($processo)
+			$exibir_nota_de_empenho
 		]);
 	}
 
@@ -78,14 +81,19 @@ class ProcessoLibrary
 				 */
 				if ($artefato->id == 63) {
 
+					$this->nome_do_arquivo = $artefato->arquivos[(count($artefato->arquivos) - 1)]->nome;
+					var_dump($this->nome_do_arquivo);
 					if ($artefato->arquivos != array()) {
 
 						$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
 
+
+
 						if ($path != '') {
 
+
 							return "<td><a href='" . base_url($path) . "'>NE</a></td>";
-						}else{
+						} else {
 							$path = '-';
 						}
 					}
