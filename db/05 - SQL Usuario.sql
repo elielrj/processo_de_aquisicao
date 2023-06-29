@@ -9,5 +9,5 @@ VALUES
 (4,'Aprovador OD','Aprovador de Processos','aprovadorod@aprovadorod','09856260701',md5(123), 3,true,1,4),
 (5,'SALC','Executor de Processos','executor@executor','09856260701',md5(123), 3,true,1,5),
 (6,'Conformador','Conformador de Processos','conformador@conformador','09856260701',md5(123), 3,true,1,6),
-(7,'Admiinistrador','Admiinistrador do Sistema','administrador@administrador','09856260701',md5(123), 4,true,1,7),
+(7,'Administrador','Administrador do Sistema','administrador@administrador','09856260701',md5(123), 4,true,1,7),
 (8,'Super','Super Usuário','root@root','09856260701',md5(123), 1,true,1,8);
