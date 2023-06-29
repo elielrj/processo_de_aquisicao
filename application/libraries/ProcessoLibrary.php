@@ -78,7 +78,7 @@ class ProcessoLibrary
 
 		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 			/**
-			 * Importante o valor do ID no database da "Nota de Empenho" ser o mesmo!
+			 * Importante o valor do ID no database do Artefato da "Nota de Empenho" é o mesmo abaixo!
 			 */
 			if ($artefato->id == 63) {
 
@@ -95,7 +95,9 @@ class ProcessoLibrary
 
 					if ($path != '') {
 
-
+						if ($this->nome_do_arquivo == '-') {
+							$this->nome_do_arquivo = 'Nota de Empenho';
+						}
 						return "<td><a href='" . base_url($path) . "'>{$this->nome_do_arquivo}</a></td>";
 					} else {
 						$path = $this->nome_do_arquivo;
@@ -118,7 +120,7 @@ class ProcessoLibrary
 
 		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 			/**
-			 * Importante o valor do ID no database da "Nota de Empenho" ser o mesmo!
+			 * Importante o valor do ID no database do Artefato "TCU" é o mesmo deste abaixo!
 			 */
 			if ($artefato->id == 57) {
 
@@ -130,6 +132,9 @@ class ProcessoLibrary
 						$tcu = true;
 					}
 				}
+				/**
+				 * Importante o valor do ID no database do Artefato "CADIN" é o mesmo deste abaixo!
+				 */
 			} else if ($artefato->id == 58) {
 
 				if ($artefato->arquivos != array()) {
@@ -140,6 +145,9 @@ class ProcessoLibrary
 						$cadin = true;
 					}
 				}
+				/**
+				 * Importante o valor do ID no database do Artefato "SICAF" é o mesmo deste abaixo!
+				 */
 			} else if ($artefato->id == 59) {
 
 				if ($artefato->arquivos != array()) {
