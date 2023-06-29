@@ -267,6 +267,7 @@ function view_form_submit_button($name, $value, $title, $disabled = false)
 {
 	$array = [];
 
+
 	if($disabled){
 
 		$array =  [
