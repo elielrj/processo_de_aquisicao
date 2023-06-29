@@ -38,7 +38,8 @@ class ProcessoLibrary
 			'Andamento',
 			'Modificado às',
 			'Status',
-			'NE'
+			'NE',
+			'Certidões'
 		]);
 	}
 
@@ -50,7 +51,7 @@ class ProcessoLibrary
 		return from_array_to_table_row([
 			td_ordem($this->ordem),
 			$this->objeto($processo->objeto, $processo->id),
-			td_value($processo->tipo->nome . ' ' . $this->nome_do_arquivo),
+			td_value($processo->tipo->nome),
 			td_value($processo->lei->modalidade->nome),
 			td_value($processo->numero),
 			td_data_hora_br($processo->dataHora),
@@ -58,7 +59,8 @@ class ProcessoLibrary
 			td_value(ucfirst(str_replace('_od', ' OD', str_replace('_fisc_adm', ' Fisc Adm', $processo->listaDeAndamento[0]->nome())))),
 			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
 			td_status_completo($processo->completo),
-			$exibir_nota_de_empenho
+			$exibir_nota_de_empenho,
+			$this->verificarSeAsCertoesForamAnexadas($processo)
 		]);
 	}
 
@@ -71,35 +73,86 @@ class ProcessoLibrary
 
 	private function exibirNotaDeEmpenho($processo)
 	{
+
 		$path = '-';
 
-		if ($processo->completo) {
+		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
+			/**
+			 * Importante o valor do ID no database da "Nota de Empenho" ser o mesmo!
+			 */
+			if ($artefato->id == 63) {
 
-			foreach ($processo->tipo->listaDeArtefatos as $artefato) {
-				/**
-				 * Importante o valor do ID no database da "Nota de Empenho" ser o mesmo!
-				 */
-				if ($artefato->id == 63) {
+
+				if ($artefato->arquivos != array()) {
+
+					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
 
 					$this->nome_do_arquivo = $artefato->arquivos[(count($artefato->arquivos) - 1)]->nome;
-					var_dump($this->nome_do_arquivo);
-					if ($artefato->arquivos != array()) {
 
-						$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+					if ($this->nome_do_arquivo == '') {
+						$this->nome_do_arquivo = '-';
+					}
 
-
-
-						if ($path != '') {
+					if ($path != '') {
 
 
-							return "<td><a href='" . base_url($path) . "'>NE</a></td>";
-						} else {
-							$path = '-';
-						}
+						return "<td><a href='" . base_url($path) . "'>{$this->nome_do_arquivo}</a></td>";
+					} else {
+						$path = $this->nome_do_arquivo;
 					}
 				}
 			}
 		}
+
 		return "<td>" . $path . "</td>";
+
+	}
+
+	private function verificarSeAsCertoesForamAnexadas($processo)
+	{
+		$path = '-';
+
+		$tcu = false;
+		$cadin = false;
+		$sicaf = false;
+
+		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
+			/**
+			 * Importante o valor do ID no database da "Nota de Empenho" ser o mesmo!
+			 */
+			if ($artefato->id == 57) {
+
+				if ($artefato->arquivos != array()) {
+
+					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+
+					if ($path != '') {
+						$tcu = true;
+					}
+				}
+			} else if ($artefato->id == 58) {
+
+				if ($artefato->arquivos != array()) {
+
+					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+
+					if ($path != '') {
+						$cadin = true;
+					}
+				}
+			} else if ($artefato->id == 59) {
+
+				if ($artefato->arquivos != array()) {
+
+					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+
+					if ($path != '') {
+						$sicaf = true;
+					}
+				}
+			}
+		}
+
+		return td_status_completo($sicaf && $cadin && $tcu);
 	}
 }
