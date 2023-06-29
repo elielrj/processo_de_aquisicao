@@ -43,7 +43,6 @@ class ArquivoLibrary
             $this->arquivoPath($arquivo->path),
             td_data_hora_br($arquivo->dataHora),
 			td_value($arquivo->nome),
-			td_value($arquivo->nome),
             td_status($arquivo->status),
 			td_value($arquivo->processoId),
 			td_value($arquivo->usuarioId),

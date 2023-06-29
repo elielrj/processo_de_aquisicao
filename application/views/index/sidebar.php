@@ -7,7 +7,7 @@ $posto_ou_raduacao_e_nome_de_guerra =
 		? ($_SESSION['hierarquia_sigla'] . " " . $_SESSION['nome_de_guerra'])
 		: '';
 
-$nivel_de_acesso = 	$_SESSION['funcao_nivel_de_acesso'] ?? '';
+$nivel_de_acesso = $_SESSION['funcao_nivel_de_acesso'] ?? '';
 
 include_once('application/models/bo/nivel_de_acesso/Administrador.php');
 include_once('application/models/bo/nivel_de_acesso/Root.php');
@@ -15,17 +15,18 @@ include_once('application/models/bo/nivel_de_acesso/Root.php');
 
 $acesso_ao_banco =
 	isset($_SESSION['funcao_nivel_de_acesso']) &&
-		(
-			$_SESSION['funcao_nivel_de_acesso'] == Administrador::NOME ||
-			$_SESSION['funcao_nivel_de_acesso'] == Root::NOME
-		);
+	(
+		$_SESSION['funcao_nivel_de_acesso'] == Administrador::NOME ||
+		$_SESSION['funcao_nivel_de_acesso'] == Root::NOME
+	);
 ?>
 
 
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url('index.php/usuario-alterar-usuario') ?>">
+	<a class="sidebar-brand d-flex align-items-center justify-content-center"
+	   href="<?php echo base_url('index.php/usuario-alterar-usuario') ?>">
 
 		<div class="sidebar-brand-text mx-3">
 			<small>
@@ -62,17 +63,18 @@ $acesso_ao_banco =
 	<!-- Heading -->
 	<div class="sidebar-heading">Processos</div>
 
-	<?php require('sidebar/processo.php'); ?>
+	<?php include_once('sidebar/processo.php'); ?>
 
 
 
-	<?php $acesso_ao_banco ? require('sidebar/banco_de_dados.php') : ''; ?>
+	<?php $acesso_ao_banco ? include_once('sidebar/banco_de_dados.php') : ''; ?>
+
 
 
 	<!-- Heading -->
 	<div class="sidebar-heading">Configurações</div>
 
-	<?php require('sidebar/configuracao_usuario.php'); ?>
+	<?php include_once('sidebar/configuracao_usuario.php'); ?>
 
 
 	<!-- Sidebar Toggler (Sidebar) -->

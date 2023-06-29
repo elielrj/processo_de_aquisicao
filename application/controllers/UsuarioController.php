@@ -6,12 +6,11 @@ class UsuarioController extends CI_Controller
 {
 
 	public static $usuarioController = 'UsuarioController';
-    private $usuarioDAO;
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
+        //$this->load->library('session');
         $this->load->model('dao/UsuarioDAO');
         $this->load->model('dao/DepartamentoDAO');
         $this->load->model('dao/FuncaoDAO');
