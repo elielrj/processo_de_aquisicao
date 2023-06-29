@@ -1,4 +1,8 @@
 <!-- Nav Item - Utilities Collapse Processos -->
+<?php
+include_once('application/models/bo/nivel_de_acesso/Root.php');
+include_once('application/models/bo/nivel_de_acesso/Escritor.php');
+?>
 <li class="nav-item">
 	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
 	   aria-controls="collapseThree">
