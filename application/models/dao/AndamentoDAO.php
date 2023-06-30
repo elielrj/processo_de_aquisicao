@@ -58,6 +58,15 @@ class AndamentoDAO extends CI_Model
 		return $this->criarLista($array);
 	}
 
+	public function buscarTodosAtivosInativosDeUmProcesso($proceso_id)
+	{
+		$whare = array('processo_id' => $proceso_id);
+
+		$array = $this->DAO->buscarOndeOrderById(self::$TABELA_DB, $whare);
+
+		return $this->criarLista($array);
+	}
+
 	public static function toObject($arrayList)
 	{
 		return new Andamento(
@@ -159,6 +168,7 @@ class AndamentoDAO extends CI_Model
 
 		$this->AndamentoDAO->criar($andamento);
 	}
+
 	public function processoConformado($processo_id)
 	{
 		$andamento = new Andamento(

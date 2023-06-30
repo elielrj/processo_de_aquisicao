@@ -41,7 +41,7 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
 			'controller' => 'ProcessoController',
@@ -70,9 +70,9 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('completo'=>false);
+		$where = array('completo' => false);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base, $where);
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
 			'controller' => 'ProcessoController',
@@ -101,9 +101,9 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('completo'=>true);
+		$where = array('completo' => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base, $where);
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
 			'controller' => 'ProcessoController',
@@ -132,9 +132,9 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('departamento_id'=>$_SESSION['departamento_id']);
+		$where = array('departamento_id' => $_SESSION['departamento_id']);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base,$where);
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
 			'controller' => 'ProcessoController',
@@ -173,14 +173,14 @@ class ProcessoController extends CI_Controller
 	{
 		$this->AndamentoDAO->processoEnviado($processo_id);
 
-		redirect('ProcessoController/exibir/'.$processo_id);
+		redirect('ProcessoController/exibir/' . $processo_id);
 	}
 
 	public function aprovarProcessoFiscAdm($processo_id)
 	{
 		$this->AndamentoDAO->processoAprovadoFiscAdm($processo_id);
 
-		 redirect('ProcessoController/exibir/'.$processo_id);
+		redirect('ProcessoController/exibir/' . $processo_id);
 	}
 
 
@@ -188,21 +188,23 @@ class ProcessoController extends CI_Controller
 	{
 		$this->AndamentoDAO->processoAprovadoOd($processo_id);
 
-		redirect('ProcessoController/exibir/'.$processo_id);
+		redirect('ProcessoController/exibir/' . $processo_id);
 	}
+
 	public function executarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoExecutado($processo_id);
 
-		redirect('ProcessoController/exibir/'.$processo_id);
+		redirect('ProcessoController/exibir/' . $processo_id);
 	}
 
 	public function conformarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoConformado($processo_id);
 
-		redirect('ProcessoController/exibir/'.$processo_id);
+		redirect('ProcessoController/exibir/' . $processo_id);
 	}
+
 	public function arquivarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoArquivar($processo_id);
@@ -213,7 +215,7 @@ class ProcessoController extends CI_Controller
 
 		$this->ProcessoDAO->atualizar($processo);
 
-		redirect('ProcessoController/exibir/'.$processo_id);
+		redirect('ProcessoController/exibir/' . $processo_id);
 	}
 
 	public function visualizarProcesso($id)
@@ -229,7 +231,12 @@ class ProcessoController extends CI_Controller
 		]);
 	}
 
-	public function imprimirProcesso($id)
+	public function imprimirCertidoes($processo_id)
+	{
+		$this->imprimirProcesso($processo_id, true);
+	}
+
+	public function imprimirProcesso($id, $so_certidao = false)
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
 		/*
@@ -243,7 +250,7 @@ class ProcessoController extends CI_Controller
 
 		//$html = $this->processoimprimirlibrary->imprimir($processo);
 
-		$this->imprimir($processo);
+		$this->imprimir($processo, $so_certidao);
 
 	}
 
@@ -300,7 +307,7 @@ class ProcessoController extends CI_Controller
 			'titulo' => 'Alterar Processo',
 			'pagina' => 'processo/alterar.php',
 			'processo' => $processo,
-			'tipos_options'=>$this->TipoDAO->options(),
+			'tipos_options' => $this->TipoDAO->options(),
 			'departamentos' => $this->DepartamentoDAO->options(),
 			'modalidades_options' => $this->ModalidadeDAO->options(),
 			'leis_options' => $this->LeiDAO->options($processo->lei->modalidade->id)
@@ -348,8 +355,9 @@ class ProcessoController extends CI_Controller
 	 * com o auxilio da biblioteca PDFMerger
 	 * @param mixed $processo
 	 * @return void
+	 * importante: os ID do Artefato deve ser o mesmo do DataBase!!!
 	 */
-	private function imprimir($processo)
+	private function imprimir($processo, $so_certidao)
 	{
 		include_once 'vendor/PDFMerger/PDFMerger.php';
 
@@ -357,23 +365,53 @@ class ProcessoController extends CI_Controller
 
 		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 
-			if ($artefato->arquivos != null) {
+			if ($so_certidao) {
+				switch ($artefato->id) {
+					case 55:
+					case 56:
+					case 57:
+					case 58:
+					case 59:
+					case 60:
+					case 61:
+					case 62:
+					{
+						if ($artefato->arquivos != null) {
 
-				foreach ($artefato->arquivos as $arquivo) {
+							foreach ($artefato->arquivos as $arquivo) {
 
-					if ($arquivo->path != '' && $arquivo->path != null) {
-						$pdf->addPDF($arquivo->path, 'all');
+								if ($arquivo->path != '' && $arquivo->path != null) {
+									$pdf->addPDF($arquivo->path, 'all');
+								}
+							}
+						}
+					}
+					default:
+						break;
+				}
+			} else {
+				if ($artefato->arquivos != null) {
 
+					foreach ($artefato->arquivos as $arquivo) {
+
+						if ($arquivo->path != '' && $arquivo->path != null) {
+							$pdf->addPDF($arquivo->path, 'all');
+						}
 					}
 				}
 			}
+
+
 		}
 
-		$nomeDoArquivo =
+		$nomeDoArquivo = $so_certidao ? 'Certidoes do ' : '';
+
+		$nomeDoArquivo .=
 			'Processo de ' . $processo->tipo->nome .
 			' Lei' . $processo->lei->toString() .
 			' Numero ' . $processo->numero;
 
 		$pdf->merge('download', $nomeDoArquivo . '.pdf');
 	}
+
 }

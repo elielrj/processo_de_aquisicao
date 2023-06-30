@@ -60,7 +60,7 @@ class ProcessoLibrary
 			td_alterar_processo($processo->numero, $processo->id, $processo->departamento->id),
 			td_data_hora_br($processo->dataHora),
 			td_value($processo->departamento->sigla),
-			td_value(ucfirst(str_replace('_od', ' OD', str_replace('_fisc_adm', ' Fisc Adm', $processo->listaDeAndamento[0]->nome())))),
+			$this->andamento($processo),
 			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
 			td_status_completo($processo->completo),
 			$exibir_nota_de_empenho,
@@ -73,6 +73,19 @@ class ProcessoLibrary
 		return "<td class='col-md-3'><a  href='" .
 			base_url('index.php/ProcessoController/exibir/' . $id)
 			. "'>{$objeto}</a></td>";
+	}
+
+	private function andamento($processo)
+	{
+		$andamento = $processo->listaDeAndamento[0]->nome();
+
+		$andamento = ucfirst(str_replace('_od', ' OD', str_replace('_fisc_adm', ' Fisc Adm', $andamento)));
+
+		$href = base_url('index.php/AndamentoController/listarPorProcesso/' . $processo->id);
+
+		$link = "<a  href='" . $href . "'>{$andamento}</a>";
+
+		return td_value($link);
 	}
 
 	private function exibirNotaDeEmpenho($processo)
@@ -204,6 +217,15 @@ class ProcessoLibrary
 			}
 		}
 
-		return td_status_completo($sicaf && $cadin && $tcu);
+		if ($sicaf && $cadin && $tcu) {
+
+			$href = base_url('index.php/ProcessoController/imprimirCertidoes/' . $processo->id);
+
+			return td_status_completo_com_href($sicaf && $cadin && $tcu, $href);
+
+		} else {
+			return td_status_completo($sicaf && $cadin && $tcu);
+		}
 	}
+
 }

@@ -79,4 +79,18 @@ class AndamentoController extends CI_Controller
 
 		redirect(self::$andamentoController);
 	}
+
+	public function listarPorProcesso($proceso_id)
+	{
+		$andamentos = $this->AndamentoDAO->buscarTodosAtivosInativosDeUmProcesso($proceso_id);
+
+		$dados = array(
+			'titulo' => 'Lista de andamento do processo',
+			'tabela' => $this->andamentolibrary->listar($andamentos, 0),
+			'pagina' => 'andamento/index.php',
+			'botoes' => '',
+		);
+
+		$this->load->view('index', $dados);
+	}
 }

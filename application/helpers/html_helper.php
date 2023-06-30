@@ -43,6 +43,15 @@ function td_status_completo($status)
 			: 'Pendente') .
 		"</p></td>";
 }
+function td_status_completo_com_href($status,$controller)
+{
+	return
+		"<td><a href='".$controller."'><p style='color:" . ($status ? 'green' : 'red') . "'>" .
+		($status
+			? 'Finalizado'
+			: 'Pendente') .
+		"</p></a></td>";
+}
 
 function td_value($value)
 {
