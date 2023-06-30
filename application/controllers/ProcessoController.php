@@ -259,9 +259,9 @@ class ProcessoController extends CI_Controller
 			'pagina' => 'processo/novo.php',
 			'departamentos' => $this->DepartamentoDAO->options(),
 			'departamento' => $usuarioAtual->departamento->id,
-			'modalidades' => $this->ModalidadeDAO->options(),
-			'tipos' => $this->TipoDAO->options(),
-			'leis' => $this->LeiDAO->options($lei_e_modalidade_pre_definido),
+			'modalidades_options' => $this->ModalidadeDAO->options(),
+			'tipos_options' => $this->TipoDAO->options(),
+			'leis_options' => $this->LeiDAO->options($lei_e_modalidade_pre_definido),
 			'lei_e_modalidade_pre_definido' => $lei_e_modalidade_pre_definido
 		);
 
@@ -277,13 +277,12 @@ class ProcessoController extends CI_Controller
 			null,
 			$data_post['objeto'],
 			$data_post['numero'],
-			DataLibrary::dataHoraMySQL(),
-			uniqid(),
+			$data_post['data_hora'],
+			$data_post['chave'],
 			$this->DepartamentoDAO->buscarPorId($this->session->departamento_id),
 			$this->LeiDAO->buscarPorId($data_post['lei_id']),
 			$this->TipoDAO->buscarPorId($data_post['tipo_id']),
 			$data_post['completo'],
-			true,
 			true
 		);
 
@@ -301,9 +300,10 @@ class ProcessoController extends CI_Controller
 			'titulo' => 'Alterar Processo',
 			'pagina' => 'processo/alterar.php',
 			'processo' => $processo,
+			'tipos_options'=>$this->TipoDAO->options(),
 			'departamentos' => $this->DepartamentoDAO->options(),
-			'modalidades' => $this->ModalidadeDAO->options(),
-
+			'modalidades_options' => $this->ModalidadeDAO->options(),
+			'leis_options' => $this->LeiDAO->options($processo->lei->modalidade->id)
 		);
 
 		$this->load->view('index', $dados);
@@ -319,10 +319,11 @@ class ProcessoController extends CI_Controller
 			$data_post['id'],
 			$data_post['objeto'],
 			$data_post['numero'],
-			$this->data->dataHoraMySQL(),
+			$data_post['data_hora'],
 			$data_post['chave'],
 			$this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-			$this->ModalidadeDAO->buscarPorId($data_post['modalidade_id']),
+			$this->LeiDAO->buscarPorId($data_post['lei_id']),//$this->ModalidadeDAO->buscarPorId($data_post['modalidade_id']),
+			$this->TipoDAO->buscarPorId($data_post['tipo_id']),
 			$data_post['completo'],
 			$data_post['status']
 		);

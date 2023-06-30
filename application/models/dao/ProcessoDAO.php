@@ -71,7 +71,7 @@ class ProcessoDAO extends CI_Model
 	}
 
 	public function atualizar($processo)
-	{
+	{//var_dump($processo->array());
 		$this->DAO->atualizar(self::$TABELA_DB, $processo->array());
 	}
 

@@ -1,29 +1,35 @@
 <?php
+
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
-echo "<h1>{$titulo}</h1>";
+view_titulo($titulo);
 
-echo form_open('ProcessoController/atualizar', ['class' => 'form-group']) .
+view_form_open('ProcessoController/atualizar');
 
-    form_input(['name' => 'id', 'type' => 'hidden', 'value' => $processo->id]) . "</br>" .
+view_input('','id','id','hidden',$processo->id);
 
-    form_label('Objeto do Processo') . form_input(['name' => 'objeto', 'class' => 'form-control', 'maxlength' => 250, 'value' => $processo->objeto]) . "</br>" .
+view_input('Objeto do Processo','objeto','objeto','text',$processo->objeto);
+view_input('Número (Nup/Nud)','numero','numero','text',$processo->numero,20);
+view_input('','data_hora','data_hora','hidden',DataLibrary::dataHoraMySQL());
+view_input('','departamento_id','departamento_id','hidden',$processo->departamento->id);
 
-    form_label('Número (Nup/Nud)') . form_input(['name' => 'numero', 'class' => 'form-control', 'maxlength' => 20, 'value' => $processo->numero]) . "</br>" .
+view_dropdown('Tipo de Processo','tipo_id',$tipos_options,$processo->tipo->id);
+view_dropdown('Modalidade','modalidade_id',$modalidades_options,$processo->lei->modalidade->id);
+view_dropdown('Lei','lei_id',$leis_options,$processo->lei->id);
 
-    form_label('Data do Processo') . form_input(['name' => 'data', 'class' => 'form-control daterange', 'type' => 'date', 'value' => (new DateTime($processo->data))->format('d-m-Y')]) . "</br>" . 
 
-    form_label('Chave de Acesso') . form_input(['name' => 'chave', 'class' => 'form-control', 'value' => $processo->chave]) . "</br>" .
+view_input('','completo','completo','hidden',$processo->completo);
 
-    form_label('Seção') . form_dropdown('departamento_id', $departamentos, $processo->departamento->id, ['class' => 'form-control']) . "</br>" .
+view_input('','chave','chave','hidden',$processo->chave);
 
-    form_label('Modalidade') . form_dropdown('modalidade_id', $modalidades, $processo->modalidade->id,[ 'class' => 'form-control']) . "</br>" .
+view_input('','status','status','hidden',$processo->status);
 
-    form_label('Status') . form_dropdown('status', [true => 'Ativo', false => 'Inativo'], $processo->status, ['class' => 'form-control']) . "</br>" .
-
-    form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']);
-
-"<a href=" . base_url('index.php/ProcessoController') . " class='btn btn-danger btn-lg btn-block' >Cancelar</a>";
+view_form_submit_enviar();
+view_form_submit_cancelar('processo-listar');
 
 form_close();
+
+require_once 'java_script.php';
+
 ?>

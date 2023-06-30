@@ -9,13 +9,23 @@ function td_excluir($controller, $id)
     return "<td>{$value}</td>";
 }
 
-function td_alterar($controller, $id)
+function td_alterar($controller, $id, $name = 'Alterar')
 {
     $link = "index.php/{$controller}/alterar/{$id}";
 
-    $value = "<a href='" . base_url($link) . "'>Alterar</a>";
+    $value = "<a href='" . base_url($link) . "'>$name</a>";
 
-    return "<td>{$value}</td>";
+    return td_value($value);
+}
+
+function td_alterar_processo($numero,$processo_id,$departamento_id){
+	$controller = 'ProcessoController';
+
+	if($_SESSION['departamento_id'] == $departamento_id){
+		return td_alterar($controller,$processo_id,$numero);
+	}else{
+		return td_value($numero);
+	}
 }
 
 function td_status($status)
@@ -33,7 +43,7 @@ function td_status_completo($status)
         "</p></td>";
 }
 
-function td_value($value, $title = '')
+function td_value($value)
 {
     return "<td>{$value}</td>";
 }
@@ -155,7 +165,8 @@ function view_input($label, $name, $id, $type, $value = '', $maxlength = 250,$pl
             'type' => $type,
             'value' => $value,
             'maxlength' => $maxlength,
-            'placeholder' => $placeholder
+            'placeholder' => $placeholder,
+            'required' => 'required',
         ]);
 
     echo (($type != 'hidden') ? br_multiples() : '');
@@ -312,7 +323,10 @@ function view_dropdown($label, $name, $options, $value)
         $name,
         $options,
         $value,
-        ['class' => 'form-control']
+        [
+			'class' => 'form-control',
+			'id' => $name
+		]
     );
     echo br_multiples();
 }
