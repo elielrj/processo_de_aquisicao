@@ -6,10 +6,10 @@ view_titulo($titulo);
 view_form_open('usuario-atualizar-usuario');
 
 view_input('Id','id','id','hidden',$usuario->id,150);
-view_input('Nome de Guerra','nome_de_guerra','nome_de_guerra','text',$usuario->nomeDeGuerra,150);
-view_input('Nome Completo','nome_completo','nome_completo','text',$usuario->nomeCompleto,250);
-view_input('Email','email','email','text', $usuario->email,150);
-view_input('CPF','cpf','cpf','text',$usuario->cpf,11);
+view_input_com_required('Nome de Guerra','nome_de_guerra','nome_de_guerra','text',$usuario->nomeDeGuerra,150);
+view_input_com_required('Nome Completo','nome_completo','nome_completo','text',$usuario->nomeCompleto,250);
+view_input_com_required('Email','email','email','text', $usuario->email,150);
+view_input_com_required('CPF','cpf','cpf','text',$usuario->cpf,11);
 
 view_input('Senha','senha','senha','password',$usuario->senha,6,'Caso não queira mudar a senha, deixe-a em branco!');
 

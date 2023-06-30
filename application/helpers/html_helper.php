@@ -167,8 +167,26 @@ function view_input($label, $name, $id, $type, $value = '', $maxlength = 250, $p
 			'type' => $type,
 			'value' => $value,
 			'maxlength' => $maxlength,
+			'placeholder' => $placeholder
+		]);
+
+	echo(($type != 'hidden') ? br_multiples() : '');
+}
+
+function view_input_com_required($label, $name, $id, $type, $value = '', $maxlength = 250, $placeholder = '')
+{
+	echo
+		(($type != 'hidden') ? form_label($label) : '') .
+
+		form_input([
+			'name' => $name,
+			'id' => $id,
+			'class' => 'form-control',
+			'type' => $type,
+			'value' => $value,
+			'maxlength' => $maxlength,
 			'placeholder' => $placeholder,
-			'required' => 'required',
+			'required' => 'required'
 		]);
 
 	echo(($type != 'hidden') ? br_multiples() : '');

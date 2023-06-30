@@ -9,8 +9,8 @@ view_form_open('ProcessoController/atualizar');
 
 view_input('','id','id','hidden',$processo->id);
 
-view_input('Objeto do Processo','objeto','objeto','text',$processo->objeto);
-view_input('Número (Nup/Nud)','numero','numero','text',$processo->numero,20);
+view_input_com_required('Objeto do Processo','objeto','objeto','text',$processo->objeto);
+view_input_com_required('Número (Nup/Nud)','numero','numero','text',$processo->numero,20);
 view_input('','data_hora','data_hora','hidden',DataLibrary::dataHoraMySQL());
 view_input('','departamento_id','departamento_id','hidden',$processo->departamento->id);
 

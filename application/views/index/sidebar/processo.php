@@ -21,7 +21,9 @@ include_once('application/models/bo/nivel_de_acesso/Escritor.php');
 			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar'); ?>">Todos Processos</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-incompleto'); ?>">Processos Incompletos</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-completo'); ?>">Processos Completos</a>
+			<?php if($_SESSION['funcao_nivel_de_acesso'] === Escritor::NOME):  ?>
 			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-por-sc'); ?>">Processos do <?php echo $_SESSION['departamento_nome']; ?></a>
+			<?php endif; ?>
 		</div>
 	</div>
 </li>
