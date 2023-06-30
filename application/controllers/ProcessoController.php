@@ -275,7 +275,7 @@ class ProcessoController extends CI_Controller
 
 		$processo = new Processo(
 			null,
-			$data_post['objeto'],
+			ucfirst($data_post['objeto']),
 			$data_post['numero'],
 			$data_post['data_hora'],
 			$data_post['chave'],
@@ -317,7 +317,7 @@ class ProcessoController extends CI_Controller
 
 		$processo = new Processo(
 			$data_post['id'],
-			$data_post['objeto'],
+			ucfirst($data_post['objeto']),
 			$data_post['numero'],
 			$data_post['data_hora'],
 			$data_post['chave'],
