@@ -21,7 +21,7 @@ include_once('application/models/bo/nivel_de_acesso/Escritor.php');
 			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar'); ?>">Todos Processos</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-incompleto'); ?>">Processos Incompletos</a>
 			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-completo'); ?>">Processos Completos</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-por-sc'); ?>">Processos da Sç</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-por-sc'); ?>">Processos do <?php echo $_SESSION['departamento_nome']; ?></a>
 		</div>
 	</div>
 </li>

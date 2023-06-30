@@ -14,6 +14,7 @@ class LoginDAO extends CI_Model
 		$this->load->model('dao/DAO');
 		$this->load->model('dao/HierarquiaDAO');
 		$this->load->model('dao/FuncaoDAO');
+		$this->load->model('dao/DepartamentoDAO');
 	}
 
 	public function emailExiste($email)
@@ -47,6 +48,7 @@ class LoginDAO extends CI_Model
 					'cpf' => $linha->cpf,
 					'senha' => $linha->senha,
 					'departamento_id' => $linha->departamento_id,
+					'departamento_nome' => ($this->DepartamentoDAO->buscarPorId($linha->departamento_id))->sigla,
 					'status' => $linha->status,
 					'hierarquia_id' => $linha->hierarquia_id,
 					'funcao_id' => $linha->funcao_id,

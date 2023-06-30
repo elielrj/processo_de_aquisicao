@@ -53,7 +53,7 @@ class ProcessoLibrary
 			$this->objeto($processo->objeto, $processo->id),
 			td_value($processo->tipo->nome),
 			td_value($processo->lei->modalidade->nome),
-			td_alterar_processo($processo->numero,$processo->id,$processo->departamento->id),
+			td_alterar_processo($processo->numero, $processo->id, $processo->departamento->id),
 			td_data_hora_br($processo->dataHora),
 			td_value($processo->departamento->sigla),
 			td_value(ucfirst(str_replace('_od', ' OD', str_replace('_fisc_adm', ' Fisc Adm', $processo->listaDeAndamento[0]->nome())))),

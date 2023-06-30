@@ -2,134 +2,136 @@
 
 function td_excluir($controller, $id)
 {
-    $link = "index.php/{$controller}/deletar/{$id}";
+	$link = "index.php/{$controller}/deletar/{$id}";
 
-    $value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
+	$value = "<a href='" . base_url($link) . "'>" . 'Excluir' . "</a>";
 
-    return "<td>{$value}</td>";
+	return "<td>{$value}</td>";
 }
 
 function td_alterar($controller, $id, $name = 'Alterar')
 {
-    $link = "index.php/{$controller}/alterar/{$id}";
+	$link = "index.php/{$controller}/alterar/{$id}";
 
-    $value = "<a href='" . base_url($link) . "'>$name</a>";
+	$value = "<a href='" . base_url($link) . "'>$name</a>";
 
-    return td_value($value);
+	return td_value($value);
 }
 
-function td_alterar_processo($numero,$processo_id,$departamento_id){
+function td_alterar_processo($numero, $processo_id, $departamento_id)
+{
 	$controller = 'ProcessoController';
 
-	if($_SESSION['departamento_id'] == $departamento_id){
-		return td_alterar($controller,$processo_id,$numero);
-	}else{
+	if ($_SESSION['departamento_id'] == $departamento_id) {
+		return td_alterar($controller, $processo_id, $numero);
+	} else {
 		return td_value($numero);
 	}
 }
 
 function td_status($status)
 {
-    return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
+	return "<td>" . ($status ? 'Ativo' : 'Inativo') . "</td>";
 }
 
 function td_status_completo($status)
 {
-    return
-        "<td><p style='color:" . ($status ? 'green' : 'red') . "'>" .
-        ($status
-            ? 'Finalizado'
-            : 'Pendente') .
-        "</p></td>";
+	return
+		"<td><p style='color:" . ($status ? 'green' : 'red') . "'>" .
+		($status
+			? 'Finalizado'
+			: 'Pendente') .
+		"</p></td>";
 }
 
 function td_value($value)
 {
-    return "<td>{$value}</td>";
+	return "<td>{$value}</td>";
 }
 
 function td_ordem($value)
 {
-    return "<td>{$value}</td>";
+	return "<td>{$value}</td>";
 }
+
 function td_data_hora_br($value)
 {
-    return td_value(
-        form_input(
-            array(
-                'type' => 'datetime',
-                'value' => DataLibrary::dataHoraBr($value),
-                'disabled' => 'disable',
-                'class' => 'text-center'
-            )
-        )
-    );
+	return td_value(
+		form_input(
+			array(
+				'type' => 'datetime',
+				'value' => DataLibrary::dataHoraBr($value),
+				'disabled' => 'disable',
+				'class' => 'text-center'
+			)
+		)
+	);
 }
 
 function td_data_br($value)
 {
-    return td_value(
-        form_input(
-            array(
-                'type' => 'datetime',
-                'value' => DataLibrary::dataBr($value),
-                'disabled' => 'disable',
-                'class' => 'text-center'
-            )
-        )
-    );
+	return td_value(
+		form_input(
+			array(
+				'type' => 'datetime',
+				'value' => DataLibrary::dataBr($value),
+				'disabled' => 'disable',
+				'class' => 'text-center'
+			)
+		)
+	);
 }
 
 function from_array_to_table_row($arrayList)
 {
-    $line = "<tr class='text-center col-md-1'>";
+	$line = "<tr class='text-center col-md-1'>";
 
-    foreach ($arrayList as $value) {
-        $line .= $value;
-    }
+	foreach ($arrayList as $value) {
+		$line .= $value;
+	}
 
-    $line .= "</tr>";
+	$line .= "</tr>";
 
-    return $line;
+	return $line;
 }
 
 function from_array_to_table_row_with_td($arrayList)
 {
-    $array = [];
+	$array = [];
 
-    foreach ($arrayList as $value) {
-        array_push($array, td_value($value));
-    }
-    return from_array_to_table_row($array);
+	foreach ($arrayList as $value) {
+		array_push($array, td_value($value));
+	}
+	return from_array_to_table_row($array);
 }
 
 
 function br_multiples($ate = 1)
 {
-    $count = 1;
+	$count = 1;
 
-    $value = '';
+	$value = '';
 
-    do {
+	do {
 
-        $value .= '</br>';
+		$value .= '</br>';
 
-        $count++;
+		$count++;
 
-    } while ($count <= $ate);
+	} while ($count <= $ate);
 
-    return $value;
+	return $value;
 }
 
 function view_titulo($titulo)
 {
-    echo "<h1>{$titulo}</h1>";
+	echo "<h1>{$titulo}</h1>";
 }
 
 function view_tabela($tabela)
 {
-    echo
-        "
+	echo
+	"
             <table class=''>
                 <table class='table table-responsive-md table-hover'>
                     $tabela
@@ -140,109 +142,109 @@ function view_tabela($tabela)
 
 function view_botao($botao)
 {
-    echo "<div class='row'>{$botao}</div>";
+	echo "<div class='row'>{$botao}</div>";
 }
 
 function view_form_open($controller)
 {
-    echo form_open($controller, array('class' => 'form-group'));
+	echo form_open($controller, array('class' => 'form-group'));
 }
 
 function view_form_open_multipart($controller)
 {
-    return form_open_multipart($controller, array('class' => 'form-control'));
+	return form_open_multipart($controller, array('class' => 'form-control'));
 }
 
-function view_input($label, $name, $id, $type, $value = '', $maxlength = 250,$placeholder = '')
+function view_input($label, $name, $id, $type, $value = '', $maxlength = 250, $placeholder = '')
 {
-    echo
-        (($type != 'hidden') ? form_label($label) : '') .
+	echo
+		(($type != 'hidden') ? form_label($label) : '') .
 
-        form_input([
-            'name' => $name,
-            'id' => $id,
-            'class' => 'form-control',
-            'type' => $type,
-            'value' => $value,
-            'maxlength' => $maxlength,
-            'placeholder' => $placeholder,
-            'required' => 'required',
-        ]);
+		form_input([
+			'name' => $name,
+			'id' => $id,
+			'class' => 'form-control',
+			'type' => $type,
+			'value' => $value,
+			'maxlength' => $maxlength,
+			'placeholder' => $placeholder,
+			'required' => 'required',
+		]);
 
-    echo (($type != 'hidden') ? br_multiples() : '');
+	echo(($type != 'hidden') ? br_multiples() : '');
 }
 
 function view_input_name_value_type($name, $value = '', $type = 'hidden')
 {
-    return form_input([
-        'name' => $name,
-        'type' => $type,
-        'value' => $value,
-        'class' => 'form-control'
-    ]);
+	return form_input([
+		'name' => $name,
+		'type' => $type,
+		'value' => $value,
+		'class' => 'form-control'
+	]);
 }
+
 function view_text_area($label, $name, $id, $type, $value = '', $maxlength = 250)
 {
-    echo 
+	echo
 
-        (($type != 'hidden') ? form_label($label) : '') .
+		(($type != 'hidden') ? form_label($label) : '') .
 
-        form_input([
-            'name' => $name,
-            'id' => $id,
-            'class' => 'form-control',
-            'type' => $type,
-            'value' => $value,
-            'maxlength' => $maxlength
-        ]) .
+		form_input([
+			'name' => $name,
+			'id' => $id,
+			'class' => 'form-control',
+			'type' => $type,
+			'value' => $value,
+			'maxlength' => $maxlength
+		]) .
 
-        (($type != 'hidden') ? br_multiples() : '');
+		(($type != 'hidden') ? br_multiples() : '');
 }
 
-function formulario_par_subir_arquivo($name = 'arquivo',$disabled = false)
+function formulario_par_subir_arquivo($name = 'arquivo', $disabled = false)
 {
 	$array = [];
 
-	if($disabled){
+	if ($disabled) {
 
-		$array =  [
+		$array = [
 			'name' => $name,
 			'type' => 'file',
 			'accept' => '.pdf',
-			'disabled'=>'disabled'
+			'disabled' => 'disabled'
 		];
 
-	}else{
-		$array =  [
+	} else {
+		$array = [
 			'name' => $name,
 			'type' => 'file',
 			'accept' => '.pdf'
 		];
 	}
 
-    return form_input($array);
+	return form_input($array);
 }
 
 
-
-function view_input_placeholder($name, $value = '', $placeholder = '', $disabled=false)
+function view_input_placeholder($name, $value = '', $placeholder = '', $disabled = false)
 {
 	$array = [];
 
-	if($disabled){
+	if ($disabled) {
 
-		$array =  [
+		$array = [
 			'name' => $name,
 			'class' => 'form-control',
 			'type' => 'text',
 			'value' => $value,
 			'maxlength' => 150,
 			'placeholder' => $placeholder,
-			'disabled'=>'disabled'
+			'disabled' => 'disabled'
 		];
 
-	}else{
-		$array =  [
+	} else {
+		$array = [
 			'name' => $name,
 			'class' => 'form-control',
 			'type' => 'text',
@@ -251,27 +253,28 @@ function view_input_placeholder($name, $value = '', $placeholder = '', $disabled
 			'placeholder' => $placeholder
 		];
 	}
-    return
-        td_value(
-            form_input($array)
-        );
+	return
+		td_value(
+			form_input($array)
+		);
 
 }
 
 function view_form_submit_enviar()
 {
-    echo form_submit(
-        'enviar',
-        'Enviar',
-        ['class' => 'btn btn-primary btn-lg btn-block']
-    );
+	echo form_submit(
+		'enviar',
+		'Enviar',
+		['class' => 'btn btn-primary btn-lg btn-block']
+	);
 }
+
 function view_form_submit_cancelar($controller)
 {
-    echo
-        "<a href=" .
-        base_url('index.php/' . $controller) .
-        " class='btn btn-danger btn-lg btn-block'>Cancelar</a>";
+	echo
+		"<a href=" .
+		base_url('index.php/' . $controller) .
+		" class='btn btn-danger btn-lg btn-block'>Cancelar</a>";
 }
 
 function view_form_submit_button($name, $value, $title, $disabled = false)
@@ -279,61 +282,61 @@ function view_form_submit_button($name, $value, $title, $disabled = false)
 	$array = [];
 
 
-	if($disabled){
+	if ($disabled) {
 
-		$array =  [
+		$array = [
 			'class' => 'btn btn-primary',
 			'title' => $title,
-			'disabled'=>'disabled'
+			'disabled' => 'disabled'
 		];
 
-	}else{
-		$array =  [
+	} else {
+		$array = [
 			'class' => 'btn btn-primary',
 			'title' => $title,
 		];
 	}
 
-    return form_submit(
-        $name,
-        $value,
-        $array
-    );
+	return form_submit(
+		$name,
+		$value,
+		$array
+	);
 }
 
 function tr_view($value, $class = 'text-left')
 {
-    return "<tr class={$class}>{$value}</tr>";
+	return "<tr class={$class}>{$value}</tr>";
 }
 
 function view_dropdown_status($value = true, $label = 'Status')
 {
-    echo form_label($label) . form_dropdown(
-        'status',
-        [true => 'Ativo', false => 'Inativo'],
-        $value,
-        ['class' => 'form-control']
-    );
-    echo br_multiples();
+	echo form_label($label) . form_dropdown(
+			'status',
+			[true => 'Ativo', false => 'Inativo'],
+			$value,
+			['class' => 'form-control']
+		);
+	echo br_multiples();
 }
 
 function view_dropdown($label, $name, $options, $value)
 {
-    echo form_label($label) . form_dropdown(
-        $name,
-        $options,
-        $value,
-        [
-			'class' => 'form-control',
-			'id' => $name
-		]
-    );
-    echo br_multiples();
+	echo form_label($label) . form_dropdown(
+			$name,
+			$options,
+			$value,
+			[
+				'class' => 'form-control',
+				'id' => $name
+			]
+		);
+	echo br_multiples();
 }
 
 function estaSetado($value)
 {
-    return isset($value);
+	return isset($value);
 }
 
 ?>
