@@ -8,7 +8,8 @@ class ProcessoLibrary
 {
 	private $ordem;
 	private $controller = 'ProcessoController';
-	private $nome_do_arquivo = '';
+	private $nome_da_nota_de_empenho = '';
+	private $nome_da_diex = '';
 
 	public function listar($processos, $ordem)
 	{
@@ -32,6 +33,7 @@ class ProcessoLibrary
 			'Objeto',
 			'Tipo',
 			'Lei',
+			'DIEx',
 			'Número',
 			'Data',
 			'Seção',
@@ -47,12 +49,14 @@ class ProcessoLibrary
 	private function linhaDoProcesso($processo)
 	{
 		$exibir_nota_de_empenho = $this->exibirNotaDeEmpenho($processo);
+		$exibir_diex = $this->exibirDiex($processo);
 
 		return from_array_to_table_row([
 			td_ordem($this->ordem),
 			$this->objeto($processo->objeto, $processo->id),
 			td_value($processo->tipo->nome),
 			td_value($processo->lei->modalidade->nome),
+			$exibir_diex,
 			td_alterar_processo($processo->numero, $processo->id, $processo->departamento->id),
 			td_data_hora_br($processo->dataHora),
 			td_value($processo->departamento->sigla),
@@ -87,20 +91,59 @@ class ProcessoLibrary
 
 					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
 
-					$this->nome_do_arquivo = $artefato->arquivos[(count($artefato->arquivos) - 1)]->nome;
+					$this->nome_da_nota_de_empenho = $artefato->arquivos[(count($artefato->arquivos) - 1)]->nome;
 
-					if ($this->nome_do_arquivo == '') {
-						$this->nome_do_arquivo = '-';
+					if ($this->nome_da_nota_de_empenho == '') {
+						$this->nome_da_nota_de_empenho = '-';
 					}
 
 					if ($path != '') {
 
-						if ($this->nome_do_arquivo == '-') {
-							$this->nome_do_arquivo = 'Nota de Empenho';
+						if ($this->nome_da_nota_de_empenho == '-') {
+							$this->nome_da_nota_de_empenho = 'Nota de Empenho';
 						}
-						return "<td><a href='" . base_url($path) . "'>{$this->nome_do_arquivo}</a></td>";
+						return "<td><a href='" . base_url($path) . "'>{$this->nome_da_nota_de_empenho}</a></td>";
 					} else {
-						$path = $this->nome_do_arquivo;
+						$path = $this->nome_da_nota_de_empenho;
+					}
+				}
+			}
+		}
+
+		return "<td>" . $path . "</td>";
+
+	}
+
+	private function exibirDiex($processo)
+	{
+
+		$path = '-';
+
+		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
+			/**
+			 * Importante o valor do ID no database do Artefato da "DIEx" é o mesmo abaixo!
+			 */
+			if ($artefato->id == 53) {
+
+
+				if ($artefato->arquivos != array()) {
+
+					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+
+					$this->nome_da_diex = $artefato->arquivos[(count($artefato->arquivos) - 1)]->nome;
+
+					if ($this->nome_da_diex == '') {
+						$this->nome_da_diex = '-';
+					}
+
+					if ($path != '') {
+
+						if ($this->nome_da_diex == '-') {
+							$this->nome_da_diex = 'DIEx';
+						}
+						return "<td><a href='" . base_url($path) . "'>{$this->nome_da_diex}</a></td>";
+					} else {
+						$path = $this->nome_da_diex;
 					}
 				}
 			}
