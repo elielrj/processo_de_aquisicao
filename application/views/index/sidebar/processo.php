@@ -2,6 +2,7 @@
 <?php
 include_once('application/models/bo/nivel_de_acesso/Root.php');
 include_once('application/models/bo/nivel_de_acesso/Escritor.php');
+include_once('application/models/bo/nivel_de_acesso/Executor.php');
 ?>
 <li class="nav-item">
 	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
@@ -17,16 +18,18 @@ include_once('application/models/bo/nivel_de_acesso/Escritor.php');
 				$_SESSION['funcao_nivel_de_acesso'] === Root::NOME
 			): ?>
 				<a class="collapse-item" href="<?php echo base_url('index.php/processo-novo'); ?>">Novo</a>
-			<?php endif; ?>
-			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar'); ?>">Todos</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-incompleto'); ?>">Incompletos</a>
-			<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-completo'); ?>">Completos</a>
-			<?php if (
-				$_SESSION['funcao_nivel_de_acesso'] === Escritor::NOME ||
-				$_SESSION['funcao_nivel_de_acesso'] === Root::NOME
-			): ?>
 				<a class="collapse-item"
 				   href="<?php echo base_url('index.php/processo-listar-por-sc'); ?>"><?php echo $_SESSION['departamento_nome']; ?></a>
+			<?php
+			endif;
+			if (
+				$_SESSION['funcao_nivel_de_acesso'] === Executor::NOME ||
+				$_SESSION['funcao_nivel_de_acesso'] === Root::NOME
+			):
+				?>
+				<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar'); ?>">Todos</a>
+				<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-incompleto'); ?>">Incompletos</a>
+				<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-completo'); ?>">Completos</a>
 			<?php endif; ?>
 		</div>
 	</div>

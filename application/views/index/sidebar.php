@@ -1,6 +1,10 @@
 <!-- Sidebar -->
 
 <?php
+include_once('application/models/bo/nivel_de_acesso/Administrador.php');
+include_once('application/models/bo/nivel_de_acesso/Root.php');
+include_once('application/models/bo/nivel_de_acesso/Leitor.php');
+include_once('application/models/bo/nivel_de_acesso/Escritor.php');
 
 $posto_ou_raduacao_e_nome_de_guerra =
 	(isset($_SESSION['nome_de_guerra']) && isset($_SESSION['hierarquia_sigla']))
@@ -9,8 +13,7 @@ $posto_ou_raduacao_e_nome_de_guerra =
 
 $nivel_de_acesso = $_SESSION['funcao_nivel_de_acesso'] ?? '';
 
-include_once('application/models/bo/nivel_de_acesso/Administrador.php');
-include_once('application/models/bo/nivel_de_acesso/Root.php');
+
 
 
 $acesso_ao_banco =
@@ -46,8 +49,21 @@ $acesso_ao_banco =
 		<div class="sidebar-card d-nome d-lg-flex p-1">
 			<p class="text-center p-0 m-1"><?php echo VERSION ?></p>
 		</div>
+		<?php
 
-		<a class="nav-link" href="<?php echo base_url('index.php/processo-listar') ?>">
+		$controller = '';
+
+		if (
+			$_SESSION['funcao_nivel_de_acesso'] === Leitor::NOME ||
+			$_SESSION['funcao_nivel_de_acesso'] === Escritor::NOME
+		) {
+			$controller = 'processo-listar-por-sc';
+		} else {
+			$controller = 'processo-listar';
+		}
+
+		?>
+		<a class="nav-link" href="<?php echo base_url('index.php/' . $controller) ?>">
             <span>
                 <img src="<?php echo base_url(); ?>icones_da_pagina/favicon-32x32.png" alt="Bootstrap" width="32"
 					 height="32">
@@ -68,7 +84,6 @@ $acesso_ao_banco =
 
 
 	<?php $acesso_ao_banco ? include_once('sidebar/banco_de_dados.php') : ''; ?>
-
 
 
 	<!-- Heading -->
