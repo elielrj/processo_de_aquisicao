@@ -166,13 +166,15 @@ class ProcessoController extends CI_Controller
 		/**
 		 * O ID do setor demandante do almox deve ser o mesmo do DataBase!
 		 */
-		$where = array('departamento_id' => 1);
+		$departamento_id = 1;
+
+		$where = array('departamento_id' => $departamento_id);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
 			'controller' => 'ProcessoController/listarPorSetorDemandante',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
 		$this->load->library('CriadorDeBotoes', $params);
@@ -200,13 +202,15 @@ class ProcessoController extends CI_Controller
 		/**
 		 * O ID do setor demandante do Aprov deve ser o mesmo do DataBase!
 		 */
-		$where = array('departamento_id' => 6);
+		$departamento_id = 6;
+
+		$where = array('departamento_id' => $departamento_id);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
 			'controller' => 'ProcessoController/listarPorSetorDemandante',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
 		$this->load->library('CriadorDeBotoes', $params);
@@ -233,13 +237,15 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		/**
 		 * O ID do setor demandante do Saúde deve ser o mesmo do DataBase!
 		 */
-		$where = array('departamento_id' => 7);
+		$departamento_id = 7;
+
+		$where = array('departamento_id' => $departamento_id);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
 			'controller' => 'ProcessoController/listarPorSetorDemandante',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
 		$this->load->library('CriadorDeBotoes', $params);
@@ -266,13 +272,15 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		/**
 		 * O ID do setor demandante do Informática deve ser o mesmo do DataBase!
 		 */
-		$where = array('departamento_id' => 8);
+		$departamento_id = 8;
+
+		$where = array('departamento_id' => $departamento_id);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
 			'controller' => 'ProcessoController/listarPorSetorDemandante',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
 		$this->load->library('CriadorDeBotoes', $params);
@@ -300,13 +308,15 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		/**
 		 * O ID do setor demandante do Mnt e Transp deve ser o mesmo do DataBase!
 		 */
-		$where = array('departamento_id' => 5);
+		$departamento_id = 5;
+
+		$where = array('departamento_id' => $departamento_id);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
 			'controller' => 'ProcessoController/listarPorSetorDemandante',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
 		$this->load->library('CriadorDeBotoes', $params);

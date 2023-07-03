@@ -80,14 +80,16 @@ class ProcessoDAO extends CI_Model
 		$this->DAO->deletar(self::$TABELA_DB, $processo->array());
 	}
 
-	public function contar($where=[])
+	public function contar($where = [])
 	{
-		return $this->DAO->contar(self::$TABELA_DB,$where);
+		return $this->DAO->contar(self::$TABELA_DB, $where);
 	}
 
-	public function contarProcessosPorSetorDemandante()
+	public function contarProcessosPorSetorDemandante($departamento_id = null)
 	{
-		$where = ['departamento_id' => $_SESSION['departamento_id']];
+		$departamento_id = $departamento_id ?? $_SESSION['departamento_id'];
+
+		$where = ['departamento_id' => $departamento_id];
 
 		return $this->DAO->contar(self::$TABELA_DB, $where);
 	}
