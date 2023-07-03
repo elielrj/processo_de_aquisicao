@@ -27,7 +27,7 @@ class ArtefatoController extends CI_Controller
         $artefatos = $this->ArtefatoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);//$qtd_de_itens_para_exibir,$indice_no_data_base
 
 		$params = [
-			'controller' => 'ArtefatoController',
+			'controller' => 'ArtefatoController/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ArtefatoDAO->contar()
 		];
 

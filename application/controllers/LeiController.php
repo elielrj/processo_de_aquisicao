@@ -31,7 +31,7 @@ class LeiController extends CI_Controller
         $leis = $this->LeiDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
 		$params = [
-			'controller' => 'LeiController',
+			'controller' => 'LeiController/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->LeiDAO->contar()
 		];
 

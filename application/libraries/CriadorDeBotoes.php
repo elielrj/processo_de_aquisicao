@@ -82,7 +82,7 @@ class CriadorDeBotoes
 
 			$value .= " <li>
                     <a class='btn btn-primary {$disabled}' 
-                    href='" . base_url() . "index.php/{$this->controller}/listar/{$index}'>" . ($index) . "</a></li> ";
+                    href='" . base_url() . "index.php/{$this->controller}/{$index}'>" . ($index) . "</a></li> ";
 
 		}
 
@@ -96,7 +96,7 @@ class CriadorDeBotoes
 		return "<nav aria-label='Page navigation'>
                     <ul class='pagination'>
                         <li>
-                            <a class='btn btn-primary {$disabled}' href='" . base_url() . "index.php/{$this->controller}/listar/{$this->pagina_inicial}' aria-label='Previous'>
+                            <a class='btn btn-primary {$disabled}' href='" . base_url() . "index.php/{$this->controller}/{$this->pagina_inicial}' aria-label='Previous'>
                                 <span aria-hidden='true'>&laquo;</span>
                             </a>
                         </li>";
@@ -107,7 +107,7 @@ class CriadorDeBotoes
 		$disabled = ($this->pagina_final == $this->botao_atual) ? 'disabled' : '';
 
 		return "<li>
-                            <a class='btn btn-primary {$disabled}' href='" . base_url() . "index.php/{$this->controller}/listar/" . ($this->pagina_final) . "' aria-label='Next'>
+                            <a class='btn btn-primary {$disabled}' href='" . base_url() . "index.php/{$this->controller}/" . ($this->pagina_final) . "' aria-label='Next'>
                                 <span aria-hidden='true'>&raquo;</span>
                             </a>
                         </li>

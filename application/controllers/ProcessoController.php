@@ -44,7 +44,7 @@ class ProcessoController extends CI_Controller
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
-			'controller' => 'ProcessoController',
+			'controller' => 'ProcessoController/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar()
 		];
 
@@ -75,7 +75,7 @@ class ProcessoController extends CI_Controller
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController',
+			'controller' => 'ProcessoController/listarTodosProcessosIncompleto',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
 		];
 
@@ -106,7 +106,7 @@ class ProcessoController extends CI_Controller
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController',
+			'controller' => 'ProcessoController/listarTodosProcessosCompleto',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
 		];
 
@@ -137,7 +137,7 @@ class ProcessoController extends CI_Controller
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController',
+			'controller' => 'ProcessoController/listarPorSetorDemandante',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
 		];
 

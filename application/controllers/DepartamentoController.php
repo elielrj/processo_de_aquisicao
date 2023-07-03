@@ -28,7 +28,7 @@ class DepartamentoController extends CI_Controller
 		$departamentos = $this->DepartamentoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
 		$params = [
-			'controller' => 'DepartamentoController',
+			'controller' => 'DepartamentoController/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->DepartamentoDAO->contar()
 		];
 
