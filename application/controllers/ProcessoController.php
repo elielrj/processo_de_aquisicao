@@ -173,7 +173,7 @@ class ProcessoController extends CI_Controller
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandante',
+			'controller' => 'ProcessoController/listarPorSetorDemandanteAlmox',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -209,7 +209,7 @@ class ProcessoController extends CI_Controller
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandante',
+			'controller' => 'ProcessoController/listarPorSetorDemandanteAprov',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -244,7 +244,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandante',
+			'controller' => 'ProcessoController/listarPorSetorDemandanteSaude',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -279,7 +279,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandante',
+			'controller' => 'ProcessoController/listarPorSetorDemandanteInformatica',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -315,7 +315,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandante',
+			'controller' => 'ProcessoController/listarPorSetorDemandanteMntTransp',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
