@@ -1,5 +1,5 @@
 
-#drop database processo_de_aquisicao;
+drop database processo_de_aquisicao;
 
 create database if not exists processo_de_aquisicao;
 
