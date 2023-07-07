@@ -14,8 +14,6 @@ $posto_ou_raduacao_e_nome_de_guerra =
 $nivel_de_acesso = $_SESSION['funcao_nivel_de_acesso'] ?? '';
 
 
-
-
 $acesso_ao_banco =
 	isset($_SESSION['funcao_nivel_de_acesso']) &&
 	(
@@ -76,6 +74,7 @@ $acesso_ao_banco =
 	<!-- Divider -->
 	<hr class="sidebar-divider">
 
+
 	<!-- Heading -->
 	<div class="sidebar-heading">Processos</div>
 
@@ -85,11 +84,16 @@ $acesso_ao_banco =
 
 	<?php $acesso_ao_banco ? include_once('sidebar/banco_de_dados.php') : ''; ?>
 
+	<!-- Heading -->
+	<div class="sidebar-heading">Pregões</div>
+
+	<?php include_once('sidebar/pregoes.php'); ?>
 
 	<!-- Heading -->
 	<div class="sidebar-heading">Configurações</div>
 
 	<?php include_once('sidebar/configuracao_usuario.php'); ?>
+
 
 
 	<!-- Sidebar Toggler (Sidebar) -->
