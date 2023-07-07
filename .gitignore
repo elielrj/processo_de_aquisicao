@@ -46,3 +46,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #Ignorar Configurações do base_url()
 /application/config/config.php
 
+
+/vendor/

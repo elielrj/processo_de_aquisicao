@@ -42,4 +42,9 @@ class Tipo implements InterfaceBO{
         );
     }
 
+	public function toString()
+	{
+		return $this->nome;
+	}
+
 }

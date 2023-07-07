@@ -80,4 +80,16 @@ class Processo implements InterfaceBO
 			'status' => $this->status
 		);
 	}
+
+	public function toString()
+	{
+		$nomeDoArquivo =
+			'Processo_de_' . $this->tipo->toString() .
+			'_Lei_' . $this->lei->toString() .
+			'_Numero_ ' . $this->numero;
+
+		str_replace($nomeDoArquivo,' ','_');
+
+		return $nomeDoArquivo;
+	}
 }

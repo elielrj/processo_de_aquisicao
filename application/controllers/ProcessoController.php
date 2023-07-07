@@ -537,6 +537,11 @@ function listarPorSetorDemandanteSaude($indice = 1)
 	 */
 	private function imprimir($processo, $so_certidao)
 	{
+		$this->load->library('ImprimirPdf');
+
+		$this->imprimirpdf->processo($processo);
+
+		/*
 		include_once 'vendor/PDFMerger/PDFMerger.php';
 
 		$pdf = new PDFMerger;
@@ -589,7 +594,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 			' Lei' . $processo->lei->toString() .
 			' Numero ' . $processo->numero;
 
-		$pdf->merge('download', $nomeDoArquivo . '.pdf');
+		$pdf->merge('download', $nomeDoArquivo . '.pdf');*/
 	}
 
 }
