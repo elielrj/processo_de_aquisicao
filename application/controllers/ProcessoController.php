@@ -643,7 +643,9 @@ class ProcessoController extends CI_Controller
 							foreach ($artefato->arquivos as $arquivo) {
 
 								if ($arquivo->path != '' && $arquivo->path != null) {
-									$pdf->addPDF(verificar_path($arquivo->path), 'all');
+									if (file_exists($arquivo->path)) {
+										$pdf->addPDF($arquivo->path, 'all');
+									}
 								}
 							}
 						}
@@ -657,7 +659,10 @@ class ProcessoController extends CI_Controller
 					foreach ($artefato->arquivos as $arquivo) {
 
 						if ($arquivo->path != '' && $arquivo->path != null) {
-							$pdf->addPDF(verificar_path($arquivo->path), 'all');
+							if (file_exists($arquivo->path)) {
+								$pdf->addPDF($arquivo->path, 'all');
+							}
+
 						}
 					}
 				}
@@ -673,7 +678,9 @@ class ProcessoController extends CI_Controller
 			' Lei' . $processo->lei->toString() .
 			' Numero ' . $processo->numero;
 
-		$pdf->merge('download', $nomeDoArquivo . '.pdf');
+		$variavel_limpa = strtolower(preg_replace("/[^a-zA-Z0-9-]/", "-", strtr(utf8_decode(trim($nomeDoArquivo)), utf8_decode("áàãâéêíóôõúüñçÁÀÃÂÉÊÍÓÔÕÚÜÑÇ"), "aaaaeeiooouuncAAAAEEIOOOUUNC-")));
+
+		$pdf->merge('download', $variavel_limpa . '.pdf');
 	}
 
 }
