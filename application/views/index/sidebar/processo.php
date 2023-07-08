@@ -1,43 +1,39 @@
 <!-- Nav Item - Utilities Collapse Processos -->
+
 <?php
-include_once('application/models/bo/nivel_de_acesso/Root.php');
+include_once('application/models/bo/nivel_de_acesso/Leitor.php');
 include_once('application/models/bo/nivel_de_acesso/Escritor.php');
 include_once('application/models/bo/nivel_de_acesso/Executor.php');
-include_once('application/models/bo/nivel_de_acesso/Leitor.php');
+include_once('application/models/bo/nivel_de_acesso/Conformador.php');
+include_once('application/models/bo/nivel_de_acesso/Administrador.php');
+include_once('application/models/bo/nivel_de_acesso/Root.php');
+
+$leitor = $_SESSION['funcao_nivel_de_acesso'] === Leitor::NOME;
+$escritor = $_SESSION['funcao_nivel_de_acesso'] === Escritor::NOME;
+$executor = $_SESSION['funcao_nivel_de_acesso'] === Executor::NOME;
+$conformador = $_SESSION['funcao_nivel_de_acesso'] === Conformador::NOME;
+$administrador = $_SESSION['funcao_nivel_de_acesso'] === Administrador::NOME;
+$root = $_SESSION['funcao_nivel_de_acesso'] === Root::NOME;
 ?>
+
 <li class="nav-item">
 	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true"
 	   aria-controls="collapseThree">
-		<i class="fas fa-fw fa-wrench"></i>
+		<i class="fa fa-book"></i>
 		<span>Processos</span>
 	</a>
 	<div id="collapseThree" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 		<div class="bg-white py-2 collapse-inner rounded">
 			<h6 class="collapse-header">Opções:</h6>
-			<?php if (
-				$_SESSION['funcao_nivel_de_acesso'] === Escritor::NOME ||
-				$_SESSION['funcao_nivel_de_acesso'] === Root::NOME
-			): ?>
-				<a class="collapse-item" href="<?php echo base_url('index.php/processo-novo'); ?>">Novo</a>
-				<a class="collapse-item"
-				   href="<?php echo base_url('index.php/processo-listar-por-sc'); ?>"><?php echo $_SESSION['departamento_nome']; ?></a>
-			<?php
-			endif;
-			if (
-				!($_SESSION['funcao_nivel_de_acesso'] === Executor::NOME) ||
-				!($_SESSION['funcao_nivel_de_acesso'] === Leitor::NOME)
-			):
-				?>
-				<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar'); ?>">Todos</a>
-				<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-incompleto'); ?>">Incompletos</a>
-				<a class="collapse-item" href="<?php echo base_url('index.php/processo-listar-todos-completo'); ?>">Completos</a>
 
-				<a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarPorSetorDemandanteAlmox'); ?>">Almox</a>
-				<a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarPorSetorDemandanteAprov'); ?>">Aprov</a>
-				<a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarPorSetorDemandanteSaude'); ?>">Saúde</a>
-				<a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarPorSetorDemandanteInformatica'); ?>">Informática</a>
-				<a class="collapse-item" href="<?php echo base_url('index.php/ProcessoController/listarPorSetorDemandanteMntTransp'); ?>">Mnt e Transp</a>
-			<?php endif; ?>
+			<?php ($escritor || $executor || $root) ? include_once 'processo_novo.php' : '' ?>
+			<?php ($executor || $root) ? include_once 'processo_listar_todos.php' : '' ?>
+			<?php ($escritor || $root) ? include_once 'processo_listar_por_demandante.php' : '' ?>
+			<?php ($executor || $root) ? include_once 'processo_listar_todos.php' : '' ?>
+			<?php ($executor || $root) ? include_once 'processo_listar_todos_competos.php' : '' ?>
+			<?php ($executor || $root) ? include_once 'processo_listar_todos_incompletos.php' : '' ?>
+			<?php ($executor || $root) ? include_once 'processo_listar_todos_excluidos.php' : '' ?>
+
 		</div>
 	</div>
 </li>

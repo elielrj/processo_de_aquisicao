@@ -11,6 +11,18 @@ class ProcessoLibrary
 	private $nome_da_nota_de_empenho = '';
 	private $nome_da_diex = '';
 
+	private $executor;
+	private $root;
+
+	public function __construct()
+	{
+		include_once('application/models/bo/nivel_de_acesso/Executor.php');
+		include_once('application/models/bo/nivel_de_acesso/Root.php');
+
+		$this->executor = $_SESSION['funcao_nivel_de_acesso'] === Executor::NOME;
+		$this->root = $_SESSION['funcao_nivel_de_acesso'] === Root::NOME;
+	}
+
 	public function listar($processos, $ordem)
 	{
 		$this->ordem = $ordem;
@@ -28,6 +40,8 @@ class ProcessoLibrary
 
 	private function linhaDeCabecalhoDoProcesso()
 	{
+		include_once('application/models/bo/nivel_de_acesso/Executor.php');
+
 		return from_array_to_table_row_with_td([
 			'Ordem',
 			'Objeto',
@@ -41,7 +55,8 @@ class ProcessoLibrary
 			'Modificado às',
 			'Status',
 			'NE',
-			'Certidões'
+			'Certidões',
+			(($this->executor || $this->root) ? 'Excluir' : 'Excluir')
 		]);
 	}
 
@@ -59,13 +74,29 @@ class ProcessoLibrary
 			$exibir_diex,
 			td_alterar_processo($processo->numero, $processo->id, $processo->departamento->id),
 			td_data_hora_br($processo->dataHora),
-			td_value($processo->departamento->sigla),
+			$this->secao($processo->departamento->sigla, $processo->departamento->id),
 			$this->andamento($processo),
 			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
 			td_status_completo($processo->completo),
 			$exibir_nota_de_empenho,
-			$this->verificarSeAsCertoesForamAnexadas($processo)
+			$this->verificarSeAsCertoesForamAnexadas($processo),
+			$this->excluirOuRecuperar($processo)
 		]);
+	}
+
+	private function excluirOuRecuperar($processo)
+	{
+		if ($this->executor || $this->root) {
+			if ($processo->status) {
+				return td_excluir('ProcessoController', $processo->id);
+			} else {
+				return "<td class='col-md-1'><a  href='" .
+                    base_url('index.php/ProcessoController/recuperar/' . $processo->id)
+                    . "'>Recuperar</a></td>";
+			}
+		} else {
+			return td_value('-');
+		}
 	}
 
 	private function objeto($objeto, $id)
@@ -73,6 +104,37 @@ class ProcessoLibrary
 		return "<td class='col-md-3'><a  href='" .
 			base_url('index.php/ProcessoController/exibir/' . $id)
 			. "'>{$objeto}</a></td>";
+	}
+
+	/**
+	 * @param $valor_para_exibir
+	 * @param $id_do_departamento_no_dataBase
+	 * @return string
+	 * id 1 = Almox
+	 * id 2 = SALC
+	 * id 5 = Transpor e Mnt
+	 * id 6 = Aprov
+	 * id 7 = Saúde
+	 * id 8 = Informática
+	 */
+	private function secao($valor_para_exibir, $id_do_departamento_no_dataBase)
+	{
+		if ($id_do_departamento_no_dataBase == 1) {
+			return "<td class='col-md-1'><a  href='" . base_url('index.php/processo-listar-almox') . "'>{$valor_para_exibir}</a></td>";
+		} elseif ($id_do_departamento_no_dataBase == 2) {
+			return "<td class='col-md-1'><a  href='" . base_url('index.php/processo-listar-salc') . "'>{$valor_para_exibir}</a></td>";
+		} elseif ($id_do_departamento_no_dataBase == 5) {
+			return "<td class='col-md-1'><a  href='" . base_url('index.php/processo-listar-transporte') . "'>{$valor_para_exibir}</a></td>";
+		} elseif ($id_do_departamento_no_dataBase == 6) {
+			return "<td class='col-md-1'><a  href='" . base_url('index.php/processo-listar-aprov') . "'>{$valor_para_exibir}</a></td>";
+		} elseif ($id_do_departamento_no_dataBase == 7) {
+			return "<td class='col-md-1'><a  href='" . base_url('index.php/processo-listar-saude') . "'>{$valor_para_exibir}</a></td>";
+		} elseif ($id_do_departamento_no_dataBase == 8) {
+			return "<td class='col-md-1'><a  href='" . base_url('index.php/processo-listar-informatica') . "'>{$valor_para_exibir}</a></td>";
+		} else {
+			return td_value($valor_para_exibir);
+		}
+
 	}
 
 	private function andamento($processo)

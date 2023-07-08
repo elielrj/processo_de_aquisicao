@@ -41,11 +41,44 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
+		$whare = ['status' => true];
+
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $whare);
 
 		$params = [
 			'controller' => 'ProcessoController/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar()
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
+		];
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
+
+		$dados = array(
+			'titulo' => 'Lista de processos',
+			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'pagina' => 'processo/index.php',
+			'botoes' => $botoes,
+		);
+
+		$this->load->view('index', $dados);
+
+	}
+
+	function listarTodosExcluidos($indice = 1)
+	{
+		$indice--;
+
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
+
+		$whare = ['status' => false];
+
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $whare);
+
+		$params = [
+			'controller' => 'ProcessoController/listarTodosExcluidos',
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
 		];
 
 		$this->load->library('CriadorDeBotoes', $params);
@@ -70,7 +103,7 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('completo' => false);
+		$where = array('completo' => false, 'status' => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
@@ -101,7 +134,7 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('completo' => true);
+		$where = array('completo' => true, 'status' => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
@@ -132,7 +165,7 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('departamento_id' => $_SESSION['departamento_id']);
+		$where = array('departamento_id' => $_SESSION['departamento_id'], 'status' => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
@@ -146,7 +179,7 @@ class ProcessoController extends CI_Controller
 		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
 
 		$dados = array(
-			'titulo' => 'Lista de processos por demandante: '. $_SESSION['departamento_nome'],
+			'titulo' => 'Lista de processos por demandante: ' . $_SESSION['departamento_nome'],
 			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
@@ -168,7 +201,7 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 1;
 
-		$where = array('departamento_id' => $departamento_id);
+		$where = array('departamento_id' => $departamento_id, 'status' => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
@@ -192,6 +225,42 @@ class ProcessoController extends CI_Controller
 
 	}
 
+	function listarPorSetorDemandanteSalc($indice = 1)
+	{
+		$indice--;
+
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
+
+		/**
+		 * O ID do setor demandante do almox deve ser o mesmo do DataBase!
+		 */
+		$departamento_id = 2;
+
+		$where = array('departamento_id' => $departamento_id, 'status' => true);
+
+		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
+
+		$params = [
+			'controller' => 'ProcessoController/listarPorSetorDemandanteSalc',
+			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
+		];
+
+		$this->load->library('CriadorDeBotoes', $params);
+
+		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
+
+		$dados = array(
+			'titulo' => 'Lista de processos por demandante: SALC',
+			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'pagina' => 'processo/index.php',
+			'botoes' => $botoes,
+		);
+
+		$this->load->view('index', $dados);
+
+	}
+
 	function listarPorSetorDemandanteAprov($indice = 1)
 	{
 		$indice--;
@@ -204,7 +273,7 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 6;
 
-		$where = array('departamento_id' => $departamento_id);
+		$where = array('departamento_id' => $departamento_id, 'status' => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
@@ -227,7 +296,8 @@ class ProcessoController extends CI_Controller
 		$this->load->view('index', $dados);
 
 	}
-function listarPorSetorDemandanteSaude($indice = 1)
+
+	function listarPorSetorDemandanteSaude($indice = 1)
 	{
 		$indice--;
 
@@ -239,7 +309,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		 */
 		$departamento_id = 7;
 
-		$where = array('departamento_id' => $departamento_id);
+		$where = array('departamento_id' => $departamento_id, 'status' => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
@@ -262,6 +332,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		$this->load->view('index', $dados);
 
 	}
+
 	function listarPorSetorDemandanteInformatica($indice = 1)
 	{
 		$indice--;
@@ -274,7 +345,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		 */
 		$departamento_id = 8;
 
-		$where = array('departamento_id' => $departamento_id);
+		$where = array('departamento_id' => $departamento_id, 'status' => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
@@ -310,7 +381,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 		 */
 		$departamento_id = 5;
 
-		$where = array('departamento_id' => $departamento_id);
+		$where = array('departamento_id' => $departamento_id, 'status' => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
@@ -521,9 +592,17 @@ function listarPorSetorDemandanteSaude($indice = 1)
 	public function deletar($id)
 	{
 
-		$this->ProcessoDAO->delete($id);
+		$this->ProcessoDAO->deletar($id);
 
-		redirect('ProcessoController');
+		redirect('ProcessoController/listar');
+	}
+
+	public function recuperar($id)
+	{
+
+		$this->ProcessoDAO->recuperar($id);
+
+		redirect('ProcessoController/listarTodosExcluidos');
 	}
 
 
@@ -537,11 +616,11 @@ function listarPorSetorDemandanteSaude($indice = 1)
 	 */
 	private function imprimir($processo, $so_certidao)
 	{
-		$this->load->library('ImprimirPdf');
+		//$this->load->library('ImprimirPdf');
 
-		$this->imprimirpdf->processo($processo);
+		//$this->imprimirpdf->processo($processo);
 
-		/*
+
 		include_once 'vendor/PDFMerger/PDFMerger.php';
 
 		$pdf = new PDFMerger;
@@ -594,7 +673,7 @@ function listarPorSetorDemandanteSaude($indice = 1)
 			' Lei' . $processo->lei->toString() .
 			' Numero ' . $processo->numero;
 
-		$pdf->merge('download', $nomeDoArquivo . '.pdf');*/
+		$pdf->merge('download', $nomeDoArquivo . '.pdf');
 	}
 
 }

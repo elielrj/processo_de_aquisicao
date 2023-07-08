@@ -232,7 +232,7 @@ class UsuarioController extends CI_Controller
         $this->load->model('dao/LoginDAO');
         $this->LoginDAO->buscarDadosDoUsuarioLogado($usuario->email, $usuario->senha);
 
-        redirect('ProcessoController');
+		header("Location:" . base_url('index.php/ProcessoController'));
     }
 
     public function ativar($id)

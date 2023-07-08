@@ -75,9 +75,22 @@ class ProcessoDAO extends CI_Model
 		$this->DAO->atualizar(self::$TABELA_DB, $processo->array());
 	}
 
-	public function deletar($processo)
+	public function deletar($processo_id)
 	{
-		$this->DAO->deletar(self::$TABELA_DB, $processo->array());
+		$processo = $this->buscarPorId($processo_id);
+
+		$processo->status = false;
+
+		$this->DAO->atualizar(self::$TABELA_DB, $processo->array());
+	}
+
+	public function recuperar($processo_id)
+	{
+		$processo = $this->buscarPorId($processo_id);
+
+		$processo->status = true;
+
+		$this->DAO->atualizar(self::$TABELA_DB, $processo->array());
 	}
 
 	public function contar($where = [])
@@ -89,7 +102,7 @@ class ProcessoDAO extends CI_Model
 	{
 		$departamento_id = $departamento_id ?? $_SESSION['departamento_id'];
 
-		$where = ['departamento_id' => $departamento_id];
+		$where = ['departamento_id' => $departamento_id,'status'=>true];
 
 		return $this->DAO->contar(self::$TABELA_DB, $where);
 	}

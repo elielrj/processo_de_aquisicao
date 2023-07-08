@@ -9,3 +9,4 @@ function redirecionarParaPaginaInicial()
 {
 	header("Location:" . base_url());
 }
+

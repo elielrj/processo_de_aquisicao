@@ -22,7 +22,14 @@ function td_alterar_processo($numero, $processo_id, $departamento_id)
 {
 	$controller = 'ProcessoController';
 
-	if ($_SESSION['departamento_id'] == $departamento_id) {
+	include_once('application/models/bo/nivel_de_acesso/Root.php');
+	include_once('application/models/bo/nivel_de_acesso/Executor.php');
+
+	if (
+		$_SESSION['departamento_id'] == $departamento_id ||
+		$_SESSION['funcao_nivel_de_acesso'] == Root::NOME ||
+		$_SESSION['funcao_nivel_de_acesso'] == Executor::NOME
+	) {
 		return td_alterar($controller, $processo_id, $numero);
 	} else {
 		return td_value($numero);

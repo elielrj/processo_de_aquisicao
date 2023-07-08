@@ -62,8 +62,16 @@ $route['arquivo-deletar'] = 'ArquivoController/deletar';
 $route['processo-listar'] = 'ProcessoController/listar';
 $route['processo-listar-todos-completo'] = 'ProcessoController/listarTodosProcessosCompleto';
 $route['processo-listar-todos-incompleto'] = 'ProcessoController/listarTodosProcessosIncompleto';
+$route['processo-listar-excluidos'] = 'ProcessoController/listarTodosExcluidos';
 $route['processo-listar-por-sc'] = 'ProcessoController/listarPorSetorDemandante';
 $route['processo-novo'] = 'ProcessoController/novo';
+
+$route['processo-listar-almox'] = 'ProcessoController/listarPorSetorDemandanteAlmox';
+$route['processo-listar-aprov'] = 'ProcessoController/listarPorSetorDemandanteAprov';
+$route['processo-listar-saude'] = 'ProcessoController/listarPorSetorDemandanteSaude';
+$route['processo-listar-informatica'] = 'ProcessoController/listarPorSetorDemandanteInformatica';
+$route['processo-listar-transporte'] = 'ProcessoController/listarPorSetorDemandanteMntTransp';
+$route['processo-listar-salc'] = 'ProcessoController/listarPorSetorDemandanteSalc';
 
 $route['artefato-listar'] = 'ArtefatoController/listar';
 $route['artefato-novo'] = 'ArtefatoController/novo';
