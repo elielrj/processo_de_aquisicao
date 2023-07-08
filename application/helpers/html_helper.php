@@ -148,7 +148,7 @@ function view_tabela($tabela)
 {
 	echo
 	"
-            <table class=''>
+            <table class='text-center fs-6'>
                 <table class='table table-responsive-md table-hover'>
                     $tabela
                 </table>
