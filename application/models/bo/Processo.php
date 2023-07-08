@@ -84,11 +84,9 @@ class Processo implements InterfaceBO
 	public function toString()
 	{
 		$nomeDoArquivo =
-			'Processo_de_' . $this->tipo->toString() .
-			'_Lei_' . $this->lei->toString() .
-			'_Numero_ ' . $this->numero;
-
-		str_replace($nomeDoArquivo,' ','_');
+			'Processo de ' . $this->tipo->toString() .
+			', Lei ' . $this->lei->toString() .
+			', Número ' . $this->numero;
 
 		return $nomeDoArquivo;
 	}
