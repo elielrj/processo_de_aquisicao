@@ -27,8 +27,8 @@ $root = $_SESSION['funcao_nivel_de_acesso'] === Root::NOME;
 			<h6 class="collapse-header">Opções:</h6>
 
 			<?php ($escritor || $executor || $root) ? include_once 'processo_novo.php' : '' ?>
-			<?php ($executor || $root) ? include_once 'processo_listar_todos.php' : '' ?>
-			<?php ($escritor || $root) ? include_once 'processo_listar_por_demandante.php' : '' ?>
+			<?php ($executor || $conformador || $root) ? include_once 'processo_listar_todos.php' : '' ?>
+			<?php ($escritor || $leitor ||$root) ? include_once 'processo_listar_por_demandante.php' : '' ?>
 			<?php ($executor || $root) ? include_once 'processo_listar_todos.php' : '' ?>
 			<?php ($executor || $root) ? include_once 'processo_listar_todos_competos.php' : '' ?>
 			<?php ($executor || $root) ? include_once 'processo_listar_todos_incompletos.php' : '' ?>

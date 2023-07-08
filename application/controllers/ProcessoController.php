@@ -643,7 +643,7 @@ class ProcessoController extends CI_Controller
 							foreach ($artefato->arquivos as $arquivo) {
 
 								if ($arquivo->path != '' && $arquivo->path != null) {
-									$pdf->addPDF($arquivo->path, 'all');
+									$pdf->addPDF(verificar_path($arquivo->path), 'all');
 								}
 							}
 						}
@@ -657,7 +657,7 @@ class ProcessoController extends CI_Controller
 					foreach ($artefato->arquivos as $arquivo) {
 
 						if ($arquivo->path != '' && $arquivo->path != null) {
-							$pdf->addPDF($arquivo->path, 'all');
+							$pdf->addPDF(verificar_path($arquivo->path), 'all');
 						}
 					}
 				}

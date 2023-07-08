@@ -1,5 +1,9 @@
 <?php
 
+function verificar_path($path)
+{
+	return file_exists($path) ? base_url($path) : '#';
+}
 function td_excluir($controller, $id)
 {
 	$link = "index.php/{$controller}/deletar/{$id}";

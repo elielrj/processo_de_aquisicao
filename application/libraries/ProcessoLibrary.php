@@ -91,8 +91,8 @@ class ProcessoLibrary
 				return td_excluir('ProcessoController', $processo->id);
 			} else {
 				return "<td class='col-md-1'><a  href='" .
-                    base_url('index.php/ProcessoController/recuperar/' . $processo->id)
-                    . "'>Recuperar</a></td>";
+					base_url('index.php/ProcessoController/recuperar/' . $processo->id)
+					. "'>Recuperar</a></td>";
 			}
 		} else {
 			return td_value('-');
@@ -164,7 +164,7 @@ class ProcessoLibrary
 
 				if ($artefato->arquivos != array()) {
 
-					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+					$path = verificar_path($artefato->arquivos[(count($artefato->arquivos) - 1)]->path);
 
 					$this->nome_da_nota_de_empenho = $artefato->arquivos[(count($artefato->arquivos) - 1)]->nome;
 
@@ -177,7 +177,7 @@ class ProcessoLibrary
 						if ($this->nome_da_nota_de_empenho == '-') {
 							$this->nome_da_nota_de_empenho = 'Nota de Empenho';
 						}
-						return "<td><a href='" . base_url($path) . "'>{$this->nome_da_nota_de_empenho}</a></td>";
+						return "<td><a href='" . verificar_path($path) . "'>{$this->nome_da_nota_de_empenho}</a></td>";
 					} else {
 						$path = $this->nome_da_nota_de_empenho;
 					}
@@ -203,7 +203,7 @@ class ProcessoLibrary
 
 				if ($artefato->arquivos != array()) {
 
-					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+					$path = verificar_path($artefato->arquivos[(count($artefato->arquivos) - 1)]->path);
 
 					$this->nome_da_diex = $artefato->arquivos[(count($artefato->arquivos) - 1)]->nome;
 
@@ -216,7 +216,7 @@ class ProcessoLibrary
 						if ($this->nome_da_diex == '-') {
 							$this->nome_da_diex = 'DIEx';
 						}
-						return "<td><a href='" . base_url($path) . "'>{$this->nome_da_diex}</a></td>";
+						return "<td><a href='" . verificar_path($path) . "'>{$this->nome_da_diex}</a></td>";
 					} else {
 						$path = $this->nome_da_diex;
 					}
@@ -244,7 +244,7 @@ class ProcessoLibrary
 
 				if ($artefato->arquivos != array()) {
 
-					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+					$path = verificar_path($artefato->arquivos[(count($artefato->arquivos) - 1)]->path);
 
 					if ($path != '') {
 						$tcu = true;
@@ -257,7 +257,7 @@ class ProcessoLibrary
 
 				if ($artefato->arquivos != array()) {
 
-					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+					$path = verificar_path($artefato->arquivos[(count($artefato->arquivos) - 1)]->path);
 
 					if ($path != '') {
 						$cadin = true;
@@ -270,7 +270,7 @@ class ProcessoLibrary
 
 				if ($artefato->arquivos != array()) {
 
-					$path = $artefato->arquivos[(count($artefato->arquivos) - 1)]->path;
+					$path = verificar_path($artefato->arquivos[(count($artefato->arquivos) - 1)]->path);
 
 					if ($path != '') {
 						$sicaf = true;

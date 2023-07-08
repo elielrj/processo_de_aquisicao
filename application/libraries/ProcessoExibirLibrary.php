@@ -130,7 +130,7 @@ class ProcessoExibirLibrary
 
 				} else {
 
-					$link = "<a href='" . base_url($arquivo->path) . "'>{$artefato->nome}</a>";
+					$link = "<a href='" . verificar_path($arquivo->path) . "'>{$artefato->nome}</a>";
 
 				}
 
@@ -204,7 +204,7 @@ class ProcessoExibirLibrary
 	{
 
 		if ($arquivo != null) {
-			return $arquivo->path;
+			return  verificar_path($arquivo->path);
 		} else {
 			return '';
 		}
@@ -245,6 +245,7 @@ class ProcessoExibirLibrary
 			{
 				if (
 					$nivelDeAcesso->nivel() == Escritor::NIVEL ||
+					$nivelDeAcesso->nivel() == Executor::NIVEL ||//todo retirar se houver usuário participantes
 					$nivelDeAcesso->nivel() == Root::NIVEL
 				) {
 					$href = base_url('index.php/ProcessoController/enviarProcesso/' . $processo->id);
@@ -259,6 +260,7 @@ class ProcessoExibirLibrary
 			{
 				if (
 					$nivelDeAcesso->nivel() == AprovadorFiscAdm::NIVEL ||
+					$nivelDeAcesso->nivel() == Executor::NIVEL ||//todo retirar se houver usuário participantes
 					$nivelDeAcesso->nivel() == Root::NIVEL
 				) {
 					$href = base_url('index.php/ProcessoController/aprovarProcessoFiscAdm/' . $processo->id);
@@ -273,6 +275,7 @@ class ProcessoExibirLibrary
 			{
 				if (
 					$nivelDeAcesso->nivel() == AprovadorOd::NIVEL ||
+					$nivelDeAcesso->nivel() == Executor::NIVEL ||//todo retirar se houver usuário participantes
 					$nivelDeAcesso->nivel() == Root::NIVEL
 				) {
 					$href = base_url('index.php/ProcessoController/aprovarProcessoOd/' . $processo->id);
@@ -301,6 +304,7 @@ class ProcessoExibirLibrary
 			{
 				if (
 					$nivelDeAcesso->nivel() == Conformador::NIVEL ||
+					$nivelDeAcesso->nivel() == Executor::NIVEL ||//todo retirar se houver usuário participantes
 					$nivelDeAcesso->nivel() == Root::NIVEL
 
 				) {
@@ -316,6 +320,7 @@ class ProcessoExibirLibrary
 			{
 				if (
 					$nivelDeAcesso->nivel() == Conformador::NIVEL ||
+					$nivelDeAcesso->nivel() == Executor::NIVEL ||//todo retirar se houver usuário participantes
 					$nivelDeAcesso->nivel() == Root::NIVEL
 				) {
 					$href = base_url('index.php/ProcessoController/arquivarProcesso/' . $processo->id);
