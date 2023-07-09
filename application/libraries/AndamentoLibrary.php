@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/libraries/DataLibrary.php');
-
 class AndamentoLibrary
 {
 
@@ -60,7 +58,7 @@ class AndamentoLibrary
 						str_replace('_fisc_adm', ' Fisc Adm', $andamento->statusDoAndamento->nome())
 					))
 			),
-			td_data_hora_br($andamento->dataHora),
+			td_data_hora_br($andamento->dataHora->dataHoraNoFormatoBrasileiro()),
 			td_value($this->processo->toString()),
 			td_value(($this->usuarioDAO->buscarPorId($andamento->usuario_id))->toString()),
 			td_status($andamento->status)

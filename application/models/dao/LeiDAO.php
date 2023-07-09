@@ -2,6 +2,9 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use helper\Tempo;
+
+include_once 'application/models/helper/Tempo.php';
 include_once('application/models/bo/Lei.php');
 
 class LeiDAO extends CI_Model
@@ -76,7 +79,7 @@ class LeiDAO extends CI_Model
 			$array->numero ?? ($array['numero'] ?? null),
 			$array->artigo ?? ($array['artigo'] ?? null),
 			$array->inciso ?? ($array['inciso'] ?? null),
-			$array->data ?? ($array['data'] ?? null),
+			new Tempo($array->data ?? ($array['data'] ?? null)),
 			isset($array->modalidade_id)
 				? $this->ModalidadeDAO->buscarPorId($array->modalidade_id)
 				: (isset($array['modalidade_id']) ? $this->ModalidadeDAO->buscarPorId($array['modalidade_id']) : null),

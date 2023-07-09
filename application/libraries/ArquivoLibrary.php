@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/libraries/DataLibrary.php');
 
 class ArquivoLibrary
 {
@@ -41,7 +40,7 @@ class ArquivoLibrary
 		return from_array_to_table_row([
 			td_ordem($this->ordem),
 			$this->arquivoPath($arquivo->path),
-			td_data_hora_br($arquivo->dataHora),
+			td_data_hora_br($arquivo->dataHora->dataHoraNoFormatoBrasileiro()),
 			td_value($arquivo->nome),
 			td_status($arquivo->status),
 			td_value($arquivo->processoId),

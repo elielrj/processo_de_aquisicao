@@ -8,6 +8,9 @@ use Dompdf\Dompdf;
 require_once('vendor/PDFMerger/PDFMerger.php');
 
 use PDFMerger\PDFMerger;
+use helper\Tempo;
+
+include_once 'application/models/helper/Tempo.php';
 
 class ProcessoController extends CI_Controller
 {
@@ -25,7 +28,6 @@ class ProcessoController extends CI_Controller
 		$this->load->model('dao/AndamentoDAO');
 		$this->load->library('ProcessoLibrary');
 		$this->load->library('session');
-		$this->load->library('DataLibrary');
 	}
 
 	public function index()
@@ -533,7 +535,7 @@ class ProcessoController extends CI_Controller
 			null,
 			ucfirst($data_post['objeto']),
 			$data_post['numero'],
-			$data_post['data_hora'],
+			new Tempo(),
 			$data_post['chave'],
 			$this->DepartamentoDAO->buscarPorId($this->session->departamento_id),
 			$this->LeiDAO->buscarPorId($data_post['lei_id']),

@@ -2,6 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use helper\Tempo;
 include_once('InterfaceBO.php');
 include_once('status_do_andamento/StatusDoAndamento.php');
 include_once('status_do_andamento/Criado.php');  //Nível 0
@@ -12,12 +13,13 @@ include_once('status_do_andamento/Executado.php');  //Nível 3
 include_once('status_do_andamento/Conformado.php');  //Nível 4
 include_once('status_do_andamento/Arquivado.php');  //Nível 5
 
+include_once 'application/models/helper/Tempo.php';
 class Andamento implements StatusDoAndamento, InterfaceBO
 {
 
 	private $id;
 	private $statusDoAndamento;
-	private $dataHora;
+	private Tempo $dataHora;
 	private $processo_id;
 	private $usuario_id;
 	private $status;
@@ -54,7 +56,7 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 		return array(
 			'id' => $this->id ?? null,
 			'status_do_andamento' => $this->statusDoAndamento->nome(),
-			'data_hora' => DataLibrary::dataHoraMySQL($this->dataHora),
+			'data_hora' => $this->dataHora->dataHoraNoFormatoMySQL(),
 			'processo_id' => $this->processo_id,
 			'usuario_id' => $this->usuario_id,
 			'status' => $this->status,

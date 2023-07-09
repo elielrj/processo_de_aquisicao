@@ -2,6 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use  helper\Tempo;
+
 include_once('application/models/bo/Andamento.php');
 include_once('application/models/bo/status_do_andamento/Criado.php');
 include_once('application/models/bo/status_do_andamento/Enviado.php');
@@ -10,6 +12,8 @@ include_once('application/models/bo/status_do_andamento/AprovadoOd.php');
 include_once('application/models/bo/status_do_andamento/Executado.php');
 include_once('application/models/bo/status_do_andamento/Conformado.php');
 include_once('application/models/bo/status_do_andamento/Arquivado.php');
+
+include_once 'application/models/helper/Tempo.php';
 
 class AndamentoDAO extends CI_Model
 {
@@ -75,8 +79,8 @@ class AndamentoDAO extends CI_Model
 				? (Andamento::selecionarStatus($arrayList->status_do_andamento))
 				: (isset($arrayList['status_do_andamento']) ? Andamento::selecionarStatus($arrayList['status_do_andamento']) : null),
 			isset($arrayList->data_hora)
-				? (DataLibrary::dataHoraBr($arrayList->data_hora))
-				: (isset($arrayList['data_hora']) ? DataLibrary::dataHoraBr($arrayList['data_hora']) : null),
+				? (new Tempo($arrayList->data_hora))
+				: (isset($arrayList['data_hora']) ? new Tempo($arrayList['data_hora']) : null),
 			$arrayList->processo_id ?? ($arrayList['processo_id'] ?? null),
 			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null),
 			$arrayList->status ?? ($arrayList['status'] ?? null)

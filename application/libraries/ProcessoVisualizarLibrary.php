@@ -2,6 +2,10 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use helper\Tempo;
+
+include_once 'application/models/helper/Tempo.php';
+
 class ProcessoVisualizarLibrary
 {
 
@@ -38,7 +42,7 @@ class ProcessoVisualizarLibrary
                         </tr>
                         <tr class='text-left'> 
                             <td>Data de abertura(Nup/Nud): </td>"
-							. td_data_br($processo->dataHora) .
+							. td_data_br($processo->dataHora->dataHoraNoFormatoBrasileiro()) .
 						"</tr>
                         <tr class='text-left'> 
                             <td>Chave para acompanhar: </td>

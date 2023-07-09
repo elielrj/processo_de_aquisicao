@@ -11,6 +11,9 @@ include_once('application/models/bo/nivel_de_acesso/Conformador.php');
 include_once('application/models/bo/nivel_de_acesso/Administrador.php');
 include_once('application/models/bo/nivel_de_acesso/Root.php');
 
+use helper\Tempo;
+include_once 'application/models/helper/Tempo.php';
+
 class ProcessoExibirLibrary
 {
 
@@ -50,7 +53,7 @@ class ProcessoExibirLibrary
                         </tr>
                         <tr class='text-left'> 
                             <td>Data de abertura(Nup/Nud): </td>
-                            " . td_data_hora_br($processo->dataHora) . "
+                            " . td_data_hora_br($processo->dataHora->dataHoraNoFormatoBrasileiro()) . "
                         </tr>
                         <tr class='text-left'> 
                             <td>Chave para acompanhar: </td>

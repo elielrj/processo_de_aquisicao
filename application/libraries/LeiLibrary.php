@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/libraries/DataLibrary.php');
-
+use helper\Tempo;
+include_once 'application/models/helper/Tempo.php';
 class LeiLibrary
 {
 
@@ -45,7 +45,7 @@ class LeiLibrary
             td_value($lei->numero),
             td_value($lei->artigo),
             td_value($lei->inciso),
-            td_data_br($lei->data),
+            td_data_br($lei->data->dataHoraNoFormatoBrasileiro()),
             td_value($lei->modalidade->nome),
             td_status($lei->status),
             td_alterar($this->controller, $lei->id),

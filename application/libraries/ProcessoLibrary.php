@@ -2,7 +2,8 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('DataLibrary.php');
+use helper\Tempo;
+include_once 'application/models/helper/Tempo.php';
 
 class ProcessoLibrary
 {
@@ -18,6 +19,7 @@ class ProcessoLibrary
 	{
 		include_once('application/models/bo/nivel_de_acesso/Executor.php');
 		include_once('application/models/bo/nivel_de_acesso/Root.php');
+
 
 		$this->executor = $_SESSION['funcao_nivel_de_acesso'] === Executor::NOME;
 		$this->root = $_SESSION['funcao_nivel_de_acesso'] === Root::NOME;
@@ -73,10 +75,10 @@ class ProcessoLibrary
 			td_value($processo->lei->modalidade->nome),
 			$exibir_diex,
 			td_alterar_processo($processo->numero, $processo->id, $processo->departamento->id),
-			td_data_hora_br($processo->dataHora),
+			td_data_hora_br($processo->dataHora->dataHoraNoFormatoBrasileiro()),
 			$this->secao($processo->departamento->sigla, $processo->departamento->id),
 			$this->andamento($processo),
-			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
+			td_data_hora_br($processo->listaDeAndamento[0]->dataHora->dataHoraNoFormatoBrasileiro()),
 			td_status_completo($processo->completo),
 			$exibir_nota_de_empenho,
 			$this->verificarSeAsCertoesForamAnexadas($processo),

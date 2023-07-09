@@ -4,7 +4,6 @@ use function PHPUnit\Framework\isEmpty;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/libraries/DataLibrary.php');
 include_once('application/models/bo/Arquivo.php');
 
 class ArquivoController extends CI_Controller

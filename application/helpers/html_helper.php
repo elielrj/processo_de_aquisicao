@@ -76,11 +76,12 @@ function td_ordem($value)
 
 function td_data_hora_br($value)
 {
+
 	return td_value(
 		form_input(
 			array(
 				'type' => 'datetime',
-				'value' => DataLibrary::dataHoraBr($value),
+				'value' => $value,
 				'disabled' => 'disable',
 				'class' => 'text-center'
 			)
@@ -94,7 +95,7 @@ function td_data_br($value)
 		form_input(
 			array(
 				'type' => 'datetime',
-				'value' => DataLibrary::dataBr($value),
+				'value' => $value,
 				'disabled' => 'disable',
 				'class' => 'text-center'
 			)

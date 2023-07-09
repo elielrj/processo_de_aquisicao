@@ -2,7 +2,10 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use helper\Tempo;
+
 include_once('application/models/bo/Processo.php');
+include_once 'application/models/helper/Tempo.php';
 
 class ProcessoDAO extends CI_Model
 {
@@ -30,7 +33,7 @@ class ProcessoDAO extends CI_Model
 		$andamento = new Andamento(
 			null,
 			new Criado(),
-			DataLibrary::dataHoraMySQL(),
+			new Tempo(),
 			$processo->id,
 			$_SESSION['id'],
 			true
@@ -118,7 +121,7 @@ class ProcessoDAO extends CI_Model
 			$arrayList->id ?? ($arrayList['id'] ?? null),
 			$arrayList->objeto ?? ($arrayList['objeto'] ?? null),
 			$arrayList->numero ?? ($arrayList['numero'] ?? null),
-			$arrayList->data_hora ?? ($arrayList['data_hora'] ?? null),
+			new Tempo($arrayList->data_hora ?? ($arrayList['data_hora'] ?? null)),
 			$arrayList->chave ?? ($arrayList['chave'] ?? null),
 			isset($arrayList->departamento_id) ? $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id) : (isset($arrayList['departamento_id']) ? $this->DepartamentoDAO->buscarPorId($arrayList['departamento_id']) : null),
 			isset($arrayList->lei_id) ? $this->LeiDAO->buscarPorId($arrayList->lei_id) : (isset($arrayList['lei_id']) ? $this->LeiDAO->buscarPorId($arrayList['lei_id']) : null),

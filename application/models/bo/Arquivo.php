@@ -1,16 +1,18 @@
 <?php
 
+use helper\Tempo;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
-include_once('application/libraries/DataLibrary.php');
+include_once('application/models/helper/Tempo.php');
 
 class Arquivo implements InterfaceBO
 {
 
 	private $id;
 	private $path;
-	private $dataHora;
+	private Tempo $dataHora;
 	private $usuarioId;
 	private $artefatoId;
 	private $processoId;
@@ -18,19 +20,19 @@ class Arquivo implements InterfaceBO
 	private $status;
 
 	public function __construct(
-		$id = null,
+		$id,
 		$path,
-		$dataHora = null,
+		$dataHora,
 		$usuarioId,
 		$artefatoId,
 		$processoId,
 		$nome,
-		$status = true
+		$status
 	)
 	{
-		$this->id = $id ?? null;
+		$this->id = $id;
 		$this->path = $path;
-		$this->dataHora = $dataHora ?? DataLibrary::dataHoraBr();
+		$this->dataHora = $dataHora;
 		$this->usuarioId = $usuarioId;
 		$this->artefatoId = $artefatoId;
 		$this->processoId = $processoId;
@@ -53,7 +55,7 @@ class Arquivo implements InterfaceBO
 		return array(
 			'id' => $this->id ?? null,
 			'path' => $this->path,
-			'data_hora' => DataLibrary::dataHoraMySQL($this->dataHora),
+			'data_hora' => $this->dataHora->dataHoraNoFormatoMySQL(),
 			'usuario_id' => $this->usuarioId,
 			'artefato_id' => $this->artefatoId,
 			'processo_id' => $this->processoId,

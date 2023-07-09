@@ -12,7 +12,7 @@ class AndamentoController extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('dao/AndamentoDAO');
-		$this->load->library('AndamentoLibrary');
+
 	}
 
 	public function index()

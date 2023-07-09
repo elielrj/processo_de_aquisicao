@@ -497,7 +497,7 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'UM-3';
+$config['time_reference'] = 'America/Sao_Paulo';
 
 /*
 |--------------------------------------------------------------------------

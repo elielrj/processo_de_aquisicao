@@ -1,5 +1,7 @@
 <?php
 
+use helper\Tempo;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
@@ -10,6 +12,7 @@ include_once('status_do_andamento/AprovadoOd.php');
 include_once('status_do_andamento/Executado.php');
 include_once('status_do_andamento/Conformado.php');
 include_once('status_do_andamento/Arquivado.php');
+include_once('application/models/helper/Tempo.php');
 
 
 class Processo implements InterfaceBO
@@ -18,7 +21,7 @@ class Processo implements InterfaceBO
 	private $id;
 	private $objeto;
 	private $numero;
-	private $dataHora;
+	private Tempo $dataHora;
 	private $chave;
 	private $departamento;
 	private $lei;
@@ -71,7 +74,7 @@ class Processo implements InterfaceBO
 			'id' => $this->id ?? null,
 			'objeto' => $this->objeto,
 			'numero' => $this->numero,
-			'data_hora' => $this->dataHora,
+			'data_hora' => $this->dataHora->dataHoraNoFormatoMySQL(),
 			'chave' => $this->chave,
 			'departamento_id' => $this->departamento->id,
 			'lei_id' => $this->lei->id,
