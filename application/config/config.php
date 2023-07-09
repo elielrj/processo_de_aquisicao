@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/web/processo_de_aquisicao/';
+$config['base_url'] = 'http://localhost/web/processo_de_aquisicao/';//todo add index.php
 
 /*
 |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'english';//todo translater for brazil
 
 /*
 |--------------------------------------------------------------------------
@@ -138,7 +138,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = FALSE;//todo verificar
 
 /*
 |--------------------------------------------------------------------------
@@ -497,7 +497,7 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'local';
+$config['time_reference'] = 'UM-3';
 
 /*
 |--------------------------------------------------------------------------
