@@ -86,4 +86,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 //
-const VERSION = 'Versão 3.0.0';
+const VERSION = 'Versão 3.0.1';
