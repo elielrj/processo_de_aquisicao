@@ -41,3 +41,11 @@ application/config/database.php
 
 #Ignorar Configurações do base_url()
 application/config/config.php
+
+## Ignorar configurações da base_url()
+#application/config/config
+application/config/base_url_config.php
+
+##Ignorar Configurações de banco de dados
+##application/config/database.php
+application/config/db_config.php
