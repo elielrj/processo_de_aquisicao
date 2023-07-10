@@ -121,7 +121,7 @@ class AndamentoDAO extends CI_Model
 		$andamento = new Andamento(
 			null,
 			new Enviado(),
-			DataLibrary::dataHoraMySQL(),
+			new Tempo(),
 			$processo_id,
 			$_SESSION['id'],
 			true
@@ -136,7 +136,7 @@ class AndamentoDAO extends CI_Model
 		$andamento = new Andamento(
 			null,
 			new AprovadoFiscAdm(),
-			DataLibrary::dataHoraMySQL(),
+			new Tempo(),
 			$processo_id,
 			$_SESSION['id'],
 			true
@@ -150,7 +150,7 @@ class AndamentoDAO extends CI_Model
 		$andamento = new Andamento(
 			null,
 			new AprovadoOd(),
-			DataLibrary::dataHoraMySQL(),
+			new Tempo(),
 			$processo_id,
 			$_SESSION['id'],
 			true
@@ -164,7 +164,7 @@ class AndamentoDAO extends CI_Model
 		$andamento = new Andamento(
 			null,
 			new Executado(),
-			DataLibrary::dataHoraMySQL(),
+			new Tempo(),
 			$processo_id,
 			$_SESSION['id'],
 			true
@@ -178,7 +178,7 @@ class AndamentoDAO extends CI_Model
 		$andamento = new Andamento(
 			null,
 			new Conformado(),
-			DataLibrary::dataHoraMySQL(),
+			new Tempo(),
 			$processo_id,
 			$_SESSION['id'],
 			true
@@ -193,7 +193,7 @@ class AndamentoDAO extends CI_Model
 		$andamento = new Andamento(
 			null,
 			new Arquivado(),
-			DataLibrary::dataHoraMySQL(),
+			new Tempo(),
 			$processo_id,
 			$_SESSION['id'],
 			true

@@ -4,6 +4,8 @@ use function PHPUnit\Framework\isEmpty;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use helper\Tempo;
+include_once 'application/models/helper/Tempo.php';
 include_once('application/models/bo/Arquivo.php');
 
 class ArquivoController extends CI_Controller
@@ -233,7 +235,7 @@ class ArquivoController extends CI_Controller
 		return new Arquivo(
 			$criarUmNovoArquivo ? null : (isset($data_post['arquivo_id']) ? $data_post['arquivo_id'] : null),
 			$path,
-			DataLibrary::dataHoraBr(),
+			new Tempo(),
 			$_SESSION['id'],
 			$data_post['artefato_id'],
 			$data_post['processo_id'],

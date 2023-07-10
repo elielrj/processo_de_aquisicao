@@ -2,6 +2,9 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use helper\Tempo;
+
+include_once 'application/models/helper/Tempo.php';
 require_once('application/models/bo/Andamento.php');
 
 class AndamentoController extends CI_Controller
@@ -69,7 +72,7 @@ class AndamentoController extends CI_Controller
 		$andamento = new Andamento(
 			$this->input->post('id'),
 			$this->input->post('status'),
-			$this->input->post('data_hora'),
+			new Tempo($this->input->post('data_hora')),
 			$this->input->post('processo_id'),
 			$_SESSION['id'],
 			true//todo
@@ -83,6 +86,7 @@ class AndamentoController extends CI_Controller
 	public function listarPorProcesso($proceso_id)
 	{
 		$andamentos = $this->AndamentoDAO->buscarTodosAtivosInativosDeUmProcesso($proceso_id);
+		$this->load->library('AndamentoLibrary');
 
 		$dados = array(
 			'titulo' => 'Lista de andamento do processo',

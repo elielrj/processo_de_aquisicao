@@ -577,7 +577,7 @@ class ProcessoController extends CI_Controller
 			$data_post['id'],
 			ucfirst($data_post['objeto']),
 			$data_post['numero'],
-			$data_post['data_hora'],
+			new Tempo($data_post['data_hora']),
 			$data_post['chave'],
 			$this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
 			$this->LeiDAO->buscarPorId($data_post['lei_id']),//$this->ModalidadeDAO->buscarPorId($data_post['modalidade_id']),

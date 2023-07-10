@@ -12,6 +12,7 @@ include_once('application/models/bo/nivel_de_acesso/Administrador.php');
 include_once('application/models/bo/nivel_de_acesso/Root.php');
 
 use helper\Tempo;
+
 include_once 'application/models/helper/Tempo.php';
 
 class ProcessoExibirLibrary
@@ -133,7 +134,12 @@ class ProcessoExibirLibrary
 
 				} else {
 
-					$link = "<a href='" . verificar_path($arquivo->path) . "'>{$artefato->nome}</a>";
+					if (file_exists($arquivo->path)) {
+						$link = "<a href='" . base_url($arquivo->path) . "'>{$artefato->nome}</a>";
+					} else {
+						$link = "<a>{$artefato->nome}</a>";
+					}
+
 
 				}
 
@@ -205,12 +211,10 @@ class ProcessoExibirLibrary
 
 	public function pathDoArquivo($arquivo)
 	{
-
-		if ($arquivo != null) {
-			return  verificar_path($arquivo->path);
-		} else {
-			return '';
+		if (isset($arquivo->path) && file_exists($arquivo->path)) {
+			return $arquivo->path;
 		}
+		return '';
 	}
 
 	private function objeto($objeto, $id)
