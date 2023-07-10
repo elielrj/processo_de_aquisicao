@@ -23,7 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/web/processo_de_aquisicao/';//todo add index.php
+require_once 'base_url_config.php';
+
+$config['base_url'] = BASE_URL_CONFIG;//todo add index.php
 
 /*
 |--------------------------------------------------------------------------

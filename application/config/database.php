@@ -73,12 +73,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+require_once 'db_config.php';
+
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'processo_de_aquisicao',
+	'hostname' => DB_CONFIG_HOSTNAME,
+	'username' => DB_CONFIG_USERNAME,
+	'password' => DB_CONFIG_PASSWORD,
+	'database' => DB_CONFIG_DATABASE,
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
