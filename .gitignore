@@ -15,7 +15,6 @@ user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
-#/vendor/
 
 # IDE Files
 #-------------------------
@@ -33,19 +32,12 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 ## Iginorar Arquivos do de Upload
 *.pdf 
-arquivos*
 
 #Astah
 *.asta.lock
-
-#Pasta PDFMerger
-/vendo/PDFMerger*
 
 #Ignorar Configurações de database
 application/config/database.php
 
 #Ignorar Configurações do base_url()
 application/config/config.php
-
-
-vendor/
