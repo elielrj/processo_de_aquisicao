@@ -6,6 +6,9 @@ include_once('application/models/bo/nivel_de_acesso/Root.php');
 include_once('application/models/bo/nivel_de_acesso/Leitor.php');
 include_once('application/models/bo/nivel_de_acesso/Escritor.php');
 
+$administrador = $_SESSION['funcao_nivel_de_acesso'] === Administrador::NOME;
+$root = $_SESSION['funcao_nivel_de_acesso'] == Root::NOME;
+
 $posto_ou_raduacao_e_nome_de_guerra =
 	(isset($_SESSION['nome_de_guerra']) && isset($_SESSION['hierarquia_sigla']))
 		? ($_SESSION['hierarquia_sigla'] . " " . $_SESSION['nome_de_guerra'])
@@ -13,13 +16,9 @@ $posto_ou_raduacao_e_nome_de_guerra =
 
 $nivel_de_acesso = $_SESSION['funcao_nivel_de_acesso'] ?? '';
 
-
 $acesso_ao_banco =
 	isset($_SESSION['funcao_nivel_de_acesso']) &&
-	(
-		$_SESSION['funcao_nivel_de_acesso'] == Administrador::NOME ||
-		$_SESSION['funcao_nivel_de_acesso'] == Root::NOME
-	);
+	($administrador || $root);
 ?>
 
 
@@ -75,14 +74,22 @@ $acesso_ao_banco =
 	<hr class="sidebar-divider">
 
 
-	<!-- Heading -->
-	<div class="sidebar-heading">Processos</div>
+	<?php
+	if (!$administrador) : ?>
 
-	<?php include_once('sidebar/processo.php'); ?>
+		<!-- Heading -->
+		<div class="sidebar-heading">Processos</div>
+
+		<?php
+		include_once('sidebar/processo.php');
+
+	endif;
+	?>
 
 
 
 	<?php $acesso_ao_banco ? include_once('sidebar/banco_de_dados.php') : ''; ?>
+
 
 	<!-- Heading -->
 	<div class="sidebar-heading">Pregões</div>
@@ -93,7 +100,6 @@ $acesso_ao_banco =
 	<div class="sidebar-heading">Configurações</div>
 
 	<?php include_once('sidebar/configuracao_usuario.php'); ?>
-
 
 
 	<!-- Sidebar Toggler (Sidebar) -->

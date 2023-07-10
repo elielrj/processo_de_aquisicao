@@ -5,14 +5,12 @@ include_once('application/models/bo/nivel_de_acesso/Leitor.php');
 include_once('application/models/bo/nivel_de_acesso/Escritor.php');
 include_once('application/models/bo/nivel_de_acesso/Executor.php');
 include_once('application/models/bo/nivel_de_acesso/Conformador.php');
-include_once('application/models/bo/nivel_de_acesso/Administrador.php');
 include_once('application/models/bo/nivel_de_acesso/Root.php');
 
 $leitor = $_SESSION['funcao_nivel_de_acesso'] === Leitor::NOME;
 $escritor = $_SESSION['funcao_nivel_de_acesso'] === Escritor::NOME;
 $executor = $_SESSION['funcao_nivel_de_acesso'] === Executor::NOME;
 $conformador = $_SESSION['funcao_nivel_de_acesso'] === Conformador::NOME;
-$administrador = $_SESSION['funcao_nivel_de_acesso'] === Administrador::NOME;
 $root = $_SESSION['funcao_nivel_de_acesso'] === Root::NOME;
 ?>
 

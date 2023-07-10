@@ -182,7 +182,7 @@ class ProcessoLibrary
 						}
 
 
-						if(file_exists()){
+						if(file_exists($path)){
 							return "<td><a href='" . base_url($path) . "'>{$this->nome_da_nota_de_empenho}</a></td>";
 						}else{
 							return "<td><a>{$this->nome_da_nota_de_empenho}</a></td>";
