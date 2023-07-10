@@ -36,12 +36,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 #Astah
 *.asta.lock
 
-#Ignorar Configurações de database
-application/config/database.php
-
-#Ignorar Configurações do base_url()
-application/config/config.php
-
 ## Ignorar configurações da base_url()
 #application/config/config
 application/config/base_url_config.php
