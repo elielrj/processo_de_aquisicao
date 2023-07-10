@@ -1,6 +1,5 @@
 <?php
 
-use helper\Tempo;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -21,7 +20,7 @@ class Processo implements InterfaceBO
 	private $id;
 	private $objeto;
 	private $numero;
-	private Tempo $dataHora;
+	private $dataHora;
 	private $chave;
 	private $departamento;
 	private $lei;

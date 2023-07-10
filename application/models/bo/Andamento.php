@@ -2,7 +2,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use helper\Tempo;
 include_once('InterfaceBO.php');
 include_once('status_do_andamento/StatusDoAndamento.php');
 include_once('status_do_andamento/Criado.php');  //Nível 0
@@ -19,7 +18,7 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 
 	private $id;
 	private $statusDoAndamento;
-	private Tempo $dataHora;
+	private $dataHora;
 	private $processo_id;
 	private $usuario_id;
 	private $status;

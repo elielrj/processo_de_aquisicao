@@ -2,7 +2,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use helper\Tempo;
 
 include_once 'application/models/helper/Tempo.php';
 include_once('InterfaceBO.php');
@@ -15,7 +14,7 @@ class Lei implements InterfaceBO
 	private $numero;
 	private $artigo;
 	private $inciso;
-	private Tempo $data;
+	private $data;
 	private $modalidade;
 	private $status;
 
