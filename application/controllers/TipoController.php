@@ -5,6 +5,7 @@ include_once('application/models/bo/Tipo.php');
 
 class TipoController extends CI_Controller
 {
+	const TIPO_CONTROLLER = 'TipoController';
 
 	public function __construct()
 	{
@@ -27,7 +28,7 @@ class TipoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$tipo = $this->tipoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
+		$tipo = $this->tipoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
 			'controller' => 'TipoController/listar',

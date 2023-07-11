@@ -14,7 +14,7 @@ include_once 'application/models/helper/Tempo.php';
 
 class ProcessoController extends CI_Controller
 {
-	public static $controller = 'ProcessoController';
+	const PROCESSO_CONTROLLER = 'ProcessoController';
 
 	public function __construct()
 	{

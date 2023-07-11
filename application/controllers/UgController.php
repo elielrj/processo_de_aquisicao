@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class UgController extends CI_Controller
 {
+	const UG_CONTROLLER = 'UgController';
 
 	public function __construct()
 	{

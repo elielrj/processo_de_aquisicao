@@ -5,13 +5,13 @@ use function PHPUnit\Framework\isEmpty;
 defined('BASEPATH') or exit('No direct script access allowed');
 
 use helper\Tempo;
+
 include_once 'application/models/helper/Tempo.php';
 include_once('application/models/bo/Arquivo.php');
 
 class ArquivoController extends CI_Controller
 {
-
-	public static $arquivoController = 'ArquivoController';
+	const  ARQUIVO_CONTROLLER = 'ArquivoController';
 
 	public function __construct()
 	{
@@ -35,7 +35,7 @@ class ArquivoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$arquivos = $this->ArquivoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
+		$arquivos = $this->ArquivoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
 			'controller' => 'ArquivoController/listar',

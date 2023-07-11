@@ -4,33 +4,32 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class UsuarioController extends CI_Controller
 {
+	const USUARIO_CONTROLLER = 'UsuarioController';
 
-	public static $usuarioController = 'UsuarioController';
+	public function __construct()
+	{
+		parent::__construct();
+		//$this->load->library('session');
+		$this->load->model('dao/UsuarioDAO');
+		$this->load->model('dao/DepartamentoDAO');
+		$this->load->model('dao/FuncaoDAO');
+		$this->load->model('dao/HierarquiaDAO');
+		$this->load->library('UsuarioLibrary');
+	}
 
-    public function __construct()
-    {
-        parent::__construct();
-        //$this->load->library('session');
-        $this->load->model('dao/UsuarioDAO');
-        $this->load->model('dao/DepartamentoDAO');
-        $this->load->model('dao/FuncaoDAO');
-        $this->load->model('dao/HierarquiaDAO');
-        $this->load->library('UsuarioLibrary');
-    }
+	public function index()
+	{
+		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
+	}
 
-    public function index()
-    {
-        usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
-    }
+	public function listar($indice = 1)
+	{
+		$indice--;
 
-    public function listar($indice = 1)
-    {
-        $indice--;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $qtd_de_itens_para_exibir = 10;
-        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
-
-        $usuarios = $this->UsuarioDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
+		$usuarios = $this->UsuarioDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
 			'controller' => 'UsuarioController/listar',
@@ -40,26 +39,26 @@ class UsuarioController extends CI_Controller
 
 		$this->load->library('CriadorDeBotoes', $params);
 
-        $botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
+		$botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
 
-        $dados = array(
-            'titulo' => 'Lista de Usuários',
-            'tabela' => $this->usuariolibrary->listar($usuarios, $indice_no_data_base),
-            'pagina' => 'usuario/index.php',
-            'botoes' => $botoes,
-        );
+		$dados = array(
+			'titulo' => 'Lista de Usuários',
+			'tabela' => $this->usuariolibrary->listar($usuarios, $indice_no_data_base),
+			'pagina' => 'usuario/index.php',
+			'botoes' => $botoes,
+		);
 
-        $this->load->view('index', $dados);
-    }
+		$this->load->view('index', $dados);
+	}
 
-    public function listarAtivos($indice = 1)
-    {
-        $indice--;
+	public function listarAtivos($indice = 1)
+	{
+		$indice--;
 
-        $qtd_de_itens_para_exibir = 10;
-        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $usuarios = $this->UsuarioDAO->buscarTodos($indice_no_data_base, $qtd_de_itens_para_exibir);
+		$usuarios = $this->UsuarioDAO->buscarTodos($indice_no_data_base, $qtd_de_itens_para_exibir);
 
 		$params = [
 			'controller' => 'UsuarioController',
@@ -69,192 +68,194 @@ class UsuarioController extends CI_Controller
 		$this->load->library('CriadorDeBotoes', $params);
 
 
-        $botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
+		$botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
 
-        $dados = array(
-            'titulo' => 'Lista de Usuários',
-            'tabela' => $this->tabela->usuario($usuarios, $indice_no_data_base),
-            'pagina' => 'usuario/index.php',
-            'botoes' => $botoes,
-        );
+		$dados = array(
+			'titulo' => 'Lista de Usuários',
+			'tabela' => $this->tabela->usuario($usuarios, $indice_no_data_base),
+			'pagina' => 'usuario/index.php',
+			'botoes' => $botoes,
+		);
 
-        $this->load->view('index', $dados);
-    }
+		$this->load->view('index', $dados);
+	}
 
-    public function listarDesativados($indice = 1)
-    {
-        $indice--;
+	public function listarDesativados($indice = 1)
+	{
+		$indice--;
 
-        $qtd_de_itens_para_exibir = 10;
-        $indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-        $usuarios = $this->UsuarioDAO->buscarTodosDesativados($indice_no_data_base, $qtd_de_itens_para_exibir);
+		$usuarios = $this->UsuarioDAO->buscarTodosDesativados($indice_no_data_base, $qtd_de_itens_para_exibir);
 
-        $quantidade = $this->UsuarioDAO->contarDesativados();
+		$quantidade = $this->UsuarioDAO->contarDesativados();
 
-        $botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $qtd_de_itens_para_exibir);
+		$botoes = empty($usuarios) ? '' : $this->botao->paginar('usuario/listar', $indice, $quantidade, $qtd_de_itens_para_exibir);
 
-        $dados = array(
-            'titulo' => 'Lista de Usuários',
-            'tabela' => $this->tabela->usuario($usuarios, $indice_no_data_base),
-            'pagina' => 'usuario/index.php',
-            'botoes' => $botoes,
-        );
+		$dados = array(
+			'titulo' => 'Lista de Usuários',
+			'tabela' => $this->tabela->usuario($usuarios, $indice_no_data_base),
+			'pagina' => 'usuario/index.php',
+			'botoes' => $botoes,
+		);
 
-        $this->load->view('index', $dados);
-    }
+		$this->load->view('index', $dados);
+	}
 
-    public function novo()
-    {
+	public function novo()
+	{
 
-        $dados = array(
-            'titulo' => 'Novo Usuário',
-            'pagina' => 'usuario/novo.php',
-            'departamentos' => $this->DepartamentoDAO->options(),
-            'hierarquias' => $this->HierarquiaDAO->options(),
-            'funcoes' => $this->FuncaoDAO->options()
-        );
+		$dados = array(
+			'titulo' => 'Novo Usuário',
+			'pagina' => 'usuario/novo.php',
+			'departamentos' => $this->DepartamentoDAO->options(),
+			'hierarquias' => $this->HierarquiaDAO->options(),
+			'funcoes' => $this->FuncaoDAO->options()
+		);
 
-        $this->load->view('index', $dados);
-    }
+		$this->load->view('index', $dados);
+	}
 
-    public function criar()
-    {
+	public function criar()
+	{
 
-        $data_post = $this->input->post();
+		$data_post = $this->input->post();
 
-        $usuario = new Usuario(
-            null,
-            $data_post['nome_de_guerra'],
-            $data_post['nome_completo'],
-            $data_post['email'],
-            $data_post['cpf'],
-            md5($data_post['senha']),
-            $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-            $data_post['status'],
-            $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
-            $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
-        );
+		$usuario = new Usuario(
+			null,
+			$data_post['nome_de_guerra'],
+			$data_post['nome_completo'],
+			$data_post['email'],
+			$data_post['cpf'],
+			md5($data_post['senha']),
+			$this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
+			$data_post['status'],
+			$this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
+			$this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
+		);
 
-        $this->UsuarioDAO->criar($usuario);
+		$this->UsuarioDAO->criar($usuario);
 
-        redirect('UsuarioController');
-    }
+		redirect('UsuarioController');
+	}
 
-    public function alterar($id)
-    {
+	public function alterar($id)
+	{
 
-        $usuario = $this->UsuarioDAO->buscarPorId($id);
+		$usuario = $this->UsuarioDAO->buscarPorId($id);
 
 		$this->removerSenha($usuario);
 
-        $dados = array(
-            'titulo' => 'Alterar Usuário',
-            'pagina' => 'usuario/alterar.php',
-            'usuario' => $usuario,
-            'departamentos' => $this->DepartamentoDAO->options(),
-            'hierarquias' => $this->HierarquiaDAO->options(),
-            'funcoes' => $this->FuncaoDAO->options()
-        );
+		$dados = array(
+			'titulo' => 'Alterar Usuário',
+			'pagina' => 'usuario/alterar.php',
+			'usuario' => $usuario,
+			'departamentos' => $this->DepartamentoDAO->options(),
+			'hierarquias' => $this->HierarquiaDAO->options(),
+			'funcoes' => $this->FuncaoDAO->options()
+		);
 
-        $this->load->view('index', $dados);
-    }
-    public function alterarUsuario()
-    {
+		$this->load->view('index', $dados);
+	}
 
-        $usuario = $this->UsuarioDAO->buscarPorId($_SESSION['id']);
+	public function alterarUsuario()
+	{
 
-        $this->removerSenha($usuario);
+		$usuario = $this->UsuarioDAO->buscarPorId($_SESSION['id']);
 
-        $options = $this->HierarquiaDAO->options();
+		$this->removerSenha($usuario);
 
-        $dados = array(
-            'titulo' => 'Atualizar dados do usuário: ' . $_SESSION['nome_de_guerra'],
-            'pagina' => 'usuario/alterar_usuario.php',
-            'usuario' => $usuario,
-            'departamentos' => $this->DepartamentoDAO->options(),
-            'hierarquias' => $options,
-        );
+		$options = $this->HierarquiaDAO->options();
 
-        $this->load->view('index', $dados);
-    }
+		$dados = array(
+			'titulo' => 'Atualizar dados do usuário: ' . $_SESSION['nome_de_guerra'],
+			'pagina' => 'usuario/alterar_usuario.php',
+			'usuario' => $usuario,
+			'departamentos' => $this->DepartamentoDAO->options(),
+			'hierarquias' => $options,
+		);
 
-    public function atualizar()
-    {
+		$this->load->view('index', $dados);
+	}
 
-        $data_post = $this->input->post();
+	public function atualizar()
+	{
+
+		$data_post = $this->input->post();
 
 		$senha = $data_post['senha'] === ''
 			? $_SESSION['senha']
 			: md5($data_post['senha']);
 
-        $usuario = new Usuario(
-            $data_post['id'],
+		$usuario = new Usuario(
+			$data_post['id'],
 			$data_post['nome_de_guerra'],
 			$data_post['nome_completo'],
-            $data_post['email'],
-            $data_post['cpf'],
-            $senha,
-            $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-            $data_post['status'],
-            $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
-            $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
-        );
+			$data_post['email'],
+			$data_post['cpf'],
+			$senha,
+			$this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
+			$data_post['status'],
+			$this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
+			$this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
+		);
 
-        $this->UsuarioDAO->atualizar($usuario);
+		$this->UsuarioDAO->atualizar($usuario);
 
-        redirect('UsuarioController');
-    }
-    public function atualizarUsuario()
-    {
+		redirect('UsuarioController');
+	}
 
-        $data_post = $this->input->post();
+	public function atualizarUsuario()
+	{
 
-        $senha = $data_post['senha'] === ''
-            ? $_SESSION['senha']
-            : md5($data_post['senha']);
+		$data_post = $this->input->post();
 
-        $usuario = new Usuario(
-            $data_post['id'],
+		$senha = $data_post['senha'] === ''
+			? $_SESSION['senha']
+			: md5($data_post['senha']);
+
+		$usuario = new Usuario(
+			$data_post['id'],
 			$data_post['nome_de_guerra'],
 			$data_post['nome_completo'],
-            $data_post['email'],
-            $data_post['cpf'],
-            $senha,
-            $this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-            $data_post['status'],
-            $this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
-            $this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
-        );
+			$data_post['email'],
+			$data_post['cpf'],
+			$senha,
+			$this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
+			$data_post['status'],
+			$this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
+			$this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
+		);
 
-        $this->UsuarioDAO->atualizar($usuario);
+		$this->UsuarioDAO->atualizar($usuario);
 
-        $this->load->model('dao/LoginDAO');
-        $this->LoginDAO->buscarDadosDoUsuarioLogado($usuario->email, $usuario->senha);
+		$this->load->model('dao/LoginDAO');
+		$this->LoginDAO->buscarDadosDoUsuarioLogado($usuario->email, $usuario->senha);
 
 		header("Location:" . base_url('index.php/ProcessoController'));
-    }
+	}
 
-    public function ativar($id)
-    {
+	public function ativar($id)
+	{
 
-        $this->UsuarioDAO->ativar($id);
+		$this->UsuarioDAO->ativar($id);
 
-        redirect('UsuarioController');
-    }
+		redirect('UsuarioController');
+	}
 
-    public function deletar($id)
-    {
+	public function deletar($id)
+	{
 
-        $this->UsuarioDAO->deletar($id);
+		$this->UsuarioDAO->deletar($id);
 
-        redirect('UsuarioController');
-    }
+		redirect('UsuarioController');
+	}
 
-    private function removerSenha($usuario)
-    {
-        $usuario->senha = '';
-    }
+	private function removerSenha($usuario)
+	{
+		$usuario->senha = '';
+	}
 
 
 }

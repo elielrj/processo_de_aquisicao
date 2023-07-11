@@ -5,7 +5,7 @@ include_once('application/models/bo/Sugestao.php');
 
 class SugestaoController extends CI_Controller
 {
-	static $controller = 'SugestaoController';
+	const SUGESTAO_CONTROLLER = 'SugestaoController';
 
 	public function __construct()
 	{

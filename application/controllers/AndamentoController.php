@@ -9,7 +9,7 @@ require_once('application/models/bo/Andamento.php');
 
 class AndamentoController extends CI_Controller
 {
-	public static $andamentoController = 'AndamentoController';
+	const ANDAMENTO_CONTROLLER = 'AndamentoController';
 
 	public function __construct()
 	{
