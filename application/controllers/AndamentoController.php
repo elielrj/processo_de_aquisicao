@@ -6,6 +6,7 @@ use helper\Tempo;
 
 include_once 'application/models/helper/Tempo.php';
 require_once('application/models/bo/Andamento.php');
+include_once 'application/models/dao/AndamentoDAO.php';
 
 class AndamentoController extends CI_Controller
 {
@@ -32,7 +33,7 @@ class AndamentoController extends CI_Controller
 		$andamento = $this->AndamentoDAO->buscarTodosAtivosInativos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
-			'controller' => 'AndamentoController/listar',
+			'controller' => self::ANDAMENTO_CONTROLLER.'/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->AndamentoDAO->contarAtivosInativos()
 		];
 
@@ -54,32 +55,32 @@ class AndamentoController extends CI_Controller
 	{
 		$andamento = new Andamento(
 			null,
-			$this->input->post('status'),
-			$this->input->post('data_hora'),
-			$this->input->post('processo_id'),
+			$this->input->post(AndamentoDAO::STATUS_DO_ANDAMENTO),
+			$this->input->post(AndamentoDAO::DATA_HORA),
+			$this->input->post(AndamentoDAO::PROCESSO_ID),
 			$_SESSION['id'],
 			true//todo
 		);
 
 		$this->AndamentoDAO->criar($andamento);
 
-		redirect(self::$andamentoController);
+		redirect(ANDAMENTO_CONTROLLER);
 	}
 
 	public function atualizar()
 	{
 		$andamento = new Andamento(
-			$this->input->post('id'),
-			$this->input->post('status'),
-			new Tempo($this->input->post('data_hora')),
-			$this->input->post('processo_id'),
+			$this->input->post(AndamentoDAO::ID),
+			$this->input->post(AndamentoDAO::STATUS_DO_ANDAMENTO),
+			new Tempo($this->input->post(AndamentoDAO::DATA_HORA)),
+			$this->input->post(AndamentoDAO::PROCESSO_ID),
 			$_SESSION['id'],
 			true//todo
 		);
 
 		$this->AndamentoDAO->atualizar($andamento);
 
-		redirect(self::$andamentoController);
+		redirect(ANDAMENTO_CONTROLLER);
 	}
 
 	public function listarPorProcesso($proceso_id)
