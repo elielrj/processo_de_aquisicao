@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class DepartamentoController extends CI_Controller
 {
-	const DEPARTAMENTO_CONTROLLER = 'DepartamentoController';
+
 
 	public function __construct()
 	{

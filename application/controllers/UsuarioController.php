@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class UsuarioController extends CI_Controller
 {
-	const USUARIO_CONTROLLER = 'UsuarioController';
 
 	public function __construct()
 	{

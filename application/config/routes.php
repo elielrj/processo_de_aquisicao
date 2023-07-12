@@ -53,7 +53,6 @@ $route['default_controller'] = 'LoginController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-require_once 'application/controllers/*.php';
 
 /**
  * @class AndamentoController
@@ -63,113 +62,103 @@ require_once 'application/controllers/*.php';
 /**
  * @class ArquivoController
  */
-$route['arquivo-listar'] = ArquivoController::ARQUIVO_CONTROLLER . '/listar';
-$route['arquivo-atualizar'] = ArquivoController::ARQUIVO_CONTROLLER . '/atualizar';
-$route['arquivo-deletar'] = ArquivoController::ARQUIVO_CONTROLLER . '/deletar';
+$route['arquivo-listar'] = ARQUIVO_CONTROLLER . '/listar';
+$route['arquivo-atualizar'] = ARQUIVO_CONTROLLER . '/atualizar';
+$route['arquivo-deletar'] = ARQUIVO_CONTROLLER . '/deletar';
 
 
 /**
  * @class ArtefatoController
  */
-$route['artefato-listar'] = ArtefatoController::ARTEFATO_CONTROLLER . '/listar';
-$route['artefato-novo'] = ArtefatoController::ARTEFATO_CONTROLLER . '/novo';
+$route['artefato-listar'] = ARTEFATO_CONTROLLER . '/listar';
+$route['artefato-novo'] = ARTEFATO_CONTROLLER . '/novo';
 
 
 /**
  * @class DepartamentoController
  */
-
-$route['departamento-listar'] = DepartamentoController::DEPARTAMENTO_CONTROLLER . '/listar';
-$route['departamento-novo'] = DepartamentoController::DEPARTAMENTO_CONTROLLER . '/novo';
-$route['departamento-criar'] = DepartamentoController::DEPARTAMENTO_CONTROLLER . '/criar';
-$route['departamento-atualizar'] = DepartamentoController::DEPARTAMENTO_CONTROLLER . '/atualizar';
-
-
-/**
- * @class LeiController
- */
-
-$route['lei-listar'] = LeiController::LEI_CONTROLLER . '/listar';
-$route['lei-novo'] = LeiController::LEI_CONTROLLER . '/novo';
+$route['departamento-listar'] = DEPARTAMENTO_CONTROLLER . '/listar';
+$route['departamento-novo'] = DEPARTAMENTO_CONTROLLER . '/novo';
+$route['departamento-criar'] = DEPARTAMENTO_CONTROLLER . '/criar';
+$route['departamento-atualizar'] = DEPARTAMENTO_CONTROLLER . '/atualizar';
 
 
 /**
  * @class LeiController
  */
+$route['lei-listar'] = LEI_CONTROLLER . '/listar';
+$route['lei-novo'] = LEI_CONTROLLER . '/novo';
 
-$route['lei-tipo-artefato-listar'] = LeiTipoArtefatoController::LEI_TIPO_ARTEFATO_CONTROLLER . '/listar';
-$route['lei-tipo-artefato-novo'] = LeiTipoArtefatoController::LEI_TIPO_ARTEFATO_CONTROLLER . '/novo';
-$route['lei-tipo-artefato-criar'] = LeiTipoArtefatoController::LEI_TIPO_ARTEFATO_CONTROLLER . '/criar';
+
+/**
+ * @class LeiController
+ */
+$route['lei-tipo-artefato-listar'] = LEI_TIPO_ARTEFATO_CONTROLLER . '/listar';
+$route['lei-tipo-artefato-novo'] = LEI_TIPO_ARTEFATO_CONTROLLER . '/novo';
+$route['lei-tipo-artefato-criar'] = LEI_TIPO_ARTEFATO_CONTROLLER . '/criar';
 
 
 /**
  * @class TipoController
  */
-
-$route['tipo-listar'] = TipoController::TIPO_CONTROLLER . '/listar';
-$route['tipo-novo'] = TipoController::TIPO_CONTROLLER . '/novo';
-$route['tipo-alterar'] = TipoController::TIPO_CONTROLLER . '/alterar';
-$route['tipo-atualizar'] = TipoController::TIPO_CONTROLLER . '/atualizar';
+$route['tipo-listar'] = TIPO_CONTROLLER . '/listar';
+$route['tipo-novo'] = TIPO_CONTROLLER . '/novo';
+$route['tipo-alterar'] = TIPO_CONTROLLER . '/alterar';
+$route['tipo-atualizar'] = TIPO_CONTROLLER . '/atualizar';
 
 
 /**
- * @class
+ * @class UgController
  */
-
-$route['ug-novo'] = 'UgController/novo';
-$route['ug-listar'] = 'UgController/listar';
+$route['ug-novo'] = UG_CONTROLLER . '/novo';
+$route['ug-listar'] = UG_CONTROLLER . '/listar';
 
 
 /**
  * @class LoginController
  */
-
-$route['sair'] = LoginController::LOGIN_CONTROLLER . '/sair';
+$route['sair'] = LOGIN_CONTROLLER . '/sair';
 
 
 /**
  * @class ModalidadeController
  */
-
-$route['modalidade-listar'] = ModalidadeController::MODALIDADE_CONTROLLER . '/listar';
-$route['modalidade-novo'] = ModalidadeController::MODALIDADE_CONTROLLER . '/novo';
+$route['modalidade-listar'] = MODALIDADE_CONTROLLER . '/listar';
+$route['modalidade-novo'] = MODALIDADE_CONTROLLER . '/novo';
 
 
 /**
  * @class ProcessoController
  */
-
-$route['processo-listar'] = ProcessoController::PROCESSO_CONTROLLER . '/listar';
-$route['processo-listar-todos-completo'] = ProcessoController::PROCESSO_CONTROLLER . '/listarTodosProcessosCompleto';
-$route['processo-listar-todos-incompleto'] = ProcessoController::PROCESSO_CONTROLLER . '/listarTodosProcessosIncompleto';
-$route['processo-listar-excluidos'] = ProcessoController::PROCESSO_CONTROLLER . '/listarTodosExcluidos';
-$route['processo-listar-por-sc'] = ProcessoController::PROCESSO_CONTROLLER . '/listarPorSetorDemandante';
-$route['processo-novo'] = ProcessoController::PROCESSO_CONTROLLER . '/novo';
-$route['processo-listar-almox'] = ProcessoController::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox';
-$route['processo-listar-aprov'] = ProcessoController::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAprov';
-$route['processo-listar-saude'] = ProcessoController::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSaude';
-$route['processo-listar-informatica'] = ProcessoController::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteInformatica';
-$route['processo-listar-transporte'] = ProcessoController::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteMntTransp';
-$route['processo-listar-salc'] = ProcessoController::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSalc';
+$route['processo-listar'] = PROCESSO_CONTROLLER . '/listar';
+$route['processo-listar-todos-completo'] = PROCESSO_CONTROLLER . '/listarTodosProcessosCompleto';
+$route['processo-listar-todos-incompleto'] = PROCESSO_CONTROLLER . '/listarTodosProcessosIncompleto';
+$route['processo-listar-excluidos'] = PROCESSO_CONTROLLER . '/listarTodosExcluidos';
+$route['processo-listar-por-sc'] = PROCESSO_CONTROLLER . '/listarPorSetorDemandante';
+$route['processo-novo'] = PROCESSO_CONTROLLER . '/novo';
+$route['processo-listar-almox'] = PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox';
+$route['processo-listar-aprov'] = PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAprov';
+$route['processo-listar-saude'] = PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSaude';
+$route['processo-listar-informatica'] = PROCESSO_CONTROLLER . '/listarPorSetorDemandanteInformatica';
+$route['processo-listar-transporte'] = PROCESSO_CONTROLLER . '/listarPorSetorDemandanteMntTransp';
+$route['processo-listar-salc'] = PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSalc';
 
 
 /**
  * @class SugestaoController
  */
-
-$route['sugestao-criar'] = SugestaoController::SUGESTAO_CONTROLLER . '/criar';
+$route['sugestao-criar'] = SUGESTAO_CONTROLLER . '/criar';
 
 
 /**
  * @class UsuarioController
  */
-
-$route['usuario-listar'] = UsuarioController::USUARIO_CONTROLLER . 'UsuarioController/listar';
-$route['usuario-novo'] = UsuarioController::USUARIO_CONTROLLER . 'UsuarioController/novo';
-$route['usuario-criar'] = UsuarioController::USUARIO_CONTROLLER . 'UsuarioController/criar';
-$route['usuario-atualizar'] = UsuarioController::USUARIO_CONTROLLER . 'UsuarioController/atualizar';
-$route['usuario-atualizar-usuario'] = UsuarioController::USUARIO_CONTROLLER . 'UsuarioController/atualizarUsuario';
-$route['usuario-alterar-usuario'] = UsuarioController::USUARIO_CONTROLLER . 'UsuarioController/alterarUsuario';
+$route['usuario-listar'] = USUARIO_CONTROLLER . '/listar';
+$route['usuario-novo'] = USUARIO_CONTROLLER . '/novo';
+$route['usuario-criar'] = USUARIO_CONTROLLER . '/criar';
+$route['usuario-atualizar'] = USUARIO_CONTROLLER . '/atualizar';
+$route['usuario-atualizar-usuario'] = USUARIO_CONTROLLER . '/atualizarUsuario';
+$route['usuario-alterar-usuario'] = USUARIO_CONTROLLER . '/alterarUsuario';
 
 
 

@@ -6,7 +6,6 @@ require_once('application/models/bo/Lei.php');
 
 class LeiController extends CI_Controller
 {
-	const LEI_CONTROLLER = 'LeiController';
 
 	public function __construct()
 	{

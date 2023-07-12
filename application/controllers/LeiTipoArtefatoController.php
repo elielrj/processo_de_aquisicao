@@ -5,7 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class LeiTipoArtefatoController extends CI_Controller
 {
-	const LEI_TIPO_ARTEFATO_CONTROLLER = 'LeiTipoArtefatoController';
 
 	public function __construct()
 	{

@@ -5,7 +5,6 @@ include_once('application/models/bo/Tipo.php');
 
 class TipoController extends CI_Controller
 {
-	const TIPO_CONTROLLER = 'TipoController';
 
 	public function __construct()
 	{

@@ -11,11 +11,11 @@ include_once 'application/models/dao/AndamentoDAO.php';
 class AndamentoController extends CI_Controller
 {
 	const ANDAMENTO_CONTROLLER = 'AndamentoController';
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model(AndamentoDAO::ANDAMENTO_DAO);
-		$this->load->library(AndamentoLibrary::ANDAMENTO_LIBRARY);
 	}
 
 	public function index()
@@ -26,29 +26,26 @@ class AndamentoController extends CI_Controller
 	public function listar($indice = 1)
 	{
 		$indice--;
-
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$andamento = $this->AndamentoDAO->buscarTodosAtivosInativos($qtd_de_itens_para_exibir, $indice_no_data_base);
+		$andamentos = $this->AndamentoDAO->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base);
 
-		$params = [
-			'controller' => self::ANDAMENTO_CONTROLLER.'/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->AndamentoDAO->contarAtivosInativos()
-		];
+		$this->load->library(
+			'CriadorDeBotoes',
+			[
+				'controller' => self::ANDAMENTO_CONTROLLER . '/listar',
+				'quantidade_de_registros_no_banco_de_dados' => $this->AndamentoDAO->contarTodosOsRegistros()
+			]);
 
-		$this->load->library('CriadorDeBotoes', $params);
-
-
-		$botoes = empty($andamento) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de andamentos',
-			'tabela' => $this->andamentolibrary->listar($andamento, $indice_no_data_base),
-			'pagina' => 'andamento/index.php',
-			'botoes' => $botoes,
-		);
-		$this->load->view('index', $dados);
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Lista de andamentos',
+				'tabela' => $andamentos,
+				'pagina' => 'andamento/index.php',
+				'botoes' => empty($andamentos) ? '' : $this->criadordebotoes->listar($indice),
+			]);
 	}
 
 	public function criar()

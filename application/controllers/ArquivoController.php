@@ -11,7 +11,6 @@ include_once('application/models/bo/Arquivo.php');
 
 class ArquivoController extends CI_Controller
 {
-	const  ARQUIVO_CONTROLLER = 'ArquivoController';
 
 	public function __construct()
 	{

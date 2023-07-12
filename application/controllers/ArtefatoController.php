@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ArtefatoController extends CI_Controller
 {
-	const ARTEFATO_CONTROLLER = 'ArtefatoController';
 
 	public function __construct()
 	{
