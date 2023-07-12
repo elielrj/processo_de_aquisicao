@@ -10,13 +10,11 @@ require_once('application/models/bo/Andamento.php');
 class AndamentoController extends CI_Controller
 {
 	const ANDAMENTO_CONTROLLER = 'AndamentoController';
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/AndamentoDAO');
-		$this->load->library('AndamentoLibrary');
-
+		$this->load->model(AndamentoDAO::ANDAMENTO_DAO);
+		$this->load->library(AndamentoLibrary::ANDAMENTO_LIBRARY);
 	}
 
 	public function index()

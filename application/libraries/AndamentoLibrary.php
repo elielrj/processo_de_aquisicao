@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class AndamentoLibrary
 {
-
+const ANDAMENTO_LIBRARY = 'AndamentoLibrary';
 	private $ordem;
 	private $processo;
 	private $processoDAO;

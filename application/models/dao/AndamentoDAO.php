@@ -5,100 +5,158 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use  helper\Tempo;
 
 include_once('application/models/bo/Andamento.php');
-include_once('application/models/bo/status_do_andamento/Criado.php');
-include_once('application/models/bo/status_do_andamento/Enviado.php');
-include_once('application/models/bo/status_do_andamento/AprovadoFiscAdm.php');
-include_once('application/models/bo/status_do_andamento/AprovadoOd.php');
-include_once('application/models/bo/status_do_andamento/Executado.php');
-include_once('application/models/bo/status_do_andamento/Conformado.php');
-include_once('application/models/bo/status_do_andamento/Arquivado.php');
+include_once('application/models/bo/status_do_andamento/*.php');
 
 include_once 'application/models/helper/Tempo.php';
 
-class AndamentoDAO extends CI_Model
+class AndamentoDAO extends CI_Model implements InterfaceDAO
 {
+	const ANDAMENTO_DAO = 'dao/AndamentoDAO';
 
-	public static $TABELA_DB = 'andamento';
+	const TABELA_DB = 'andamento';
 
 	public function __construct()
 	{
-		$this->load->model('dao/DAO');
+		parent::__construct();
 	}
 
 	public function criar($objeto)
 	{
-		$this->DAO->criar(self::$TABELA_DB, $objeto->array());
-	}
-
-	public function atualizar($andamento)
-	{
-		$this->DAO->atualizar(self::$TABELA_DB, $andamento->array());
-	}
-
-	/**
-	 * @param $key
-	 * @param $value
-	 * @return array
-	 * Devolve uma lista de Objetos de Andamento em Ordem descrescente por DataTime
-	 */
-	public function buscarOnde($key, $value)
-	{
-		$array = $this->DAO->buscarOndeOrderById(self::$TABELA_DB, array($key => $value));
-
-		$listaDeAndamento = [];
-
-		foreach ($array->result() as $andamento) {
-
-			$listaDeAndamento[] = $this->toObject($andamento);
-		}
-
-		return $listaDeAndamento;
-	}
-
-	public function buscarTodosAtivosInativos($inicial, $final)
-	{
-		$array = $this->DAO->buscarTodosAtivosInativosOrderByProcessoId(self::$TABELA_DB, $inicial, $final);
-
-		return $this->criarLista($array);
-	}
-
-	public function buscarTodosAtivosInativosDeUmProcesso($proceso_id)
-	{
-		$whare = array('processo_id' => $proceso_id);
-
-		$array = $this->DAO->buscarOndeOrderById(self::$TABELA_DB, $whare);
-
-		return $this->criarLista($array);
-	}
-
-	public static function toObject($arrayList)
-	{
-		return new Andamento(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			isset($arrayList->status_do_andamento)
-				? (Andamento::selecionarStatus($arrayList->status_do_andamento))
-				: (isset($arrayList['status_do_andamento']) ? Andamento::selecionarStatus($arrayList['status_do_andamento']) : null),
-			isset($arrayList->data_hora)
-				? (new Tempo($arrayList->data_hora))
-				: (isset($arrayList['data_hora']) ? new Tempo($arrayList['data_hora']) : null),
-			$arrayList->processo_id ?? ($arrayList['processo_id'] ?? null),
-			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null)
+		$this->db->insert(
+			self::TABELA_DB,
+			$objeto->array()
 		);
 	}
 
-	private function criarLista($array)
+	public function atualizar($objeto)
 	{
-		$listaDeAndamento = array();
+		$this->db->update(
+			self::TABELA_DB,
+			$objeto->array(),
+			['id' => $objeto->id]
+		);
+	}
 
-		foreach ($array->result() as $linha) {
+	public function buscarPorId($objetoId)
+	{
+		$linhaArrayList =
+			$this->db->get_where(
+				self::TABELA_DB,
+				['id' => $objetoId]
+			);
 
-			$andamento = $this->toObject($linha);
+		return $this->toObject($linhaArrayList);
+	}
 
-			$listaDeAndamento[] = $andamento;
+	public function buscarTodosAtivos($inicio, $fim)
+	{
+		$arrayList =
+			$this->db
+				->order_by('data_hora', 'DESC')
+				->where(['status' => true])
+				->get(self::TABELA_DB, $inicio, $fim);
+
+		return $this->criarLista($arrayList);
+	}
+
+	public function buscarTodosInativos($inicio, $fim)
+	{
+		$arrayList =
+			$this->db
+				->order_by('data_hora', 'DESC')
+				->where(['status' => false])
+				->get(self::TABELA_DB, $inicio, $fim);
+
+		return $this->criarLista($arrayList);
+	}
+
+	public function buscarTodosStatus($inicio, $fim)
+	{
+		$arrayList =
+			$this->db
+				->order_by('id', 'ASC')
+				->get(self::TABELA_DB, $inicio, $fim);
+
+		return $this->criarLista($arrayList);
+	}
+
+	public function buscarAonde($whare)
+	{
+		$arrayList =
+			$this->db
+				->where($whare)
+				->get(self::TABELA_DB);
+
+		return $this->criarLista($arrayList);
+	}
+
+	public function excluirDeFormaPermanente($objetoId)
+	{
+		$this->db->delete(
+			self::TABELA_DB,
+			['id' => $objetoId]);
+	}
+
+	public function excluirDeFormaLogica($objetoId)
+	{
+		$linhaArrayList = $this->buscarPorId($objetoId);
+
+		$andamento = $this->toObject($linhaArrayList);
+
+		$andamento->status = false;
+
+		$this->atualizar($andamento);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where(['status' => true])
+			->count_all_results(self::TABELA_DB);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where(['status' => false])
+			->count_all_results(self::TABELA_DB);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(self::TABELA_DB);
+	}
+
+	public function criarLista($arrayList)
+	{
+		$listaDeAndamentos = [];
+
+		foreach ($arrayList->result() as $linha) {
+			$listaDeAndamento[] = $this->toObject($linha);
 		}
 
 		return $listaDeAndamento;
+	}
+
+	public function toObject($linhaDoArrayList)
+	{
+		$id = $linhaDoArrayList->id ?? $linhaDoArrayList['id'] ?? null;
+		$statusDoAndamento = $linhaDoArrayList->status_do_andamento ?? $linhaDoArrayList['status_do_andamento'] ?? null;
+		$dataHora = $linhaDoArrayList->data_hora ?? $linhaDoArrayList['data_hora'] ?? null;
+		$processo_id = $linhaDoArrayList->processo_id ?? $linhaDoArrayList['processo_id'] ?? null;
+		$usuario_id = $linhaDoArrayList->usuario_id ?? $linhaDoArrayList['usuario_id'] ?? null;
+		$status = $linhaDoArrayList->status ?? $linhaDoArrayList['status'] ?? null;
+
+		return
+			new Andamento(
+				$id,
+				Andamento::selecionarStatus($statusDoAndamento),
+				new Tempo($dataHora),
+				$processo_id,
+				$usuario_id,
+				$status
+			);
 	}
 
 	public function options()
@@ -109,12 +167,27 @@ class AndamentoDAO extends CI_Model
 		$options += [Executado::$NOME => Executado::$NOME];
 		$options += [Conformado::$NOME => Conformado::$NOME];
 		$options += [Arquivado::$NOME => Arquivado::$NOME];
+
+		return $options;
 	}
 
-	public function contarAtivosInativos()
+	public function buscarTodosOsAndamentosDeUmProcesso($procesoId)
 	{
-		return $this->DAO->contarAtivosInativos(self::$TABELA_DB);
+		$whare = array('processo_id' => $procesoId);
+
+		$arrayList =
+			$this->db
+				->order_by('data_hora', 'DESC')
+				->where(['processo_id' => $procesoId])
+				->get(self::TABELA_DB);
+
+		return $this->criarLista($arrayList);
 	}
+
+	/*
+	| *
+	| */
+
 
 	public function processoEnviado($processo_id)
 	{
