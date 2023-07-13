@@ -14,9 +14,6 @@ include_once('application/models/bo/nivel_de_acesso/Root.php');
 
 class FuncaoDAO extends CI_Model
 {
-
-    public static $TABELA_DB = 'funcao';
-
     public function __construct()
     {
         $this->load->model('dao/DAO');
@@ -24,56 +21,56 @@ class FuncaoDAO extends CI_Model
 
     public function criar($objeto)
     {
-        $this->DAO->criar(self::$TABELA_DB, $objeto->array());
+        $this->DAO->criar(TABLE_FUNCAO, $objeto->array());
     }
 
     public function buscarTodos($inicial, $final)
     {
-        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodos(TABLE_FUNCAO, $inicial, $final);
 
         return $this->criarLista($array);
     }
 
     public function buscarTodosDesativados($inicial, $final)
     {
-        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodosDesativados(TABLE_FUNCAO, $inicial, $final);
 
         return $this->criarLista($array);
     }
 
     public function buscarPorId($funcaoId)
     {
-        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $funcaoId);
+        $array = $this->DAO->buscarPorId(TABLE_FUNCAO, $funcaoId);
 
         return $this->toObject($array->result()[0]);
     }
 
     public function buscarOnde($key, $value)
     {
-        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+        $array = $this->DAO->buscarOnde(TABLE_FUNCAO, array($key => $value));
 
         return $this->criarLista($array->result());
     }
 
     public function atualizar($funcao)
     {
-        $this->DAO->atualizar(self::$TABELA_DB, $funcao->array());
+        $this->DAO->atualizar(TABLE_FUNCAO, $funcao->array());
     }
 
 
     public function deletar($funcao)
     {
-        $this->DAO->deletar(self::$TABELA_DB, $funcao->array());
+        $this->DAO->deletar(TABLE_FUNCAO, $funcao->array());
     }
 
     public function contar()
     {
-        return $this->DAO->contar(self::$TABELA_DB);
+        return $this->DAO->contar(TABLE_FUNCAO);
     }
 
     public function contarDesativados()
     {
-        return $this->DAO->contarDesativados(self::$TABELA_DB);
+        return $this->DAO->contarDesativados(TABLE_FUNCAO);
     }
 
     private function toObject($arrayList)

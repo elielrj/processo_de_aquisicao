@@ -24,21 +24,21 @@ class ArtefatoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$artefatos = $this->ArtefatoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);//$qtd_de_itens_para_exibir,$indice_no_data_base
+		$artefatos = $this->ArtefatoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
-		$params = [
-			'controller' => 'ArtefatoController/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ArtefatoDAO->contar()
-		];
 
-		$this->load->library('CriadorDeBotoes', $params);
+		$this->load->library('CriadorDeBotoes',
+			[
+				'controller' => ARTEFATO_CONTROLLER . '/listar',
+				'quantidade_de_registros_no_banco_de_dados' => $this->ArtefatoDAO->contar()
+			]);
 
 
 		$botoes = empty($artefatos) ? '' : $this->criadordebotoes->listar($indice);
 
 		$dados = array(
 			'titulo' => 'Lista de Artefatos',
-			'tabela' => $this->artefatolibrary->listar($artefatos, $indice_no_data_base),
+			'tabela' => $artefatos,
 			'pagina' => 'artefato/index.php',
 			'botoes' => $botoes,
 		);

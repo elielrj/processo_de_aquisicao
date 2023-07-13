@@ -6,8 +6,6 @@ include_once('application/models/bo/Usuario.php');
 
 class UsuarioDAO extends CI_Model
 {
-	public static  $TABELA_DB = 'usuario';
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -19,40 +17,40 @@ class UsuarioDAO extends CI_Model
 
 	public function criar($usuario)
 	{
-		$this->DAO->criar(self::$TABELA_DB, $usuario->array());
+		$this->DAO->criar(TABLE_USUARIO, $usuario->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodos(TABLE_USUARIO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(TABLE_USUARIO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($usuarioId)
 	{
-		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $usuarioId);
+		$array = $this->DAO->buscarPorId(TABLE_USUARIO, $usuarioId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+		$array = $this->DAO->buscarOnde(TABLE_USUARIO, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
 
 	public function atualizar($usuario)
 	{
-		$this->DAO->atualizar(self::$TABELA_DB, $usuario->array());
+		$this->DAO->atualizar(TABLE_USUARIO, $usuario->array());
 	}
 
 
@@ -62,17 +60,17 @@ class UsuarioDAO extends CI_Model
 
 		$usuario->status = false;
 
-		$this->DAO->atualizar(self::$TABELA_DB, $usuario->array());
+		$this->DAO->atualizar(TABLE_USUARIO, $usuario->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(self::$TABELA_DB);
+		return $this->DAO->contar(TABLE_USUARIO);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(self::$TABELA_DB);
+		return $this->DAO->contarDesativados(TABLE_USUARIO);
 	}
 
 	public function toObject($arrayList)

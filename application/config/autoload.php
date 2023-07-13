@@ -103,8 +103,9 @@ $autoload['helper'] = array(
 	'replace_fisc_adm',
 	'replace_od',
 	'status',
-	'excluir_helper',
-	'alterar_helper',
+	'excluir',
+	'alterar',
+	'href',
 );
 
 /*

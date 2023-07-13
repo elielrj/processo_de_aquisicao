@@ -6,9 +6,6 @@ include_once('application/models/bo/Departamento.php');
 
 class DepartamentoDAO extends CI_Model
 {
-
-	public static $TABELA_DB = 'departamento';
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -18,26 +15,26 @@ class DepartamentoDAO extends CI_Model
 
 	public function criar($objeto)
 	{
-		$this->DAO->criar(self::$TABELA_DB, $objeto->array());
+		$this->DAO->criar(TABLE_DEPARTAMENTO, $objeto->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodos(TABLE_DEPARTAMENTO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(TABLE_DEPARTAMENTO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($departamentoId)
 	{
-		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $departamentoId);
+		$array = $this->DAO->buscarPorId(TABLE_DEPARTAMENTO, $departamentoId);
 
 		$departamento = $this->toObject($array->result()[0]);
 
@@ -46,14 +43,14 @@ class DepartamentoDAO extends CI_Model
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+		$array = $this->DAO->buscarOnde(TABLE_DEPARTAMENTO, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
 
 	public function atualizar($departamento)
 	{
-		$this->DAO->atualizar(self::$TABELA_DB, $departamento->array());
+		$this->DAO->atualizar(TABLE_DEPARTAMENTO, $departamento->array());
 	}
 
 
@@ -63,17 +60,17 @@ class DepartamentoDAO extends CI_Model
 
 		$departamento->status = false;
 
-		$this->DAO->atualizar(self::$TABELA_DB, $departamento->array());
+		$this->DAO->atualizar(TABLE_DEPARTAMENTO, $departamento->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(self::$TABELA_DB);
+		return $this->DAO->contar(TABLE_DEPARTAMENTO);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(self::$TABELA_DB);
+		return $this->DAO->contarDesativados(TABLE_DEPARTAMENTO);
 	}
 
 	public function toObject($arrayList)

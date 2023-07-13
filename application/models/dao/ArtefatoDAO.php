@@ -6,9 +6,6 @@ include_once('application/models/bo/Artefato.php');
 
 class ArtefatoDAO extends CI_Model
 {
-
-    public static $TABELA_DB = 'artefato';
-
     public function __construct()
     {
         $this->load->model('dao/DAO');
@@ -16,56 +13,56 @@ class ArtefatoDAO extends CI_Model
 
     public function criar($objeto)
     {
-        $this->DAO->criar(self::$TABELA_DB, $objeto->array());
+        $this->DAO->criar(TABLE_ARTERFATO, $objeto->array());
     }
 
     public function buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base)
     {
-        $array = $this->DAO->buscarTodos(self::$TABELA_DB, $qtd_de_itens_para_exibir,$indice_no_data_base); //($qtd_de_itens_para_exibir,$indice_no_data_base)
+        $array = $this->DAO->buscarTodos(TABLE_ARTERFATO, $qtd_de_itens_para_exibir,$indice_no_data_base); //($qtd_de_itens_para_exibir,$indice_no_data_base)
 
         return $this->criarLista($array);
     }
 
     public function buscarTodosDesativados($inicial, $final)
     {
-        $array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+        $array = $this->DAO->buscarTodosDesativados(TABLE_ARTERFATO, $inicial, $final);
 
         return $this->criarLista($array);
     }
 
     public function buscarPorId($artefatoId)
     {
-        $array = $this->DAO->buscarPorId(self::$TABELA_DB, $artefatoId);
+        $array = $this->DAO->buscarPorId(TABLE_ARTERFATO, $artefatoId);
 
         return $this->toObject($array->result()[0]);
     }
 
     public function buscarOnde($key, $value)
     {
-        $array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+        $array = $this->DAO->buscarOnde(TABLE_ARTERFATO, array($key => $value));
 
         return $this->criarLista($array->result());
     }
 
     public function atualizar($artefato)
     {
-        $this->DAO->atualizar(self::$TABELA_DB, $artefato->array());
+        $this->DAO->atualizar(TABLE_ARTERFATO, $artefato->array());
     }
 
 
     public function deletar($artefato)
     {
-        $this->DAO->deletar(self::$TABELA_DB, $artefato->array());
+        $this->DAO->deletar(TABLE_ARTERFATO, $artefato->array());
     }
 
     public function contar()
     {
-        return $this->DAO->contar(self::$TABELA_DB);
+        return $this->DAO->contar(TABLE_ARTERFATO);
     }
 
     public function contarDesativados()
     {
-        return $this->DAO->contarDesativados(self::$TABELA_DB);
+        return $this->DAO->contarDesativados(TABLE_ARTERFATO);
     }
 
     /**

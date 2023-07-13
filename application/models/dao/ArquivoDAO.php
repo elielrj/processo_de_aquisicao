@@ -9,7 +9,6 @@ include_once('application/models/bo/Arquivo.php');
 class ArquivoDAO extends CI_Model
 {
 
-	public static $TABELA_DB = 'arquivo';
 
 	public function __construct()
 	{
@@ -18,56 +17,56 @@ class ArquivoDAO extends CI_Model
 
 	public function criar($objeto)
 	{
-		$this->DAO->criar(self::$TABELA_DB, $objeto->array());
+		$this->DAO->criar(TABLE_ARQUIVO, $objeto->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodos(TABLE_ARQUIVO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(TABLE_ARQUIVO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($arquivoId)
 	{
-		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $arquivoId);
+		$array = $this->DAO->buscarPorId(TABLE_ARQUIVO, $arquivoId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+		$array = $this->DAO->buscarOnde(TABLE_ARQUIVO, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
 
 	public function atualizar($arquivo)
 	{
-		$this->DAO->atualizar(self::$TABELA_DB, $arquivo->array());
+		$this->DAO->atualizar(TABLE_ARQUIVO, $arquivo->array());
 	}
 
 
 	public function deletar($arquivo)
 	{
-		$this->DAO->deletar(self::$TABELA_DB, $arquivo->array());
+		$this->DAO->deletar(TABLE_ARQUIVO, $arquivo->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(self::$TABELA_DB);
+		return $this->DAO->contar(TABLE_ARQUIVO);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(self::$TABELA_DB);
+		return $this->DAO->contarDesativados(TABLE_ARQUIVO);
 	}
 
 	public function toObject($arrayList)
@@ -112,7 +111,7 @@ class ArquivoDAO extends CI_Model
 	{
 		$whare = array('processo_id' => $processoId, 'artefato_id' => $artefatoId);
 
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, $whare);
+		$array = $this->DAO->buscarOnde(TABLE_ARQUIVO, $whare);
 
 		if (!empty($array->result())) {
 

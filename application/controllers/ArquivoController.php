@@ -1,22 +1,11 @@
 <?php
-
-use function PHPUnit\Framework\isEmpty;
-
 defined('BASEPATH') or exit('No direct script access allowed');
-
-use helper\Tempo;
-
-include_once 'application/models/helper/Tempo.php';
-include_once('application/models/bo/Arquivo.php');
 
 class ArquivoController extends CI_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('ArquivoLibrary');
-
 		$this->load->model('dao/ArquivoDAO');
 		$this->load->model('dao/ProcessoDAO');
 		$this->load->model('dao/ArtefatoDAO');
@@ -36,23 +25,22 @@ class ArquivoController extends CI_Controller
 
 		$arquivos = $this->ArquivoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
-		$params = [
-			'controller' => 'ArquivoController/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ArquivoDAO->contar()
-		];
 
-		$this->load->library('CriadorDeBotoes', $params);
+		$this->load->library('CriadorDeBotoes',
+			[
+				'controller' => ARQUIVO_CONTROLLER . '/listar',
+				'quantidade_de_registros_no_banco_de_dados' => $this->ArquivoDAO->contar()
+			]);
 
 		$botoes = empty($arquivos) ? '' : $this->criadordebotoes->listar($indice);
 
-		$dados = array(
-			'titulo' => 'Lista de arquivos',
-			'tabela' => $this->arquivolibrary->listar($arquivos, $indice_no_data_base),
-			'pagina' => 'arquivo/index.php',
-			'botoes' => $botoes,
-		);
-
-		$this->load->view('index', $dados);
+		$this->load->view('index',
+			[
+				'titulo' => 'Lista de arquivos',
+				'tabela' => $arquivos,
+				'pagina' => 'arquivo/index.php',
+				'botoes' => $botoes,
+			]);
 	}
 
 	public function novo()

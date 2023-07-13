@@ -113,6 +113,19 @@ const USUARIO_CONTROLLER = 'UsuarioController';
  */
 
 const TABLE_ANDAMENTO = 'andamento';
+const TABLE_ARQUIVO = 'arquivo';
+const TABLE_ARTERFATO = 'artefato';
+const TABLE_DEPARTAMENTO = 'departamento';
+const TABLE_FUNCAO = 'funcao';
+const TABLE_HIERARQUIA = 'hierarquia';
+const TABLE_LEI = 'lei';
+const TABLE_LEI_TIPO_ARTEFATO = 'lei_tipo_artefato';
+const TABLE_MODALIDADE = 'modalidade';
+const TABLE_PROCESSO = 'processo';
+const TABLE_SUGESTAO = 'sugestao';
+const TABLE_TIPO = 'tipo';
+const TABLE_UG = 'ug';
+const TABLE_USUARIO = 'usuario';
 const DIRECTIONS_ASC = 'ASC';
 const DIRECTIONS_DESC = 'DESC';
 const ID = 'id';
@@ -121,3 +134,8 @@ const DATA_HORA = 'data_hora';
 const PROCESSO_ID = 'processo_id';
 const USUARIO_ID = 'usuario_id';
 const STATUS = 'status';
+
+/**
+ * ERROS
+ */
+const ERRO_PATH = '#_ERRO_PATH';

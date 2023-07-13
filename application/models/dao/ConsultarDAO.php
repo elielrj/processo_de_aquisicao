@@ -4,9 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ConsultarDAO extends CI_Model
 {
-
-    public static $TABELA_DB = 'processo';
-
     public function __construct()
     {
         $this->load->model('dao/ProcessoDAO');

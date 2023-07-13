@@ -6,9 +6,6 @@ include_once('application/models/bo/Ug.php');
 
 class UgDAO extends CI_Model
 {
-
-	public static $TABELA_DB = 'ug';
-
 	public function __construct()
 	{
 		$this->load->model('dao/DAO');
@@ -16,56 +13,56 @@ class UgDAO extends CI_Model
 
 	public function criar($objeto)
 	{
-		$this->DAO->criar(self::$TABELA_DB, $objeto->array());
+		$this->DAO->criar(TABLE_UG, $objeto->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodos(TABLE_UG, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(TABLE_UG, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($ugId)
 	{
-		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $ugId);
+		$array = $this->DAO->buscarPorId(TABLE_UG, $ugId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+		$array = $this->DAO->buscarOnde(TABLE_UG, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
 
 	public function atualizar($ug)
 	{
-		$this->DAO->atualizar(self::$TABELA_DB, $ug->array());
+		$this->DAO->atualizar(TABLE_UG, $ug->array());
 	}
 
 
 	public function deletar($ug)
 	{
-		$this->DAO->deletar(self::$TABELA_DB, $ug->array());
+		$this->DAO->deletar(TABLE_UG, $ug->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(self::$TABELA_DB);
+		return $this->DAO->contar(TABLE_UG);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(self::$TABELA_DB);
+		return $this->DAO->contarDesativados(TABLE_UG);
 	}
 
 	public function toObject($arrayList)

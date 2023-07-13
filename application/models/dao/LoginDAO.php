@@ -5,9 +5,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class LoginDAO extends CI_Model
 {
-
-	public static $TABELA_DB = 'usuario';
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -19,14 +16,14 @@ class LoginDAO extends CI_Model
 
 	public function emailExiste($email)
 	{
-		$array = $this->DAO->buscarOnde(LoginDAO::$TABELA_DB, array('email' => $email));
+		$array = $this->DAO->buscarOnde(TABLE_USUARIO, array('email' => $email));
 
 		return ($array->num_rows() == 1);
 	}
 
 	public function senhaEstaCorreta($email, $senha)
 	{
-		$array = $this->DAO->buscarOnde(LoginDAO::$TABELA_DB, array('email' => $email, 'senha' => $senha));
+		$array = $this->DAO->buscarOnde(TABLE_USUARIO, array('email' => $email, 'senha' => $senha));
 
 		return ($array->num_rows() == 1);
 	}
@@ -35,7 +32,7 @@ class LoginDAO extends CI_Model
 	{
 		$where = array('email' => $email, 'senha' => $senha);
 
-		$array = $this->DAO->buscarOnde(LoginDAO::$TABELA_DB, $where);
+		$array = $this->DAO->buscarOnde(TABLE_USUARIO, $where);
 
 		foreach ($array->result() as $linha) {
 
