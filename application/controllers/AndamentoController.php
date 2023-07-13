@@ -1,21 +1,13 @@
 <?php
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use helper\Tempo;
-
-include_once 'application/models/helper/Tempo.php';
-require_once('application/models/bo/Andamento.php');
-include_once 'application/models/dao/AndamentoDAO.php';
 
 class AndamentoController extends CI_Controller
 {
-	const ANDAMENTO_CONTROLLER = 'AndamentoController';
-
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model(AndamentoDAO::ANDAMENTO_DAO);
+		$this->load->model('dao/AndamentoDAO');
 	}
 
 	public function index()
@@ -34,9 +26,11 @@ class AndamentoController extends CI_Controller
 		$this->load->library(
 			'CriadorDeBotoes',
 			[
-				'controller' => self::ANDAMENTO_CONTROLLER . '/listar',
+				'controller' => ANDAMENTO_CONTROLLER . '/listar',
 				'quantidade_de_registros_no_banco_de_dados' => $this->AndamentoDAO->contarTodosOsRegistros()
 			]);
+
+		$botoes = empty($andamentos) ? '' : $this->criadordebotoes->listar($indice);
 
 		$this->load->view(
 			'index',
@@ -44,7 +38,7 @@ class AndamentoController extends CI_Controller
 				'titulo' => 'Lista de andamentos',
 				'tabela' => $andamentos,
 				'pagina' => 'andamento/index.php',
-				'botoes' => empty($andamentos) ? '' : $this->criadordebotoes->listar($indice),
+				'botoes' => $botoes
 			]);
 	}
 
@@ -52,9 +46,9 @@ class AndamentoController extends CI_Controller
 	{
 		$andamento = new Andamento(
 			null,
-			$this->input->post(AndamentoDAO::STATUS_DO_ANDAMENTO),
-			$this->input->post(AndamentoDAO::DATA_HORA),
-			$this->input->post(AndamentoDAO::PROCESSO_ID),
+			$this->input->post(STATUS_DO_ANDAMENTO),
+			$this->input->post(DATA_HORA),
+			$this->input->post(PROCESSO_ID),
 			$_SESSION['id'],
 			true//todo
 		);
@@ -67,10 +61,10 @@ class AndamentoController extends CI_Controller
 	public function atualizar()
 	{
 		$andamento = new Andamento(
-			$this->input->post(AndamentoDAO::ID),
-			$this->input->post(AndamentoDAO::STATUS_DO_ANDAMENTO),
-			new Tempo($this->input->post(AndamentoDAO::DATA_HORA)),
-			$this->input->post(AndamentoDAO::PROCESSO_ID),
+			$this->input->post(ID),
+			$this->input->post(STATUS_DO_ANDAMENTO),
+			new Tempo($this->input->post(DATA_HORA)),
+			$this->input->post(PROCESSO_ID),
 			$_SESSION['id'],
 			true//todo
 		);

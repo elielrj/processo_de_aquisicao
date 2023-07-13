@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use helper\Tempo;
 
-include_once 'application/models/helper/Tempo.php';
 include_once('application/models/bo/Lei.php');
 
 class LeiDAO extends CI_Model
@@ -74,12 +73,15 @@ class LeiDAO extends CI_Model
 
 	public function toObject($array)
 	{
+		$data = $array->data ?? ($array['data'] ?? null);
+		$this->load->library('Data',$data);
+
 		return new Lei(
 			$array->id ?? ($array['id'] ?? null),
 			$array->numero ?? ($array['numero'] ?? null),
 			$array->artigo ?? ($array['artigo'] ?? null),
 			$array->inciso ?? ($array['inciso'] ?? null),
-			new Tempo($array->data ?? ($array['data'] ?? null)),
+			$this->data->formatoDoMySQL(),
 			isset($array->modalidade_id)
 				? $this->ModalidadeDAO->buscarPorId($array->modalidade_id)
 				: (isset($array['modalidade_id']) ? $this->ModalidadeDAO->buscarPorId($array['modalidade_id']) : null),

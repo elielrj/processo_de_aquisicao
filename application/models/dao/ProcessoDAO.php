@@ -5,12 +5,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use helper\Tempo;
 
 include_once('application/models/bo/Processo.php');
-include_once 'application/models/helper/Tempo.php';
 
 class ProcessoDAO extends CI_Model
 {
 
-	public static $TABELA_DB = 'processo';
+	const TABELA_DB = 'processo';
+	const PROCESSO_DAO = 'dao/ProcessoDAO';
 
 	public function __construct()
 	{
@@ -26,7 +26,7 @@ class ProcessoDAO extends CI_Model
 
 	public function criar($processo)
 	{
-		$this->DAO->criar(self::$TABELA_DB, $processo->array());
+		$this->DAO->criar(ProcessoDAO::TABELA_DB, $processo->array());
 
 		$processo = $this->buscarOnde('chave', $processo->chave);
 
@@ -46,7 +46,7 @@ class ProcessoDAO extends CI_Model
 
 	public function buscarTodos($inicial, $final, $where = [])
 	{
-		$array = $this->DAO->buscarTodosOrderByData(self::$TABELA_DB, $inicial, $final, $where);
+		$array = $this->DAO->buscarTodosOrderByData(ProcessoDAO::TABELA_DB, $inicial, $final, $where);
 
 		return $this->criarLista($array);
 	}
@@ -54,28 +54,28 @@ class ProcessoDAO extends CI_Model
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(self::$TABELA_DB, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(ProcessoDAO::TABELA_DB, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($processoId)
 	{
-		$array = $this->DAO->buscarPorId(self::$TABELA_DB, $processoId);
+		$array = $this->DAO->buscarPorId(ProcessoDAO::TABELA_DB, $processoId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array($key => $value));
+		$array = $this->DAO->buscarOnde(ProcessoDAO::TABELA_DB, array($key => $value));
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function atualizar($processo)
 	{//var_dump($processo->array());
-		$this->DAO->atualizar(self::$TABELA_DB, $processo->array());
+		$this->DAO->atualizar(ProcessoDAO::TABELA_DB, $processo->array());
 	}
 
 	public function deletar($processo_id)
@@ -84,7 +84,7 @@ class ProcessoDAO extends CI_Model
 
 		$processo->status = false;
 
-		$this->DAO->atualizar(self::$TABELA_DB, $processo->array());
+		$this->DAO->atualizar(ProcessoDAO::TABELA_DB, $processo->array());
 	}
 
 	public function recuperar($processo_id)
@@ -93,12 +93,12 @@ class ProcessoDAO extends CI_Model
 
 		$processo->status = true;
 
-		$this->DAO->atualizar(self::$TABELA_DB, $processo->array());
+		$this->DAO->atualizar(ProcessoDAO::TABELA_DB, $processo->array());
 	}
 
 	public function contar($where = [])
 	{
-		return $this->DAO->contar(self::$TABELA_DB, $where);
+		return $this->DAO->contar(ProcessoDAO::TABELA_DB, $where);
 	}
 
 	public function contarProcessosPorSetorDemandante($departamento_id = null)
@@ -107,21 +107,25 @@ class ProcessoDAO extends CI_Model
 
 		$where = ['departamento_id' => $departamento_id,'status'=>true];
 
-		return $this->DAO->contar(self::$TABELA_DB, $where);
+		return $this->DAO->contar(ProcessoDAO::TABELA_DB, $where);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(self::$TABELA_DB);
+		return $this->DAO->contarDesativados(ProcessoDAO::TABELA_DB);
 	}
 
 	private function toObject($arrayList)
 	{
+		$data_hora = $arrayList->data_hora ?? ($arrayList['data_hora'] ?? null);
+
+		$this->load->library('DataHora',$data_hora);
+
 		$processo = new Processo(
 			$arrayList->id ?? ($arrayList['id'] ?? null),
 			$arrayList->objeto ?? ($arrayList['objeto'] ?? null),
 			$arrayList->numero ?? ($arrayList['numero'] ?? null),
-			new Tempo($arrayList->data_hora ?? ($arrayList['data_hora'] ?? null)),
+			$this->datahora->formatoDoMySQL(),
 			$arrayList->chave ?? ($arrayList['chave'] ?? null),
 			isset($arrayList->departamento_id) ? $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id) : (isset($arrayList['departamento_id']) ? $this->DepartamentoDAO->buscarPorId($arrayList['departamento_id']) : null),
 			isset($arrayList->lei_id) ? $this->LeiDAO->buscarPorId($arrayList->lei_id) : (isset($arrayList['lei_id']) ? $this->LeiDAO->buscarPorId($arrayList['lei_id']) : null),
@@ -129,9 +133,9 @@ class ProcessoDAO extends CI_Model
 			$arrayList->completo ?? ($arrayList['completo'] ?? null),
 			$arrayList->status ?? ($arrayList['status'] ?? null),
 			isset($arrayList->id)
-				? $this->AndamentoDAO->buscarOnde('processo_id', $arrayList->id)
+				? $this->AndamentoDAO->buscarAonde(['processo_id'=>$arrayList->id])
 				: (isset($arrayList['id'])
-				? $this->AndamentoDAO->buscarOnde('processo_id', $arrayList['id'])
+				? $this->AndamentoDAO->buscarAonde(['processo_id'=>$arrayList->id])
 				: null)
 
 		);
@@ -186,7 +190,7 @@ class ProcessoDAO extends CI_Model
 
 	public function buscarProcessoPeloNumeroChave($numero, $chave)
 	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array('numero' => $numero, 'chave' => $chave));
+		$array = $this->DAO->buscarOnde(ProcessoDAO::TABELA_DB, array('numero' => $numero, 'chave' => $chave));
 
 		if (isset($array)) {
 			return $this->toObject($array->result()[0]);

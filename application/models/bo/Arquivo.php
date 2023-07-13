@@ -4,7 +4,6 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
-include_once('application/models/helper/Tempo.php');
 
 class Arquivo implements InterfaceBO
 {

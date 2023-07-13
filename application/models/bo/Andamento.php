@@ -11,8 +11,8 @@ include_once('status_do_andamento/AprovadoOd.php');  //Nível 2
 include_once('status_do_andamento/Executado.php');  //Nível 3
 include_once('status_do_andamento/Conformado.php');  //Nível 4
 include_once('status_do_andamento/Arquivado.php');  //Nível 5
-include_once '../dao/AndamentoDAO.php';
-include_once 'application/models/helper/Tempo.php';
+include_once 'application/models/dao/AndamentoDAO.php';
+
 class Andamento implements StatusDoAndamento, InterfaceBO
 {
 
@@ -20,7 +20,7 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 	private $statusDoAndamento;
 	private $dataHora;
 	private $processo_id;
-	private $usuario_id;
+	private $usuario;
 	private $status;
 
 	public function __construct(
@@ -28,7 +28,7 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 		$statusDoAndamento,
 		$dataHora,
 		$processo_id,
-		$usuario_id,
+		$usuario,
 		$status
 	)
 	{
@@ -36,7 +36,7 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 		$this->statusDoAndamento = $statusDoAndamento;
 		$this->dataHora = $dataHora;
 		$this->processo_id = $processo_id;
-		$this->usuario_id = $usuario_id;
+		$this->usuario = $usuario;
 		$this->status = $status;
 	}
 
@@ -53,12 +53,12 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 	public function array()
 	{
 		return array(
-			AndamentoDAO::ID => isset($this->id) ? $this->id : null,
-			AndamentoDAO::STATUS_DO_ANDAMENTO => $this->statusDoAndamento->nome(),
-			AndamentoDAO::DATA_HORA  => $this->dataHora->dataHoraNoFormatoMySQL(),
-			AndamentoDAO::PROCESSO_ID => $this->processo_id,
-			AndamentoDAO::USUARIO_ID => $this->usuario_id,
-			AndamentoDAO::STATUS => $this->status,
+			ID => $this->id ?? null,
+			STATUS_DO_ANDAMENTO => $this->statusDoAndamento->nome(),
+			DATA_HORA  => $this->dataHora,
+			PROCESSO_ID => $this->processo_id,
+			USUARIO_ID => $this->usuario->id,
+			STATUS => $this->status,
 		);
 	}
 

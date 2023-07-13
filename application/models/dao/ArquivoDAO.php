@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use helper\Tempo;
 
-include_once 'application/models/helper/Tempo.php';
 include_once('application/models/bo/Arquivo.php');
 
 class ArquivoDAO extends CI_Model
@@ -73,10 +72,13 @@ class ArquivoDAO extends CI_Model
 
 	public function toObject($arrayList)
 	{
+		$data_hora = $arrayList->data_hora ?? ($arrayList['data_hora'] ?? null);
+		$this->load->library('DataHora',$data_hora);
+
 		return new Arquivo(
 			$arrayList->id ?? ($arrayList['id'] ?? null),
 			$arrayList->path ?? ($arrayList['path'] ?? null),
-			new Tempo($arrayList->data_hora ?? ($arrayList['data_hora'] ?? null)),
+			$this->datahora->formatoDoMySQL(),
 			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null),
 			$arrayList->artefato_id ?? ($arrayList['artefato_id'] ?? null),
 			$arrayList->processo_id ?? ($arrayList['processo_id'] ?? null),

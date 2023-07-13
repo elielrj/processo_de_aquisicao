@@ -57,6 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 /**
  * @class AndamentoController
  */
+$route['andamento-listar'] = ANDAMENTO_CONTROLLER . '/listar';
 
 
 /**

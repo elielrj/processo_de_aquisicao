@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class LoginController extends CI_Controller
 {
-	const LOGIN_CONTROLLER = 'LoginController';
 
 	public function __construct()
 	{

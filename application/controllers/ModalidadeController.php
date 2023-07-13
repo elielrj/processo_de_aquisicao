@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ModalidadeController extends CI_Controller
 {
-	const MODALIDADE_CONTROLLER = 'ModalidadeController';
 
 	public function __construct()
 	{

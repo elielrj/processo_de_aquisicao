@@ -11,7 +11,6 @@ include_once('status_do_andamento/AprovadoOd.php');
 include_once('status_do_andamento/Executado.php');
 include_once('status_do_andamento/Conformado.php');
 include_once('status_do_andamento/Arquivado.php');
-include_once('application/models/helper/Tempo.php');
 
 
 class Processo implements InterfaceBO

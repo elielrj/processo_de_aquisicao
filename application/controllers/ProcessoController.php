@@ -10,11 +10,8 @@ require_once('vendor/PDFMerger/PDFMerger.php');
 use PDFMerger\PDFMerger;
 use helper\Tempo;
 
-include_once 'application/models/helper/Tempo.php';
-
 class ProcessoController extends CI_Controller
 {
-	const PROCESSO_CONTROLLER = 'ProcessoController';
 
 	public function __construct()
 	{

@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use helper\Tempo;
 
-include_once 'application/models/helper/Tempo.php';
 
 class ProcessoLibrary
 {
@@ -76,10 +75,10 @@ class ProcessoLibrary
 			td_value($processo->lei->modalidade->nome),
 			$exibir_diex,
 			td_alterar_processo($processo->numero, $processo->id, $processo->departamento->id),
-			td_data_hora_br($processo->dataHora->dataNoFormatoBrasileiro()),
+			td_data_hora_br($processo->dataHora),
 			$this->secao($processo->departamento->sigla, $processo->departamento->id),
 			$this->andamento($processo),
-			td_data_hora_br($processo->listaDeAndamento[0]->dataHora->dataNoFormatoBrasileiro()),
+			td_data_hora_br($processo->listaDeAndamento[0]->dataHora),
 			td_status_completo($processo->completo),
 			$exibir_nota_de_empenho,
 			$this->verificarSeAsCertoesForamAnexadas($processo),

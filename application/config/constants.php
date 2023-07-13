@@ -86,8 +86,38 @@ defined('EXIT__AUTO_MAX') or define('EXIT__AUTO_MAX', 125); // highest automatic
 
 
 /**
- * Versão
+ * CONSTANTE DA VERSÃO
  */
 const VERSAO_PROCESSO_DE_AQUISICAO = 'Versão 3.0.1';
 
+/**
+ * CONSTATES DOS CONTROLLERS
+ */
 
+const  ANDAMENTO_CONTROLLER = 'AndamentoController';
+const  ARQUIVO_CONTROLLER = 'ArquivoController';
+const ARTEFATO_CONTROLLER = 'ArtefatoController';
+const DEPARTAMENTO_CONTROLLER = 'DepartamentoController';
+const LEI_CONTROLLER = 'LeiController';
+const LEI_TIPO_ARTEFATO_CONTROLLER = 'LeiTipoArtefatoController';
+const TIPO_CONTROLLER = 'TipoController';
+const UG_CONTROLLER = 'UgController';
+const LOGIN_CONTROLLER = 'LoginController';
+const MODALIDADE_CONTROLLER = 'ModalidadeController';
+const PROCESSO_CONTROLLER = 'ProcessoController';
+const SUGESTAO_CONTROLLER = 'SugestaoController';
+const USUARIO_CONTROLLER = 'UsuarioController';
+
+/**
+ * CONSTANTES O BANCO DE DADOS E VIEWS
+ */
+
+const TABLE_ANDAMENTO = 'andamento';
+const DIRECTIONS_ASC = 'ASC';
+const DIRECTIONS_DESC = 'DESC';
+const ID = 'id';
+const STATUS_DO_ANDAMENTO = 'status_do_andamento';
+const DATA_HORA = 'data_hora';
+const PROCESSO_ID = 'processo_id';
+const USUARIO_ID = 'usuario_id';
+const STATUS = 'status';

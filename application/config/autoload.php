@@ -101,7 +101,10 @@ $autoload['helper'] = array(
 	'html_helper',
 	'verificador_de_usuario_helper',
 	'replace_fisc_adm',
-	'replace_od'
+	'replace_od',
+	'status',
+	'excluir_helper',
+	'alterar_helper',
 );
 
 /*

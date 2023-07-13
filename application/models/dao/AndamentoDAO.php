@@ -1,32 +1,11 @@
 <?php
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use  helper\Tempo;
-
-include_once('application/models/bo/Andamento.php');
-include_once('application/models/bo/status_do_andamento/*.php');
-
-include_once 'application/models/helper/Tempo.php';
+require_once 'InterfaceDAO.php';
+require_once 'application/models/bo/Andamento.php';
 
 class AndamentoDAO extends CI_Model implements InterfaceDAO
 {
-	const ANDAMENTO_DAO = 'dao/AndamentoDAO';
-
-	const TABELA_DB = 'andamento';
-
-	/*
-	 * nome das variáveis da @class Andamento no Banco de Dados
-	 */
-	const ID = 'id';
-	const  STATUS_DO_ANDAMENTO = 'status_do_andamento';
-	const  DATA_HORA = 'data_hora';
-	const PROCESSO_ID = 'processo_id';
-	const USUARIO_ID = 'usuario_id';
-	const STATUS = 'status';
-
-	const TABELA_DB = 'andamento';
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -35,7 +14,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	public function criar($objeto)
 	{
 		$this->db->insert(
-			AndamentoDAO::TABELA_DB,
+			TABLE_ANDAMENTO,
 			$objeto->array()
 		);
 	}
@@ -43,9 +22,9 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	public function atualizar($objeto)
 	{
 		$this->db->update(
-			AndamentoDAO::TABELA_DB,
+			TABLE_ANDAMENTO,
 			$objeto->array(),
-			['id' => $objeto->id]
+			[ID => $objeto->id]
 		);
 	}
 
@@ -53,8 +32,8 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	{
 		$linhaArrayList =
 			$this->db->get_where(
-				AndamentoDAO::TABELA_DB,
-				['id' => $objetoId]
+				TABLE_ANDAMENTO,
+				[ID => $objetoId]
 			);
 
 		return $this->toObject($linhaArrayList);
@@ -64,9 +43,9 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	{
 		$arrayList =
 			$this->db
-				->order_by('data_hora', 'DESC')
-				->where(['status' => true])
-				->get(AndamentoDAO::TABELA_DB, $inicio, $fim);
+				->order_by(DATA_HORA, 'DESC')
+				->where([STATUS => true])
+				->get(TABLE_ANDAMENTO, $inicio, $fim);
 
 		return $this->criarLista($arrayList);
 	}
@@ -75,9 +54,9 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	{
 		$arrayList =
 			$this->db
-				->order_by('data_hora', 'DESC')
-				->where(['status' => false])
-				->get(AndamentoDAO::TABELA_DB, $inicio, $fim);
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(TABLE_ANDAMENTO, $inicio, $fim);
 
 		return $this->criarLista($arrayList);
 	}
@@ -86,8 +65,8 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	{
 		$arrayList =
 			$this->db
-				->order_by('id', 'ASC')
-				->get(AndamentoDAO::TABELA_DB, $inicio, $fim);
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(TABLE_ANDAMENTO, $inicio, $fim);
 
 		return $this->criarLista($arrayList);
 	}
@@ -97,7 +76,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 		$arrayList =
 			$this->db
 				->where($whare)
-				->get(AndamentoDAO::TABELA_DB);
+				->get(TABLE_ANDAMENTO);
 
 		return $this->criarLista($arrayList);
 	}
@@ -105,8 +84,8 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	public function excluirDeFormaPermanente($objetoId)
 	{
 		$this->db->delete(
-			AndamentoDAO::TABELA_DB,
-			['id' => $objetoId]);
+			TABLE_ANDAMENTO,
+			[ID => $objetoId]);
 	}
 
 	public function excluirDeFormaLogica($objetoId)
@@ -123,21 +102,21 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	public function contarRegistrosAtivos()
 	{
 		return $this->db
-			->where(['status' => true])
-			->count_all_results(AndamentoDAO::TABELA_DB);
+			->where([STATUS => true])
+			->count_all_results(TABLE_ANDAMENTO);
 	}
 
 	public function contarRegistrosInativos()
 	{
 		return $this->db
-			->where(['status' => false])
-			->count_all_results(AndamentoDAO::TABELA_DB);
+			->where([STATUS => false])
+			->count_all_results(TABLE_ANDAMENTO);
 	}
 
 	public function contarTodosOsRegistros()
 	{
 		return $this->db
-			->count_all_results(AndamentoDAO::TABELA_DB);
+			->count_all_results(TABLE_ANDAMENTO);
 	}
 
 	public function criarLista($arrayList)
@@ -145,28 +124,32 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 		$listaDeAndamentos = [];
 
 		foreach ($arrayList->result() as $linha) {
-			$listaDeAndamento[] = $this->toObject($linha);
+			$listaDeAndamentos[] = $this->toObject($linha);
 		}
 
-		return $listaDeAndamento;
+		return $listaDeAndamentos;
 	}
 
 	public function toObject($linhaDoArrayList)
 	{
-		$id = $linhaDoArrayList->id ?? $linhaDoArrayList['id'] ?? null;
-		$statusDoAndamento = $linhaDoArrayList->status_do_andamento ?? $linhaDoArrayList['status_do_andamento'] ?? null;
-		$dataHora = $linhaDoArrayList->data_hora ?? $linhaDoArrayList['data_hora'] ?? null;
-		$processo_id = $linhaDoArrayList->processo_id ?? $linhaDoArrayList['processo_id'] ?? null;
-		$usuario_id = $linhaDoArrayList->usuario_id ?? $linhaDoArrayList['usuario_id'] ?? null;
-		$status = $linhaDoArrayList->status ?? $linhaDoArrayList['status'] ?? null;
+		$id = $linhaDoArrayList->id ?? $linhaDoArrayList[ID] ?? null;
+		$statusDoAndamento = $linhaDoArrayList->status_do_andamento ?? $linhaDoArrayList[STATUS_DO_ANDAMENTO] ?? null;
+		$dataHora = $linhaDoArrayList->data_hora ?? $linhaDoArrayList[DATA_HORA] ?? null;
+		$processo_id = $linhaDoArrayList->processo_id ?? $linhaDoArrayList[PROCESSO_ID] ?? null;
+		$usuario_id = $linhaDoArrayList->usuario_id ?? $linhaDoArrayList[USUARIO_ID] ?? null;
+		$status = $linhaDoArrayList->status ?? $linhaDoArrayList[STATUS] ?? null;
+
+		$this->load->library('DataHora', $dataHora);
+
+		$this->load->model('dao/UsuarioDAO');
 
 		return
 			new Andamento(
 				$id,
 				Andamento::selecionarStatus($statusDoAndamento),
-				new Tempo($dataHora),
+				$this->datahora->formatoDoMySQL(),
 				$processo_id,
-				$usuario_id,
+				$this->UsuarioDAO->buscarPorId($usuario_id),
 				$status
 			);
 	}
@@ -189,9 +172,9 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 
 		$arrayList =
 			$this->db
-				->order_by('data_hora', 'DESC')
+				->order_by(DATA_HORA, 'DESC')
 				->where(['processo_id' => $procesoId])
-				->get(AndamentoDAO::TABELA_DB);
+				->get(TABLE_ANDAMENTO);
 
 		return $this->criarLista($arrayList);
 	}
@@ -208,7 +191,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 			new Enviado(),
 			new Tempo(),
 			$processo_id,
-			$_SESSION['id'],
+			$_SESSION[ID],
 			true
 		);
 
@@ -223,7 +206,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 			new AprovadoFiscAdm(),
 			new Tempo(),
 			$processo_id,
-			$_SESSION['id'],
+			$_SESSION[ID],
 			true
 		);
 
@@ -237,7 +220,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 			new AprovadoOd(),
 			new Tempo(),
 			$processo_id,
-			$_SESSION['id'],
+			$_SESSION[ID],
 			true
 		);
 
@@ -251,7 +234,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 			new Executado(),
 			new Tempo(),
 			$processo_id,
-			$_SESSION['id'],
+			$_SESSION[ID],
 			true
 		);
 
@@ -265,7 +248,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 			new Conformado(),
 			new Tempo(),
 			$processo_id,
-			$_SESSION['id'],
+			$_SESSION[ID],
 			true
 		);
 
@@ -280,7 +263,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 			new Arquivado(),
 			new Tempo(),
 			$processo_id,
-			$_SESSION['id'],
+			$_SESSION[ID],
 			true
 		);
 
