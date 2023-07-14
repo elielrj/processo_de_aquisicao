@@ -13,7 +13,6 @@ class LeiController extends CI_Controller
 		$this->load->model('dao/LeiDAO');
 		$this->load->model('dao/TipoDAO');
 		$this->load->model('dao/ArtefatoDAO');
-		$this->load->library('LeiLibrary');
 	}
 
 	public function index()
@@ -31,7 +30,7 @@ class LeiController extends CI_Controller
 		$leis = $this->LeiDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
-			'controller' => 'LeiController/listar',
+			'controller' => LEI_CONTROLLER . '/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->LeiDAO->contar()
 		];
 
@@ -42,7 +41,7 @@ class LeiController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de leis',
-			'tabela' => $this->leilibrary->listar($leis, $indice_no_data_base),
+			'tabela' => $leis,
 			'pagina' => 'lei/index.php',
 			'botoes' => $botoes,
 		);

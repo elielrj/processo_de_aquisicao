@@ -25,23 +25,22 @@ class SugestaoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$sugestao = $this->SugestaoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
+		$sugestoes = $this->SugestaoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
 
 		$params = [
-			'controller' => 'SugestaoController/listar',
+			'controller' => SUGESTAO_CONTROLLER.'/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->SugestaoDAO->contar()
 		];
 
 
 		$this->load->library('CriadorDeBotoes', $params);
 
-		$botoes = empty($sugestao) ? '' : $this->criadordebotoes->listar($indice);
+		$botoes = empty($sugestoes) ? '' : $this->criadordebotoes->listar($indice);
 		
-		$this->load->library('SugestaoLibrary');
 
 		$dados = array(
 			'titulo' => 'Lista de Sugestões',
-			'tabela' => $this->sugestaolibrary->listar($sugestao, $indice_no_data_base),
+			'tabela' => $sugestoes,
 			'pagina' => 'sugestao/index.php',
 			'botoes' => $botoes,
 		);

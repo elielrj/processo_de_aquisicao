@@ -13,7 +13,6 @@ class LeiTipoArtefatoController extends CI_Controller
 		$this->load->model('dao/LeiDAO');
 		$this->load->model('dao/TipoDAO');
 		$this->load->model('dao/ArtefatoDAO');
-		$this->load->library('LeiTipoArtefatoLibrary');
 	}
 
 	public function index()
@@ -31,7 +30,7 @@ class LeiTipoArtefatoController extends CI_Controller
 		$leisTiposArtefatos = $this->LeiTipoArtefatoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
-			'controller' => 'LeiTipoArtefatoController/listar',
+			'controller' => LEI_TIPO_ARTEFATO_CONTROLLER . '/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->LeiTipoArtefatoDAO->contar()
 		];
 
@@ -42,7 +41,7 @@ class LeiTipoArtefatoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de Leis/Tipos/Artefatos',
-			'tabela' => $this->leitipoartefatolibrary->listar($leisTiposArtefatos, $indice_no_data_base),
+			'tabela' => $leisTiposArtefatos,
 			'pagina' => 'lei_tipo_artefato/index.php',
 			'botoes' => $botoes,
 		);

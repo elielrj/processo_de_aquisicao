@@ -179,5 +179,21 @@
 	</div>
 </li>
 
+<!-- Nav Item - Pages Collapse Sugestão -->
+<li class="nav-item">
+	<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSugestao" aria-expanded="true"
+	   aria-controls="collapseSugestao">
+		<i class="fas fa-fw fa-cog"></i>
+		<span>Sugestão</span>
+	</a>
+	<div id="collapseSugestao" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		<div class="bg-white py-2 collapse-inner rounded">
+			<h6 class="collapse-header">Sugestão</h6>
+			<a class="collapse-item" href="<?php echo base_url('index.php/sugestao-listar'); ?>">Listar</a>
+			<a class="collapse-item" href="<?php echo base_url('index.php/sugestao-novo'); ?>">Novo</a>
+		</div>
+	</div>
+</li>
+
 <!-- Divider -->
 <hr class="sidebar-divider">

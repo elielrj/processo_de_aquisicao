@@ -9,7 +9,6 @@ class ModalidadeController extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('dao/ModalidadeDAO');
-		$this->load->library('ModalidadeLibrary');
 	}
 
 	public function index()
@@ -27,7 +26,7 @@ class ModalidadeController extends CI_Controller
 		$modalidades = $this->ModalidadeDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
-			'controller' => 'ArquivoController/listar',
+			'controller' => MODALIDADE_CONTROLLER . '/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ModalidadeDAO->contar()
 		];
 
@@ -38,7 +37,7 @@ class ModalidadeController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de modalidades',
-			'tabela' => $this->modalidadelibrary->listar($modalidades, $indice_no_data_base),
+			'tabela' => $modalidades,
 			'pagina' => 'modalidade/index.php',
 			'botoes' => $botoes,
 		);

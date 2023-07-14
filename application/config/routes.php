@@ -149,6 +149,8 @@ $route['processo-listar-salc'] = PROCESSO_CONTROLLER . '/listarPorSetorDemandant
  * @class SugestaoController
  */
 $route['sugestao-criar'] = SUGESTAO_CONTROLLER . '/criar';
+$route['sugestao-listar'] = SUGESTAO_CONTROLLER . '/listar';
+$route['sugestao-novo'] = SUGESTAO_CONTROLLER . '/novo';
 
 
 /**

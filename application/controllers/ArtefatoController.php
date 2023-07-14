@@ -9,7 +9,6 @@ class ArtefatoController extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('dao/ArtefatoDAO');
-		$this->load->library('ArtefatoLibrary');
 	}
 
 	public function index()

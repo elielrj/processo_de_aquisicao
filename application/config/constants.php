@@ -139,3 +139,37 @@ const STATUS = 'status';
  * ERROS
  */
 const ERRO_PATH = '#_ERRO_PATH';
+
+
+/**
+ * Artefato DIEx no banco de datos deve estar igual ao número abaixo
+ */
+const ARTEFATO_DIEX_NO_BANCO_DE_DADOS = 53;
+
+/**
+ * Artefato Nota de Empenho no banco de datos deve estar igual ao número abaixo
+ */
+const ARTEFATO_NOTA_DE_EMPENHO_NO_BANCO_DE_DADOS = 63;
+
+/**
+ * Artefato Certidões no banco de datos deve estar igual ao número abaixo
+ */
+const ARTEFATO_CERTIDAO_TCU_NO_BANCO_DE_DADOS = 57;
+const ARTEFATO_CERTIDAO_CADIN_NO_BANCO_DE_DADOS = 58;
+const ARTEFATO_CERTIDAO_SICAF_NO_BANCO_DE_DADOS = 59;
+
+/**
+ * Id dos Departamentos dever ser os mesmo do banco de dados
+ */
+const ID_ALMOX_NO_BANCO_DE_DADOS = 1;
+const ID_SALC_NO_BANCO_DE_DADOS = 2;
+const ID_GARAGEM_NO_BANCO_DE_DADOS = 5;
+const ID_APROV_NO_BANCO_DE_DADOS = 6;
+const ID_SAUDE_NO_BANCO_DE_DADOS = 7;
+const ID_INFOR_NO_BANCO_DE_DADOS = 8;
+
+
+/**
+ * SESSION
+ */
+const FUNCAO_NIVEL_DE_ACESSO = 'funcao_nivel_de_acesso';

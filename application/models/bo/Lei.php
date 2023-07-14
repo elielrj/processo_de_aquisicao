@@ -49,10 +49,12 @@ class Lei implements InterfaceBO
 	public function toString()
 	{
 
+		include_once 'application/libraries/Data.php';
+		$data = new Data($this->data);
 
 		$art = ($this->artigo != "") ? (", Art. " . $this->artigo) : '';
 		$inc = ($this->inciso != "") ? (", Inc. " . $this->inciso) : '';
-		$dat = ", de " . $this->data->dataNoFormatoBrasileiro();
+		$dat = ", de " . $data->formatoDoBrasil();
 
 		return $this->numero . $art . $inc . $dat;
 	}

@@ -23,8 +23,6 @@ class ProcessoController extends CI_Controller
 		$this->load->model('dao/LeiDAO');
 		$this->load->model('dao/UsuarioDAO');
 		$this->load->model('dao/AndamentoDAO');
-		$this->load->library('ProcessoLibrary');
-		$this->load->library('session');
 	}
 
 	public function index()
@@ -40,12 +38,12 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$whare = ['status' => true];
+		$whare = [STATUS => true];
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $whare);
 
 		$params = [
-			'controller' => 'ProcessoController/listar',
+			'controller' => PROCESSO_CONTROLLER . '/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
 		];
 
@@ -55,7 +53,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -71,12 +69,12 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$whare = ['status' => false];
+		$whare = [STATUS => false];
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $whare);
 
 		$params = [
-			'controller' => 'ProcessoController/listarTodosExcluidos',
+			'controller' => PROCESSO_CONTROLLER.'/listarTodosExcluidos',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
 		];
 
@@ -86,7 +84,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -102,12 +100,12 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('completo' => false, 'status' => true);
+		$where = array('completo' => false, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarTodosProcessosIncompleto',
+			'controller' => PROCESSO_CONTROLLER.'/listarTodosProcessosIncompleto',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
 		];
 
@@ -117,7 +115,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -133,12 +131,12 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('completo' => true, 'status' => true);
+		$where = array('completo' => true, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarTodosProcessosCompleto',
+			'controller' => PROCESSO_CONTROLLER.'/listarTodosProcessosCompleto',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
 		];
 
@@ -148,7 +146,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -164,12 +162,12 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('departamento_id' => $_SESSION['departamento_id'], 'status' => true);
+		$where = array('departamento_id' => $_SESSION['departamento_id'], STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandante',
+			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandante',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
 		];
 
@@ -179,7 +177,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos por demandante: ' . $_SESSION['departamento_nome'],
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -200,12 +198,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 1;
 
-		$where = array('departamento_id' => $departamento_id, 'status' => true);
+		$where = array('departamento_id' => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandanteAlmox',
+			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteAlmox',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -215,7 +213,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos por demandante: Almox',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -236,12 +234,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 2;
 
-		$where = array('departamento_id' => $departamento_id, 'status' => true);
+		$where = array('departamento_id' => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandanteSalc',
+			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteSalc',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -251,7 +249,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos por demandante: SALC',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -272,12 +270,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 6;
 
-		$where = array('departamento_id' => $departamento_id, 'status' => true);
+		$where = array('departamento_id' => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandanteAprov',
+			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteAprov',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -287,7 +285,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos por demandante: Aprov',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -308,12 +306,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 7;
 
-		$where = array('departamento_id' => $departamento_id, 'status' => true);
+		$where = array('departamento_id' => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandanteSaude',
+			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteSaude',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -323,7 +321,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos por demandante: Saúde',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -344,12 +342,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 8;
 
-		$where = array('departamento_id' => $departamento_id, 'status' => true);
+		$where = array('departamento_id' => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandanteInformatica',
+			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteInformatica',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -359,7 +357,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos por demandante: Infomática',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -380,12 +378,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 5;
 
-		$where = array('departamento_id' => $departamento_id, 'status' => true);
+		$where = array('departamento_id' => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => 'ProcessoController/listarPorSetorDemandanteMntTransp',
+			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteMntTransp',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -395,7 +393,7 @@ class ProcessoController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de processos por demandante: Mnt e Transp',
-			'tabela' => $this->processolibrary->listar($processos, $indice_no_data_base),
+			'tabela' => $processos,
 			'pagina' => 'processo/index.php',
 			'botoes' => $botoes,
 		);
@@ -421,14 +419,14 @@ class ProcessoController extends CI_Controller
 	{
 		$this->AndamentoDAO->processoEnviado($processo_id);
 
-		redirect('ProcessoController/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
 	}
 
 	public function aprovarProcessoFiscAdm($processo_id)
 	{
 		$this->AndamentoDAO->processoAprovadoFiscAdm($processo_id);
 
-		redirect('ProcessoController/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
 	}
 
 
@@ -436,21 +434,21 @@ class ProcessoController extends CI_Controller
 	{
 		$this->AndamentoDAO->processoAprovadoOd($processo_id);
 
-		redirect('ProcessoController/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
 	}
 
 	public function executarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoExecutado($processo_id);
 
-		redirect('ProcessoController/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
 	}
 
 	public function conformarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoConformado($processo_id);
 
-		redirect('ProcessoController/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
 	}
 
 	public function arquivarProcesso($processo_id)
@@ -463,7 +461,7 @@ class ProcessoController extends CI_Controller
 
 		$this->ProcessoDAO->atualizar($processo);
 
-		redirect('ProcessoController/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
 	}
 
 	public function visualizarProcesso($id)
@@ -580,12 +578,12 @@ class ProcessoController extends CI_Controller
 			$this->LeiDAO->buscarPorId($data_post['lei_id']),//$this->ModalidadeDAO->buscarPorId($data_post['modalidade_id']),
 			$this->TipoDAO->buscarPorId($data_post['tipo_id']),
 			$data_post['completo'],
-			$data_post['status']
+			$data_post[STATUS]
 		);
 
 		$this->ProcessoDAO->atualizar($processo);
 
-		redirect('ProcessoController');
+		redirect(PROCESSO_CONTROLLER.'');
 	}
 
 	public function deletar($id)
@@ -593,7 +591,7 @@ class ProcessoController extends CI_Controller
 
 		$this->ProcessoDAO->deletar($id);
 
-		redirect('ProcessoController/listar');
+		redirect(PROCESSO_CONTROLLER.'/listar');
 	}
 
 	public function recuperar($id)
@@ -601,7 +599,7 @@ class ProcessoController extends CI_Controller
 
 		$this->ProcessoDAO->recuperar($id);
 
-		redirect('ProcessoController/listarTodosExcluidos');
+		redirect(PROCESSO_CONTROLLER.'/listarTodosExcluidos');
 	}
 
 

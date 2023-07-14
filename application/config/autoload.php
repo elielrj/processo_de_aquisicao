@@ -106,6 +106,16 @@ $autoload['helper'] = array(
 	'excluir',
 	'alterar',
 	'href',
+	'exibir_processo',
+	'alterar_processo',
+	'exibir_diex',
+	'andamento_processo',
+	'exibir_ne',
+	'imprimir_certidoes',
+	'excluir_processo',
+	'data_hora',
+	'processo_completo',
+	'listar_processo_por_secao',
 );
 
 /*

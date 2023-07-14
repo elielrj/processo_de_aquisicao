@@ -25,10 +25,10 @@ class DepartamentoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$departamentos = $this->DepartamentoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
+		$departamentos = $this->DepartamentoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
-			'controller' => 'DepartamentoController/listar',
+			'controller' => DEPARTAMENTO_CONTROLLER . '/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->DepartamentoDAO->contar()
 		];
 
@@ -36,11 +36,9 @@ class DepartamentoController extends CI_Controller
 
 		$botoes = empty($departamentos) ? '' : $this->criadordebotoes->listar($indice);
 
-		$this->load->library('DepartamentoLibrary');
-
 		$dados = array(
 			'titulo' => 'Lista de Departamentos',
-			'tabela' => $this->departamentolibrary->listar($departamentos, $indice_no_data_base),
+			'tabela' => $departamentos,
 			'pagina' => 'departamento/index.php',
 			'botoes' => $botoes,
 		);
@@ -83,7 +81,6 @@ class DepartamentoController extends CI_Controller
 	{
 
 		$departamento = $this->DepartamentoDAO->buscarPorId($id);
-
 
 
 		$dados = array(

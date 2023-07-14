@@ -13,7 +13,6 @@ class UsuarioController extends CI_Controller
 		$this->load->model('dao/DepartamentoDAO');
 		$this->load->model('dao/FuncaoDAO');
 		$this->load->model('dao/HierarquiaDAO');
-		$this->load->library('UsuarioLibrary');
 	}
 
 	public function index()
@@ -31,7 +30,7 @@ class UsuarioController extends CI_Controller
 		$usuarios = $this->UsuarioDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
-			'controller' => 'UsuarioController/listar',
+			'controller' => USUARIO_CONTROLLER . '/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->UsuarioDAO->contar()
 		];
 
@@ -42,7 +41,7 @@ class UsuarioController extends CI_Controller
 
 		$dados = array(
 			'titulo' => 'Lista de Usuários',
-			'tabela' => $this->usuariolibrary->listar($usuarios, $indice_no_data_base),
+			'tabela' => $usuarios,
 			'pagina' => 'usuario/index.php',
 			'botoes' => $botoes,
 		);

@@ -10,7 +10,6 @@ class TipoController extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('session');
-		$this->load->library('TipoLibrary');
 		$this->load->model('dao/tipoDAO');
 	}
 
@@ -27,7 +26,7 @@ class TipoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$tipo = $this->tipoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
+		$tipos = $this->tipoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
 			'controller' => 'TipoController/listar',
@@ -37,11 +36,11 @@ class TipoController extends CI_Controller
 
 		$this->load->library('CriadorDeBotoes', $params);
 
-		$botoes = empty($tipo) ? '' : $this->criadordebotoes->listar($indice);
+		$botoes = empty($tipos) ? '' : $this->criadordebotoes->listar($indice);
 
 		$dados = array(
 			'titulo' => 'Lista de Tipos De Licitacões',
-			'tabela' => $this->tipolibrary->listar($tipo, $indice_no_data_base),
+			'tabela' => $tipos,
 			'pagina' => 'tipo/index.php',
 			'botoes' => $botoes,
 		);
