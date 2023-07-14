@@ -49,7 +49,7 @@ class AndamentoController extends CI_Controller
 			$this->input->post(STATUS_DO_ANDAMENTO),
 			$this->input->post(DATA_HORA),
 			$this->input->post(PROCESSO_ID),
-			$_SESSION['id'],
+			$_SESSION[ID],
 			true//todo
 		);
 
@@ -65,7 +65,7 @@ class AndamentoController extends CI_Controller
 			$this->input->post(STATUS_DO_ANDAMENTO),
 			new Tempo($this->input->post(DATA_HORA)),
 			$this->input->post(PROCESSO_ID),
-			$_SESSION['id'],
+			$_SESSION[ID],
 			true//todo
 		);
 

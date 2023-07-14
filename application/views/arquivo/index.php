@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<tr class='text-center col-md-1'>
 				<td class='text-center col-md-1'><?php echo $arquivo->id ?></td>
 				<td class='text-center col-md-3'><?php echo($path === ERRO_PATH ? ERRO_PATH : path($path)) ?></td>
-				<td class='text-center col-md-2'><?php echo $arquivo->dataHora ?></td>
+				<td class='text-center col-md-2'><?php echo data_hora($arquivo->dataHora) ?></td>
 				<td class='text-center col-md-3'><?php echo($arquivo->nome === '' ? '-' : $arquivo->nome) ?></td>
 				<td class='text-center col-md-2'><?php echo $arquivo->processoId ?></td>
 				<td class='text-center col-md-2'><?php echo $arquivo->usuarioId ?></td>

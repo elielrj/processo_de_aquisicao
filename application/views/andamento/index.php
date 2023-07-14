@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<tr class='text-center col-md-1'>
 				<td class='text-center col-md-1'><?php echo $andamento->id ?></td>
 				<td class='text-center col-md-1'><?php echo replace_od(replace_fisc_adm($andamento->statusDoAndamento->nome())) ?></td>
-				<td class='text-center col-md-1'><?php echo $andamento->dataHora ?></td>
+				<td class='text-center col-md-1'><?php echo data_hora($andamento->dataHora) ?></td>
 				<td class='text-center col-md-1'><?php echo $andamento->usuario->toString() ?></td>
 				<td class='text-center col-md-1'><?php echo status($andamento->status) ?></td>
 				<td class='text-center col-md-1'><?php echo alterar(ANDAMENTO_CONTROLLER, $andamento->id) ?></td>

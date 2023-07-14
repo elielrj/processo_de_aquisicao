@@ -62,7 +62,7 @@ class UgController extends CI_Controller
 			$this->input->post('numero'),
 			$this->input->post('nome'),
 			$this->input->post('sigla'),
-			$this->input->post('status'),
+			$this->input->post('status')
 		);
 
 		$this->UgDAO->criar($ug);
