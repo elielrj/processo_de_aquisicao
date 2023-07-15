@@ -116,6 +116,7 @@ $autoload['helper'] = array(
 	'data_hora',
 	'processo_completo',
 	'listar_processo_por_secao',
+	'clear_strings',
 );
 
 /*

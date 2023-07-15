@@ -134,7 +134,13 @@ const DATA_HORA = 'data_hora';
 const PROCESSO_ID = 'processo_id';
 const USUARIO_ID = 'usuario_id';
 const STATUS = 'status';
-
+const OBJETO = 'objeto';
+const NUMERO = 'numero';
+const DEPARTAMENTO_ID = 'departamento_id';
+const LEI_ID = 'lei_id';
+const TIPO_ID = 'tipo_id';
+const COMPLETO = 'completo';
+const CHAVE = 'chave';
 /**
  * ERROS
  */

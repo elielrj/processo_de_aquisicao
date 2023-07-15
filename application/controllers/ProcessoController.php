@@ -74,7 +74,7 @@ class ProcessoController extends CI_Controller
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $whare);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarTodosExcluidos',
+			'controller' => PROCESSO_CONTROLLER . '/listarTodosExcluidos',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
 		];
 
@@ -100,12 +100,12 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('completo' => false, STATUS => true);
+		$where = array(COMPLETO => false, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarTodosProcessosIncompleto',
+			'controller' => PROCESSO_CONTROLLER . '/listarTodosProcessosIncompleto',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
 		];
 
@@ -131,12 +131,12 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('completo' => true, STATUS => true);
+		$where = array(COMPLETO => true, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarTodosProcessosCompleto',
+			'controller' => PROCESSO_CONTROLLER . '/listarTodosProcessosCompleto',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
 		];
 
@@ -162,12 +162,12 @@ class ProcessoController extends CI_Controller
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$where = array('departamento_id' => $_SESSION['departamento_id'], STATUS => true);
+		$where = array(DEPARTAMENTO_ID => $_SESSION[DEPARTAMENTO_ID], STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandante',
+			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandante',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
 		];
 
@@ -198,12 +198,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 1;
 
-		$where = array('departamento_id' => $departamento_id, STATUS => true);
+		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteAlmox',
+			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -234,12 +234,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 2;
 
-		$where = array('departamento_id' => $departamento_id, STATUS => true);
+		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteSalc',
+			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSalc',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -270,12 +270,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 6;
 
-		$where = array('departamento_id' => $departamento_id, STATUS => true);
+		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteAprov',
+			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAprov',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -306,12 +306,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 7;
 
-		$where = array('departamento_id' => $departamento_id, STATUS => true);
+		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteSaude',
+			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSaude',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -342,12 +342,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 8;
 
-		$where = array('departamento_id' => $departamento_id, STATUS => true);
+		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteInformatica',
+			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteInformatica',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -378,12 +378,12 @@ class ProcessoController extends CI_Controller
 		 */
 		$departamento_id = 5;
 
-		$where = array('departamento_id' => $departamento_id, STATUS => true);
+		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER.'/listarPorSetorDemandanteMntTransp',
+			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteMntTransp',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -406,27 +406,27 @@ class ProcessoController extends CI_Controller
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($id);
 
-		$this->load->library('ProcessoExibirLibrary');
-
-		$this->load->view('index', [
-			'titulo' => 'Processo: ' . $processo->tipo->nome,
-			'tabela' => $this->processoexibirlibrary->listar($processo),
-			'pagina' => 'processo/exibir.php',
-		]);
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Processo: ' . $processo->tipo->nome,
+				'processo' => $processo,
+				'pagina' => 'processo/exibir.php'
+			]);
 	}
 
 	public function enviarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoEnviado($processo_id);
 
-		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function aprovarProcessoFiscAdm($processo_id)
 	{
 		$this->AndamentoDAO->processoAprovadoFiscAdm($processo_id);
 
-		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 
@@ -434,21 +434,21 @@ class ProcessoController extends CI_Controller
 	{
 		$this->AndamentoDAO->processoAprovadoOd($processo_id);
 
-		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function executarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoExecutado($processo_id);
 
-		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function conformarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoConformado($processo_id);
 
-		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function arquivarProcesso($processo_id)
@@ -461,7 +461,7 @@ class ProcessoController extends CI_Controller
 
 		$this->ProcessoDAO->atualizar($processo);
 
-		redirect(PROCESSO_CONTROLLER.'/exibir/' . $processo_id);
+		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function visualizarProcesso($id)
@@ -477,28 +477,6 @@ class ProcessoController extends CI_Controller
 		]);
 	}
 
-	public function imprimirCertidoes($processo_id)
-	{
-		$this->imprimirProcesso($processo_id, true);
-	}
-
-	public function imprimirProcesso($id, $so_certidao = false)
-	{
-		$processo = $this->ProcessoDAO->buscarPorId($id);
-		/*
-												  $html = $this->load->view('index/processo/visualizar.php', [
-												  'titulo' => 'Processo: '. $processo->tipo->nome ,
-												  'tabela' => $this->tabela->processo_imprimir($processo),
-												  //'pagina' => 'processo/visualizar.php',
-												  ]);*/
-
-		//$this->load->library('ProcessoImprimirLibrary');
-
-		//$html = $this->processoimprimirlibrary->imprimir($processo);
-
-		$this->imprimir($processo, $so_certidao);
-
-	}
 
 	public function novo()
 	{
@@ -526,16 +504,18 @@ class ProcessoController extends CI_Controller
 
 		$data_post = $this->input->post();
 
+		$this->load->library('DataHora');
+
 		$processo = new Processo(
 			null,
-			ucfirst($data_post['objeto']),
-			$data_post['numero'],
-			new Tempo(),
-			$data_post['chave'],
+			ucfirst($data_post[OBJETO]),
+			$data_post[NUMERO],
+			$this->datahora->formatoDoMySQL(),
+			$data_post[CHAVE],
 			$this->DepartamentoDAO->buscarPorId($this->session->departamento_id),
-			$this->LeiDAO->buscarPorId($data_post['lei_id']),
-			$this->TipoDAO->buscarPorId($data_post['tipo_id']),
-			$data_post['completo'],
+			$this->LeiDAO->buscarPorId($data_post[LEI_ID]),
+			$this->TipoDAO->buscarPorId($data_post[TIPO_ID]),
+			$data_post[COMPLETO],
 			true
 		);
 
@@ -546,7 +526,6 @@ class ProcessoController extends CI_Controller
 
 	public function alterar($id)
 	{
-
 		$processo = $this->ProcessoDAO->buscarPorId($id);
 
 		$dados = array(
@@ -568,116 +547,91 @@ class ProcessoController extends CI_Controller
 
 		$data_post = $this->input->post();
 
+		$this->load->library('DataHora', $data_post[DATA_HORA]);
+
 		$processo = new Processo(
-			$data_post['id'],
-			ucfirst($data_post['objeto']),
-			$data_post['numero'],
-			new Tempo($data_post['data_hora']),
-			$data_post['chave'],
-			$this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-			$this->LeiDAO->buscarPorId($data_post['lei_id']),//$this->ModalidadeDAO->buscarPorId($data_post['modalidade_id']),
-			$this->TipoDAO->buscarPorId($data_post['tipo_id']),
-			$data_post['completo'],
+			$data_post[ID],
+			ucfirst($data_post[OBJETO]),
+			$data_post[NUMERO],
+			$this->datahora->formatoDoMySQL(),
+			$data_post[CHAVE],
+			$this->DepartamentoDAO->buscarPorId($data_post[DEPARTAMENTO_ID]),
+			$this->LeiDAO->buscarPorId($data_post[LEI_ID]),
+			$this->TipoDAO->buscarPorId($data_post[TIPO_ID]),
+			$data_post[COMPLETO],
 			$data_post[STATUS]
 		);
 
 		$this->ProcessoDAO->atualizar($processo);
 
-		redirect(PROCESSO_CONTROLLER.'');
+		redirect(PROCESSO_CONTROLLER . $processo->id);
 	}
 
 	public function deletar($id)
 	{
-
 		$this->ProcessoDAO->deletar($id);
-
-		redirect(PROCESSO_CONTROLLER.'/listar');
+		redirect(PROCESSO_CONTROLLER . '/listar');
 	}
 
 	public function recuperar($id)
 	{
-
 		$this->ProcessoDAO->recuperar($id);
-
-		redirect(PROCESSO_CONTROLLER.'/listarTodosExcluidos');
+		redirect(PROCESSO_CONTROLLER . '/listarTodosExcluidos');
 	}
 
-
-	/**
-	 * Summary of imprimir
-	 * imprimir todos os arquivos em pdf do processoem um único arquivo,
-	 * com o auxilio da biblioteca PDFMerger
-	 * @param mixed $processo
-	 * @return void
-	 * importante: os ID do Artefato deve ser o mesmo do DataBase!!!
-	 */
-	private function imprimir($processo, $so_certidao)
+	private function imprimirProcesso($processo)
 	{
-		//$this->load->library('ImprimirPdf');
-
-		//$this->imprimirpdf->processo($processo);
-
-
-		include_once 'vendor/PDFMerger/PDFMerger.php';
-
-		$pdf = new PDFMerger;
+		$listaDePath = [];
 
 		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 
-			if ($so_certidao) {
-				switch ($artefato->id) {
-					case 55:
-					case 56:
-					case 57:
-					case 58:
-					case 59:
-					case 60:
-					case 61:
-					case 62:
-					{
-						if ($artefato->arquivos != null) {
+			if ($artefato->arquivos != array()) {
 
-							foreach ($artefato->arquivos as $arquivo) {
+				foreach ($artefato->arquivos as $arquivo) {
 
-								if ($arquivo->path != '' && $arquivo->path != null) {
-									if (file_exists($arquivo->path)) {
-										$pdf->addPDF($arquivo->path, 'all');
-									}
-								}
-							}
-						}
-					}
-					default:
-						break;
-				}
-			} else {
-				if ($artefato->arquivos != null) {
-
-					foreach ($artefato->arquivos as $arquivo) {
-
-						if ($arquivo->path != '' && $arquivo->path != null) {
-							if (file_exists($arquivo->path)) {
-								$pdf->addPDF($arquivo->path, 'all');
-							}
-
-						}
+					if (file_exists($arquivo->path)) {
+						$listaDePath[] = $arquivo->path;
 					}
 				}
 			}
-
-
 		}
 
-		$nomeDoArquivo = $so_certidao ? 'Certidoes do ' : '';
-
-		$nomeDoArquivo .=
-			'Processo de ' . $processo->tipo->nome .
-			' Lei' . $processo->lei->toString() .
-			' Numero ' . $processo->numero;
-
-		$variavel_limpa = strtolower(preg_replace("/[^a-zA-Z0-9-]/", "-", strtr(utf8_decode(trim($nomeDoArquivo)), utf8_decode("áàãâéêíóôõúüñçÁÀÃÂÉÊÍÓÔÕÚÜÑÇ"), "aaaaeeiooouuncAAAAEEIOOOUUNC-")));
-
-		$pdf->merge('download', $variavel_limpa . '.pdf');
+		$this->load->library('Pdf');
+		$this->imprimir($listaDePath, $processo->toString());
 	}
 
+	public function imprimirCertidoes($processo)
+	{
+		$listaDePath = [];
+
+		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
+			switch ($artefato->id) {
+				case 55:
+				case 56:
+				case 57:
+				case 58:
+				case 59:
+				case 60:
+				case 61:
+				case 62:
+				{
+					if ($artefato->arquivos != array()) {
+						foreach ($artefato->arquivos as $arquivo) {
+							if (file_exists($arquivo->path)) {
+
+								$listaDePath[] = $arquivo->path;
+								break;
+							}
+						}
+					}
+				}
+				default:
+				{
+					break;
+				}
+			}
+		}
+		$this->load->library('Pdf');
+		$this->imprimir($listaDePath, $processo->toString());
+	}
 }
