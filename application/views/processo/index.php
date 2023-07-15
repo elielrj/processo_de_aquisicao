@@ -20,9 +20,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<td class='text-center col-md-1'>Status</td>
 			<td class='text-center col-md-1'>NE</td>
 			<td class='text-center col-md-1'>Certidões</td>
-			<td class='text-center col-md-1'>Exibir</td>
-			<td class='text-center col-md-1'>Alterar</td>
-			<td class='text-center col-md-1'>Excluir</td>
+			<td class='text-center col-md-1'><i class='fa fa-eye' aria-hidden='true'></i></td>
+			<td class='text-center col-md-1'><img src='<?php echo base_url('img/pencil-square.svg'); ?>' width='16' height='16'></td>
+			<td class='text-center col-md-1'><i class='fa fa-trash' aria-hidden='true'></i></td>
 		</tr>
 		<?php foreach ($tabela as $processo) : ?>
 			<tr class='text-center col-md-1'>
