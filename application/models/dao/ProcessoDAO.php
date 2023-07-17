@@ -2,7 +2,6 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use helper\Tempo;
 
 include_once('application/models/bo/Processo.php');
 
@@ -70,7 +69,7 @@ class ProcessoDAO extends CI_Model
 	}
 
 	public function atualizar($processo)
-	{//var_dump($processo->array());
+	{
 		$this->DAO->atualizar(TABLE_PROCESSO, $processo->array());
 	}
 

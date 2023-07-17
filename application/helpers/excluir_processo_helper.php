@@ -12,7 +12,7 @@ function excluir_processo($processo)
 		if($processo->status)
 		{
 			return "<a  href='" .
-				base_url('index.php/ProcessoController/excluir/' . $processo->id)
+				base_url('index.php/ProcessoController/deletar/' . $processo->id)
 		. "'><i class='fa fa-trash' aria-hidden='true'></i></a>";
 
 		}else{

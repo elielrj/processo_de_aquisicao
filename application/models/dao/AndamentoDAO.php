@@ -168,11 +168,9 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 
 	public function buscarTodosOsAndamentosDeUmProcesso($procesoId)
 	{
-		$whare = array('processo_id' => $procesoId);
-
 		$arrayList =
 			$this->db
-				->order_by(DATA_HORA, 'DESC')
+				->order_by(DATA_HORA, DIRECTIONS_ASC)
 				->where(['processo_id' => $procesoId])
 				->get(TABLE_ANDAMENTO);
 

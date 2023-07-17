@@ -114,7 +114,8 @@ $autoload['helper'] = array(
 	'imprimir_certidoes',
 	'excluir_processo',
 	'data_hora',
-	'processo_completo',
+	'data',
+	'processo_historico',
 	'listar_processo_por_secao',
 	'clear_strings',
 );

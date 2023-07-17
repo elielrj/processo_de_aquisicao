@@ -11,7 +11,7 @@ class Pdf
 		//include_once 'vendor/PDFMerger/PDFMerger.php';
 	}
 
-	public function processo($listaDePath, $nomeDoArquivoEmPdf)
+	public function imprimir($listaDePath, $nomeDoArquivoEmPdf)
 	{
 		$pdfMerger = new PDFMerger;
 

@@ -145,6 +145,7 @@ const CHAVE = 'chave';
  * ERROS
  */
 const ERRO_PATH = '#_ERRO_PATH';
+const ERRO_ANDAMENTO = '#_ERRO_ANDAMENTO';
 
 
 /**

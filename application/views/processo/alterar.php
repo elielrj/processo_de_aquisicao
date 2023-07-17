@@ -1,9 +1,4 @@
 <?php
-
-use helper\Tempo;
-
-include_once 'application/models/helper/Tempo.php';
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
 view_titulo($titulo);
@@ -14,7 +9,7 @@ view_input('', 'id', 'id', 'hidden', $processo->id);
 
 view_input_com_required('Objeto do Processo', 'objeto', 'objeto', 'text', $processo->objeto);
 view_input_com_required('Número (Nup/Nud)', 'numero', 'numero', 'text', $processo->numero, 20);
-view_input('', 'data_hora', 'data_hora', 'hidden', $processo->dataHora->dataHoraNoFormatoMySQL());
+view_input('', 'data_hora', 'data_hora', 'hidden', $processo->dataHora);
 view_input('', 'departamento_id', 'departamento_id', 'hidden', $processo->departamento->id);
 
 view_dropdown('Tipo de Processo', 'tipo_id', $tipos_options, $processo->tipo->id);

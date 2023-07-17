@@ -42,23 +42,22 @@ class ProcessoController extends CI_Controller
 
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $whare);
 
-		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
-		];
+		$this->load->library(
+			'CriadorDeBotoes',
+			[
+				'controller' => PROCESSO_CONTROLLER . '/listar',
+				'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
+			]);
 
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Processos',
+				'tabela' => $processos,
+				'pagina' => 'processo/index.php',
+				'botoes' => (empty($processos) ? '' : $this->criadordebotoes->listar($indice))
+			]
 		);
-
-		$this->load->view('index', $dados);
 
 	}
 
@@ -564,7 +563,7 @@ class ProcessoController extends CI_Controller
 
 		$this->ProcessoDAO->atualizar($processo);
 
-		redirect(PROCESSO_CONTROLLER . $processo->id);
+		redirect(PROCESSO_CONTROLLER);
 	}
 
 	public function deletar($id)
@@ -600,8 +599,10 @@ class ProcessoController extends CI_Controller
 		$this->imprimir($listaDePath, $processo->toString());
 	}
 
-	public function imprimirCertidoes($processo)
+	public function imprimirCertidoes($processoId)
 	{
+		$processo = $this->ProcessoDAO->buscarPorId($processoId);
+
 		$listaDePath = [];
 
 		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
@@ -632,6 +633,6 @@ class ProcessoController extends CI_Controller
 			}
 		}
 		$this->load->library('Pdf');
-		$this->imprimir($listaDePath, $processo->toString());
+		$this->pdf->imprimir($listaDePath, $processo->toString());
 	}
 }

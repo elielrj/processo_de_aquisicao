@@ -2,7 +2,6 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
-
 <h1><?php echo $titulo; ?></h1>
 
 <!-- cabeçalho -->
@@ -26,19 +25,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		</tr>
 		<tr class='text-left'>
 			<td>Modalidade:</td>
-			<td><?php echo $processo->lei->modalidade->nome ?>></td>
+			<td><?php echo $processo->lei->modalidade->nome ?></td>
 		</tr>
 		<tr class='text-left'>
 			<td>Amparo legal:</td>
-			<td><?php echo $processo->lei->toString() ?>></td>
+			<td><?php echo $processo->lei->toString() ?></td>
 		</tr>
 		<tr class='text-left'>
 			<td>Andamento:</td>
-			<td><?php echo ucfirst($processo->listaDeAndamento[0]->nome()) ?></td>
+			<td><?php echo ucfirst(isset($processo->listaDeAndamento[0]) ? $processo->listaDeAndamento[0]->nome() : ERRO_ANDAMENTO) ?></td>
 		</tr>
 		<tr class='text-left'>
-			<td>Status do Processo:</td>
-			<td><?php echo processo_completo($processo->completo) ?></td>
+			<td>Histórico de movimento do Processo:</td>
+			<td><?php echo processo_historico($processo) ?></td>
 		</tr>
 	</table>
 
@@ -53,7 +52,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	$ordem = 0;
 
 	foreach ($processo->tipo->listaDeArtefatos as $artefato) {
-
 
 
 		if ($artefato->arquivos != array()) {
@@ -99,6 +97,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				}
 			}
 		}
+	}
+
+	if ($ordem === 0) {
+		?>
+		<div>
+			<p>Erro: Aquivo do processo não foi encontrato.</p>
+		</div>
+		<?php
 	}
 	?>
 	</table>

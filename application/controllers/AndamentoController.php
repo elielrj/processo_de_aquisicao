@@ -76,16 +76,18 @@ class AndamentoController extends CI_Controller
 
 	public function listarPorProcesso($proceso_id)
 	{
-		$andamentos = $this->AndamentoDAO->buscarTodosAtivosInativosDeUmProcesso($proceso_id);
-		$this->load->library('AndamentoLibrary');
+		$andamentos = $this->AndamentoDAO->buscarTodosOsAndamentosDeUmProcesso($proceso_id);
 
-		$dados = array(
-			'titulo' => 'Lista de andamento do processo',
-			'tabela' => $this->andamentolibrary->listar($andamentos, 0),
-			'pagina' => 'andamento/index.php',
-			'botoes' => '',
-		);
+		$this->load->model('dao/ProcessoDAO');
 
-		$this->load->view('index', $dados);
+		$processo = $this->ProcessoDAO->buscarPorId($proceso_id);
+
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Histórico de movimentos do processo de ' . $processo->tipo->nome,
+				'tabela' => $andamentos,
+				'pagina' => 'andamento/andamento_de_um_processo.php'
+			]);
 	}
 }

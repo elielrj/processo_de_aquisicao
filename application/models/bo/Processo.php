@@ -1,6 +1,4 @@
 <?php
-
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once('InterfaceBO.php');
@@ -72,7 +70,7 @@ class Processo implements InterfaceBO
 			'id' => $this->id ?? null,
 			'objeto' => $this->objeto,
 			'numero' => $this->numero,
-			'data_hora' => $this->dataHora->dataHoraNoFormatoMySQL(),
+			'data_hora' => $this->dataHora,
 			'chave' => $this->chave,
 			'departamento_id' => $this->departamento->id,
 			'lei_id' => $this->lei->id,
