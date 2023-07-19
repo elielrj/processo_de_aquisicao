@@ -44,6 +44,6 @@ function imprimir_certidoes($processo)
 												  height='16' ></a>";
 	} else {
 		return "<p  style='color: red'><img src='" . base_url('img/certificado-qualidade.png') . "' width='16'
-												  height='16' disabled></p>";
+												  height='16' disabled ></p>";
 	}
 }

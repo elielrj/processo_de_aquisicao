@@ -43,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						href='<?php echo base_url(PROCESSO_CONTROLLER . '/exibirArtefatos/' . $processo->id); ?>' ><img
 						src='<?php echo base_url('img/adicionar-ficheiro.png'); ?>'
 						width='16'
-						height='16'></a>
+						height='16' style='color: <?php ?>'></a>
 				</td>
 				<td class='text-center col-md-1'><?php echo alterar_processo($processo->id) ?></td>
 				<td class='text-center col-md-1'><?php echo excluir_processo($processo) ?></td>
