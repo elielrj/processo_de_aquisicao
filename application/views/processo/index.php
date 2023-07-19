@@ -14,10 +14,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 			<td class='text-center col-md-1'>Data</td>
 			<td class='text-center col-md-1'>Seção</td>
 			<td class='text-center col-md-1'>NE</td>
-			<td class='text-center col-md-1'><img src='<?php echo base_url('img/icone-certificado.png'); ?>' width='16'
+			<td class='text-center col-md-1'><img src='<?php echo base_url('img/certificado-qualidade.png'); ?>'
+												  width='16'
 												  height='16'></td>
-			<td class='text-center col-md-1'><i class="fa fa-history" aria-hidden="true"></i></td>
+			<td class='text-center col-md-1'><i class='fa fa-history' aria-hidden='true'</i></td>
 			<td class='text-center col-md-1'><i class='fa fa-eye' aria-hidden='true'></i></td>
+			<td class='text-center col-md-1'><img src='<?php echo base_url('img/adicionar-ficheiro.png'); ?>'
+												  width='16'
+												  height='16'></td>
 			<td class='text-center col-md-1'><img src='<?php echo base_url('img/pencil-square.svg'); ?>' width='16'
 												  height='16'></td>
 			<td class='text-center col-md-1'><i class='fa fa-trash' aria-hidden='true'></i></td>
@@ -35,6 +39,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<td class='text-center col-md-1'><?php echo imprimir_certidoes($processo) ?></td>
 				<td class='text-center col-md-1'><?php echo processo_historico($processo) ?></td>
 				<td class='text-center col-md-1'><?php echo exibir_processo($processo->id) ?></td>
+				<td class='text-center col-md-1'><a
+						href='<?php echo base_url(PROCESSO_CONTROLLER . '/exibirArtefatos/' . $processo->id); ?>' ><img
+						src='<?php echo base_url('img/adicionar-ficheiro.png'); ?>'
+						width='16'
+						height='16'></a>
+				</td>
 				<td class='text-center col-md-1'><?php echo alterar_processo($processo->id) ?></td>
 				<td class='text-center col-md-1'><?php echo excluir_processo($processo) ?></td>
 				<td class='text-center col-md-1'><i class="fa fa-print" aria-hidden="true"></i></td>

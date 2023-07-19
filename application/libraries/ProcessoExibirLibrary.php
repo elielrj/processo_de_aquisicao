@@ -11,9 +11,7 @@ include_once('application/models/bo/nivel_de_acesso/Conformador.php');
 include_once('application/models/bo/nivel_de_acesso/Administrador.php');
 include_once('application/models/bo/nivel_de_acesso/Root.php');
 
-use helper\Tempo;
 
-include_once 'application/models/helper/Tempo.php';
 
 class ProcessoExibirLibrary
 {

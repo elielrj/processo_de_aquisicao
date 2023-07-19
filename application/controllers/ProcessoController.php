@@ -413,6 +413,18 @@ class ProcessoController extends CI_Controller
 				'pagina' => 'processo/exibir.php'
 			]);
 	}
+	public function exibirArtefatos($processoId)
+	{
+		$processo = $this->ProcessoDAO->buscarPorId($processoId);
+
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Processo: ' . $processo->tipo->nome,
+				'processo' => $processo,
+				'pagina' => 'processo/exibir_artefatos.php'
+			]);
+	}
 
 	public function enviarProcesso($processo_id)
 	{

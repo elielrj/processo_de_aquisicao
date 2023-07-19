@@ -40,10 +40,10 @@ function imprimir_certidoes($processo)
 	if ($sicaf && $cadin && $tcu) {
 		$href = base_url('index.php/ProcessoController/imprimirCertidoes/' . $processo->id);
 
-		return "<a href='{$href}' style='color: green'><img src='" . base_url('img/icone-certificado.png') . "' width='16'
+		return "<a href='{$href}' style='color: green'><img src='" . base_url('img/certificado-qualidade.png') . "' width='16'
 												  height='16' ></a>";
 	} else {
-		return "<p  style='color: red'><img src='" . base_url('img/icone-certificado.png') . "' width='16'
+		return "<p  style='color: red'><img src='" . base_url('img/certificado-qualidade.png') . "' width='16'
 												  height='16' disabled></p>";
 	}
 }
