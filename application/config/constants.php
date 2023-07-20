@@ -141,6 +141,8 @@ const LEI_ID = 'lei_id';
 const TIPO_ID = 'tipo_id';
 const COMPLETO = 'completo';
 const CHAVE = 'chave';
+const SENHA = 'senha';
+const EMAIL = 'email';
 /**
  * ERROS
  */
@@ -179,4 +181,16 @@ const ID_INFOR_NO_BANCO_DE_DADOS = 8;
 /**
  * SESSION
  */
-const FUNCAO_NIVEL_DE_ACESSO = 'funcao_nivel_de_acesso';
+const SESSION_ID = 'session_id';
+const SESSION_NOME_DE_GUERRA = 'nome_de_guerra';
+const SESSION_NOME_COMPLETO = 'nome_completo';
+const SESSION_EMAIL = 'email';
+const SESSION_CPF = 'CPF';
+const SESSION_SENHA = 'senha';
+const SESSION_DEPARTAMENTO_ID = 'departamento_id';
+const SESSION_DEPARTAMENTO_NOME = 'departamento_nome';
+const  SESSION_STATUS= 'status';
+const SESSION_HIERARQUIA_ID = 'hierarquia_id';
+const SESSION_HIERARQUIA_SIGLA = 'hierarquia_sigla';
+const SESSION_FUNCAO_ID = 'funcao_id';
+const SESSION_FUNCAO_NIVEL_DE_ACESSO = 'funcao_nivel_de_acesso';

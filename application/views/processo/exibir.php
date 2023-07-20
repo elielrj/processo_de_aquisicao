@@ -12,7 +12,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </div>
 
 
-
 <!-- Artefatos -->
 
 <div>
@@ -34,9 +33,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				if (count($artefato->arquivos) > 1) {
 					$subindice++;
 				}
-
-				if (file_exists($arquivo->path)) { ?>
-
+				?>
+				<div>
 					<p>
 						<?php
 						echo
@@ -45,21 +43,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							$artefato->nome . ($arquivo->nome != '' ? ' - Descrição do anexo: ' . $arquivo->nome : ''); //Título do Artefato: "1.2 Artefato A-2"
 						?>
 					</p>
+				</div>
+				<?php
+
+				if (file_exists($arquivo->path)) { ?>
+
 					<div style='height: 1080px; width: 100%;'>
 						<embed src='<?php echo base_url($arquivo->path) ?>' type='application/pdf' width='100%'
 							   height='100%'>
 					</div>
+
 					</br>
+
 					<?php
 				} else {
 					?>
-					<p>
-						<?php
-						echo
-							$ordem . ($subindice > 0 ? ('.' . $subindice) : '') . //Título do Artefato: "1. Artefato A"
-							$artefato->nome . ($arquivo->nome != '' ? ' - Descrição do anexo: ' . $arquivo->nome : ''); //Título do Artefato: "1.2 Artefato A-2"
-						?>
-					<p>
 					<div>
 						<p>Erro: Aquivo do processo não foi encontrato.</p>
 					</div>

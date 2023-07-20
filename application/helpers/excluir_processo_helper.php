@@ -5,8 +5,8 @@ function excluir_processo($processo)
 	include_once('application/models/bo/nivel_de_acesso/Root.php');
 
 	if(
-		$_SESSION[FUNCAO_NIVEL_DE_ACESSO] === Executor::NOME ||
-		$_SESSION[FUNCAO_NIVEL_DE_ACESSO] === Root::NOME
+		$_SESSION[SESSION_FUNCAO_NIVEL_DE_ACESSO] === Executor::NOME ||
+		$_SESSION[SESSION_FUNCAO_NIVEL_DE_ACESSO] === Root::NOME
 	)
 	{
 		if($processo->status)
