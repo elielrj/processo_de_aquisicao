@@ -40,14 +40,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<td class='text-center col-md-1'><?php echo processo_historico($processo) ?></td>
 				<td class='text-center col-md-1'><?php echo exibir_processo($processo->id) ?></td>
 				<td class='text-center col-md-1'><a
-						href='<?php echo base_url(PROCESSO_CONTROLLER . '/exibirArtefatos/' . $processo->id); ?>' ><img
-						src='<?php echo base_url('img/adicionar-ficheiro.png'); ?>'
-						width='16'
-						height='16' style='color: <?php ?>'></a>
+						href='<?php echo base_url('index.php/' . PROCESSO_CONTROLLER . '/exibirArtefatos/' . $processo->id); ?>'><img
+							src='<?php echo base_url('img/adicionar-ficheiro.png'); ?>'
+							width='16'
+							height='16' style='color: <?php ?>'></a>
 				</td>
 				<td class='text-center col-md-1'><?php echo alterar_processo($processo->id) ?></td>
 				<td class='text-center col-md-1'><?php echo excluir_processo($processo) ?></td>
-				<td class='text-center col-md-1'><i class="fa fa-print" aria-hidden="true"></i></td>
+				<td class='text-center col-md-1'><a
+						href='<?php echo base_url('index.php/' . PROCESSO_CONTROLLER . 'imprimir/' . $processo->id); ?>'><i
+							class="fa fa-print" aria-hidden="true"></i></a></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

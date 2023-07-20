@@ -413,6 +413,7 @@ class ProcessoController extends CI_Controller
 				'pagina' => 'processo/exibir.php'
 			]);
 	}
+
 	public function exibirArtefatos($processoId)
 	{
 		$processo = $this->ProcessoDAO->buscarPorId($processoId);
@@ -588,6 +589,12 @@ class ProcessoController extends CI_Controller
 	{
 		$this->ProcessoDAO->recuperar($id);
 		redirect(PROCESSO_CONTROLLER . '/listarTodosExcluidos');
+	}
+
+	public function imprimir($processoId)
+	{
+		$processo = $this->ProcessoDAO->buscarPorId($processoId);
+		$this->imprimirProcesso($processo);
 	}
 
 	private function imprimirProcesso($processo)

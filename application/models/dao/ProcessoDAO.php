@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-
+include_once 'application/libraries/DataHora.php';
 include_once('application/models/bo/Processo.php');
 
 class ProcessoDAO extends CI_Model
@@ -28,7 +28,7 @@ class ProcessoDAO extends CI_Model
 		$andamento = new Andamento(
 			null,
 			new Criado(),
-			new Tempo(),
+			new DataHora(),
 			$processo->id,
 			$_SESSION['id'],
 			true
