@@ -6,11 +6,6 @@ use PDFMerger\PDFMerger;
 
 class Pdf
 {
-	public function __construct()
-	{
-		//include_once 'vendor/PDFMerger/PDFMerger.php';
-	}
-
 	public function imprimir($listaDePath, $nomeDoArquivoEmPdf)
 	{
 		$pdfMerger = new PDFMerger;
@@ -20,7 +15,10 @@ class Pdf
 				$pdfMerger->addPDF($path);
 			}
 		}
-		
-		$pdfMerger->merge('download', clear_strings($nomeDoArquivoEmPdf));
+
+		$pdfMerger->merge(
+			'download',
+			clear_strings($nomeDoArquivoEmPdf) . '.pdf'
+		);
 	}
 }

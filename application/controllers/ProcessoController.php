@@ -615,7 +615,7 @@ class ProcessoController extends CI_Controller
 		}
 
 		$this->load->library('Pdf');
-		$this->imprimir($listaDePath, $processo->toString());
+		$this->pdf->imprimir($listaDePath, $processo->toString());
 	}
 
 	public function imprimirCertidoes($processoId)

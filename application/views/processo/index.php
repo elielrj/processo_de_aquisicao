@@ -48,7 +48,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				<td class='text-center col-md-1'><?php echo alterar_processo($processo->id) ?></td>
 				<td class='text-center col-md-1'><?php echo excluir_processo($processo) ?></td>
 				<td class='text-center col-md-1'><a
-						href='<?php echo base_url('index.php/' . PROCESSO_CONTROLLER . 'imprimir/' . $processo->id); ?>'><i
+						href='<?php echo PROCESSO_CONTROLLER . '/imprimir/' . $processo->id; ?>'><i
 							class="fa fa-print" aria-hidden="true"></i></a></td>
 			</tr>
 		<?php endforeach; ?>
