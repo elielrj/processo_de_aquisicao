@@ -50,10 +50,13 @@ class Arquivo implements InterfaceBO
 
 	public function array()
 	{
+		include_once 'application/libraries/DataHora.php';
+		$dataHora = new DataHora($this->dataHora);
+
 		return array(
 			'id' => $this->id ?? null,
 			'path' => $this->path,
-			'data_hora' => $this->dataHora->dataHoraNoFormatoMySQL(),
+			'data_hora' => $dataHora->formatoDoMySQL(),
 			'usuario_id' => $this->usuarioId,
 			'artefato_id' => $this->artefatoId,
 			'processo_id' => $this->processoId,

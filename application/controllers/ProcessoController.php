@@ -650,25 +650,4 @@ class ProcessoController extends CI_Controller
 		$this->load->library('Pdf');
 		$this->pdf->imprimir($listaDePath, $processo->toString());
 	}
-
-	public function alterarArquivoDeUmProcesso()
-	{
-		if(isset($_POST['mais_um'])){
-
-			//valida se foi apontado um arquivo
-			if(
-				count($_FILES['arquivo']) > 0 &&
-				isset($_FILES['arquivo']['temp_name'])
-			){
-
-				$arquivo = $this->moverUmArquivo();
-			}
-
-		}else if(isset($_POST['menos_um'])){
-
-		}else if(isset($_POST['enviar'])){
-
-		}
-
-	}
 }

@@ -38,6 +38,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 			$listaDeArquivosDesteArtefatoIsNull = is_null($artefato->arquivos);
 
+			$ordem++;
+
 			if (!$listaDeArquivosDesteArtefatoIsNull) {
 
 				$subindice = 0; //Sub-índice para Cada Artefato repetido
@@ -50,13 +52,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					?>
 
 					<tr>
-						<td><?php echo ++$ordem . ($subindice > 0 ? ('.' . $subindice) : ''); ?></td>
+						<td><?php echo $ordem . ($subindice > 0 ? ('.' . $subindice) : ''); ?></td>
 						<td>
 							<a href='<?php echo(file_exists($arquivo->path) ? base_url($arquivo->path) : '') ?>'>
 								<?php echo $artefato->nome . ($arquivo->nome != '' ? ' - Descrição do anexo: ' . $arquivo->nome : ''); ?>
 							</a>
 						</td>
-						<?php form_open_multipart(PROCESSO_CONTROLLER . '/alterarArquivoDeUmProcesso', ['class' => 'form-control']) ?>
+						<?php echo form_open_multipart(ARQUIVO_CONTROLLER . '/alterarArquivoDeUmProcesso', ['class' => 'form-control']) ?>
 						<td><?php echo form_input([
 								'name' => 'arquivo_nome',
 								'class' => 'form-control',
@@ -67,27 +69,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 							]) ?>
 						</td>
 						<?php
-						form_input([
+						echo form_input([
 							'name' => 'arquivo_id',
 							'type' => 'hidden',
 							'value' => $arquivo->id,
 							'class' => 'form-control']);
-						form_input([
+						echo form_input([
 							'name' => 'processo_id',
 							'type' => 'hidden',
 							'value' => $processo->id,
 							'class' => 'form-control']);
-						form_input([
+						echo form_input([
 							'name' => 'artefato_id',
 							'type' => 'hidden',
 							'value' => $artefato->id,
 							'class' => 'form-control']);
-						form_input([
+						echo form_input([
 							'name' => 'arquivo_status',
 							'type' => 'hidden',
 							'value' => ($arquivo->status ?? true),
 							'class' => 'form-control']);
-						form_input([
+						echo form_input([
 							'name' => 'arquivo_path',
 							'type' => 'hidden',
 							'value' => (file_exists($arquivo->path) ? $arquivo->path : ''),
@@ -126,7 +128,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 									'title' => 'Excluir artefato'
 								]) ?>
 						</td>
-						<?php form_close(); ?>
+						<?php echo form_close(); ?>
 					</tr>
 
 					<?php
@@ -136,9 +138,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				?>
 
 				<tr>
-					<td><?php echo ++$ordem; ?></td>
+					<td><?php echo $ordem; ?></td>
 					<td><?php echo $artefato->nome; ?></td>
-					<?php form_open_multipart(ARQUIVO_CONTROLLER . '/alterarArquivoDeUmProcesso', ['class' => 'form-control']) ?>
+					<?php echo form_open_multipart(ARQUIVO_CONTROLLER . '/alterarArquivoDeUmProcesso', ['class' => 'form-control']) ?>
 					<td><?php echo form_input([
 							'name' => 'arquivo_nome',
 							'class' => 'form-control',
@@ -149,27 +151,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 						]) ?>
 					</td>
 					<?php
-					form_input([
+					echo form_input([
 						'name' => 'arquivo_id',
 						'type' => 'hidden',
 						'value' => null,
 						'class' => 'form-control']);
-					form_input([
+					echo form_input([
 						'name' => 'processo_id',
 						'type' => 'hidden',
 						'value' => $processo->id,
 						'class' => 'form-control']);
-					form_input([
+					echo form_input([
 						'name' => 'artefato_id',
 						'type' => 'hidden',
 						'value' => $artefato->id,
 						'class' => 'form-control']);
-					form_input([
+					echo form_input([
 						'name' => 'arquivo_status',
 						'type' => 'hidden',
 						'value' => ($arquivo->status ?? true),
 						'class' => 'form-control']);
-					form_input([
+					echo form_input([
 						'name' => 'arquivo_path',
 						'type' => 'hidden',
 						'value' => null,
@@ -208,7 +210,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 								'title' => 'Excluir artefato'
 							]) ?>
 					</td>
-					<?php form_close(); ?>
+					<?php echo form_close(); ?>
 				</tr>
 
 				<?php

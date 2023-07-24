@@ -146,7 +146,7 @@ class ArquivoController extends CI_Controller
 						null,
 						'',
 						null,
-						$_SESSION['id'],
+						$_SESSION[SESSION_ID],
 						$data_post['artefato_id'],
 						$data_post['processo_id'],
 						'',
@@ -205,7 +205,7 @@ class ArquivoController extends CI_Controller
 			}
 		}
 
-		redirect('ProcessoController/exibir/' . $data_post['processo_id']);
+		redirect('ProcessoController/exibirArtefatos/' . $data_post['processo_id']);
 
 
 	}
