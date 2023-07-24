@@ -57,7 +57,7 @@ class Andamento implements StatusDoAndamento, InterfaceBO
 			STATUS_DO_ANDAMENTO => $this->statusDoAndamento->nome(),
 			DATA_HORA  => $this->dataHora,
 			PROCESSO_ID => $this->processo_id,
-			USUARIO_ID => $this->usuario->id,
+			USUARIO_ID => $_SESSION[SESSION_ID],
 			STATUS => $this->status,
 		);
 	}

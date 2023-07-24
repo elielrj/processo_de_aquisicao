@@ -8,7 +8,6 @@ view_form_open('ProcessoController/criar');
 view_input_com_required('Objeto do Processo', 'objeto', 'objeto', 'text');
 view_input_com_required('Número (Nup/Nud)', 'numero', 'numero', 'text', '', 20);
 
-view_input('', 'departamento_id', 'departamento_id', 'hidden', $_SESSION['departamento_id']);
 
 view_dropdown('Tipo de Processo', 'tipo_id', $tipos_options, '');
 

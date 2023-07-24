@@ -492,16 +492,12 @@ class ProcessoController extends CI_Controller
 
 	public function novo()
 	{
-
-		$usuarioAtual = $this->UsuarioDAO->buscarPorId($this->session->id);
-
 		$lei_e_modalidade_pre_definido = 1;
 
 		$dados = array(
 			'titulo' => 'Novo Processo',
 			'pagina' => 'processo/novo.php',
 			'departamentos' => $this->DepartamentoDAO->options(),
-			'departamento' => $usuarioAtual->departamento->id,
 			'modalidades_options' => $this->ModalidadeDAO->options(),
 			'tipos_options' => $this->TipoDAO->options(),
 			'leis_options' => $this->LeiDAO->options($lei_e_modalidade_pre_definido),
@@ -524,7 +520,7 @@ class ProcessoController extends CI_Controller
 			$data_post[NUMERO],
 			$this->datahora->formatoDoMySQL(),
 			$data_post[CHAVE],
-			$this->DepartamentoDAO->buscarPorId($this->session->departamento_id),
+			$this->DepartamentoDAO->buscarPorId($_SESSION[SESSION_DEPARTAMENTO_ID]),
 			$this->LeiDAO->buscarPorId($data_post[LEI_ID]),
 			$this->TipoDAO->buscarPorId($data_post[TIPO_ID]),
 			$data_post[COMPLETO],
@@ -653,5 +649,26 @@ class ProcessoController extends CI_Controller
 		}
 		$this->load->library('Pdf');
 		$this->pdf->imprimir($listaDePath, $processo->toString());
+	}
+
+	public function alterarArquivoDeUmProcesso()
+	{
+		if(isset($_POST['mais_um'])){
+
+			//valida se foi apontado um arquivo
+			if(
+				count($_FILES['arquivo']) > 0 &&
+				isset($_FILES['arquivo']['temp_name'])
+			){
+
+				$arquivo = $this->moverUmArquivo();
+			}
+
+		}else if(isset($_POST['menos_um'])){
+
+		}else if(isset($_POST['enviar'])){
+
+		}
+
 	}
 }

@@ -36,12 +36,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
 
-			if ($artefato->arquivos != array()) {
+			$listaDeArquivosDesteArtefatoIsNull = is_null($artefato->arquivos);
+
+			if (!$listaDeArquivosDesteArtefatoIsNull) {
 
 				$subindice = 0; //Sub-índice para Cada Artefato repetido
 				foreach ($artefato->arquivos as $arquivo) {
 
-					++$ordem; //Ordem de cada Artefato, somente se exirtir algum arquivo nos artefatos
 
 					if (count($artefato->arquivos) > 1) {
 						$subindice++;
@@ -49,13 +50,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					?>
 
 					<tr>
-						<td><?php echo $ordem . ($subindice > 0 ? ('.' . $subindice) : ''); ?></td>
+						<td><?php echo ++$ordem . ($subindice > 0 ? ('.' . $subindice) : ''); ?></td>
 						<td>
 							<a href='<?php echo(file_exists($arquivo->path) ? base_url($arquivo->path) : '') ?>'>
 								<?php echo $artefato->nome . ($arquivo->nome != '' ? ' - Descrição do anexo: ' . $arquivo->nome : ''); ?>
 							</a>
 						</td>
-						<?php form_open_multipart(ARQUIVO_CONTROLLER . '/alterarArquivoDeUmProcesso', ['class' => 'form-control']) ?>
+						<?php form_open_multipart(PROCESSO_CONTROLLER . '/alterarArquivoDeUmProcesso', ['class' => 'form-control']) ?>
 						<td><?php echo form_input([
 								'name' => 'arquivo_nome',
 								'class' => 'form-control',
@@ -131,6 +132,86 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<?php
 
 				}
+			} else {
+				?>
+
+				<tr>
+					<td><?php echo ++$ordem; ?></td>
+					<td><?php echo $artefato->nome; ?></td>
+					<?php form_open_multipart(ARQUIVO_CONTROLLER . '/alterarArquivoDeUmProcesso', ['class' => 'form-control']) ?>
+					<td><?php echo form_input([
+							'name' => 'arquivo_nome',
+							'class' => 'form-control',
+							'type' => 'text',
+							'value' => '',
+							'maxlength' => 150,
+							'placeholder' => 'Descrição'
+						]) ?>
+					</td>
+					<?php
+					form_input([
+						'name' => 'arquivo_id',
+						'type' => 'hidden',
+						'value' => null,
+						'class' => 'form-control']);
+					form_input([
+						'name' => 'processo_id',
+						'type' => 'hidden',
+						'value' => $processo->id,
+						'class' => 'form-control']);
+					form_input([
+						'name' => 'artefato_id',
+						'type' => 'hidden',
+						'value' => $artefato->id,
+						'class' => 'form-control']);
+					form_input([
+						'name' => 'arquivo_status',
+						'type' => 'hidden',
+						'value' => ($arquivo->status ?? true),
+						'class' => 'form-control']);
+					form_input([
+						'name' => 'arquivo_path',
+						'type' => 'hidden',
+						'value' => null,
+						'class' => 'form-control']);
+					?>
+					<td><?php echo form_input([
+							'name' => 'arquivo',
+							'type' => 'file',
+							'accept' => '.pdf'
+						]) ?>
+					</td>
+					<td>
+						<?php echo form_submit(
+							'enviar',
+							'Upload/Atualizar',
+							[
+								'class' => 'btn btn-primary',
+								'title' => 'Sobe um novo ou atualiza o arquivo para este artefato do processo'
+							]) ?>
+					</td>
+					<td>
+						<?php echo form_submit(
+							'mais_um',
+							'+',
+							[
+								'class' => 'btn btn-primary',
+								'title' => 'Incluir mais arquivo para este artefato'
+							]) ?>
+					</td>
+					<td>
+						<?php echo form_submit(
+							'menos_um',
+							'-',
+							[
+								'class' => 'btn btn-primary',
+								'title' => 'Excluir artefato'
+							]) ?>
+					</td>
+					<?php form_close(); ?>
+				</tr>
+
+				<?php
 			}
 		}
 
