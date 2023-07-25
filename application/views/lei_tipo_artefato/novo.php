@@ -1,19 +1,28 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-defined('BASEPATH') or exit('No direct script access allowed');
+<h1><?php echo $titulo; ?></h1>
 
-view_titulo($titulo);
+<?php echo form_open(LEI_TIPO_ARTEFATO_CONTROLLER.'/criar', ['class' => 'form-group']); ?>
 
-view_form_open('lei-tipo-artefato-criar');
+<?php echo form_label('Lei'); ?>
+<?php echo form_dropdown('lei_id', $options_lei, '',['class' => 'form-control']); ?>
 
-view_dropdown('Lei','lei_id',$options_lei,'');
-view_dropdown('Tipo','tipo_id',$options_tipo,'');
-view_dropdown('Artefato','artefato_id',$options_artefato,'');
+</br>
+<?php echo form_label('Tipo'); ?>
+<?php echo form_dropdown('tipo_id', $options_tipo, '',['class' => 'form-control']); ?>
 
-view_dropdown_status();
+</br>
+<?php echo form_label('Artefato'); ?>
+<?php echo form_dropdown('artefato_id', $options_artefato, '',['class' => 'form-control']); ?>
 
-view_form_submit_enviar();
+</br>
+<?php echo form_label('Status'); ?>
+<?php echo form_dropdown('status', [true => 'Ativo', false => 'Inativo'], true, ['class' => 'form-control']); ?>
 
-view_form_submit_cancelar('lei-tipo-artefato-listar');
+</br>
+<?php echo form_submit('enviar', 'Enviar', ['class' => 'btn btn-primary btn-lg btn-block']); ?>
 
-echo form_close();
+<a href="<?php echo base_url('index.php/' . LEI_TIPO_ARTEFATO_CONTROLLER); ?>" class='btn btn-danger btn-lg btn-block'>Cancelar</a>
+
+<?php echo form_close(); ?>
