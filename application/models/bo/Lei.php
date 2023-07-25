@@ -61,14 +61,15 @@ class Lei implements InterfaceBO
 
 	public function array()
 	{
-		$this->load->helper('data');
+		include_once 'application/libraries/Data.php';
+		$data = new Data($this->data);
 
 		return array(
 			'id' => $this->id ?? null,
 			'numero' => $this->numero,
 			'artigo' => $this->artigo,
 			'inciso' => $this->inciso,
-			'data' => $this->data->dataHoraNoFormatoMySQL(),
+			'data' => $data->formatoDoMySQL(),
 			'modalidade_id' => $this->modalidade->id,
 			'status' => $this->status
 		);

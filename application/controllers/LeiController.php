@@ -50,12 +50,12 @@ class LeiController extends CI_Controller
 
 	public function novo()
 	{
+		$this->load->model('dao/ModalidadeDAO');
+
 		$this->load->view('index', [
 			'titulo' => 'Nova lei',
 			'pagina' => 'lei/novo.php',
-			'options_lei' => $this->LeiDAO->options(),
-			'options_tipo' => $this->TipoDAO->options(),
-			'options_artefato' => $this->ArtefatoDAO->options()
+			'options_modalidades' => $this->ModalidadeDAO->options()
 		]);
 	}
 
@@ -64,17 +64,21 @@ class LeiController extends CI_Controller
 
 		$data_post = $this->input->post();
 
+		$this->load->library('DataHora',$data_post['data']);
+
+		$this->load->model('dao/ModalidadeDAO');
+
 		$lei = new lei(
 			null,
 			$data_post['numero'],
 			$data_post['artigo'],
 			$data_post['inciso'],
-			$this->data->dataHoraBr($data_post['data']),
-			$data_post['modalidade_id'],
+			$this->datahora->formatoDoMySQL(),
+			$this->ModalidadeDAO->buscarPorId($data_post['modalidade_id']),
 			$data_post['status']
 		);
 
-		$this->LeiDAO->create($lei);
+		$this->LeiDAO->criar($lei);
 
 		redirect('leiController');
 	}
@@ -116,7 +120,7 @@ class LeiController extends CI_Controller
 	public function deletar($id)
 	{
 
-		$this->LeiDAO->update($id);
+		$this->LeiDAO->update($id);//todo atualizar método
 
 		redirect('leiController');
 	}
