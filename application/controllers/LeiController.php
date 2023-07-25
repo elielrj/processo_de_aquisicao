@@ -88,10 +88,13 @@ class LeiController extends CI_Controller
 
 		$lei = $this->LeiDAO->buscarPorId($id);
 
+		$this->load->model('dao/ModalidadeDAO');
+
 		$dados = [
 			'titulo' => 'Alterar lei',
 			'pagina' => 'lei/alterar.php',
-			'lei' => $lei
+			'lei' => $lei,
+			'options_modalidades' => $this->ModalidadeDAO->options(),
 		];
 
 		$this->load->view('index', $dados);

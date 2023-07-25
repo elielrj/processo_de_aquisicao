@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <h1><?php echo $titulo; ?></h1>
 
-<?php echo form_open(LEI_CONTROLLER.'/criar', ['class' => 'form-group']); ?>
+<?php echo form_open(LEI_CONTROLLER . '/criar', ['class' => 'form-group']); ?>
 
 </br>
 <?php echo form_label('Número'); ?>
@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 </br>
 <?php echo form_label('Modalidade'); ?>
-<?php echo form_dropdown('modalidade_id', $options_modalidades, '',['class' => 'form-control']); ?>
+<?php echo form_dropdown('modalidade_id', $options_modalidades, '', ['class' => 'form-control']); ?>
 
 </br>
 <?php echo form_label('Status'); ?>
