@@ -54,7 +54,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 					<tr>
 						<td><?php echo $ordem . ($subindice > 0 ? ('.' . $subindice) : ''); ?></td>
 						<td>
-							<a href='<?php echo(file_exists($arquivo->path) ? base_url($arquivo->path) : '') ?>'>
+							<a
+								<?php
+								if (file_exists(base_url($arquivo->path))):
+									echo "href='" . base_url($arquivo->path) . "'";
+								endif;
+								?>
+							>
 								<?php echo $artefato->nome . ($arquivo->nome != '' ? ' - Descrição do anexo: ' . $arquivo->nome : ''); ?>
 							</a>
 						</td>
