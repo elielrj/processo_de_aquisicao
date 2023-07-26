@@ -27,4 +27,13 @@ class DataHora
 	{
 		return ($this->dataHora)->format(self::FORMATO_A_M_D__H_M_SP_MYSQL);
 	}
+	function __get($key)
+	{
+		return $this->$key;
+	}
+
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
 }

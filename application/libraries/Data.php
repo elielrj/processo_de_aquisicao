@@ -27,4 +27,14 @@ class Data
 	{
 		return ($this->data)->format(self::FORMATO_A_M_D_MYSQL);
 	}
+
+	function __get($key)
+	{
+		return $this->$key;
+	}
+
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
 }

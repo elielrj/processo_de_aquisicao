@@ -43,7 +43,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	{
 		$arrayList =
 			$this->db
-				->order_by(DATA_HORA, 'DESC')
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
 				->where([STATUS => true])
 				->get(TABLE_ANDAMENTO, $inicio, $fim);
 
@@ -134,12 +134,12 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 	{
 		$id = $linhaDoArrayList->id ?? $linhaDoArrayList[ID] ?? null;
 		$statusDoAndamento = $linhaDoArrayList->status_do_andamento ?? $linhaDoArrayList[STATUS_DO_ANDAMENTO] ?? null;
-		$dataHora = $linhaDoArrayList->data_hora ?? $linhaDoArrayList[DATA_HORA] ?? null;
+		$data_hora = $linhaDoArrayList->data_hora ?? $linhaDoArrayList[DATA_HORA] ?? null;
 		$processo_id = $linhaDoArrayList->processo_id ?? $linhaDoArrayList[PROCESSO_ID] ?? null;
 		$usuario_id = $linhaDoArrayList->usuario_id ?? $linhaDoArrayList[USUARIO_ID] ?? null;
 		$status = $linhaDoArrayList->status ?? $linhaDoArrayList[STATUS] ?? null;
 
-		$this->load->library('DataHora', $dataHora);
+		$this->load->library('DataHora', $data_hora);
 
 		$this->load->model('dao/UsuarioDAO');
 
@@ -147,7 +147,7 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 			new Andamento(
 				$id,
 				Andamento::selecionarStatus($statusDoAndamento),
-				$this->datahora->formatoDoMySQL(),
+				$this->datahora,
 				$processo_id,
 				$this->UsuarioDAO->buscarPorId($usuario_id),
 				$status
