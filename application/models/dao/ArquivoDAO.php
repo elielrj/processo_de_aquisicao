@@ -3,7 +3,6 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once 'InterfaceDAO.php';
-require_once 'application/models/bo/Arquivo.php';
 
 class ArquivoDAO extends CI_Model implements InterfaceDAO
 {
@@ -190,7 +189,6 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 	}
 
 
-
 	public function buscarArquivosDeUmProcesso($processoId)
 	{
 		$array = $this->buscarOnde('processo_id', $processoId);
@@ -223,4 +221,20 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 		}
 	}
 
+	public function array()
+	{
+		include_once 'application/libraries/DataHora.php';
+		$dataHora = new DataHora($this->dataHora);
+
+		return array(
+			'id' => $this->id ?? null,
+			'path' => $this->path,
+			'data_hora' => $dataHora->formatoDoMySQL(),
+			'usuario_id' => $this->usuarioId,
+			'artefato_id' => $this->artefatoId,
+			'processo_id' => $this->processoId,
+			'nome' => $this->nome ?? '',
+			'status' => $this->status,
+		);
+	}
 }

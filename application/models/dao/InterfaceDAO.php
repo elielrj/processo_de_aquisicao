@@ -8,9 +8,9 @@ interface InterfaceDAO
 
 	public function buscarPorId($objetoId);
 
-	public function buscarTodosAtivos($inicio,$fim);
+	public function buscarTodosAtivos($inicio, $fim);
 
-	public function buscarTodosInativos($inicio,$fim);
+	public function buscarTodosInativos($inicio, $fim);
 
 	public function buscarTodosStatus($inicio, $fim);
 
@@ -29,6 +29,8 @@ interface InterfaceDAO
 	public function criarLista($arrayList);
 
 	public function toObject($linhaDoArrayList);
+
+	public function toArray($objeto);
 
 	public function options();
 }

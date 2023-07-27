@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/models/bo/Tipo.php');
+require_once 'InterfaceDAO.php';
 
 class TipoDAO extends CI_Model
 {

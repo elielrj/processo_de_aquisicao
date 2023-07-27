@@ -2,8 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/models/bo/Modalidade.php');
-
+require_once 'InterfaceDAO.php';
 class ModalidadeDAO extends CI_Model
 {
 

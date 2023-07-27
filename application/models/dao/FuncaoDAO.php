@@ -16,7 +16,7 @@ class FuncaoDAO extends CI_Model
 {
     public function __construct()
     {
-        $this->load->model('dao/DAO');
+        parent::__construct();
     }
 
     public function criar($objeto)
@@ -122,4 +122,35 @@ class FuncaoDAO extends CI_Model
         return $options;
     }
 
+	public static function selecionarNivelDeAcesso($nome)
+	{
+		switch ($nome) {
+			case Leitor::NOME:
+				return new Leitor();
+			case Escritor::NOME:
+				return new Escritor();
+			case AprovadorFiscAdm::NOME:
+				return new AprovadorFiscAdm();
+			case AprovadorOd::NOME:
+				return new AprovadorOd();
+			case Executor::NOME:
+				return new Executor();
+			case Conformador::NOME:
+				return new Conformador();
+			case Administrador::NOME:
+				return new Administrador();
+			case Root::NOME:
+				return new Root();
+		}
+	}
+
+	public function array()
+	{
+		return array(
+			'id' => $this->id,
+			'nome' => $this->nome,
+			'nivel_de_acesso' => $this->nivelDeAcesso->nome(),
+			'status' => $this->status
+		);
+	}
 }

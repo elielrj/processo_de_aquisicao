@@ -2,15 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/models/bo/Departamento.php');
+require_once 'InterfaceDAO.php';
 
-class DepartamentoDAO extends CI_Model
+class DepartamentoDAO extends CI_Model implements InterfaceDAO
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/DAO');
-		$this->load->model('dao/UgDAO');
 	}
 
 	public function criar($objeto)

@@ -2,8 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/models/bo/Processo.php');
-
+require_once 'InterfaceDAO.php';
 class ProcessoDAO extends CI_Model
 {
 	public function __construct()

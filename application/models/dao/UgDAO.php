@@ -2,13 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/models/bo/Ug.php');
+require_once 'InterfaceBO.php';
 
-class UgDAO extends CI_Model
+class UgDAO extends CI_Model implements InterfaceDAO
 {
 	public function __construct()
 	{
-		$this->load->model('dao/DAO');
+		parent::__construct();
 	}
 
 	public function criar($objeto)

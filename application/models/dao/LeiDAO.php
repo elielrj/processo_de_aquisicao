@@ -2,9 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use helper\Tempo;
-
-include_once('application/models/bo/Lei.php');
+require_once 'InterfaceDAO.php';
 
 class LeiDAO extends CI_Model
 {
@@ -71,7 +69,7 @@ class LeiDAO extends CI_Model
 	public function toObject($array)
 	{
 		$data = $array->data ?? ($array['data'] ?? null);
-		$this->load->library('Data',$data);
+		$this->load->library('Data', $data);
 
 		return new Lei(
 			$array->id ?? ($array['id'] ?? null),

@@ -2,116 +2,116 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/models/bo/Artefato.php');
+require_once 'InterfaceDAO.php';
 
-class ArtefatoDAO extends CI_Model
+class ArtefatoDAO extends CI_Model implements InterfaceDAO
 {
-    public function __construct()
-    {
-        $this->load->model('dao/DAO');
-    }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    public function criar($objeto)
-    {
-        $this->DAO->criar(TABLE_ARTERFATO, $objeto->array());
-    }
+	public function criar($objeto)
+	{
+		$this->DAO->criar(TABLE_ARTERFATO, $objeto->array());
+	}
 
-    public function buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base)
-    {
-        $array = $this->DAO->buscarTodos(TABLE_ARTERFATO, $qtd_de_itens_para_exibir,$indice_no_data_base); //($qtd_de_itens_para_exibir,$indice_no_data_base)
+	public function buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base)
+	{
+		$array = $this->DAO->buscarTodos(TABLE_ARTERFATO, $qtd_de_itens_para_exibir, $indice_no_data_base); //($qtd_de_itens_para_exibir,$indice_no_data_base)
 
-        return $this->criarLista($array);
-    }
+		return $this->criarLista($array);
+	}
 
-    public function buscarTodosDesativados($inicial, $final)
-    {
-        $array = $this->DAO->buscarTodosDesativados(TABLE_ARTERFATO, $inicial, $final);
+	public function buscarTodosDesativados($inicial, $final)
+	{
+		$array = $this->DAO->buscarTodosDesativados(TABLE_ARTERFATO, $inicial, $final);
 
-        return $this->criarLista($array);
-    }
+		return $this->criarLista($array);
+	}
 
-    public function buscarPorId($artefatoId)
-    {
-        $array = $this->DAO->buscarPorId(TABLE_ARTERFATO, $artefatoId);
+	public function buscarPorId($artefatoId)
+	{
+		$array = $this->DAO->buscarPorId(TABLE_ARTERFATO, $artefatoId);
 
-        return $this->toObject($array->result()[0]);
-    }
+		return $this->toObject($array->result()[0]);
+	}
 
-    public function buscarOnde($key, $value)
-    {
-        $array = $this->DAO->buscarOnde(TABLE_ARTERFATO, array($key => $value));
+	public function buscarOnde($key, $value)
+	{
+		$array = $this->DAO->buscarOnde(TABLE_ARTERFATO, array($key => $value));
 
-        return $this->criarLista($array->result());
-    }
+		return $this->criarLista($array->result());
+	}
 
-    public function atualizar($artefato)
-    {
-        $this->DAO->atualizar(TABLE_ARTERFATO, $artefato->array());
-    }
+	public function atualizar($artefato)
+	{
+		$this->DAO->atualizar(TABLE_ARTERFATO, $artefato->array());
+	}
 
 
-    public function deletar($artefato)
-    {
-        $this->DAO->deletar(TABLE_ARTERFATO, $artefato->array());
-    }
+	public function deletar($artefato)
+	{
+		$this->DAO->deletar(TABLE_ARTERFATO, $artefato->array());
+	}
 
-    public function contar()
-    {
-        return $this->DAO->contar(TABLE_ARTERFATO);
-    }
+	public function contar()
+	{
+		return $this->DAO->contar(TABLE_ARTERFATO);
+	}
 
-    public function contarDesativados()
-    {
-        return $this->DAO->contarDesativados(TABLE_ARTERFATO);
-    }
+	public function contarDesativados()
+	{
+		return $this->DAO->contarDesativados(TABLE_ARTERFATO);
+	}
 
-    /**
-     * Summary of toObject
-     * @param mixed $arrayList
-     * @return Artefato
-     * Este método não buscar o Arquivo do artefato, 
-     * pois quem tem essa responsabilidade é ProcessoDAO
-     */
-    public function toObject($arrayList)
-    {
-        return new Artefato(
-            $arrayList->id,
-            $arrayList->ordem,
-            $arrayList->nome,
-            null,
-            $arrayList->status
-        );
-    }
+	/**
+	 * Summary of toObject
+	 * @param mixed $arrayList
+	 * @return Artefato
+	 * Este método não buscar o Arquivo do artefato,
+	 * pois quem tem essa responsabilidade é ProcessoDAO
+	 */
+	public function toObject($arrayList)
+	{
+		return new Artefato(
+			$arrayList->id,
+			$arrayList->ordem,
+			$arrayList->nome,
+			null,
+			$arrayList->status
+		);
+	}
 
-    private function criarLista($array)
-    {
-        $listaDeArtefato = array();
+	private function criarLista($array)
+	{
+		$listaDeArtefato = array();
 
-        foreach ($array->result() as $linha) {
+		foreach ($array->result() as $linha) {
 
-            $artefato = $this->toObject($linha);
+			$artefato = $this->toObject($linha);
 
-            array_push($listaDeArtefato, $artefato);
-        }
+			array_push($listaDeArtefato, $artefato);
+		}
 
-        return $listaDeArtefato;
-    }
+		return $listaDeArtefato;
+	}
 
-    public function options()
-    {
+	public function options()
+	{
 
-        $artefatos = $this->buscarTodos(null, null);
+		$artefatos = $this->buscarTodos(null, null);
 
-        $options = [];
+		$options = [];
 
-        if (isset($artefatos)) {
+		if (isset($artefatos)) {
 
-            foreach ($artefatos as $value) {
+			foreach ($artefatos as $value) {
 
-                $options += [$value->id => $value->nome];
-            }
-        }
-        return $options;
-    }
+				$options += [$value->id => $value->nome];
+			}
+		}
+		return $options;
+	}
 
 }

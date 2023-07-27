@@ -2,9 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-interface NivelDeAcesso
+interface InterfaceNivelDeAcesso
 {
-	public function nivel();
-
 	public function nome();
 }

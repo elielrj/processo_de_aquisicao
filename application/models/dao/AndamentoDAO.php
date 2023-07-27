@@ -2,7 +2,6 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 require_once 'InterfaceDAO.php';
-require_once 'application/models/bo/Andamento.php';
 
 class AndamentoDAO extends CI_Model implements InterfaceDAO
 {
@@ -268,5 +267,35 @@ class AndamentoDAO extends CI_Model implements InterfaceDAO
 		$this->AndamentoDAO->criar($andamento);
 
 	}
+	public static function selecionarStatus($nome)
+	{
+		switch ($nome) {
+			case Criado::NOME:
+				return new Criado();
+			case Enviado::NOME:
+				return new Enviado();
+			case AprovadoFiscAdm::NOME:
+				return new AprovadoFiscAdm();
+			case AprovadoOd::NOME:
+				return new AprovadoOd();
+			case Executado::NOME:
+				return new Executado();
+			case Conformado::NOME:
+				return new Conformado();
+			case Arquivado::NOME:
+				return new Arquivado();
+		}
+	}
 
+	public function array()
+	{
+		return array(
+			ID => $this->id ?? null,
+			STATUS_DO_ANDAMENTO => $this->statusDoAndamento->nome(),
+			DATA_HORA => $this->dataHora,
+			PROCESSO_ID => $this->processo_id,
+			USUARIO_ID => $_SESSION[SESSION_ID],
+			STATUS => $this->status,
+		);
+	}
 }
