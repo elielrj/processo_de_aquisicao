@@ -30,6 +30,26 @@ class Andamento extends AbstractBO implements InterfaceStatusDoAndamento
 	{
 		return $this->statusDoAndamento->nome();
 	}
+
+	public function toString()
+	{
+		return
+			$this->replace_fisc_adm(
+				$this->replace_od(
+					$this->nome())) .
+			' por ' .
+			$this->usuario->toString();
+	}
+
+	private function replace_od($value)
+	{
+		return ucfirst(str_replace('_od', ' OD', $value));
+	}
+
+	private function replace_fisc_adm($value)
+	{
+		return ucfirst(str_replace('_fisc_adm', ' Fisc Adm', $value));
+	}
 }
 
 ?>
