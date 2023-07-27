@@ -1,43 +1,29 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+require_once 'AbstractBO.php';
 
-include_once('InterfaceBO.php');
+class Sugestao extends AbstractBO
+{
 
-class Sugestao implements InterfaceBO{
+	private $mensagem;
+	private $usuario;
 
-    private $id;
-    private $mensagem;
-    private $status;
-    private $usuario_id;
-
-    public function __construct(
-            $id,
-            $mensagem,
-            $status,
-            $usuario_id
-    ) {
-        $this->id = $id;
-        $this->mensagem = $mensagem;
-        $this->status = $status;
-        $this->usuario_id = $usuario_id;
-    }
-
-    function __get($key) {
-        return $this->$key;
-    }
-
-    function __set($key, $value) {
-        $this->$key = $value;
-    }
-
-    public function array()
+	public function __construct(
+		$id,
+		$status,
+		$mensagem,
+		$usuario
+	)
 	{
-        return array(
-            'id' => $this->id ?? null,
-           'mensagem' =>  $this->mensagem,
-           'status' =>  $this->status,
-           'usuario_id' => $this->usuario_id
-        );
-    }
+		parent::__construct($id, $status);
+		$this->mensagem = $mensagem;
+		$this->usuario = $usuario;
+	}
+
+	public function toString()
+	{
+		return
+			$this->usuario->toString() . ': ' .
+			$this->mensagem;
+	}
 }
