@@ -114,4 +114,13 @@ class ArtefatoDAO extends CI_Model implements InterfaceDAO
 		return $options;
 	}
 
+	public function array(): array
+	{
+		return array(
+			'id' => isset($this->id) ? $this->id : null,
+			'ordem' => $this->ordem,
+			'nome' => $this->nome,
+			'status' => $this->status,
+		);
+	}
 }

@@ -1,53 +1,29 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+include_once('AbstractBO.php');
 
-include_once('InterfaceBO.php');
-
-class Artefato implements InterfaceBO
+class Artefato extends AbstractBO
 {
-
-	private $id;
 	private $ordem;
 	private $nome;
-	private $arquivos = array();
-	private $status;
+	private $listaDeArquivos;
 
-	/**
-	 * Os arquivos não é construindo juntamente com o Artefato,
-	 * somente é acrescentado a este Objeto quando o Objeto Processo for criado
-	 * com a lista de Artefatos
-	 */
 	public function __construct(
-		$id = null,
+		$id,
+		$status,
 		$ordem,
 		$nome,
-		$status = true
+		$listaDeArquivos
 	)
 	{
-		$this->id = $id;
+		parent::__construct($id, $status);
 		$this->ordem = $ordem;
 		$this->nome = $nome;
-		$this->status = $status;
+		$this->listaDeArquivos = $listaDeArquivos;
 	}
 
-	function __get($key)
+	public function toString()
 	{
-		return $this->$key;
-	}
-
-	function __set($key, $value)
-	{
-		$this->$key = $value;
-	}
-
-	public function array(): array
-	{
-		return array(
-			'id' => isset($this->id) ? $this->id : null,
-			'ordem' => $this->ordem,
-			'nome' => $this->nome,
-			'status' => $this->status,
-		);
+		return $this->nome;
 	}
 }
