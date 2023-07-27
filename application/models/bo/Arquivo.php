@@ -21,10 +21,22 @@ class Arquivo extends AbstractBO
 		$usuario
 	)
 	{
-		parent::__contruct($id, $status);
+		parent::__construct($id, $status);
 		$this->nome = $nome;
 		$this->path = $path;
 		$this->dataHora = $dataHora;
 		$this->usuario = $usuario;
+	}
+
+	public function toString()
+	{
+		return
+			(
+			empty($this->nome)
+				? ''
+				: $this->nome . ' - '
+			) .
+			'Transferido por ' .
+			$this->usuario->toString();
 	}
 }
