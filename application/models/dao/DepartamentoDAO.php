@@ -112,5 +112,15 @@ class DepartamentoDAO extends CI_Model implements InterfaceDAO
 		}
 		return $options;
 	}
+	public function array(): array
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'nome' => $this->nome,
+			'sigla' => $this->sigla,
+			'ug_id' => $this->ug->id,
+			'status' => $this->status
+		);
+	}
 
 }

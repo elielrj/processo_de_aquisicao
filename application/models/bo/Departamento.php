@@ -1,57 +1,30 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+require_once 'AbstractBO.php';
 
-include_once('InterfaceBO.php');
-
-class Departamento implements InterfaceBO
+class Departamento extends AbstractBO
 {
 
-	private $id;
 	private $nome;
 	private $sigla;
 	private $ug;
-	private $status;
 
 	public function __construct(
 		$id,
+		$status,
 		$nome,
 		$sigla,
-		$ug,
-		$status = true
+		$ug
 	)
 	{
-		$this->id = $id;
+		parent::__construct($id, $status);
 		$this->nome = $nome;
 		$this->sigla = $sigla;
 		$this->ug = $ug;
-		$this->status = $status;
-	}
-
-	function __get($key)
-	{
-		return $this->$key;
-	}
-
-	function __set($key, $value)
-	{
-		$this->$key = $value;
 	}
 
 	public function toString()
 	{
-		return $this->nome . ' (' . $this->sigla . ')';
+		return $this->sigla;
 	}
-
-	public function array(): array
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'nome' => $this->nome,
-			'sigla' => $this->sigla,
-			'ug_id' => $this->ug->id,
-			'status' => $this->status
-		);
-	}
-
 }
