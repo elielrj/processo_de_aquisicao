@@ -193,4 +193,27 @@ class ProcessoDAO extends CI_Model
 			return null;
 		}
 	}
+
+	/**
+	 * Consultar processo
+	 *
+	 */
+	public function buscarPorNumeroChave($numero, $chave)
+	{
+		return $this->ProcessoDAO->buscarProcessoPeloNumeroChave($numero, $chave);
+	}
+
+	public function numeroExiste($numero)
+	{
+		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array('numero' => $numero));
+
+		return ($array->num_rows() == 1);
+	}
+
+	public function chaveEstaCorreta($chave)
+	{
+		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array('chave' => $chave));
+
+		return ($array->num_rows() == 1);
+	}
 }
