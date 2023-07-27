@@ -153,4 +153,21 @@ class UsuarioDAO extends CI_Model
 			);
 		}
 	}
+
+
+	public function array()
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'nome_de_guerra' => $this->nomeDeGuerra,
+			'nome_completo' => $this->nomeCompleto,
+			'email' => $this->email,
+			'cpf' => $this->cpf,
+			'senha' => $this->senha,
+			'departamento_id' => $this->departamento->id,
+			'status' => $this->status,
+			'hierarquia_id' => $this->hierarquia->id,
+			'funcao_id' => $this->funcao->id,
+		);
+	}
 }
