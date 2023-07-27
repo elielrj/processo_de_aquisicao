@@ -1,47 +1,26 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+require_once 'AbstractBO.php';
 
-include_once('InterfaceBO.php');
-
-class Hierarquia implements InterfaceBO
+class Hierarquia extends AbstractBO
 {
-
-	private $id;
 	private $postoOuGraduacao;
 	private $sigla;
-	private $status;
 
 	public function __construct(
 		$id,
+		$status,
 		$postoOuGraduacao,
-		$sigla,
-		$status = true
+		$sigla
 	)
 	{
-		$this->id = $id;
+		parent::__construct($id, $status);
 		$this->postoOuGraduacao = $postoOuGraduacao;
 		$this->sigla = $sigla;
-		$this->status = $status;
 	}
 
-	function __get($key)
+	public function toString()
 	{
-		return $this->$key;
-	}
-
-	function __set($key, $value)
-	{
-		$this->$key = $value;
-	}
-
-	public function array()
-	{
-		return array(
-			'id' => ($this->id ?? null),
-			'posto_ou_graduacao' => $this->postoOuGraduacao,
-			'sigla' => $this->sigla,
-			'status' => $this->status
-		);
+		return $this->sigla;
 	}
 }
