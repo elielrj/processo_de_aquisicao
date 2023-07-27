@@ -1,43 +1,23 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+require_once 'AbstractBO.php';
 
-include_once('InterfaceBO.php');
-
-
-class Modalidade implements InterfaceBO
+class Modalidade extends AbstractBO
 {
+	private $nome;
 
-    private $id;
-    private $nome;
-    private $status;
-
-    public function __construct(
-        $id = null,
-        $nome,
-        $status = true
-    ) {
-        $this->id = $id ?? null;
-        $this->nome = $nome;
-        $this->status = $status;
-    }
-
-    function __get($key)
-    {
-        return $this->$key;
-    }
-
-    function __set($key, $value)
-    {
-        $this->$key = $value;
-    }
-
-    public function array()
+	public function __construct(
+		$id,
+		$status,
+		$nome
+	)
 	{
-        return array(
-            'id' => $this->id ?? null,
-            'nome' => $this->nome,
-            'status' => $this->status,
-        );
-    }
+		parent::__construct($id, $status);
+		$this->nome = $nome;
+	}
+
+	public function toString()
+	{
+		return $this->nome;
+	}
 }

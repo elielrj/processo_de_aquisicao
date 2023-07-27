@@ -104,5 +104,12 @@ class ModalidadeDAO extends CI_Model
 		}
 		return $options;
 	}
-
+	public function array()
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'nome' => $this->nome,
+			'status' => $this->status,
+		);
+	}
 }
