@@ -1,8 +1,7 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
-
-class ArtefatoController extends CI_Controller
+require_once 'AbstractController.php';
+class ArtefatoController  extends AbstractController
 {
 
 	public function __construct()

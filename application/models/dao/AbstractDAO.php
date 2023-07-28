@@ -13,8 +13,6 @@ abstract class AbstractDAO extends CI_Model implements
 	InterfaceDelete,
 	InterfaceOptions,
 	InterfaceRetrive,
-	InterfaceToArray,
-	InterfaceToObject,
 	InterfaceUpdate
 {
 	public function __construct()

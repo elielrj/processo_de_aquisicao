@@ -1,9 +1,7 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
 
-include_once('application/models/bo/Sugestao.php');
-
-class SugestaoController extends CI_Controller
+require_once 'AbstractController.php';
+class SugestaoController  extends AbstractController
 {
 
 	public function __construct()

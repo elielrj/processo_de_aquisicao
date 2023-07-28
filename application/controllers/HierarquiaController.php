@@ -1,6 +1,6 @@
 <?php
-
-class UgController extends CI_Controller
+require_once 'AbstractController.php';
+class HierarquiaController  extends AbstractController
 {
 
 	public function __construct()

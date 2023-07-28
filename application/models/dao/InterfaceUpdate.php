@@ -2,5 +2,5 @@
 
 interface InterfaceUpdate
 {
-	public function atualizar($objeto);
+	public function atualizar($array,$where);
 }

@@ -5,100 +5,87 @@ require_once 'AbstractDAO.php';
 class AndamentoDAO extends AbstractDAO
 {
 	const TABELA_ANDAMENTO = 'andamento';
-	const STATUS_DO_ANDAMENTO = 'status_do_andamento';
-
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function criar($objeto)
+	public function criar($array)
 	{
 		$this->db->insert(
 			AndamentoDAO::TABELA_ANDAMENTO,
-			$this->toArray($objeto)
+			$array
 		);
 	}
 
-	public function atualizar($objeto)
+	public function atualizar($array, $where)
 	{
 		$this->db->update(
 			AndamentoDAO::TABELA_ANDAMENTO,
-			$this->toArray($objeto),
-			[ID => $objeto->id]
+			$array,
+			$where
 		);
 	}
 
-	public function buscarPorId($objetoId)
+	public function buscarPorId($id)
 	{
-		$linhaArrayList =
-			$this->db->get_where(
-				AndamentoDAO::TABELA_ANDAMENTO,
-				[ID => $objetoId]
-			);
-
-		return $this->toObject($linhaArrayList);
+		return $this->db->get_where(
+			AndamentoDAO::TABELA_ANDAMENTO,
+			[ID => $id]
+		);
 	}
 
 	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$arrayList =
+		return
 			$this->db
 				->order_by(DATA_HORA, DIRECTIONS_ASC)
 				->where([STATUS => true])
 				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
-
-		return $this->toObject($arrayList);
 	}
 
 	public function buscarTodosInativos($inicio, $fim)
 	{
-		$arrayList =
+		return
 			$this->db
 				->order_by(DATA_HORA, DIRECTIONS_DESC)
 				->where([STATUS => false])
 				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
-
-		return $this->criarLista($arrayList);
 	}
 
 	public function buscarTodosStatus($inicio, $fim)
 	{
-		$arrayList =
+		return
 			$this->db
 				->order_by(ID, DIRECTIONS_ASC)
 				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
-
-		return $this->criarLista($arrayList);
 	}
 
 	public function buscarAonde($whare)
 	{
-		$arrayList =
+		return
 			$this->db
 				->where($whare)
 				->get(AndamentoDAO::TABELA_ANDAMENTO);
-
-		return $this->criarLista($arrayList);
 	}
 
-	public function excluirDeFormaPermanente($objetoId)
+	public function excluirDeFormaPermanente($id)
 	{
 		$this->db->delete(
 			AndamentoDAO::TABELA_ANDAMENTO,
-			[ID => $objetoId]);
+			[ID => $id]);
 	}
 
-	public function excluirDeFormaLogica($objetoId)
+	public function excluirDeFormaLogica($id)
 	{
-		$linhaArrayList = $this->buscarPorId($objetoId);
+		$linhaArrayList = $this->buscarPorId($id);
 
-		$andamento = $this->toObject($linhaArrayList);
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
+		}
 
-		$andamento->status = false;
-
-		$this->atualizar($andamento);
+		$this->db->update($linhaArrayList);
 	}
 
 	public function contarRegistrosAtivos()
@@ -121,153 +108,16 @@ class AndamentoDAO extends AbstractDAO
 			->count_all_results(AndamentoDAO::TABELA_ANDAMENTO);
 	}
 
-	public function criarLista($arrayList)
-	{
-		$listaDeAndamentos = [];
-
-		foreach ($arrayList->result() as $linha) {
-			$listaDeAndamentos[] = $this->toObject($linha);
-		}
-
-		return $listaDeAndamentos;
-	}
-
-
-
 	public function options()
 	{
-		$options = [Criado::$NOME => Criado::$NOME];
-		$options += [Enviado::$NOME => Enviado::$NOME];
-		$options += [AprovadoFiscAdm::$NOME => AprovadoFiscAdm::$NOME];
-		$options += [Executado::$NOME => Executado::$NOME];
-		$options += [Conformado::$NOME => Conformado::$NOME];
-		$options += [Arquivado::$NOME => Arquivado::$NOME];
-
-		return $options;
+		return [
+			Criado::$NOME => Criado::$NOME,
+			Enviado::$NOME => Enviado::$NOME,
+			AprovadoFiscAdm::$NOME => AprovadoFiscAdm::$NOME,
+			Executado::$NOME => Executado::$NOME,
+			Conformado::$NOME => Conformado::$NOME,
+			Arquivado::$NOME => Arquivado::$NOME
+		];
 	}
-
-	public function buscarTodosOsAndamentosDeUmProcesso($procesoId)
-	{
-		$arrayList =
-			$this->db
-				->order_by(DATA_HORA, DIRECTIONS_ASC)
-				->where(['processo_id' => $procesoId])
-				->get(AndamentoDAO::TABELA_ANDAMENTO);
-
-		return $this->criarLista($arrayList);
-	}
-
-	/*
-	| *
-	| */
-
-
-	public function processoEnviado($processo_id)
-	{
-		$andamento = new Andamento(
-			null,
-			new Enviado(),
-			new Tempo(),
-			$processo_id,
-			$_SESSION[ID],
-			true
-		);
-
-		$this->AndamentoDAO->criar($andamento);
-		return;
-	}
-
-	public function processoAprovadoFiscAdm($processo_id)
-	{
-		$andamento = new Andamento(
-			null,
-			new AprovadoFiscAdm(),
-			new Tempo(),
-			$processo_id,
-			$_SESSION[ID],
-			true
-		);
-
-		$this->AndamentoDAO->criar($andamento);
-	}
-
-	public function processoAprovadoOd($processo_id)
-	{
-		$andamento = new Andamento(
-			null,
-			new AprovadoOd(),
-			new Tempo(),
-			$processo_id,
-			$_SESSION[ID],
-			true
-		);
-
-		$this->AndamentoDAO->criar($andamento);
-	}
-
-	public function processoExecutado($processo_id)
-	{
-		$andamento = new Andamento(
-			null,
-			new Executado(),
-			new Tempo(),
-			$processo_id,
-			$_SESSION[ID],
-			true
-		);
-
-		$this->AndamentoDAO->criar($andamento);
-	}
-
-	public function processoConformado($processo_id)
-	{
-		$andamento = new Andamento(
-			null,
-			new Conformado(),
-			new Tempo(),
-			$processo_id,
-			$_SESSION[ID],
-			true
-		);
-
-		$this->AndamentoDAO->criar($andamento);
-
-	}
-
-	public function processoArquivar($processo_id)
-	{
-		$andamento = new Andamento(
-			null,
-			new Arquivado(),
-			new Tempo(),
-			$processo_id,
-			$_SESSION[ID],
-			true
-		);
-
-		$this->AndamentoDAO->criar($andamento);
-
-	}
-
-	public static function selecionarStatus($nome)
-	{
-		switch ($nome) {
-			case Criado::NOME:
-				return new Criado();
-			case Enviado::NOME:
-				return new Enviado();
-			case AprovadoFiscAdm::NOME:
-				return new AprovadoFiscAdm();
-			case AprovadoOd::NOME:
-				return new AprovadoOd();
-			case Executado::NOME:
-				return new Executado();
-			case Conformado::NOME:
-				return new Conformado();
-			case Arquivado::NOME:
-				return new Arquivado();
-		}
-	}
-
 
 }

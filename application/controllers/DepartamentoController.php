@@ -1,8 +1,7 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
-
-class DepartamentoController extends CI_Controller
+require_once 'AbstractController.php';
+class DepartamentoController   extends AbstractController
 {
 
 

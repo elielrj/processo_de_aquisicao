@@ -250,4 +250,14 @@ class ArquivoDAO  extends AbstractDAO
 			$data_post['arquivo_status']
 		);
 	}
+
+	public function options($listaDeObjetos)
+	{
+		// TODO: Implement options() method.
+	}
+
+	public function buscarTodosInativos($inicio, $fim)
+	{
+		// TODO: Implement buscarTodosInativos() method.
+	}
 }

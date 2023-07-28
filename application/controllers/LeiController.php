@@ -1,10 +1,8 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once('application/models/bo/Lei.php');
-
-class LeiController extends CI_Controller
+require_once 'AbstractController.php';
+class LeiController  extends AbstractController
 {
 
 	public function __construct()

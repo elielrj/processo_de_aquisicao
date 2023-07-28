@@ -2,7 +2,7 @@
 
 interface InterfaceRetrive
 {
-	public function buscarPorId($objetoId);
+	public function buscarPorId($id);
 
 	public function buscarTodosAtivos($inicio, $fim);
 

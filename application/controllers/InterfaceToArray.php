@@ -2,5 +2,5 @@
 
 interface InterfaceToArray
 {
-	public function toArray($listaDeObjeto);
+	public function toArray($listaDeObjetos);
 }

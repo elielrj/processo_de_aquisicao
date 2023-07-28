@@ -1,8 +1,7 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
-
-class UgController extends CI_Controller
+require_once 'AbstractController.php';
+class UgController  extends AbstractController
 {
 
 	public function __construct()

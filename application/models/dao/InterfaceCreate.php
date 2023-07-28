@@ -2,5 +2,5 @@
 
 interface InterfaceCreate
 {
-	public function criar($objeto);
+	public function criar($array);
 }

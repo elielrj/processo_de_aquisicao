@@ -1,16 +1,13 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
 
-require 'vendor/autoload.php';
-
-use Dompdf\Dompdf;
+require_once 'AbstractController.php';
 
 require_once('vendor/PDFMerger/PDFMerger.php');
 
 use PDFMerger\PDFMerger;
 use helper\Tempo;
 
-class ProcessoController extends CI_Controller
+class ProcessoController  extends AbstractController
 {
 
 	public function __construct()

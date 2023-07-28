@@ -2,5 +2,5 @@
 
 interface InterfaceOptions
 {
-	public function options($listaDeObjetos);
+	public function options();
 }

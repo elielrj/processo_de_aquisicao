@@ -94,7 +94,7 @@ const VERSAO_PROCESSO_DE_AQUISICAO = 'Versão 3.0.1';
  * CONSTATES DOS CONTROLLERS
  */
 
-const  ANDAMENTO_CONTROLLER = 'AndamentoController';
+
 const  ARQUIVO_CONTROLLER = 'ArquivoController';
 const ARTEFATO_CONTROLLER = 'ArtefatoController';
 const DEPARTAMENTO_CONTROLLER = 'DepartamentoController';
