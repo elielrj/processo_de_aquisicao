@@ -65,16 +65,7 @@ class UgDAO  extends AbstractDAO
 		return $this->DAO->contarDesativados(TABELA_UG);
 	}
 
-	public function toObject($arrayList)
-	{
-		return new Ug(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->numero ?? ($arrayList['numero'] ?? null),
-			$arrayList->nome ?? ($arrayList['nome'] ?? null),
-			$arrayList->sigla ?? ($arrayList['sigla'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null)
-		);
-	}
+
 
 	private function criarLista($array)
 	{
@@ -106,15 +97,6 @@ class UgDAO  extends AbstractDAO
 		}
 		return $options;
 	}
-	public function array()
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'numero' => $this->numero,
-			'nome' => $this->nome,
-			'sigla' => $this->sigla,
-			'status' => $this->status
-		);
-	}
+
 
 }

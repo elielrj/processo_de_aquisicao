@@ -114,4 +114,23 @@ class SugestaoController extends CI_Controller
 
 		redirect(SugestaoController::$controller);
 	}
+	private function toObject($arrayList)
+	{
+		return new Sugestao(
+			$arrayList->id ?? ($arrayList['id'] ?? null),
+			$arrayList->nome ?? ($arrayList['mensagem'] ?? null),
+			$arrayList->status ?? ($arrayList['status'] ?? null),
+			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null)
+		);
+	}
+
+	public function array()
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'mensagem' => $this->mensagem,
+			'status' => $this->status,
+			'usuario_id' => $this->usuario_id
+		);
+	}
 }

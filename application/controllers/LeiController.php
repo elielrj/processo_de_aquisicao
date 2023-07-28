@@ -146,4 +146,39 @@ class LeiController extends CI_Controller
 		echo $options;
 	}
 
+
+	public function toObject($array)
+	{
+		$data = $array->data ?? ($array['data'] ?? null);
+		$this->load->library('Data', $data);
+
+		return new Lei(
+			$array->id ?? ($array['id'] ?? null),
+			$array->numero ?? ($array['numero'] ?? null),
+			$array->artigo ?? ($array['artigo'] ?? null),
+			$array->inciso ?? ($array['inciso'] ?? null),
+			$this->data->formatoDoMySQL(),
+			isset($array->modalidade_id)
+				? $this->ModalidadeDAO->buscarPorId($array->modalidade_id)
+				: (isset($array['modalidade_id']) ? $this->ModalidadeDAO->buscarPorId($array['modalidade_id']) : null),
+			$array->status
+		);
+	}
+
+	public function array()
+	{
+		include_once 'application/libraries/Data.php';
+		$data = new Data($this->data);
+
+		return array(
+			'id' => $this->id ?? null,
+			'numero' => $this->numero,
+			'artigo' => $this->artigo,
+			'inciso' => $this->inciso,
+			'data' => $data->formatoDoMySQL(),
+			'modalidade_id' => $this->modalidade->id,
+			'status' => $this->status
+		);
+	}
+
 }

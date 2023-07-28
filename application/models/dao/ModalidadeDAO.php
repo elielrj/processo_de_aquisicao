@@ -66,14 +66,7 @@ class ModalidadeDAO  extends AbstractDAO
 		return $this->DAO->contarDesativados(TABELA_MODALIDADE);
 	}
 
-	private function toObject($arrayList)
-	{
-		return new Modalidade(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->nome ?? ($arrayList['nome'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null)
-		);
-	}
+
 
 	private function criarLista($array): array
 	{
@@ -104,12 +97,5 @@ class ModalidadeDAO  extends AbstractDAO
 		}
 		return $options;
 	}
-	public function array()
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'nome' => $this->nome,
-			'status' => $this->status,
-		);
-	}
+
 }

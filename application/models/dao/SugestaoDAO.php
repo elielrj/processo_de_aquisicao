@@ -64,15 +64,7 @@ class SugestaoDAO  extends AbstractDAO
 		return $this->DAO->contarDesativados(TABELA_SUGESTAO);
 	}
 
-	private function toObject($arrayList)
-	{
-		return new Sugestao(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->nome ?? ($arrayList['mensagem'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null),
-			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null)
-		);
-	}
+
 
 	private function criarLista($array)
 	{
@@ -89,13 +81,5 @@ class SugestaoDAO  extends AbstractDAO
 	}
 
 
-	public function array()
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'mensagem' => $this->mensagem,
-			'status' => $this->status,
-			'usuario_id' => $this->usuario_id
-		);
-	}
+
 }

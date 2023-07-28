@@ -254,6 +254,42 @@ class UsuarioController extends CI_Controller
 	{
 		$usuario->senha = '';
 	}
+	public function array()
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'nome_de_guerra' => $this->nomeDeGuerra,
+			'nome_completo' => $this->nomeCompleto,
+			'email' => $this->email,
+			'cpf' => $this->cpf,
+			'senha' => $this->senha,
+			'departamento_id' => $this->departamento->id,
+			'status' => $this->status,
+			'hierarquia_id' => $this->hierarquia->id,
+			'funcao_id' => $this->funcao->id,
+		);
+	}
 
+	public function toObject($arrayList)
+	{
+		return new Usuario(
+			$arrayList->id ?? ($arrayList['id'] ?? null),
+			$arrayList->nome_de_guerra ?? ($arrayList['nome_de_guerra'] ?? null),
+			$arrayList->nome_completo ?? ($arrayList['nome_completo'] ?? null),
+			$arrayList->email ?? ($arrayList['email'] ?? null),
+			$arrayList->cpf ?? ($arrayList['cpf'] ?? null),
+			$arrayList->senha ?? ($arrayList['senha'] ?? null),
+			isset($arrayList->departamento_id)
+				? ($this->DepartamentoDAO->buscarPorId($arrayList->departamento_id))
+				: (isset($arrayList['departamento_id']) ? $this->DepartamentoDAO->buscarPorId($arrayList['departamento_id']) : null),
+			$arrayList->status ?? ($arrayList['status'] ?? null),
+			isset($arrayList->hierarquia_id)
+				? $this->HierarquiaDAO->buscarPorId($arrayList->hierarquia_id)
+				: (isset($arrayList['hierarquia_id']) ? $this->HierarquiaDAO->buscarPorId($arrayList['hierarquia_id']) : null),
+			isset($arrayList->funcao_id)
+				? $this->FuncaoDAO->buscarPorId($arrayList->funcao_id)
+				: (isset($arrayList['funcao_id']) ? $this->FuncaoDAO->buscarPorId($arrayList['funcao_id']) : null)
+		);
+	}
 
 }

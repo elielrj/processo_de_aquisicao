@@ -132,29 +132,7 @@ class AndamentoDAO extends AbstractDAO
 		return $listaDeAndamentos;
 	}
 
-	public function toObject($linhaDoArrayList)
-	{
-		$id = $linhaDoArrayList->id ?? $linhaDoArrayList[ID] ?? null;
-		$statusDoAndamento = $linhaDoArrayList->status_do_andamento ?? $linhaDoArrayList[STATUS_DO_ANDAMENTO] ?? null;
-		$data_hora = $linhaDoArrayList->data_hora ?? $linhaDoArrayList[DATA_HORA] ?? null;
-		$processo_id = $linhaDoArrayList->processo_id ?? $linhaDoArrayList[PROCESSO_ID] ?? null;
-		$usuario_id = $linhaDoArrayList->usuario_id ?? $linhaDoArrayList[USUARIO_ID] ?? null;
-		$status = $linhaDoArrayList->status ?? $linhaDoArrayList[STATUS] ?? null;
 
-		$this->load->library('DataHora', $data_hora);
-
-		$this->load->model('dao/UsuarioDAO');
-
-		return
-			new Andamento(
-				$id,
-				Andamento::selecionarStatus($statusDoAndamento),
-				$this->datahora,
-				$processo_id,
-				$this->UsuarioDAO->buscarPorId($usuario_id),
-				$status
-			);
-	}
 
 	public function options()
 	{
@@ -291,16 +269,5 @@ class AndamentoDAO extends AbstractDAO
 		}
 	}
 
-	public function toArray($objeto)
-	{
-		return
-			array(
-				ID => $objeto->id ?? null,
-				STATUS_DO_ANDAMENTO => $objeto->statusDoAndamento->nome(),
-				DATA_HORA => $objeto->dataHora,
-				PROCESSO_ID => $objeto->processo_id,
-				USUARIO_ID => $objeto->usuario->id,
-				STATUS => $objeto->status,
-			);
-	}
+
 }

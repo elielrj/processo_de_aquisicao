@@ -65,23 +65,6 @@ class LeiDAO  extends AbstractDAO
 		return $this->DAO->contarDesativados(TABELA_LEI);
 	}
 
-	public function toObject($array)
-	{
-		$data = $array->data ?? ($array['data'] ?? null);
-		$this->load->library('Data', $data);
-
-		return new Lei(
-			$array->id ?? ($array['id'] ?? null),
-			$array->numero ?? ($array['numero'] ?? null),
-			$array->artigo ?? ($array['artigo'] ?? null),
-			$array->inciso ?? ($array['inciso'] ?? null),
-			$this->data->formatoDoMySQL(),
-			isset($array->modalidade_id)
-				? $this->ModalidadeDAO->buscarPorId($array->modalidade_id)
-				: (isset($array['modalidade_id']) ? $this->ModalidadeDAO->buscarPorId($array['modalidade_id']) : null),
-			$array->status
-		);
-	}
 
 	private function criarLista($array)
 	{
@@ -124,19 +107,5 @@ class LeiDAO  extends AbstractDAO
 	{
 		return $this->buscarOnde('modalidade_id', $modalidadeId);
 	}
-	public function array()
-	{
-		include_once 'application/libraries/Data.php';
-		$data = new Data($this->data);
 
-		return array(
-			'id' => $this->id ?? null,
-			'numero' => $this->numero,
-			'artigo' => $this->artigo,
-			'inciso' => $this->inciso,
-			'data' => $data->formatoDoMySQL(),
-			'modalidade_id' => $this->modalidade->id,
-			'status' => $this->status
-		);
-	}
 }

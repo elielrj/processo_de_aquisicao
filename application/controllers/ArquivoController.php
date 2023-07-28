@@ -217,19 +217,7 @@ class ArquivoController extends CI_Controller
 		redirect('ArquivoController');
 	}
 
-	private function toObject($data_post, $path, $criarUmNovoArquivo)
-	{
-		return new Arquivo(
-			$criarUmNovoArquivo ? null : (isset($data_post['arquivo_id']) ? $data_post['arquivo_id'] : null),
-			$path,
-			new Tempo(),
-			$_SESSION['id'],
-			$data_post['artefato_id'],
-			$data_post['processo_id'],
-			isset($data_post['arquivo_nome']) ? $data_post['arquivo_nome'] : '',
-			$data_post['arquivo_status']
-		);
-	}
+	
 
 	private function moverArquivo($data_post, $criarUmNovoArquivo = false)
 	{

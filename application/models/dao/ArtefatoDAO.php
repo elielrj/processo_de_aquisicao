@@ -72,16 +72,7 @@ class ArtefatoDAO  extends AbstractDAO
 	 * Este método não buscar o Arquivo do artefato,
 	 * pois quem tem essa responsabilidade é ProcessoDAO
 	 */
-	public function toObject($arrayList)
-	{
-		return new Artefato(
-			$arrayList->id,
-			$arrayList->ordem,
-			$arrayList->nome,
-			null,
-			$arrayList->status
-		);
-	}
+
 
 	private function criarLista($array)
 	{
@@ -114,13 +105,5 @@ class ArtefatoDAO  extends AbstractDAO
 		return $options;
 	}
 
-	public function array(): array
-	{
-		return array(
-			'id' => isset($this->id) ? $this->id : null,
-			'ordem' => $this->ordem,
-			'nome' => $this->nome,
-			'status' => $this->status,
-		);
-	}
+
 }

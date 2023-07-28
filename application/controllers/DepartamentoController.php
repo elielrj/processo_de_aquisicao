@@ -117,5 +117,26 @@ class DepartamentoController extends CI_Controller
 
 		redirect('DepartamentoController');
 	}
-
+	public function array(): array
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'nome' => $this->nome,
+			'sigla' => $this->sigla,
+			'ug_id' => $this->ug->id,
+			'status' => $this->status
+		);
+	}
+	public function toObject($arrayList)
+	{
+		return new Departamento(
+			$arrayList->id ?? ($arrayList['id'] ?? null),
+			$arrayList->nome ?? ($arrayList['nome'] ?? null),
+			$arrayList->sigla ?? ($arrayList['sigla'] ?? null),
+			isset($arrayList->ug_id)
+				? $this->UgDAO->buscarPorId($arrayList->ug_id)
+				: (isset($arrayList['ug_id']) ? $this->UgDAO->buscarPorId($arrayList['ug_id']) : null),
+			$arrayList->status ?? ($arrayList['status'] ?? null)
+		);
+	}
 }

@@ -69,4 +69,25 @@ class UgController extends CI_Controller
 
 		redirect('UgController');
 	}
+	public function toObject($arrayList)
+	{
+		return new Ug(
+			$arrayList->id ?? ($arrayList['id'] ?? null),
+			$arrayList->numero ?? ($arrayList['numero'] ?? null),
+			$arrayList->nome ?? ($arrayList['nome'] ?? null),
+			$arrayList->sigla ?? ($arrayList['sigla'] ?? null),
+			$arrayList->status ?? ($arrayList['status'] ?? null)
+		);
+	}
+
+	public function array()
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'numero' => $this->numero,
+			'nome' => $this->nome,
+			'sigla' => $this->sigla,
+			'status' => $this->status
+		);
+	}
 }

@@ -64,23 +64,7 @@ class FuncaoDAO  extends AbstractDAO
         return $this->DAO->contarDesativados(TABELA_FUNCAO);
     }
 
-    private function toObject($arrayList)
-    {
-        return new Funcao(
-            isset($arrayList->id)
-            ? $arrayList->id
-            : (isset($arrayList['id']) ? $arrayList['id'] : null),
-            isset($arrayList->nome)
-            ? $arrayList->nome
-            : (isset($arrayList['nome']) ? $arrayList['nome'] : null),
-            isset($arrayList->nivel_de_acesso)
-            ? Funcao::selecionarNivelDeAcesso($arrayList->nivel_de_acesso)
-            : (isset($arrayList['nivel_de_acesso']) ? Funcao::selecionarNivelDeAcesso($arrayList['nivel_de_acesso']) : null),
-            isset($arrayList->status)
-            ? $arrayList->status
-            : (isset($arrayList['status']) ? $arrayList['status'] : null)
-        );
-    }
+
 
     private function criarLista($array)
     {
@@ -135,13 +119,5 @@ class FuncaoDAO  extends AbstractDAO
 		}
 	}
 
-	public function array()
-	{
-		return array(
-			'id' => $this->id,
-			'nome' => $this->nome,
-			'nivel_de_acesso' => $this->nivelDeAcesso->nome(),
-			'status' => $this->status
-		);
-	}
+
 }

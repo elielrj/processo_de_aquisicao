@@ -65,23 +65,7 @@ class HierarquiaDAO extends AbstractDAO
 		return $this->DAO->contarDesativados(TABELA_HIERARQUIA);
 	}
 
-	private function toObject($arrayList)
-	{
-		return new Hierarquia(
-			isset($arrayList->id)
-				? $arrayList->id
-				: (isset($arrayList['id']) ? $arrayList['id'] : null),
-			isset($arrayList->posto_ou_graduacao)
-				? $arrayList->posto_ou_graduacao
-				: (isset($arrayList['posto_ou_graduacao']) ? $arrayList['posto_ou_graduacao'] : null),
-			isset($arrayList->sigla)
-				? $arrayList->sigla
-				: (isset($arrayList['sigla']) ? $arrayList['sigla'] : null),
-			isset($arrayList->status)
-				? $arrayList->status
-				: (isset($arrayList['status']) ? $arrayList['status'] : null)
-		);
-	}
+
 
 	private function criarLista($array)
 	{

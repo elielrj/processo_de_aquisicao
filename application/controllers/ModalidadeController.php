@@ -105,5 +105,21 @@ class ModalidadeController extends CI_Controller
 
 		redirect('ModalidadeController');
 	}
+	private function toObject($arrayList)
+	{
+		return new Modalidade(
+			$arrayList->id ?? ($arrayList['id'] ?? null),
+			$arrayList->nome ?? ($arrayList['nome'] ?? null),
+			$arrayList->status ?? ($arrayList['status'] ?? null)
+		);
+	}
 
+	public function array()
+	{
+		return array(
+			'id' => $this->id ?? null,
+			'nome' => $this->nome,
+			'status' => $this->status,
+		);
+	}
 }
