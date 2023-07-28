@@ -1,13 +1,14 @@
 <?php
 
 require_once 'AbstractController.php';
-class SugestaoController  extends AbstractController
+
+class SugestaoController extends AbstractController
 {
+	const SUGESTAO_CONTROLLER = 'SugestaoController';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/SugestaoDAO');
 	}
 
 	public function index()
@@ -23,10 +24,10 @@ class SugestaoController  extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$sugestoes = $this->SugestaoDAO->buscarTodos($qtd_de_itens_para_exibir,$indice_no_data_base);
+		$sugestoes = $this->SugestaoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$params = [
-			'controller' => SUGESTAO_CONTROLLER.'/listar',
+			'controller' => SUGESTAO_CONTROLLER . '/listar',
 			'quantidade_de_registros_no_banco_de_dados' => $this->SugestaoDAO->contar()
 		];
 
@@ -34,7 +35,7 @@ class SugestaoController  extends AbstractController
 		$this->load->library('CriadorDeBotoes', $params);
 
 		$botoes = empty($sugestoes) ? '' : $this->criadordebotoes->listar($indice);
-		
+
 
 		$dados = array(
 			'titulo' => 'Lista de Sugestões',
@@ -112,6 +113,7 @@ class SugestaoController  extends AbstractController
 
 		redirect(SugestaoController::$controller);
 	}
+
 	private function toObject($arrayList)
 	{
 		return new Sugestao(

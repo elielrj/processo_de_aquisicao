@@ -1,13 +1,14 @@
 <?php
 
 require_once 'AbstractController.php';
-class UgController  extends AbstractController
+
+class UgController extends AbstractController
 {
+	const UG_CONTROLLER = 'UgController';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/UgDAO');
 	}
 
 	public function index()
@@ -68,6 +69,7 @@ class UgController  extends AbstractController
 
 		redirect('UgController');
 	}
+
 	public function toObject($arrayList)
 	{
 		return new Ug(

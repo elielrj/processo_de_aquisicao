@@ -1,13 +1,14 @@
 <?php
 
 require_once 'AbstractController.php';
-class ModalidadeController  extends AbstractController
+
+class ModalidadeController extends AbstractController
 {
+	const MODALIDADE_CONTROLLER = 'ModalidadeController';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/ModalidadeDAO');
 	}
 
 	public function index()
@@ -104,6 +105,7 @@ class ModalidadeController  extends AbstractController
 
 		redirect('ModalidadeController');
 	}
+
 	private function toObject($arrayList)
 	{
 		return new Modalidade(

@@ -95,18 +95,8 @@ const VERSAO_PROCESSO_DE_AQUISICAO = 'Versão 3.0.1';
  */
 
 
-const  ARQUIVO_CONTROLLER = 'ArquivoController';
-const ARTEFATO_CONTROLLER = 'ArtefatoController';
-const DEPARTAMENTO_CONTROLLER = 'DepartamentoController';
-const LEI_CONTROLLER = 'LeiController';
 const LEI_TIPO_ARTEFATO_CONTROLLER = 'LeiTipoArtefatoController';
-const TIPO_CONTROLLER = 'TipoController';
-const UG_CONTROLLER = 'UgController';
 const LOGIN_CONTROLLER = 'LoginController';
-const MODALIDADE_CONTROLLER = 'ModalidadeController';
-const PROCESSO_CONTROLLER = 'ProcessoController';
-const SUGESTAO_CONTROLLER = 'SugestaoController';
-const USUARIO_CONTROLLER = 'UsuarioController';
 
 /**
  * CONSTANTES O BANCO DE DADOS E VIEWS

@@ -2,14 +2,13 @@
 
 require_once 'AbstractController.php';
 
-class ArquivoController  extends AbstractController
+class ArquivoController extends AbstractController
 {
+	const  ARQUIVO_CONTROLLER = 'ArquivoController';
+
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/ArquivoDAO');
-		$this->load->model('dao/ProcessoDAO');
-		$this->load->model('dao/ArtefatoDAO');
 	}
 
 	public function index()
@@ -218,7 +217,6 @@ class ArquivoController  extends AbstractController
 		redirect('ArquivoController');
 	}
 
-	
 
 	private function moverArquivo($data_post, $criarUmNovoArquivo = false)
 	{

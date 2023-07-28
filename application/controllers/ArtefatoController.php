@@ -1,13 +1,14 @@
 <?php
 
 require_once 'AbstractController.php';
-class ArtefatoController  extends AbstractController
+
+class ArtefatoController extends AbstractController
 {
+	const ARTEFATO_CONTROLLER = 'ArtefatoController';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/ArtefatoDAO');
 	}
 
 	public function index()
@@ -106,6 +107,7 @@ class ArtefatoController  extends AbstractController
 
 		redirect('ArtefatoController');
 	}
+
 	public function toObject($arrayList)
 	{
 		return new Artefato(

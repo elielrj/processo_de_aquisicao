@@ -1,15 +1,14 @@
 <?php
 
 require_once 'AbstractController.php';
-class DepartamentoController   extends AbstractController
-{
 
+class DepartamentoController extends AbstractController
+{
+	const DEPARTAMENTO_CONTROLLER = 'DepartamentoController';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/DepartamentoDAO');
-		$this->load->model('dao/UgDAO');
 	}
 
 	public function index()
@@ -116,6 +115,7 @@ class DepartamentoController   extends AbstractController
 
 		redirect('DepartamentoController');
 	}
+
 	public function array(): array
 	{
 		return array(
@@ -126,6 +126,7 @@ class DepartamentoController   extends AbstractController
 			'status' => $this->status
 		);
 	}
+
 	public function toObject($arrayList)
 	{
 		return new Departamento(

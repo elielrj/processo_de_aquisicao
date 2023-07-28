@@ -2,24 +2,13 @@
 
 require_once 'AbstractController.php';
 
-require_once('vendor/PDFMerger/PDFMerger.php');
-
-use PDFMerger\PDFMerger;
-use helper\Tempo;
-
-class ProcessoController  extends AbstractController
+class ProcessoController extends AbstractController
 {
+	const PROCESSO_CONTROLLER = 'ProcessoController';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/ProcessoDAO');
-		$this->load->model('dao/DepartamentoDAO');
-		$this->load->model('dao/ModalidadeDAO');
-		$this->load->model('dao/TipoDAO');
-		$this->load->model('dao/LeiDAO');
-		$this->load->model('dao/UsuarioDAO');
-		$this->load->model('dao/AndamentoDAO');
 	}
 
 	public function index()
@@ -647,11 +636,12 @@ class ProcessoController  extends AbstractController
 		$this->load->library('Pdf');
 		$this->pdf->imprimir($listaDePath, $processo->toString());
 	}
+
 	private function toObject($arrayList)
 	{
 		$data_hora = $arrayList->data_hora ?? ($arrayList['data_hora'] ?? null);
 
-		$this->load->library('DataHora',$data_hora);
+		$this->load->library('DataHora', $data_hora);
 
 		$processo = new Processo(
 			$arrayList->id ?? ($arrayList['id'] ?? null),
@@ -665,9 +655,9 @@ class ProcessoController  extends AbstractController
 			$arrayList->completo ?? ($arrayList['completo'] ?? null),
 			$arrayList->status ?? ($arrayList['status'] ?? null),
 			isset($arrayList->id)
-				? $this->AndamentoDAO->buscarAonde(['processo_id'=>$arrayList->id])
+				? $this->AndamentoDAO->buscarAonde(['processo_id' => $arrayList->id])
 				: (isset($arrayList['id'])
-				? $this->AndamentoDAO->buscarAonde(['processo_id'=>$arrayList->id])
+				? $this->AndamentoDAO->buscarAonde(['processo_id' => $arrayList->id])
 				: null)
 
 		);

@@ -1,14 +1,14 @@
 <?php
 
 require_once 'AbstractController.php';
-class TipoController  extends AbstractController
+
+class TipoController extends AbstractController
 {
+	const TIPO_CONTROLLER = 'TipoController';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('session');
-		$this->load->model('dao/tipoDAO');
 	}
 
 	public function index()
@@ -111,6 +111,7 @@ class TipoController  extends AbstractController
 
 		redirect('TipoController');
 	}
+
 	public function array()
 	{
 		return array(
@@ -119,6 +120,7 @@ class TipoController  extends AbstractController
 			'status' => $this->status
 		);
 	}
+
 	private function toObject($arrayList)
 	{
 		return new Tipo(

@@ -1,17 +1,14 @@
 <?php
 
 require_once 'AbstractController.php';
-class UsuarioController  extends AbstractController
+
+class UsuarioController extends AbstractController
 {
+	const USUARIO_CONTROLLER = 'UsuarioController';
 
 	public function __construct()
 	{
 		parent::__construct();
-		//$this->load->library('session');
-		$this->load->model('dao/UsuarioDAO');
-		$this->load->model('dao/DepartamentoDAO');
-		$this->load->model('dao/FuncaoDAO');
-		$this->load->model('dao/HierarquiaDAO');
 	}
 
 	public function index()
@@ -253,6 +250,7 @@ class UsuarioController  extends AbstractController
 	{
 		$usuario->senha = '';
 	}
+
 	public function array()
 	{
 		return array(

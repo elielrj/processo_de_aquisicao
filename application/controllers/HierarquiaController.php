@@ -1,12 +1,12 @@
 <?php
-require_once 'AbstractController.php';
-class HierarquiaController  extends AbstractController
-{
 
+require_once 'AbstractController.php';
+
+class HierarquiaController extends AbstractController
+{
 	public function __construct()
 	{
 		parent::__construct();
-
 	}
 
 	public function index()

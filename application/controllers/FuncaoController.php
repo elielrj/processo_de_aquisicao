@@ -1,13 +1,14 @@
 <?php
 
 require_once 'AbstractController.php';
-class FuncaoController  extends AbstractController
+
+class FuncaoController extends AbstractController
 {
-const FUNCAO_CONTROLLER = 'FuncaoController';
+	const FUNCAO_CONTROLLER = 'FuncaoController';
+
 	public function __construct()
 	{
 		parent::__construct();
-
 	}
 
 	public function index()

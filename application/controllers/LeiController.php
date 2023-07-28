@@ -1,16 +1,13 @@
 <?php
 
-
 require_once 'AbstractController.php';
-class LeiController  extends AbstractController
-{
 
+class LeiController extends AbstractController
+{
+	const LEI_CONTROLLER = 'LeiController';
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/LeiDAO');
-		$this->load->model('dao/TipoDAO');
-		$this->load->model('dao/ArtefatoDAO');
 	}
 
 	public function index()
@@ -62,7 +59,7 @@ class LeiController  extends AbstractController
 
 		$data_post = $this->input->post();
 
-		$this->load->library('DataHora',$data_post['data']);
+		$this->load->library('DataHora', $data_post['data']);
 
 		$this->load->model('dao/ModalidadeDAO');
 
