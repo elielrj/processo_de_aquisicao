@@ -1,8 +1,13 @@
 <?php
 
-require_once 'abstract_dao/AbstractDAO.php';
-class AndamentoDAO extends
+require_once 'AbstractDAO.php';
+
+class AndamentoDAO extends AbstractDAO
 {
+	const TABELA_ANDAMENTO = 'andamento';
+	const STATUS_DO_ANDAMENTO = 'status_do_andamento';
+
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -11,16 +16,16 @@ class AndamentoDAO extends
 	public function criar($objeto)
 	{
 		$this->db->insert(
-			TABLE_ANDAMENTO,
-			$objeto->array()
+			AndamentoDAO::TABELA_ANDAMENTO,
+			$this->toArray($objeto)
 		);
 	}
 
 	public function atualizar($objeto)
 	{
 		$this->db->update(
-			TABLE_ANDAMENTO,
-			$objeto->array(),
+			AndamentoDAO::TABELA_ANDAMENTO,
+			$this->toArray($objeto),
 			[ID => $objeto->id]
 		);
 	}
@@ -29,7 +34,7 @@ class AndamentoDAO extends
 	{
 		$linhaArrayList =
 			$this->db->get_where(
-				TABLE_ANDAMENTO,
+				AndamentoDAO::TABELA_ANDAMENTO,
 				[ID => $objetoId]
 			);
 
@@ -40,11 +45,11 @@ class AndamentoDAO extends
 	{
 		$arrayList =
 			$this->db
-				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->order_by(DATA_HORA, DIRECTIONS_ASC)
 				->where([STATUS => true])
-				->get(TABLE_ANDAMENTO, $inicio, $fim);
+				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
 
-		return $this->criarLista($arrayList);
+		return $this->toObject($arrayList);
 	}
 
 	public function buscarTodosInativos($inicio, $fim)
@@ -53,7 +58,7 @@ class AndamentoDAO extends
 			$this->db
 				->order_by(DATA_HORA, DIRECTIONS_DESC)
 				->where([STATUS => false])
-				->get(TABLE_ANDAMENTO, $inicio, $fim);
+				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
 
 		return $this->criarLista($arrayList);
 	}
@@ -63,7 +68,7 @@ class AndamentoDAO extends
 		$arrayList =
 			$this->db
 				->order_by(ID, DIRECTIONS_ASC)
-				->get(TABLE_ANDAMENTO, $inicio, $fim);
+				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
 
 		return $this->criarLista($arrayList);
 	}
@@ -73,7 +78,7 @@ class AndamentoDAO extends
 		$arrayList =
 			$this->db
 				->where($whare)
-				->get(TABLE_ANDAMENTO);
+				->get(AndamentoDAO::TABELA_ANDAMENTO);
 
 		return $this->criarLista($arrayList);
 	}
@@ -81,7 +86,7 @@ class AndamentoDAO extends
 	public function excluirDeFormaPermanente($objetoId)
 	{
 		$this->db->delete(
-			TABLE_ANDAMENTO,
+			AndamentoDAO::TABELA_ANDAMENTO,
 			[ID => $objetoId]);
 	}
 
@@ -100,20 +105,20 @@ class AndamentoDAO extends
 	{
 		return $this->db
 			->where([STATUS => true])
-			->count_all_results(TABLE_ANDAMENTO);
+			->count_all_results(AndamentoDAO::TABELA_ANDAMENTO);
 	}
 
 	public function contarRegistrosInativos()
 	{
 		return $this->db
 			->where([STATUS => false])
-			->count_all_results(TABLE_ANDAMENTO);
+			->count_all_results(AndamentoDAO::TABELA_ANDAMENTO);
 	}
 
 	public function contarTodosOsRegistros()
 	{
 		return $this->db
-			->count_all_results(TABLE_ANDAMENTO);
+			->count_all_results(AndamentoDAO::TABELA_ANDAMENTO);
 	}
 
 	public function criarLista($arrayList)
@@ -169,7 +174,7 @@ class AndamentoDAO extends
 			$this->db
 				->order_by(DATA_HORA, DIRECTIONS_ASC)
 				->where(['processo_id' => $procesoId])
-				->get(TABLE_ANDAMENTO);
+				->get(AndamentoDAO::TABELA_ANDAMENTO);
 
 		return $this->criarLista($arrayList);
 	}
@@ -265,6 +270,7 @@ class AndamentoDAO extends
 		$this->AndamentoDAO->criar($andamento);
 
 	}
+
 	public static function selecionarStatus($nome)
 	{
 		switch ($nome) {
@@ -285,15 +291,16 @@ class AndamentoDAO extends
 		}
 	}
 
-	public function array()
+	public function toArray($objeto)
 	{
-		return array(
-			ID => $this->id ?? null,
-			STATUS_DO_ANDAMENTO => $this->statusDoAndamento->nome(),
-			DATA_HORA => $this->dataHora,
-			PROCESSO_ID => $this->processo_id,
-			USUARIO_ID => $_SESSION[SESSION_ID],
-			STATUS => $this->status,
-		);
+		return
+			array(
+				ID => $objeto->id ?? null,
+				STATUS_DO_ANDAMENTO => $objeto->statusDoAndamento->nome(),
+				DATA_HORA => $objeto->dataHora,
+				PROCESSO_ID => $objeto->processo_id,
+				USUARIO_ID => $objeto->usuario->id,
+				STATUS => $objeto->status,
+			);
 	}
 }

@@ -1,9 +1,11 @@
 <?php
 
-require_once 'abstract_dao/AbstractDAO.php';
+require_once 'AbstractDAO.php';
 
-class HierarquiaDAO extends CI_Model
+class HierarquiaDAO extends AbstractDAO
 {
+	const TABELA_HIERARQUIA = 'hierarquia';
+
 	public function __construct()
 	{
 		$this->load->model('dao/DAO');
@@ -11,56 +13,56 @@ class HierarquiaDAO extends CI_Model
 
 	public function criar($objeto)
 	{
-		$this->DAO->criar(TABLE_HIERARQUIA, $objeto->array());
+		$this->DAO->criar(HierarquiaDAO::TABELA_HIERARQUIA, $objeto->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(TABLE_HIERARQUIA, $inicial, $final);
+		$array = $this->DAO->buscarTodos(HierarquiaDAO::TABELA_HIERARQUIA, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(TABLE_HIERARQUIA, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(HierarquiaDAO::TABELA_HIERARQUIA, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($hierarquiaId)
 	{
-		$array = $this->DAO->buscarPorId(TABLE_HIERARQUIA, $hierarquiaId);
+		$array = $this->DAO->buscarPorId(HierarquiaDAO::TABELA_HIERARQUIA, $hierarquiaId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(TABLE_HIERARQUIA, array($key => $value));
+		$array = $this->DAO->buscarOnde(HierarquiaDAO::TABELA_HIERARQUIA, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
 
 	public function atualizar($hierarquia)
 	{
-		$this->DAO->atualizar(TABLE_HIERARQUIA, $hierarquia->array());
+		$this->DAO->atualizar(HierarquiaDAO::TABELA_HIERARQUIA, $hierarquia->array());
 	}
 
 
 	public function deletar($hierarquia)
 	{
-		$this->DAO->deletar(TABLE_HIERARQUIA, $hierarquia->array());
+		$this->DAO->deletar(HierarquiaDAO::TABELA_HIERARQUIA, $hierarquia->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(TABLE_HIERARQUIA);
+		return $this->DAO->contar(TABELA_HIERARQUIA);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(TABLE_HIERARQUIA);
+		return $this->DAO->contarDesativados(TABELA_HIERARQUIA);
 	}
 
 	private function toObject($arrayList)

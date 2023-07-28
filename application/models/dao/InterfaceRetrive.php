@@ -1,6 +1,5 @@
 <?php
 
-namespace AbstractDAO;
 interface InterfaceRetrive
 {
 	public function buscarPorId($objetoId);

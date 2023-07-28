@@ -1,9 +1,11 @@
 <?php
 
-require_once 'abstract_dao/AbstractDAO.php';
+require_once 'AbstractDAO.php';
 
-class UsuarioDAO extends CI_Model
+class UsuarioDAO  extends AbstractDAO
 {
+	const TABELA_USUARIO = 'usuario';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -15,40 +17,40 @@ class UsuarioDAO extends CI_Model
 
 	public function criar($usuario)
 	{
-		$this->DAO->criar(TABLE_USUARIO, $usuario->array());
+		$this->DAO->criar(UsuarioDAO::TABELA_USUARIO, $usuario->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(TABLE_USUARIO, $inicial, $final);
+		$array = $this->DAO->buscarTodos(UsuarioDAO::TABELA_USUARIO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(TABLE_USUARIO, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(UsuarioDAO::TABELA_USUARIO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($usuarioId)
 	{
-		$array = $this->DAO->buscarPorId(TABLE_USUARIO, $usuarioId);
+		$array = $this->DAO->buscarPorId(UsuarioDAO::TABELA_USUARIO, $usuarioId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(TABLE_USUARIO, array($key => $value));
+		$array = $this->DAO->buscarOnde(UsuarioDAO::TABELA_USUARIO, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
 
 	public function atualizar($usuario)
 	{
-		$this->DAO->atualizar(TABLE_USUARIO, $usuario->array());
+		$this->DAO->atualizar(UsuarioDAO::TABELA_USUARIO, $usuario->array());
 	}
 
 
@@ -58,17 +60,17 @@ class UsuarioDAO extends CI_Model
 
 		$usuario->status = false;
 
-		$this->DAO->atualizar(TABLE_USUARIO, $usuario->array());
+		$this->DAO->atualizar(UsuarioDAO::TABELA_USUARIO, $usuario->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(TABLE_USUARIO);
+		return $this->DAO->contar(TABELA_USUARIO);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(TABLE_USUARIO);
+		return $this->DAO->contarDesativados(TABELA_USUARIO);
 	}
 
 	public function toObject($arrayList)
@@ -112,14 +114,14 @@ class UsuarioDAO extends CI_Model
 	 */
 	public function emailExiste($email)
 	{
-		$array = $this->DAO->buscarOnde(TABLE_USUARIO, array(EMAIL => $email));
+		$array = $this->DAO->buscarOnde(UsuarioDAO::TABELA_USUARIO, array(EMAIL => $email));
 
 		return ($array->num_rows() == 1);
 	}
 
 	public function senhaEstaCorreta($email, $senha)
 	{
-		$array = $this->DAO->buscarOnde(TABLE_USUARIO, array(EMAIL => $email, SENHA => $senha));
+		$array = $this->DAO->buscarOnde(UsuarioDAO::TABELA_USUARIO, array(EMAIL => $email, SENHA => $senha));
 
 		return ($array->num_rows() == 1);
 	}
@@ -128,7 +130,7 @@ class UsuarioDAO extends CI_Model
 	{
 		$where = array(EMAIL => $email, SENHA => $senha);
 
-		$array = $this->DAO->buscarOnde(TABLE_USUARIO, $where);
+		$array = $this->DAO->buscarOnde(UsuarioDAO::TABELA_USUARIO, $where);
 
 		foreach ($array->result() as $linha) {
 

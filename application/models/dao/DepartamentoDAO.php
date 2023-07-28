@@ -1,9 +1,10 @@
 <?php
 
-require_once 'abstract_dao/AbstractDAO.php';
-
-class DepartamentoDAO extends CI_Model implements InterfaceDAO
+require_once 'AbstractDAO.php';
+class DepartamentoDAO  extends AbstractDAO
 {
+	const TABELA_DEPARTAMENTO = 'departamento';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -11,26 +12,26 @@ class DepartamentoDAO extends CI_Model implements InterfaceDAO
 
 	public function criar($objeto)
 	{
-		$this->DAO->criar(TABLE_DEPARTAMENTO, $objeto->array());
+		$this->DAO->criar(DepartamentoDAO::TABELA_DEPARTAMENTO, $objeto->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(TABLE_DEPARTAMENTO, $inicial, $final);
+		$array = $this->DAO->buscarTodos(DepartamentoDAO::TABELA_DEPARTAMENTO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(TABLE_DEPARTAMENTO, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(DepartamentoDAO::TABELA_DEPARTAMENTO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($departamentoId)
 	{
-		$array = $this->DAO->buscarPorId(TABLE_DEPARTAMENTO, $departamentoId);
+		$array = $this->DAO->buscarPorId(DepartamentoDAO::TABELA_DEPARTAMENTO, $departamentoId);
 
 		$departamento = $this->toObject($array->result()[0]);
 
@@ -39,14 +40,14 @@ class DepartamentoDAO extends CI_Model implements InterfaceDAO
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(TABLE_DEPARTAMENTO, array($key => $value));
+		$array = $this->DAO->buscarOnde(DepartamentoDAO::TABELA_DEPARTAMENTO, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
 
 	public function atualizar($departamento)
 	{
-		$this->DAO->atualizar(TABLE_DEPARTAMENTO, $departamento->array());
+		$this->DAO->atualizar(DepartamentoDAO::TABELA_DEPARTAMENTO, $departamento->array());
 	}
 
 
@@ -56,17 +57,17 @@ class DepartamentoDAO extends CI_Model implements InterfaceDAO
 
 		$departamento->status = false;
 
-		$this->DAO->atualizar(TABLE_DEPARTAMENTO, $departamento->array());
+		$this->DAO->atualizar(DepartamentoDAO::TABELA_DEPARTAMENTO, $departamento->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(TABLE_DEPARTAMENTO);
+		return $this->DAO->contar(TABELA_DEPARTAMENTO);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(TABLE_DEPARTAMENTO);
+		return $this->DAO->contarDesativados(TABELA_DEPARTAMENTO);
 	}
 
 	public function toObject($arrayList)

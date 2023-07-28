@@ -1,9 +1,10 @@
 <?php
 
-require_once 'abstract_dao/AbstractDAO.php';
-
-class LeiDAO extends CI_Model
+require_once 'AbstractDAO.php';
+class LeiDAO  extends AbstractDAO
 {
+	const TABELA_LEI = 'lei';
+
 	public function __construct()
 	{
 		$this->load->model('dao/ModalidadeDAO');
@@ -12,56 +13,56 @@ class LeiDAO extends CI_Model
 
 	public function criar($objeto)
 	{
-		$this->DAO->criar(TABLE_LEI, $objeto->array());
+		$this->DAO->criar(LeiDAO::TABELA_LEI, $objeto->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(TABLE_LEI, $inicial, $final);
+		$array = $this->DAO->buscarTodos(LeiDAO::TABELA_LEI, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(TABLE_LEI, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(LeiDAO::TABELA_LEI, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($leiId)
 	{
-		$array = $this->DAO->buscarPorId(TABLE_LEI, $leiId);
+		$array = $this->DAO->buscarPorId(LeiDAO::TABELA_LEI, $leiId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(TABLE_LEI, array($key => $value));
+		$array = $this->DAO->buscarOnde(LeiDAO::TABELA_LEI, array($key => $value));
 
 		return $this->criarLista($array);
 	}
 
 	public function atualizar($lei)
 	{
-		$this->DAO->atualizar(TABLE_LEI, $lei->array());
+		$this->DAO->atualizar(LeiDAO::TABELA_LEI, $lei->array());
 	}
 
 
 	public function deletar($lei)
 	{
-		$this->DAO->deletar(TABLE_LEI, $lei->array());
+		$this->DAO->deletar(LeiDAO::TABELA_LEI, $lei->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(TABLE_LEI);
+		return $this->DAO->contar(TABELA_LEI);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(TABLE_LEI);
+		return $this->DAO->contarDesativados(TABELA_LEI);
 	}
 
 	public function toObject($array)

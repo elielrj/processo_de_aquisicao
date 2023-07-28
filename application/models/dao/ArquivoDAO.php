@@ -1,11 +1,10 @@
 <?php
 
-require_once 'abstract_dao/AbstractDAO.php';
+require_once 'AbstractDAO.php';
 
-require_once 'InterfaceCRUD.php';
-
-class ArquivoDAO extends CI_Model implements InterfaceDAO
+class ArquivoDAO  extends AbstractDAO
 {
+	const TABELA_ARQUIVO = 'arquivo';
 
 	public function __construct()
 	{
@@ -15,7 +14,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 	public function criar($objeto)
 	{
 		$this->db->insert(
-			TABLE_ARQUIVO,
+			ArquivoDAO::TABELA_ARQUIVO,
 			$objeto->array()
 		);
 	}
@@ -23,7 +22,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 	public function atualizar($objeto)
 	{
 		$this->db->update(
-			TABLE_ARQUIVO,
+			ArquivoDAO::TABELA_ARQUIVO,
 			$objeto->array(),
 			[ID => $objeto->id]
 		);
@@ -33,7 +32,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 	{
 		$linhaArrayList =
 			$this->db->get_where(
-				TABLE_ARQUIVO,
+				ArquivoDAO::TABELA_ARQUIVO,
 				[ID => $objetoId]
 			);
 
@@ -46,7 +45,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 			$this->db
 				->order_by(DATA_HORA, DIRECTIONS_DESC)
 				->where([STATUS => true])
-				->get(TABLE_ARQUIVO, $inicio, $fim);
+				->get(ArquivoDAO::TABELA_ARQUIVO, $inicio, $fim);
 
 		return $this->criarLista($arrayList);
 	}
@@ -56,7 +55,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 		$arrayList =
 			$this->db
 				->order_by(ID, DIRECTIONS_ASC)
-				->get(TABLE_ARQUIVO, $inicio, $fim);
+				->get(ArquivoDAO::TABELA_ARQUIVO, $inicio, $fim);
 
 		return $this->criarLista($arrayList);
 	}
@@ -66,7 +65,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 		$arrayList =
 			$this->db
 				->where($whare)
-				->get(TABLE_ARQUIVO);
+				->get(TABELA_ARQUIVO);
 
 		return $this->criarLista($arrayList);
 	}
@@ -75,7 +74,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 	public function excluirDeFormaPermanente($objetoId)
 	{
 		$this->db->delete(
-			TABLE_ARQUIVO,
+			ArquivoDAO::TABELA_ARQUIVO,
 			[ID => $objetoId]);
 	}
 
@@ -128,14 +127,14 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(TABLE_ARQUIVO, $inicial, $final);
+		$array = $this->DAO->buscarTodos(ArquivoDAO::TABELA_ARQUIVO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(TABLE_ARQUIVO, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(ArquivoDAO::TABELA_ARQUIVO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
@@ -143,7 +142,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(TABLE_ARQUIVO, array($key => $value));
+		$array = $this->DAO->buscarOnde(ArquivoDAO::TABELA_ARQUIVO, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
@@ -151,17 +150,17 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 
 	public function deletar($arquivo)
 	{
-		$this->DAO->deletar(TABLE_ARQUIVO, $arquivo->array());
+		$this->DAO->deletar(ArquivoDAO::TABELA_ARQUIVO, $arquivo->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(TABLE_ARQUIVO);
+		return $this->DAO->contar(TABELA_ARQUIVO);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(TABLE_ARQUIVO);
+		return $this->DAO->contarDesativados(TABELA_ARQUIVO);
 	}
 
 	public function toObject($arrayList)
@@ -200,7 +199,7 @@ class ArquivoDAO extends CI_Model implements InterfaceDAO
 	{
 		$whare = array('processo_id' => $processoId, 'artefato_id' => $artefatoId);
 
-		$array = $this->DAO->buscarOnde(TABLE_ARQUIVO, $whare);
+		$array = $this->DAO->buscarOnde(ArquivoDAO::TABELA_ARQUIVO, $whare);
 
 		if (!empty($array->result())) {
 

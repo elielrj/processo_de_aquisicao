@@ -1,9 +1,5 @@
 <?php
 
-namespace AbstractDAO;
-
-use CI_Model;
-
 require_once 'InterfaceContagem.php';
 require_once 'InterfaceCreate.php';
 require_once 'InterfaceDelete.php';
@@ -22,7 +18,6 @@ abstract class AbstractDAO extends CI_Model implements
 	InterfaceToArray,
 	InterfaceToObject,
 	InterfaceUpdate
-
 {
 	public function __construct()
 	{

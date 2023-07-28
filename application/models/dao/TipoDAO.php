@@ -1,9 +1,11 @@
 <?php
 
-require_once 'abstract_dao/AbstractDAO.php';
+require_once 'AbstractDAO.php';
 
-class TipoDAO extends CI_Model
+class TipoDAO  extends AbstractDAO
 {
+	const TABELA_TIPO = 'tipo';
+
 	public function __construct()
 	{
 		$this->load->model('dao/DAO');
@@ -11,56 +13,56 @@ class TipoDAO extends CI_Model
 
 	public function criar($objeto)
 	{
-		$this->DAO->criar(TABLE_TIPO, $objeto->array());
+		$this->DAO->criar(TipoDAO::TABELA_TIPO, $objeto->array());
 	}
 
 	public function buscarTodos($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodos(TABLE_TIPO, $inicial, $final);
+		$array = $this->DAO->buscarTodos(TipoDAO::TABELA_TIPO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarTodosDesativados($inicial, $final)
 	{
-		$array = $this->DAO->buscarTodosDesativados(TABLE_TIPO, $inicial, $final);
+		$array = $this->DAO->buscarTodosDesativados(TipoDAO::TABELA_TIPO, $inicial, $final);
 
 		return $this->criarLista($array);
 	}
 
 	public function buscarPorId($tipoId)
 	{
-		$array = $this->DAO->buscarPorId(TABLE_TIPO, $tipoId);
+		$array = $this->DAO->buscarPorId(TipoDAO::TABELA_TIPO, $tipoId);
 
 		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarOnde($key, $value)
 	{
-		$array = $this->DAO->buscarOnde(TABLE_TIPO, array($key => $value));
+		$array = $this->DAO->buscarOnde(TipoDAO::TABELA_TIPO, array($key => $value));
 
 		return $this->criarLista($array->result());
 	}
 
 	public function atualizar($tipo)
 	{
-		$this->DAO->atualizar(TABLE_TIPO, $tipo->array());
+		$this->DAO->atualizar(TipoDAO::TABELA_TIPO, $tipo->array());
 	}
 
 
 	public function deletar($tipo)
 	{
-		$this->DAO->deletar(TABLE_TIPO, $tipo->array());
+		$this->DAO->deletar(TipoDAO::TABELA_TIPO, $tipo->array());
 	}
 
 	public function contar()
 	{
-		return $this->DAO->contar(TABLE_TIPO);
+		return $this->DAO->contar(TABELA_TIPO);
 	}
 
 	public function contarDesativados()
 	{
-		return $this->DAO->contarDesativados(TABLE_TIPO);
+		return $this->DAO->contarDesativados(TABELA_TIPO);
 	}
 
 	private function toObject($arrayList)
