@@ -1,9 +1,7 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once 'InterfaceDAO.php';
-
-class AndamentoDAO extends CI_Model implements InterfaceDAO
+require_once 'abstract_dao/AbstractDAO.php';
+class AndamentoDAO extends
 {
 	public function __construct()
 	{

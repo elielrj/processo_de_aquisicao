@@ -1,17 +1,6 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
-
-include_once('application/models/bo/Funcao.php');
-include_once('application/models/bo/nivel_de_acesso/Leitor.php');
-include_once('application/models/bo/nivel_de_acesso/Executor.php');
-include_once('application/models/bo/nivel_de_acesso/Escritor.php');
-include_once('application/models/bo/nivel_de_acesso/Administrador.php');
-include_once('application/models/bo/nivel_de_acesso/AprovadorFiscAdm.php');
-include_once('application/models/bo/nivel_de_acesso/AprovadorOd.php');
-include_once('application/models/bo/nivel_de_acesso/Conformador.php');
-include_once('application/models/bo/nivel_de_acesso/Root.php');
-
+require_once 'abstract_dao/AbstractDAO.php';
 class FuncaoDAO extends CI_Model
 {
     public function __construct()

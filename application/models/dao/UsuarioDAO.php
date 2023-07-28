@@ -1,8 +1,6 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
-
-require_once 'InterfaceDAO.php';
+require_once 'abstract_dao/AbstractDAO.php';
 
 class UsuarioDAO extends CI_Model
 {

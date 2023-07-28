@@ -1,8 +1,8 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+require_once 'abstract_dao/AbstractDAO.php';
 
-require_once 'InterfaceDAO.php';
+require_once 'InterfaceCRUD.php';
 
 class ArquivoDAO extends CI_Model implements InterfaceDAO
 {

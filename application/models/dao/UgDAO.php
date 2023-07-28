@@ -1,8 +1,6 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
-
-require_once 'InterfaceBO.php';
+require_once 'abstract_dao/AbstractDAO.php';
 
 class UgDAO extends CI_Model implements InterfaceDAO
 {
