@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AbstractDAO.php';
+require_once 'abstract_dao/AbstractDAO.php';
 class FuncaoDAO  extends AbstractDAO
 {
 	const TABELA_FUNCAO = 'funcao';

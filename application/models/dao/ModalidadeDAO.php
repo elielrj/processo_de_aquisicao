@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AbstractDAO.php';
+require_once 'abstract_dao/AbstractDAO.php';
 
 class ModalidadeDAO  extends AbstractDAO
 {
