@@ -14,7 +14,7 @@ class AndamentoDAO extends AbstractDAO
 	public function criar($array)
 	{
 		$this->db->insert(
-			AndamentoDAO::TABELA_ANDAMENTO,
+			self::TABELA_ANDAMENTO,
 			$array
 		);
 	}
@@ -22,7 +22,7 @@ class AndamentoDAO extends AbstractDAO
 	public function atualizar($array, $where)
 	{
 		$this->db->update(
-			AndamentoDAO::TABELA_ANDAMENTO,
+			self::TABELA_ANDAMENTO,
 			$array,
 			$where
 		);
@@ -31,7 +31,7 @@ class AndamentoDAO extends AbstractDAO
 	public function buscarPorId($id)
 	{
 		return $this->db->get_where(
-			AndamentoDAO::TABELA_ANDAMENTO,
+			self::TABELA_ANDAMENTO,
 			[ID => $id]
 		);
 	}
@@ -42,7 +42,7 @@ class AndamentoDAO extends AbstractDAO
 			$this->db
 				->order_by(DATA_HORA, DIRECTIONS_ASC)
 				->where([STATUS => true])
-				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
+				->get(self::TABELA_ANDAMENTO, $inicio, $fim);
 	}
 
 	public function buscarTodosInativos($inicio, $fim)
@@ -51,7 +51,7 @@ class AndamentoDAO extends AbstractDAO
 			$this->db
 				->order_by(DATA_HORA, DIRECTIONS_DESC)
 				->where([STATUS => false])
-				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
+				->get(self::TABELA_ANDAMENTO, $inicio, $fim);
 	}
 
 	public function buscarTodosStatus($inicio, $fim)
@@ -59,7 +59,7 @@ class AndamentoDAO extends AbstractDAO
 		return
 			$this->db
 				->order_by(ID, DIRECTIONS_ASC)
-				->get(AndamentoDAO::TABELA_ANDAMENTO, $inicio, $fim);
+				->get(self::TABELA_ANDAMENTO, $inicio, $fim);
 	}
 
 	public function buscarAonde($whare)
@@ -67,13 +67,13 @@ class AndamentoDAO extends AbstractDAO
 		return
 			$this->db
 				->where($whare)
-				->get(AndamentoDAO::TABELA_ANDAMENTO);
+				->get(self::TABELA_ANDAMENTO);
 	}
 
 	public function excluirDeFormaPermanente($id)
 	{
 		$this->db->delete(
-			AndamentoDAO::TABELA_ANDAMENTO,
+			self::TABELA_ANDAMENTO,
 			[ID => $id]);
 	}
 
@@ -92,20 +92,20 @@ class AndamentoDAO extends AbstractDAO
 	{
 		return $this->db
 			->where([STATUS => true])
-			->count_all_results(AndamentoDAO::TABELA_ANDAMENTO);
+			->count_all_results(self::TABELA_ANDAMENTO);
 	}
 
 	public function contarRegistrosInativos()
 	{
 		return $this->db
 			->where([STATUS => false])
-			->count_all_results(AndamentoDAO::TABELA_ANDAMENTO);
+			->count_all_results(self::TABELA_ANDAMENTO);
 	}
 
 	public function contarTodosOsRegistros()
 	{
 		return $this->db
-			->count_all_results(AndamentoDAO::TABELA_ANDAMENTO);
+			->count_all_results(self::TABELA_ANDAMENTO);
 	}
 
 	public function options()

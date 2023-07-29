@@ -208,30 +208,6 @@ class AndamentoController extends AbstractController
 		return $listaDeAndamentos;
 	}
 
-	/**
-	 * @param $listaDeObjetos
-	 * @return array
-	 */
-	public function toArray($listaDeObjetos)
-	{
-		$listaDeArray = [];
-
-		foreach ($listaDeObjetos as $objeto) {
-
-			$linha =
-				array(
-					ID => $objeto->id ?? null,
-					STATUS_DO_ANDAMENTO => $objeto->statusDoAndamento->nome(),
-					DATA_HORA => $objeto->dataHora,
-					PROCESSO_ID => $objeto->processo_id,
-					USUARIO_ID => $objeto->usuario->id,
-					STATUS => $objeto->status,
-				);
-
-			$listaDeArray[] = $linha;
-		}
-		return $listaDeArray;
-	}
 
 	/**
 	 * @param $nome
@@ -322,7 +298,7 @@ class AndamentoController extends AbstractController
 
 	/**
 	 * @param $id
-	 * @return Andamento
+	 * @return array
 	 */
 	public function buscarPorId($id)
 	{
@@ -336,7 +312,7 @@ class AndamentoController extends AbstractController
 	/**
 	 * @param $inicio
 	 * @param $fim
-	 * @return Andamento
+	 * @return array
 	 */
 	public function buscarTodosAtivos($inicio, $fim)
 	{

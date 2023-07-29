@@ -1,9 +1,8 @@
 <?php
 
-require_once 'InterfaceToArray.php';
 require_once 'InterfaceToObject.php';
 
-abstract class AbstractController extends CI_Controller implements InterfaceToArray, InterfaceToObject
+abstract class AbstractController extends CI_Controller implements InterfaceToObject
 {
 	public function __construct()
 	{

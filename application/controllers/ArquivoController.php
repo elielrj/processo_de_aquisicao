@@ -23,13 +23,12 @@ class ArquivoController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$arquivos = $this->ArquivoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
-
+		$arquivos = $this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base);
 
 		$this->load->library('CriadorDeBotoes',
 			[
-				'controller' => ARQUIVO_CONTROLLER . '/listar',
-				'quantidade_de_registros_no_banco_de_dados' => $this->ArquivoDAO->contar()
+				'controller' => self::ARQUIVO_CONTROLLER . '/listar',
+				'quantidade_de_registros_no_banco_de_dados' => $this->contarTodosOsRegistros()
 			]);
 
 		$botoes = empty($arquivos) ? '' : $this->criadordebotoes->listar($indice);
@@ -45,7 +44,6 @@ class ArquivoController extends AbstractController
 
 	public function novo()
 	{
-
 		$dados = array(
 			'titulo' => 'Novo arquivo',
 			'pagina' => 'arquivo/novo.php',
@@ -56,64 +54,21 @@ class ArquivoController extends AbstractController
 		$this->load->view('index', $dados);
 	}
 
-	public function criar()
-	{
-
-		$data_post = $this->input->post();
-
-		$file = $_FILES['arquivo'];
-
-		if (isset($file) && isset($data_post)) {
-
-			$arquivo = $this->moverArquivo($data_post);
-
-			if (isset($arquivo)) {
-
-				$this->ArquivoDAO->criar($arquivo);
-
-				redirect('ArquivoController');
-			} else {
-				echo "<script>alert('Não foi possível mover o arquivo para o banco de dados! Tente novamente!')</script>";
-			}
-		}
-	}
-
 	public function alterar($id)
 	{
+		$this->load->model('dao/ProcessoDAO');
 
-		$arquivo = $this->ArquivoDAO->buscarPorId($id);
+		$this->load->model('dao/ArtefatoDAO');
 
 		$dados = array(
 			'titulo' => 'Alterar Arquivo',
 			'pagina' => 'arquivo/alterar.php',
-			'arquivo' => $arquivo,
+			'arquivo' => $this->buscarPorId($id),
 			'processos' => $this->ProcessoDAO->options(),
 			'artefatos' => $this->ArtefatoDAO->options()
 		);
 
 		$this->load->view('index', $dados);
-	}
-
-	public function atualizar()
-	{
-
-		$data_post = $this->input->post();
-
-		$file = $_FILES['arquivo'];
-
-		if (isset($file) && isset($data_post)) {
-
-			$arquivo = $this->moverArquivo($data_post);
-
-			if (isset($arquivo)) {
-
-				$this->ArquivoDAO->criar($arquivo);
-
-				redirect('ArquivoController');
-			} else {
-				echo "<script>alert('Não foi possível atualizar o arquivo no banco de dados! Tente novamente!')</script>";
-			}
-		}
 	}
 
 	public function alterarArquivoDeUmProcesso()
@@ -210,65 +165,265 @@ class ArquivoController extends AbstractController
 
 	}
 
-	public function deletar($id)
+	/**
+	 * @param $listaDeArray
+	 * @return array
+	 */
+	public function toObject($listaDeArray)
 	{
-		$this->ArquivoDAO->deletar($$this->ArquivoDAO->buscarPorId($id));
+		$listaDeArquivos = [];
 
-		redirect('ArquivoController');
+		foreach ($listaDeArray as $linha) {
+			$data_hora = $listaDeArray->data_hora ?? ($listaDeArray['data_hora'] ?? null);
+
+			$artefato_id = $listaDeArray->artefato_id ?? ($listaDeArray['artefato_id'] ?? null);
+
+			$this->load->library('DataHora', $data_hora);
+
+			$arquivo =
+				new Arquivo(
+					$listaDeArray->id ?? ($listaDeArray['id'] ?? null),
+					$arrayList->status ?? ($arrayList['status'] ?? null),
+					$arrayList->nome ?? ($arrayList['nome'] ?? ''),
+					$listaDeArray->path ?? ($listaDeArray['path'] ?? null),
+					$this->datahora,
+					$listaDeArray->usuario_id ?? ($listaDeArray['usuario_id'] ?? null)
+				);
+			$listaDeArquivos[] = $arquivo;
+		}
+
+		return $listaDeArquivos;
 	}
 
+	/**
+	 * Banco de Dados
+	 */
 
-	private function moverArquivo($data_post, $criarUmNovoArquivo = false)
+	/**
+	 * @return void
+	 */
+	public function criar()
 	{
+		$nome_do_arquivo = $_FILES['arquivo']['name'];
+
+		$extensao =
+			strtolower(
+				pathinfo(
+					$nome_do_arquivo,
+					PATHINFO_EXTENSION));
+
+		$path =
+			'arquivos/' .
+			$this->input->post('artefato_id') . '/' .
+			uniqid('', true) . '.' .
+			$extensao;
+
 		$tmp_name = $_FILES['arquivo']['tmp_name'];
 
-		if (
-			($data_post['arquivo_path'] == '') ||
-			$criarUmNovoArquivo
-		) {
+		$estaArquivado = false;
 
-			$nome_do_arquivo = $_FILES['arquivo']['name'];
-
-			$extensao = strtolower(pathinfo($nome_do_arquivo, PATHINFO_EXTENSION));
-
-			$path = 'arquivos/' . $data_post['artefato_id'] . '/' . uniqid() . '.' . $extensao;
-
-		} else {
-
-			$path = $data_post['arquivo_path'];
-
+		if (!empty($path)) {
+			$estaArquivado = move_uploaded_file($tmp_name, $path);
 		}
 
+		if ($estaArquivado) {
 
-		$arquivado = move_uploaded_file($tmp_name, $path);
+			$this->load->library('DataHora');
 
-		//var_dump($_FILES['arquivo']);
-		/* $arquivado = false;
+			$array =
+				[
+					ID => null,
+					STATUS => true,
+					NOME => $this->input->post('arquivo_nome'),
+					PATH => $path,
+					DATA_HORA => $this->load->datahora->formatoDoMySQL(),
+					USUARIO_ID => $_SESSION[ID],
+					ARTEFATO_ID => $this->input->post('artefato_id'),
+					PROCESSO_ID => $this->input->post('processo_id')
+				];
 
-		 $config['upload_path'] = $path;
-		 $config['allowed_types'] = 'pdf';
-		 $config['max_size'] = 10000;
+			$this->load->model('dao/ArquivoDAO');
 
-		 $this->load->library('upload', $config);
-
-		 if (!$this->upload->do_upload('arquivo')) {
-			 $error = array('error' => $this->upload->display_errors());
-
-			 $this->load->view('arquivo/upload_error', $error);
-
-			 $arquivado = false;
-		 } else {
-			 $arquivado = true;
-		 }*/
-
-
-		if ($arquivado) {
-
-			return $this->toObject($data_post, $path, $criarUmNovoArquivo);
-
-		} else {
-			return null;
+			$this->ArquivoDAO->criar($array);
 		}
+
+		//todo verificar como fazer o redirect
 	}
 
+	/**
+	 * @return void
+	 */
+	public function atualizar()
+	{
+		$path = $this->input->post('arquivo_path');
+
+		unlink($path);
+
+		$tmp_name = $_FILES['arquivo']['tmp_name'];
+
+		$estaArquivado = false;
+
+		if (!empty($path)) {
+			$estaArquivado = move_uploaded_file($tmp_name, $path);
+		}
+
+		if ($estaArquivado) {
+
+			$this->load->library('DataHora');
+
+			$array =
+				[
+					ID => null,
+					STATUS => true,
+					NOME => $this->input->post('arquivo_nome'),
+					PATH => $path,
+					DATA_HORA => $this->load->datahora->formatoDoMySQL(),
+					USUARIO_ID => $_SESSION[ID],
+					ARTEFATO_ID => $this->input->post('artefato_id'),
+					PROCESSO_ID => $this->input->post('processo_id')
+				];
+
+			$this->load->model('dao/ArquivoDAO');
+
+			$this->ArquivoDAO->atualizar($array);
+		}
+
+		//todo verificar como fazer o redirect
+	}
+
+	/**
+	 * @param $id
+	 * @return array
+	 */
+	public function buscarPorId($id)
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		$array = $this->ArquivoDAO->BuscarPorId($id);
+
+		return $this->toObject($array);
+	}
+
+
+	/**
+	 * @param $inicio
+	 * @param $fim
+	 * @return array
+	 */
+	public function buscarTodosAtivos($inicio, $fim)
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		$array = $this->ArquivoDAO->buscarTodosAtivos($inicio, $fim);
+
+		return $this->toObject($array);
+	}
+
+	/**
+	 * @param $inicio
+	 * @param $fim
+	 * @return array
+	 */
+	public function buscarTodosInativos($inicio, $fim)
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		$array = $this->ArquivoDAO->buscarTodosInativos($inicio, $fim);
+
+		return $this->toObject($array);
+	}
+
+	/**
+	 * @param $inicio
+	 * @param $fim
+	 * @return array
+	 */
+	public function buscarTodosStatus($inicio, $fim)
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		$array = $this->ArquivoDAO->buscarTodosStatus($inicio, $fim);
+
+		return $this->toObject($array);
+	}
+
+	/**
+	 * @param $inicio
+	 * @param $fim
+	 * @return array
+	 */
+	public function buscarAonde($where)
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		$array = $this->ArquivoDAO->buscarAonde($where);
+
+		return $this->toObject($array);
+	}
+
+	/**
+	 * @param $id
+	 * @return void
+	 */
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		unlink($this->input->post('arquivo_path'));
+
+		$this->ArquivoDAO->excluirDeFormaPermanente($id);
+	}
+
+	/**
+	 * @param $id
+	 * @return void
+	 */
+	public function excluirDeFormaLogica($id)
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		$this->ArquivoDAO->excluirDeFormaLogica($id);
+	}
+
+	/**
+	 * @return int
+	 */
+	public function contarRegistrosAtivos()
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		return $this->ArquivoDAO->contarRegistrosAtivos();
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function contarRegistrosInativos()
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		return $this->ArquivoDAO->contarRegistrosInativos();
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function contarTodosOsRegistros()
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		return $this->ArquivoDAO->contarTodosOsRegistros();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function options()
+	{
+		$this->load->model('dao/ArquivoDAO');
+
+		return $this->ArquivoDAO->options();
+	}
 }
