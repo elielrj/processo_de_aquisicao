@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AbstractController.php';
+require_once 'abstract_controller/AbstractController.php';
 
 class AndamentoController extends AbstractController
 {
@@ -16,49 +16,67 @@ class AndamentoController extends AbstractController
 		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
 	}
 
+	public function novo()
+	{
+		$dados = array(
+			'titulo' => 'Novo Andamento',
+			'pagina' => 'andamento/novo.php',
+		);
+
+		$this->load->view('index', $dados);
+	}
+
+	public function alterar($id)
+	{
+
+		$andamento = $this->buscarPorId($id);
+
+		$dados = array(
+			'titulo' => 'Alterar Tipo de Licitação',
+			'pagina' => 'andamento/alterar.php',
+			'sugestao' => $andamento,
+		);
+
+		$this->load->view('index', $dados);
+
+	}
+
 	public function listar($indice = 1)
 	{
 		$indice--;
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$andamentos = $this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base);
-
 		$this->load->library(
 			'CriadorDeBotoes',
-			[
-				'controller' => AndamentoController::ANDAMENTO_CONTROLLER . '/listar',
-				'quantidade_de_registros_no_banco_de_dados' => $this->contarTodosOsRegistros()
-			]);
-
-		$botoes = empty($andamentos) ? '' : $this->criadordebotoes->listar($indice);
+			arrayToCriadorDeBotoes(
+				self::ANDAMENTO_CONTROLLER . '/listar',
+				$this->contarTodosOsRegistros() ?? 0
+			)
+		);
 
 		$this->load->view(
 			'index',
-			[
-				'titulo' => 'Lista de andamentos',
-				'tabela' => $andamentos,
-				'pagina' => 'andamento/index.php',
-				'botoes' => $botoes
-			]);
+			arrayToView(
+				'Lista de Andamentos',
+				$this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				'andamento/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
+		);
 	}
-
 
 	public function listarPorProcesso($proceso_id)
 	{
-		$andamentos = $this->AndamentoDAO->buscarTodosOsAndamentosDeUmProcesso($proceso_id);
-
-		$this->load->model('dao/ProcessoDAO');
-
-		$processo = $this->ProcessoDAO->buscarPorId($proceso_id);
-
 		$this->load->view(
 			'index',
-			[
-				'titulo' => 'Histórico de movimentos do processo de ' . $processo->tipo->nome,
-				'tabela' => $andamentos,
-				'pagina' => 'andamento/andamento_de_um_processo.php'
-			]);
+			arrayToView(
+				'Histórico de movimentos do processo',
+				$this->buscarAonde(['processo_id' => $proceso_id]) ?? [],
+				'andamento/andamento_de_um_processo.php',
+				''
+			)
+		);
 	}
 
 	public function processoEnviado($processo_id)
@@ -144,11 +162,11 @@ class AndamentoController extends AbstractController
 		$array =
 			[
 				ID => null,
+				STATUS => true,
 				STATUS_DO_ANDAMENTO => Conformado::NOME,
 				DATA_HORA => $this->datahora->formatoDoMySQL(),
 				PROCESSO_ID => $processo_id,
 				USUARIO_ID => $_SESSION[ID],
-				STATUS => true
 			];
 
 		$this->load->model('dao/AndamentoDAO');
@@ -261,7 +279,7 @@ class AndamentoController extends AbstractController
 
 		$this->AndamentoDAO->criar($array);
 
-		redirect(AndamentoController::ANDAMENTO_CONTROLLER);
+		redirect(self::ANDAMENTO_CONTROLLER);
 	}
 
 	/**
@@ -293,7 +311,7 @@ class AndamentoController extends AbstractController
 
 		$this->AndamentoDAO->atualizar($array);
 
-		redirect(AndamentoController::ANDAMENTO_CONTROLLER);
+		redirect(self::ANDAMENTO_CONTROLLER);
 	}
 
 	/**
