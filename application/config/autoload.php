@@ -116,6 +116,9 @@ $autoload['helper'] = array(
 	'processo_historico',
 	'listar_processo_por_secao',
 	'clear_strings',
+	'arrayToView',
+	'arrayToView',
+	'arrayToCriadorDeBotoes',
 );
 
 /*
