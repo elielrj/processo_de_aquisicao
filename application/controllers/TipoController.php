@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AbstractController.php';
+require_once 'abstract_controller/AbstractController.php';
 
 class TipoController extends AbstractController
 {

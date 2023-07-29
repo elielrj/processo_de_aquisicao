@@ -1,6 +1,6 @@
 <?php
 
-interface InterfaceToObject
+interface InterfaceToObjectController
 {
 	public function toObject($listaDeArray);
 }
