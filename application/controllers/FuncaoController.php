@@ -71,13 +71,4 @@ class FuncaoController extends AbstractController
 		);
 	}
 
-	public function array()
-	{
-		return array(
-			'id' => $this->id,
-			'nome' => $this->nome,
-			'nivel_de_acesso' => $this->nivelDeAcesso->nome(),
-			'status' => $this->status
-		);
-	}
 }

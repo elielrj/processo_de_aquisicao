@@ -112,15 +112,6 @@ class TipoController extends AbstractController
 		redirect('TipoController');
 	}
 
-	public function array()
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'nome' => $this->nome,
-			'status' => $this->status
-		);
-	}
-
 	private function toObject($arrayList)
 	{
 		return new Tipo(

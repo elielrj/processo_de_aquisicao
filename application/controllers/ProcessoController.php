@@ -679,19 +679,4 @@ class ProcessoController extends AbstractController
 		return $processo;
 	}
 
-	public function array()
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'objeto' => $this->objeto,
-			'numero' => $this->numero,
-			'data_hora' => $this->dataHora,
-			'chave' => $this->chave,
-			'departamento_id' => $this->departamento->id,
-			'lei_id' => $this->lei->id,
-			'tipo_id' => $this->tipo->id,
-			'completo' => $this->completo,
-			'status' => $this->status
-		);
-	}
 }

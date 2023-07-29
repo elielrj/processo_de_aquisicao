@@ -115,12 +115,4 @@ class ModalidadeController extends AbstractController
 		);
 	}
 
-	public function array()
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'nome' => $this->nome,
-			'status' => $this->status,
-		);
-	}
 }

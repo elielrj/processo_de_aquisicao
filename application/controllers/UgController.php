@@ -81,14 +81,4 @@ class UgController extends AbstractController
 		);
 	}
 
-	public function array()
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'numero' => $this->numero,
-			'nome' => $this->nome,
-			'sigla' => $this->sigla,
-			'status' => $this->status
-		);
-	}
 }

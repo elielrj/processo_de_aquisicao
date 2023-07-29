@@ -124,13 +124,5 @@ class SugestaoController extends AbstractController
 		);
 	}
 
-	public function array()
-	{
-		return array(
-			'id' => $this->id ?? null,
-			'mensagem' => $this->mensagem,
-			'status' => $this->status,
-			'usuario_id' => $this->usuario_id
-		);
-	}
+
 }
