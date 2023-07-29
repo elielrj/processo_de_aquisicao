@@ -6,118 +6,116 @@ class FuncaoDAO  extends AbstractDAO
 	const TABELA_FUNCAO = 'funcao';
 
 	public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function criar($objeto)
-    {
-        $this->DAO->criar(FuncaoDAO::TABELA_FUNCAO, $objeto->array());
-    }
-
-    public function buscarTodos($inicial, $final)
-    {
-        $array = $this->DAO->buscarTodos(FuncaoDAO::TABELA_FUNCAO, $inicial, $final);
-
-        return $this->criarLista($array);
-    }
-
-    public function buscarTodosDesativados($inicial, $final)
-    {
-        $array = $this->DAO->buscarTodosDesativados(FuncaoDAO::TABELA_FUNCAO, $inicial, $final);
-
-        return $this->criarLista($array);
-    }
-
-    public function buscarPorId($funcaoId)
-    {
-        $array = $this->DAO->buscarPorId(FuncaoDAO::TABELA_FUNCAO, $funcaoId);
-
-        return $this->toObject($array->result()[0]);
-    }
-
-    public function buscarOnde($key, $value)
-    {
-        $array = $this->DAO->buscarOnde(FuncaoDAO::TABELA_FUNCAO, array($key => $value));
-
-        return $this->criarLista($array->result());
-    }
-
-    public function atualizar($funcao)
-    {
-        $this->DAO->atualizar(FuncaoDAO::TABELA_FUNCAO, $funcao->array());
-    }
-
-
-    public function deletar($funcao)
-    {
-        $this->DAO->deletar(FuncaoDAO::TABELA_FUNCAO, $funcao->array());
-    }
-
-    public function contar()
-    {
-        return $this->DAO->contar(TABELA_FUNCAO);
-    }
-
-    public function contarDesativados()
-    {
-        return $this->DAO->contarDesativados(TABELA_FUNCAO);
-    }
-
-
-
-    private function criarLista($array)
-    {
-        $listaDefuncao = array();
-
-        foreach ($array->result() as $linha) {
-
-            $funcao = $this->toObject($linha);
-
-            array_push($listaDefuncao, $funcao);
-        }
-
-        return $listaDefuncao;
-    }
-
-    public function options()
-    {
-        $funcoes = $this->buscarTodos(null, null);
-
-        $options = [];
-
-        if (isset($funcoes)) {
-
-            foreach ($funcoes as $funcao) {
-
-                $options += [$funcao->id => $funcao->nome];
-
-            }
-        }
-        return $options;
-    }
-
-	public static function selecionarNivelDeAcesso($nome)
 	{
-		switch ($nome) {
-			case Leitor::NOME:
-				return new Leitor();
-			case Escritor::NOME:
-				return new Escritor();
-			case AprovadorFiscAdm::NOME:
-				return new AprovadorFiscAdm();
-			case AprovadorOd::NOME:
-				return new AprovadorOd();
-			case Executor::NOME:
-				return new Executor();
-			case Conformador::NOME:
-				return new Conformador();
-			case Administrador::NOME:
-				return new Administrador();
-			case Root::NOME:
-				return new Root();
-		}
+		parent::__construct();
+	}
+
+	public function criar($array)
+	{
+		$this->db->insert(
+			self::TABELA_FUNCAO,
+			$array
+		);
+	}
+
+	public function atualizar($array, $where)
+	{
+		$this->db->update(
+			self::TABELA_FUNCAO,
+			$array,
+			$where
+		);
+	}
+
+	public function buscarPorId($id)
+	{
+		return
+			$this->db->get_where(
+				self::TABELA_FUNCAO,
+				[ID => $id]
+			);
+	}
+
+	public function buscarTodosAtivos($inicio, $fim)
+	{
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => true])
+				->get(self::TABELA_FUNCAO, $inicio, $fim);
+	}
+
+	public function buscarTodosInativos($inicio, $fim)
+	{
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_FUNCAO, $inicio, $fim);
 	}
 
 
+	public function buscarTodosStatus($inicio, $fim)
+	{
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_FUNCAO, $inicio, $fim);
+	}
+
+	public function buscarAonde($whare)
+	{
+		return
+			$this->db
+				->where($whare)
+				->get(TABELA_FUNCAO);
+	}
+
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->db->delete(
+			self::TABELA_FUNCAO,
+			[ID => $id]);
+	}
+
+	public function excluirDeFormaLogica($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
+		}
+
+		$this->db->update($linhaArrayList);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(TABLE_ANDAMENTO);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(TABLE_ANDAMENTO);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(TABLE_ANDAMENTO);
+	}
+
+	public function options()
+	{
+		$options = [];
+
+		foreach ($this->buscarTodosAtivos(null, null) as $funcao) {
+			$options += [$funcao->id => $funcao->nome];
+		}
+		return $options;
+	}
 }

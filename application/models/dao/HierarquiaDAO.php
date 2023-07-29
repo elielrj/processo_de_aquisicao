@@ -8,103 +8,115 @@ class HierarquiaDAO extends AbstractDAO
 
 	public function __construct()
 	{
-		$this->load->model('dao/DAO');
+		parent::__construct();
 	}
 
-	public function criar($objeto)
+	public function criar($array)
 	{
-		$this->DAO->criar(HierarquiaDAO::TABELA_HIERARQUIA, $objeto->array());
+		$this->db->insert(
+			self::TABELA_HIERARQUIA,
+			$array
+		);
 	}
 
-	public function buscarTodos($inicial, $final)
+	public function atualizar($array, $where)
 	{
-		$array = $this->DAO->buscarTodos(HierarquiaDAO::TABELA_HIERARQUIA, $inicial, $final);
-
-		return $this->criarLista($array);
+		$this->db->update(
+			self::TABELA_HIERARQUIA,
+			$array,
+			$where
+		);
 	}
 
-	public function buscarTodosDesativados($inicial, $final)
+	public function buscarPorId($id)
 	{
-		$array = $this->DAO->buscarTodosDesativados(HierarquiaDAO::TABELA_HIERARQUIA, $inicial, $final);
-
-		return $this->criarLista($array);
+		return
+			$this->db->get_where(
+				self::TABELA_HIERARQUIA,
+				[ID => $id]
+			);
 	}
 
-	public function buscarPorId($hierarquiaId)
+	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarPorId(HierarquiaDAO::TABELA_HIERARQUIA, $hierarquiaId);
-
-		return $this->toObject($array->result()[0]);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => true])
+				->get(self::TABELA_HIERARQUIA, $inicio, $fim);
 	}
 
-	public function buscarOnde($key, $value)
+	public function buscarTodosInativos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarOnde(HierarquiaDAO::TABELA_HIERARQUIA, array($key => $value));
-
-		return $this->criarLista($array->result());
-	}
-
-	public function atualizar($hierarquia)
-	{
-		$this->DAO->atualizar(HierarquiaDAO::TABELA_HIERARQUIA, $hierarquia->array());
-	}
-
-
-	public function deletar($hierarquia)
-	{
-		$this->DAO->deletar(HierarquiaDAO::TABELA_HIERARQUIA, $hierarquia->array());
-	}
-
-	public function contar()
-	{
-		return $this->DAO->contar(TABELA_HIERARQUIA);
-	}
-
-	public function contarDesativados()
-	{
-		return $this->DAO->contarDesativados(TABELA_HIERARQUIA);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_HIERARQUIA, $inicio, $fim);
 	}
 
 
-
-	private function criarLista($array)
+	public function buscarTodosStatus($inicio, $fim)
 	{
-		$listaDeHierarquia = array();
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_HIERARQUIA, $inicio, $fim);
+	}
 
-		foreach ($array->result() as $linha) {
+	public function buscarAonde($whare)
+	{
+		return
+			$this->db
+				->where($whare)
+				->get(TABELA_HIERARQUIA);
+	}
 
-			$hierarquia = $this->toObject($linha);
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->db->delete(
+			self::TABELA_HIERARQUIA,
+			[ID => $id]);
+	}
 
-			array_push($listaDeHierarquia, $hierarquia);
+	public function excluirDeFormaLogica($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
 		}
 
-		return $listaDeHierarquia;
+		$this->db->update($linhaArrayList);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(TABELA_HIERARQUIA);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(TABELA_HIERARQUIA);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(TABELA_HIERARQUIA);
 	}
 
 	public function options()
 	{
-		$hierarquias = $this->buscarTodos(null, null);
-
 		$options = [];
 
-		if (isset($hierarquias)) {
-
-			foreach ($hierarquias as $hierarquia) {
-
-				$options += [$hierarquia->id => $hierarquia->postoOuGraduacao];
-			}
+		foreach ($this->buscarTodosAtivos(null, null) as $hierarquia) {
+			$options += [$hierarquia->id => $hierarquia->nome];
 		}
 		return $options;
 	}
-
-	public function array()
-	{
-		return array(
-			'id' => ($this->id ?? null),
-			'posto_ou_graduacao' => $this->postoOuGraduacao,
-			'sigla' => $this->sigla,
-			'status' => $this->status
-		);
-	}
-
 }

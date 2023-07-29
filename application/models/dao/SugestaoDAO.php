@@ -7,79 +7,115 @@ class SugestaoDAO  extends AbstractDAO
 
 	public function __construct()
 	{
-		parent::__contruct();
+		parent::__construct();
 	}
 
-	public function criar($objeto)
+	public function criar($array)
 	{
-		$this->DAO->criar(SugestaoDAO::TABELA_SUGESTAO, $objeto->array());
+		$this->db->insert(
+			self::TABELA_SUGESTAO,
+			$array
+		);
 	}
 
-	public function buscarTodos($inicial, $final)
+	public function atualizar($array, $where)
 	{
-		$array = $this->DAO->buscarTodos(SugestaoDAO::TABELA_SUGESTAO, $inicial, $final);
-
-		return $this->criarLista($array);
+		$this->db->update(
+			self::TABELA_SUGESTAO,
+			$array,
+			$where
+		);
 	}
 
-	public function buscarTodosDesativados($inicial, $final)
+	public function buscarPorId($id)
 	{
-		$array = $this->DAO->buscarTodosDesativados(SugestaoDAO::TABELA_SUGESTAO, $inicial, $final);
-
-		return $this->criarLista($array);
+		return
+			$this->db->get_where(
+				self::TABELA_SUGESTAO,
+				[ID => $id]
+			);
 	}
 
-	public function buscarPorId($sugestaoId)
+	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarPorId(SugestaoDAO::TABELA_SUGESTAO, $sugestaoId);
-
-		return $this->toObject($array->result()[0]);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => true])
+				->get(self::TABELA_SUGESTAO, $inicio, $fim);
 	}
 
-	public function buscarOnde($key, $value)
+	public function buscarTodosInativos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarOnde(SugestaoDAO::TABELA_SUGESTAO, array($key => $value));
-
-		return $this->criarLista($array->result());
-	}
-
-	public function atualizar($sugestao)
-	{
-		$this->DAO->atualizar(SugestaoDAO::TABELA_SUGESTAO, $sugestao->array());
-	}
-
-
-	public function deletar($sugestao)
-	{
-		$this->DAO->deletar(SugestaoDAO::TABELA_SUGESTAO, $sugestao->array());
-	}
-
-	public function contar()
-	{
-		return $this->DAO->contar(TABELA_SUGESTAO);
-	}
-
-	public function contarDesativados()
-	{
-		return $this->DAO->contarDesativados(TABELA_SUGESTAO);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_SUGESTAO, $inicio, $fim);
 	}
 
 
-
-	private function criarLista($array)
+	public function buscarTodosStatus($inicio, $fim)
 	{
-		$listaDeSugestao = array();
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_SUGESTAO, $inicio, $fim);
+	}
 
-		foreach ($array->result() as $linha) {
+	public function buscarAonde($whare)
+	{
+		return
+			$this->db
+				->where($whare)
+				->get(TABELA_SUGESTAO);
+	}
 
-			$sugestao = $this->toObject($linha);
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->db->delete(
+			self::TABELA_SUGESTAO,
+			[ID => $id]);
+	}
 
-			$listaDeSugestao[] = $sugestao;
+	public function excluirDeFormaLogica($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
 		}
 
-		return $listaDeSugestao;
+		$this->db->update($linhaArrayList);
 	}
 
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(TABELA_SUGESTAO);
+	}
 
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(TABELA_SUGESTAO);
+	}
 
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(TABELA_SUGESTAO);
+	}
+
+	public function options()
+	{
+		$options = [];
+
+		foreach ($this->buscarTodosAtivos(null, null) as $sugestao) {
+			$options += [$sugestao->id => $sugestao->nome];
+		}
+		return $options;
+	}
 }

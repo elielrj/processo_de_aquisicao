@@ -2,91 +2,122 @@
 
 require_once 'AbstractDAO.php';
 
-class UsuarioDAO  extends AbstractDAO
+class UsuarioDAO extends AbstractDAO
 {
 	const TABELA_USUARIO = 'usuario';
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/DAO');
-		$this->load->model('dao/DepartamentoDAO');
-		$this->load->model('dao/FuncaoDAO');
-		$this->load->model('dao/HierarquiaDAO');
 	}
 
-	public function criar($usuario)
+	public function criar($array)
 	{
-		$this->DAO->criar(UsuarioDAO::TABELA_USUARIO, $usuario->array());
+		$this->db->insert(
+			self::TABELA_USUARIO,
+			$array
+		);
 	}
 
-	public function buscarTodos($inicial, $final)
+	public function atualizar($array, $where)
 	{
-		$array = $this->DAO->buscarTodos(UsuarioDAO::TABELA_USUARIO, $inicial, $final);
-
-		return $this->criarLista($array);
+		$this->db->update(
+			self::TABELA_USUARIO,
+			$array,
+			$where
+		);
 	}
 
-	public function buscarTodosDesativados($inicial, $final)
+	public function buscarPorId($id)
 	{
-		$array = $this->DAO->buscarTodosDesativados(UsuarioDAO::TABELA_USUARIO, $inicial, $final);
-
-		return $this->criarLista($array);
+		return
+			$this->db->get_where(
+				self::TABELA_USUARIO,
+				[ID => $id]
+			);
 	}
 
-	public function buscarPorId($usuarioId)
+	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarPorId(UsuarioDAO::TABELA_USUARIO, $usuarioId);
-
-		return $this->toObject($array->result()[0]);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => true])
+				->get(self::TABELA_USUARIO, $inicio, $fim);
 	}
 
-	public function buscarOnde($key, $value)
+	public function buscarTodosInativos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarOnde(UsuarioDAO::TABELA_USUARIO, array($key => $value));
-
-		return $this->criarLista($array->result());
-	}
-
-	public function atualizar($usuario)
-	{
-		$this->DAO->atualizar(UsuarioDAO::TABELA_USUARIO, $usuario->array());
-	}
-
-
-	public function deletar($usuario_id)
-	{
-		$usuario = $this->buscarPorId($usuario_id);
-
-		$usuario->status = false;
-
-		$this->DAO->atualizar(UsuarioDAO::TABELA_USUARIO, $usuario->array());
-	}
-
-	public function contar()
-	{
-		return $this->DAO->contar(TABELA_USUARIO);
-	}
-
-	public function contarDesativados()
-	{
-		return $this->DAO->contarDesativados(TABELA_USUARIO);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_USUARIO, $inicio, $fim);
 	}
 
 
-
-	private function criarLista($array)
+	public function buscarTodosStatus($inicio, $fim)
 	{
-		$listaDeUsuarios = array();
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_USUARIO, $inicio, $fim);
+	}
 
-		foreach ($array->result() as $linha) {
+	public function buscarAonde($whare)
+	{
+		return
+			$this->db
+				->where($whare)
+				->get(TABELA_USUARIO);
+	}
 
-			$usuario = $this->toObject($linha);
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->db->delete(
+			self::TABELA_USUARIO,
+			[ID => $id]);
+	}
 
-			$listaDeUsuarios[] = $usuario;
+	public function excluirDeFormaLogica($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
 		}
 
-		return $listaDeUsuarios;
+		$this->db->update($linhaArrayList);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(TABELA_USUARIO);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(TABELA_USUARIO);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(TABELA_USUARIO);
+	}
+
+	public function options()
+	{
+		$options = [];
+
+		foreach ($this->buscarTodosAtivos(null, null) as $usuario) {
+			$options += [$usuario->id => $usuario->nome];
+		}
+		return $options;
 	}
 
 	/**
@@ -133,7 +164,4 @@ class UsuarioDAO  extends AbstractDAO
 			);
 		}
 	}
-
-
-
 }

@@ -10,96 +10,112 @@ class DepartamentoDAO  extends AbstractDAO
 		parent::__construct();
 	}
 
-	public function criar($objeto)
+	public function criar($array)
 	{
-		$this->DAO->criar(DepartamentoDAO::TABELA_DEPARTAMENTO, $objeto->array());
+		$this->db->insert(
+			self::TABELA_DEPARTAMENTO,
+			$array
+		);
 	}
 
-	public function buscarTodos($inicial, $final)
+	public function atualizar($array, $where)
 	{
-		$array = $this->DAO->buscarTodos(DepartamentoDAO::TABELA_DEPARTAMENTO, $inicial, $final);
-
-		return $this->criarLista($array);
+		$this->db->update(
+			self::TABELA_DEPARTAMENTO,
+			$array,
+			$where
+		);
 	}
 
-	public function buscarTodosDesativados($inicial, $final)
+	public function buscarPorId($id)
 	{
-		$array = $this->DAO->buscarTodosDesativados(DepartamentoDAO::TABELA_DEPARTAMENTO, $inicial, $final);
-
-		return $this->criarLista($array);
+		return
+			$this->db->get_where(
+				self::TABELA_DEPARTAMENTO,
+				[ID => $id]
+			);
 	}
 
-	public function buscarPorId($departamentoId)
+	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarPorId(DepartamentoDAO::TABELA_DEPARTAMENTO, $departamentoId);
-
-		$departamento = $this->toObject($array->result()[0]);
-
-		return $departamento;
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => true])
+				->get(self::TABELA_DEPARTAMENTO, $inicio, $fim);
 	}
 
-	public function buscarOnde($key, $value)
+	public function buscarTodosInativos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarOnde(DepartamentoDAO::TABELA_DEPARTAMENTO, array($key => $value));
-
-		return $this->criarLista($array->result());
-	}
-
-	public function atualizar($departamento)
-	{
-		$this->DAO->atualizar(DepartamentoDAO::TABELA_DEPARTAMENTO, $departamento->array());
-	}
-
-
-	public function deletar($id)
-	{
-		$departamento = $this->buscarPorId($id);
-
-		$departamento->status = false;
-
-		$this->DAO->atualizar(DepartamentoDAO::TABELA_DEPARTAMENTO, $departamento->array());
-	}
-
-	public function contar()
-	{
-		return $this->DAO->contar(TABELA_DEPARTAMENTO);
-	}
-
-	public function contarDesativados()
-	{
-		return $this->DAO->contarDesativados(TABELA_DEPARTAMENTO);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_DEPARTAMENTO, $inicio, $fim);
 	}
 
 
-
-	private function criarLista($array)
+	public function buscarTodosStatus($inicio, $fim)
 	{
-		$listaDeDepartamento = array();
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_DEPARTAMENTO, $inicio, $fim);
+	}
 
-		foreach ($array->result() as $linha) {
+	public function buscarAonde($whare)
+	{
+		return
+			$this->db
+				->where($whare)
+				->get(TABELA_DEPARTAMENTO);
+	}
 
-			$departamento = $this->toObject($linha);
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->db->delete(
+			self::TABELA_DEPARTAMENTO,
+			[ID => $id]);
+	}
 
-			$listaDeDepartamento[] = $departamento;
+	public function excluirDeFormaLogica($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
 		}
 
-		return $listaDeDepartamento;
+		$this->db->update($linhaArrayList);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(TABLE_ANDAMENTO);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(TABLE_ANDAMENTO);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(TABLE_ANDAMENTO);
 	}
 
 	public function options()
 	{
-		$departamentos = $this->buscarTodos(null, null);
-
 		$options = [];
 
-		if (isset($departamentos)) {
-
-			foreach ($departamentos as $departamento) {
-				$options += [$departamento->id => $departamento->toString()];
-			}
+		foreach ($this->buscarTodosAtivos(null, null) as $departamento) {
+			$options += [$departamento->id => $departamento->nome];
 		}
 		return $options;
 	}
-
-
 }

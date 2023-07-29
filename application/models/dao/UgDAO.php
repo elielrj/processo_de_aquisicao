@@ -11,92 +11,112 @@ class UgDAO  extends AbstractDAO
 		parent::__construct();
 	}
 
-	public function criar($objeto)
+	public function criar($array)
 	{
-		$this->DAO->criar(UgDAO::TABELA_UG, $objeto->array());
+		$this->db->insert(
+			self::TABELA_UG,
+			$array
+		);
 	}
 
-	public function buscarTodos($inicial, $final)
+	public function atualizar($array, $where)
 	{
-		$array = $this->DAO->buscarTodos(UgDAO::TABELA_UG, $inicial, $final);
-
-		return $this->criarLista($array);
+		$this->db->update(
+			self::TABELA_UG,
+			$array,
+			$where
+		);
 	}
 
-	public function buscarTodosDesativados($inicial, $final)
+	public function buscarPorId($id)
 	{
-		$array = $this->DAO->buscarTodosDesativados(UgDAO::TABELA_UG, $inicial, $final);
-
-		return $this->criarLista($array);
+		return
+			$this->db->get_where(
+				self::TABELA_UG,
+				[ID => $id]
+			);
 	}
 
-	public function buscarPorId($ugId)
+	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarPorId(UgDAO::TABELA_UG, $ugId);
-
-		return $this->toObject($array->result()[0]);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => true])
+				->get(self::TABELA_UG, $inicio, $fim);
 	}
 
-	public function buscarOnde($key, $value)
+	public function buscarTodosInativos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarOnde(UgDAO::TABELA_UG, array($key => $value));
-
-		return $this->criarLista($array->result());
-	}
-
-	public function atualizar($ug)
-	{
-		$this->DAO->atualizar(UgDAO::TABELA_UG, $ug->array());
-	}
-
-
-	public function deletar($ug)
-	{
-		$this->DAO->deletar(UgDAO::TABELA_UG, $ug->array());
-	}
-
-	public function contar()
-	{
-		return $this->DAO->contar(TABELA_UG);
-	}
-
-	public function contarDesativados()
-	{
-		return $this->DAO->contarDesativados(TABELA_UG);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_UG, $inicio, $fim);
 	}
 
 
-
-	private function criarLista($array)
+	public function buscarTodosStatus($inicio, $fim)
 	{
-		$listaDeUg = array();
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_UG, $inicio, $fim);
+	}
 
-		foreach ($array->result() as $linha) {
+	public function buscarAonde($whare)
+	{
+		return
+			$this->db
+				->where($whare)
+				->get(TABELA_UG);
+	}
 
-			$ug = $this->toObject($linha);
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->db->delete(
+			self::TABELA_UG,
+			[ID => $id]);
+	}
 
-			$listaDeUg[] = $ug;
+	public function excluirDeFormaLogica($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
 		}
 
-		return $listaDeUg;
+		$this->db->update($linhaArrayList);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(TABELA_UG);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(TABELA_UG);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(TABELA_UG);
 	}
 
 	public function options()
 	{
-
-		$ugs = $this->buscarTodos(null, null);
-
 		$options = [];
 
-		if (isset($ugs)) {
-
-			foreach ($ugs as $key => $ug) {
-
-				$options += [$ug->id => $ug->toString()];
-			}
+		foreach ($this->buscarTodosAtivos(null, null) as $ug) {
+			$options += [$ug->id => $ug->nome];
 		}
 		return $options;
 	}
-
-
 }

@@ -2,108 +2,120 @@
 
 require_once 'AbstractDAO.php';
 
-class ArtefatoDAO  extends AbstractDAO
+class ArtefatoDAO extends AbstractDAO
 {
-	const TABELA_ARTERFATO = 'artefato';
+	const TABELA_ARTEFATO = 'artefato';
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function criar($objeto)
+	public function criar($array)
 	{
-		$this->DAO->criar(ArtefatoDAO::TABELA_ARTERFATO, $objeto->array());
+		$this->db->insert(
+			self::TABELA_ARTEFATO,
+			$array
+		);
 	}
 
-	public function buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base)
+	public function atualizar($array, $where)
 	{
-		$array = $this->DAO->buscarTodos(ArtefatoDAO::TABELA_ARTERFATO, $qtd_de_itens_para_exibir, $indice_no_data_base); //($qtd_de_itens_para_exibir,$indice_no_data_base)
-
-		return $this->criarLista($array);
+		$this->db->update(
+			self::TABELA_ARTEFATO,
+			$array,
+			$where
+		);
 	}
 
-	public function buscarTodosDesativados($inicial, $final)
+	public function buscarPorId($id)
 	{
-		$array = $this->DAO->buscarTodosDesativados(ArtefatoDAO::TABELA_ARTERFATO, $inicial, $final);
-
-		return $this->criarLista($array);
+		return $this->db->get_where(
+			self::TABELA_ARTEFATO,
+			[ID => $id]
+		);
 	}
 
-	public function buscarPorId($artefatoId)
+	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarPorId(ArtefatoDAO::TABELA_ARTERFATO, $artefatoId);
-
-		return $this->toObject($array->result()[0]);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_ASC)
+				->where([STATUS => true])
+				->get(self::TABELA_ARTEFATO, $inicio, $fim);
 	}
 
-	public function buscarOnde($key, $value)
+	public function buscarTodosInativos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarOnde(ArtefatoDAO::TABELA_ARTERFATO, array($key => $value));
-
-		return $this->criarLista($array->result());
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_ARTEFATO, $inicio, $fim);
 	}
 
-	public function atualizar($artefato)
+	public function buscarTodosStatus($inicio, $fim)
 	{
-		$this->DAO->atualizar(ArtefatoDAO::TABELA_ARTERFATO, $artefato->array());
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_ARTEFATO, $inicio, $fim);
 	}
 
-
-	public function deletar($artefato)
+	public function buscarAonde($whare)
 	{
-		$this->DAO->deletar(ArtefatoDAO::TABELA_ARTERFATO, $artefato->array());
+		return
+			$this->db
+				->where($whare)
+				->get(self::TABELA_ARTEFATO);
 	}
 
-	public function contar()
+	public function excluirDeFormaPermanente($id)
 	{
-		return $this->DAO->contar(TABELA_ARTERFATO);
+		$this->db->delete(
+			self::TABELA_ARTEFATO,
+			[ID => $id]);
 	}
 
-	public function contarDesativados()
+	public function excluirDeFormaLogica($id)
 	{
-		return $this->DAO->contarDesativados(TABELA_ARTERFATO);
-	}
+		$linhaArrayList = $this->buscarPorId($id);
 
-	/**
-	 * Summary of toObject
-	 * @param mixed $arrayList
-	 * @return Artefato
-	 * Este método não buscar o Arquivo do artefato,
-	 * pois quem tem essa responsabilidade é ProcessoDAO
-	 */
-
-
-	private function criarLista($array)
-	{
-		$listaDeArtefato = array();
-
-		foreach ($array->result() as $linha) {
-
-			$artefato = $this->toObject($linha);
-
-			array_push($listaDeArtefato, $artefato);
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
 		}
 
-		return $listaDeArtefato;
+		$this->db->update($linhaArrayList);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(self::TABELA_ARTEFATO);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(self::TABELA_ARTEFATO);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(self::TABELA_ARTEFATO);
 	}
 
 	public function options()
 	{
-
-		$artefatos = $this->buscarTodos(null, null);
-
 		$options = [];
 
-		if (isset($artefatos)) {
-
-			foreach ($artefatos as $value) {
-
-				$options += [$value->id => $value->nome];
-			}
+		foreach ($this->buscarTodosAtivos(null, null) as $artefato) {
+			$options += [$artefato->id => $artefato->nome];
 		}
 		return $options;
 	}
-
 
 }

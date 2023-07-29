@@ -9,93 +9,115 @@ class ModalidadeDAO  extends AbstractDAO
 
 	public function __construct()
 	{
-		$this->load->model('dao/DAO');
+		parent::__construct();
 	}
 
-	public function criar($objeto)
+	public function criar($array)
 	{
-		$this->DAO->criar(ModalidadeDAO::TABELA_MODALIDADE, $objeto->array());
+		$this->db->insert(
+			self::TABELA_MODALIDADE,
+			$array
+		);
 	}
 
-	public function buscarTodos($inicial, $final)
+	public function atualizar($array, $where)
 	{
-		$array = $this->DAO->buscarTodos(ModalidadeDAO::TABELA_MODALIDADE, $inicial, $final);
-
-		return $this->criarLista($array);
+		$this->db->update(
+			self::TABELA_MODALIDADE,
+			$array,
+			$where
+		);
 	}
 
-	public function buscarTodosDesativados($inicial, $final)
+	public function buscarPorId($id)
 	{
-		$array = $this->DAO->buscarTodosDesativados(ModalidadeDAO::TABELA_MODALIDADE, $inicial, $final);
-
-		return $this->criarLista($array);
+		return
+			$this->db->get_where(
+				self::TABELA_MODALIDADE,
+				[ID => $id]
+			);
 	}
 
-	public function buscarPorId($modalidadeId): Modalidade
+	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarPorId(ModalidadeDAO::TABELA_MODALIDADE, $modalidadeId);
-
-		return $this->toObject($array->result()[0]);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => true])
+				->get(self::TABELA_MODALIDADE, $inicio, $fim);
 	}
 
-	public function buscarOnde($key, $value)
+	public function buscarTodosInativos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarOnde(ModalidadeDAO::TABELA_MODALIDADE, array($key => $value));
-
-		return $this->criarLista($array->result());
-	}
-
-	public function atualizar($modalidade)
-	{
-		$this->DAO->atualizar(ModalidadeDAO::TABELA_MODALIDADE, $modalidade->array());
-	}
-
-
-	public function deletar($modalidade)
-	{
-		$this->DAO->deletar(ModalidadeDAO::TABELA_MODALIDADE, $modalidade->array());
-	}
-
-	public function contar()
-	{
-		return $this->DAO->contar(TABELA_MODALIDADE);
-	}
-
-	public function contarDesativados()
-	{
-		return $this->DAO->contarDesativados(TABELA_MODALIDADE);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_MODALIDADE, $inicio, $fim);
 	}
 
 
-
-	private function criarLista($array): array
+	public function buscarTodosStatus($inicio, $fim)
 	{
-		$listaDeModalidade = array();
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_MODALIDADE, $inicio, $fim);
+	}
 
-		foreach ($array->result() as $linha) {
+	public function buscarAonde($whare)
+	{
+		return
+			$this->db
+				->where($whare)
+				->get(TABELA_MODALIDADE);
+	}
 
-			$modalidade = $this->toObject($linha);
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->db->delete(
+			self::TABELA_MODALIDADE,
+			[ID => $id]);
+	}
 
-			$listaDeModalidade[] = $modalidade;
+	public function excluirDeFormaLogica($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
 		}
 
-		return $listaDeModalidade;
+		$this->db->update($linhaArrayList);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(TABELA_MODALIDADE);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(TABELA_MODALIDADE);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(TABELA_MODALIDADE);
 	}
 
 	public function options()
 	{
-		$modalidades = $this->buscarTodos(null, null);
-
 		$options = [];
 
-		if (isset($modalidades)) {
-
-			foreach ($modalidades as $modalidade) {
-
-				$options += [$modalidade->id => $modalidade->nome];
-			}
+		foreach ($this->buscarTodosAtivos(null, null) as $modalidade) {
+			$options += [$modalidade->id => $modalidade->nome];
 		}
 		return $options;
 	}
-
 }

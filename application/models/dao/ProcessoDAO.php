@@ -8,174 +8,114 @@ class ProcessoDAO  extends AbstractDAO
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('dao/DAO');
-		$this->load->model('dao/DepartamentoDAO');
-		$this->load->model('dao/LeiDAO');
-		$this->load->model('dao/TipoDAO');
-		$this->load->model('dao/LeiTipoArtefatoDAO');
-		$this->load->model('dao/ArquivoDAO');
-		$this->load->model('dao/AndamentoDAO');
 	}
 
-	public function criar($processo)
+	public function criar($array)
 	{
-		$this->DAO->criar(ProcessoDAO::TABELA_PROCESSO, $processo->array());
-
-		$processo = $this->buscarOnde('chave', $processo->chave);
-
-		$this->load->library('DataHora');
-
-		$andamento = new Andamento(
-			null,
-			new Criado(),
-			$this->datahora->formatoDoMySQL(),
-			$processo->id,
-			$_SESSION[SESSION_ID],
-			true
+		$this->db->insert(
+			self::TABELA_PROCESSO,
+			$array
 		);
-
-		$this->AndamentoDAO->criar($andamento);
-
-		return $processo->id;
 	}
 
-	public function buscarTodos($inicial, $final, $where = [])
+	public function atualizar($array, $where)
 	{
-		$array = $this->DAO->buscarTodosOrderByData(ProcessoDAO::TABELA_PROCESSO, $inicial, $final, $where);
-
-		return $this->criarLista($array);
+		$this->db->update(
+			self::TABELA_PROCESSO,
+			$array,
+			$where
+		);
 	}
 
-
-	public function buscarTodosDesativados($inicial, $final)
+	public function buscarPorId($id)
 	{
-		$array = $this->DAO->buscarTodosDesativados(ProcessoDAO::TABELA_PROCESSO, $inicial, $final);
-
-		return $this->criarLista($array);
+		return
+			$this->db->get_where(
+				self::TABELA_PROCESSO,
+				[ID => $id]
+			);
 	}
 
-	public function buscarPorId($processoId)
+	public function buscarTodosAtivos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarPorId(ProcessoDAO::TABELA_PROCESSO, $processoId);
-
-		return $this->toObject($array->result()[0]);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => true])
+				->get(self::TABELA_PROCESSO, $inicio, $fim);
 	}
 
-	public function buscarOnde($key, $value)
+	public function buscarTodosInativos($inicio, $fim)
 	{
-		$array = $this->DAO->buscarOnde(ProcessoDAO::TABELA_PROCESSO, array($key => $value));
-
-		return $this->toObject($array->result()[0]);
-	}
-
-	public function atualizar($processo)
-	{
-		$this->DAO->atualizar(ProcessoDAO::TABELA_PROCESSO, $processo->array());
-	}
-
-	public function deletar($processo_id)
-	{
-		$processo = $this->buscarPorId($processo_id);
-
-		$processo->status = false;
-
-		$this->DAO->atualizar(ProcessoDAO::TABELA_PROCESSO, $processo->array());
-	}
-
-	public function recuperar($processo_id)
-	{
-		$processo = $this->buscarPorId($processo_id);
-
-		$processo->status = true;
-
-		$this->DAO->atualizar(ProcessoDAO::TABELA_PROCESSO, $processo->array());
-	}
-
-	public function contar($where = [])
-	{
-		return $this->DAO->contar(ProcessoDAO::TABELA_PROCESSO, $where);
-	}
-
-	public function contarProcessosPorSetorDemandante($departamento_id = null)
-	{
-		$departamento_id = $departamento_id ?? $_SESSION['departamento_id'];
-
-		$where = ['departamento_id' => $departamento_id,'status'=>true];
-
-		return $this->DAO->contar(ProcessoDAO::TABELA_PROCESSO, $where);
-	}
-
-	public function contarDesativados()
-	{
-		return $this->DAO->contarDesativados(TABELA_PROCESSO);
+		return
+			$this->db
+				->order_by(DATA_HORA, DIRECTIONS_DESC)
+				->where([STATUS => false])
+				->get(self::TABELA_PROCESSO, $inicio, $fim);
 	}
 
 
-
-	private function criarLista($array)
+	public function buscarTodosStatus($inicio, $fim)
 	{
-		$listaDeProcesso = array();
+		return
+			$this->db
+				->order_by(ID, DIRECTIONS_ASC)
+				->get(self::TABELA_PROCESSO, $inicio, $fim);
+	}
 
-		foreach ($array->result() as $linha) {
+	public function buscarAonde($whare)
+	{
+		return
+			$this->db
+				->where($whare)
+				->get(TABELA_PROCESSO);
+	}
 
-			$processo = $this->toObject($linha);
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->db->delete(
+			self::TABELA_PROCESSO,
+			[ID => $id]);
+	}
 
-			$listaDeProcesso[] = $processo;
+	public function excluirDeFormaLogica($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = false;
 		}
 
-		return $listaDeProcesso;
+		$this->db->update($linhaArrayList);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		return $this->db
+			->where([STATUS => true])
+			->count_all_results(TABELA_PROCESSO);
+	}
+
+	public function contarRegistrosInativos()
+	{
+		return $this->db
+			->where([STATUS => false])
+			->count_all_results(TABELA_PROCESSO);
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		return $this->db
+			->count_all_results(TABELA_PROCESSO);
 	}
 
 	public function options()
 	{
-
-		$processos = $this->buscarTodos(null, null);
-
 		$options = [];
 
-		if (isset($processos)) {
-
-			foreach ($processos as $key => $value) {
-
-				$options += [$value->id => 'Nup/Nud: ' . $value->numero . ' - Objeto: ' . $value->objeto];
-			}
+		foreach ($this->buscarTodosAtivos(null, null) as $processo) {
+			$options += [$processo->id => $processo->nome];
 		}
 		return $options;
 	}
-
-	public function buscarProcessoPeloNumeroChave($numero, $chave)
-	{
-		$array = $this->DAO->buscarOnde(ProcessoDAO::TABELA_PROCESSO, array('numero' => $numero, 'chave' => $chave));
-
-		if (isset($array)) {
-			return $this->toObject($array->result()[0]);
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Consultar processo
-	 *
-	 */
-	public function buscarPorNumeroChave($numero, $chave)
-	{
-		return $this->ProcessoDAO->buscarProcessoPeloNumeroChave($numero, $chave);
-	}
-
-	public function numeroExiste($numero)
-	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array('numero' => $numero));
-
-		return ($array->num_rows() == 1);
-	}
-
-	public function chaveEstaCorreta($chave)
-	{
-		$array = $this->DAO->buscarOnde(self::$TABELA_DB, array('chave' => $chave));
-
-		return ($array->num_rows() == 1);
-	}
-
-
 }

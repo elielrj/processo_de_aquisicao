@@ -7,7 +7,9 @@ require_once 'InterfaceOptions.php';
 require_once 'InterfaceRetrive.php';
 require_once 'InterfaceUpdate.php';
 
-abstract class AbstractDAO extends CI_Model implements
+abstract class AbstractDAO
+	extends CI_Model
+	implements
 	InterfaceContagem,
 	InterfaceCreate,
 	InterfaceDelete,
