@@ -1,6 +1,6 @@
 <?php
 
-interface InterfaceDelete
+interface InterfaceDeleteDAO
 {
 	public function excluirDeFormaPermanente($objetoId);
 

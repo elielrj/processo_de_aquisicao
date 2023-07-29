@@ -1,21 +1,21 @@
 <?php
 
-require_once 'interface/InterfaceContagem.php';
-require_once 'interface/InterfaceCreate.php';
-require_once 'interface/InterfaceDelete.php';
-require_once 'interface/InterfaceOptions.php';
-require_once 'interface/InterfaceRetrive.php';
-require_once 'interface/InterfaceUpdate.php';
+require_once 'interface/InterfaceContagemDAO.php';
+require_once 'interface/InterfaceCreateDAO.php';
+require_once 'interface/InterfaceDeleteDAO.php';
+require_once 'interface/InterfaceOptionsDAO.php';
+require_once 'interface/InterfaceRetriveDAO.php';
+require_once 'interface/InterfaceUpdateDAO.php';
 
 abstract class AbstractDAO
 	extends CI_Model
 	implements
-	InterfaceContagem,
-	InterfaceCreate,
-	InterfaceDelete,
-	InterfaceOptions,
-	InterfaceRetrive,
-	InterfaceUpdate
+	InterfaceContagemDAO,
+	InterfaceCreateDAO,
+	InterfaceDeleteDAO,
+	InterfaceOptionsDAO,
+	InterfaceRetriveDAO,
+	InterfaceUpdateDAO
 {
 	public function __construct()
 	{

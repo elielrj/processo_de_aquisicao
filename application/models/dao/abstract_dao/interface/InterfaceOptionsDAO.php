@@ -1,6 +1,6 @@
 <?php
 
-interface InterfaceOptions
+interface InterfaceOptionsDAO
 {
 	public function options();
 }

@@ -1,6 +1,6 @@
 <?php
 
-interface InterfaceCreate
+interface InterfaceCreateDAO
 {
 	public function criar($array);
 }

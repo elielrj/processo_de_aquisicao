@@ -1,6 +1,6 @@
 <?php
 
-interface InterfaceContagem
+interface InterfaceContagemDAO
 {
 	public function contarRegistrosAtivos();
 

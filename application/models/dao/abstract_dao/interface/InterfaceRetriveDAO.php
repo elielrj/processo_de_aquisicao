@@ -1,6 +1,6 @@
 <?php
 
-interface InterfaceRetrive
+interface InterfaceRetriveDAO
 {
 	public function buscarPorId($id);
 

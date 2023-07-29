@@ -1,6 +1,6 @@
 <?php
 
-interface InterfaceUpdate
+interface InterfaceUpdateDAO
 {
 	public function atualizar($array,$where);
 }
