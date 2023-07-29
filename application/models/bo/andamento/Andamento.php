@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-require_once '../AbstractBO.php';
+require_once '../abstract_bo/AbstractBO.php';
 require_once 'status_do_andamento/InterfaceStatusDoAndamento.php';
 
 class Andamento extends AbstractBO implements InterfaceStatusDoAndamento

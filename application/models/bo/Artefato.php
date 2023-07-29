@@ -1,6 +1,6 @@
 <?php
 
-include_once('AbstractBO.php');
+include_once('abstract_bo/AbstractBO.php');
 
 class Artefato extends AbstractBO
 {

@@ -2,7 +2,9 @@
 
 require_once 'InterfaceToString.php';
 
-abstract class AbstractBO extends CI_Model implements InterfaceToString
+abstract class AbstractBO
+	extends CI_Model
+	implements InterfaceToString
 {
 	protected $id;
 	protected $status;

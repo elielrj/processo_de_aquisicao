@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AbstractBO.php';
+require_once 'abstract_bo/AbstractBO.php';
 
 class Departamento extends AbstractBO
 {
