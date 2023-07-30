@@ -6,6 +6,7 @@ require_once 'interface/InterfaceDeleteDAO.php';
 require_once 'interface/InterfaceOptionsDAO.php';
 require_once 'interface/InterfaceRetriveDAO.php';
 require_once 'interface/InterfaceUpdateDAO.php';
+require_once 'interface/InterfaceRecuperarDAO.php';
 
 abstract class AbstractDAO
 	extends CI_Model
@@ -15,7 +16,8 @@ abstract class AbstractDAO
 	InterfaceDeleteDAO,
 	InterfaceOptionsDAO,
 	InterfaceRetriveDAO,
-	InterfaceUpdateDAO
+	InterfaceUpdateDAO,
+	InterfaceRecuperarDAO
 {
 	public function __construct()
 	{

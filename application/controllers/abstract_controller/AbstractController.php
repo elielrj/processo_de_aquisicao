@@ -8,6 +8,7 @@ require_once 'interface/InterfaceDeleteController.php';
 require_once 'interface/InterfaceOptionsController.php';
 require_once 'interface/InterfaceContagemController.php';
 require_once 'interface/InterfaceListarController.php';
+require_once 'interface/InterfaceRecuperarController.php';
 
 abstract class AbstractController
 	extends CI_Controller
@@ -19,7 +20,8 @@ abstract class AbstractController
 	InterfaceDeleteController,
 	InterfaceOptionsController,
 	InterfaceContagemController,
-	InterfaceListarController
+	InterfaceListarController,
+	InterfaceRecuperarController
 {
 	public function __construct()
 	{
