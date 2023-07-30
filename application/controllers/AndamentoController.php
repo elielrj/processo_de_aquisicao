@@ -16,31 +16,6 @@ class AndamentoController extends AbstractController
 		usuarioPossuiSessaoAberta() ? $this->listar() : redirecionarParaPaginaInicial();
 	}
 
-	public function novo()
-	{
-		$dados = array(
-			'titulo' => 'Novo Andamento',
-			'pagina' => 'andamento/novo.php',
-		);
-
-		$this->load->view('index', $dados);
-	}
-
-	public function alterar($id)
-	{
-
-		$andamento = $this->buscarPorId($id);
-
-		$dados = array(
-			'titulo' => 'Alterar Tipo de Licitação',
-			'pagina' => 'andamento/alterar.php',
-			'sugestao' => $andamento,
-		);
-
-		$this->load->view('index', $dados);
-
-	}
-
 	public function listar($indice = 1)
 	{
 		$indice--;
@@ -65,6 +40,59 @@ class AndamentoController extends AbstractController
 			)
 		);
 	}
+
+	public function novo()
+	{
+		$dados = array(
+			'titulo' => 'Novo Andamento',
+			'pagina' => 'andamento/novo.php',
+		);
+
+		$this->load->view('index', $dados);
+	}
+
+	/**
+	 * @return void
+	 * @input STATUS_DO_ANDAMENTO
+	 * @input PROCESSO_ID
+	 * @input USUARIO_ID
+	 */
+	public function criar()
+	{
+		$this->load->library('DataHora');
+
+		$array =
+			[
+				ID => null,
+				STATUS_DO_ANDAMENTO => $this->input->post(STATUS_DO_ANDAMENTO),
+				DATA_HORA => $this->datahora->formatoDoMySQL(),
+				PROCESSO_ID => $this->input->post(PROCESSO_ID),
+				USUARIO_ID => $this->input->post(USUARIO_ID),
+				STATUS => true
+			];
+
+		$this->load->model('dao/AndamentoDAO');
+
+		$this->AndamentoDAO->criar($array);
+
+		redirect(self::ANDAMENTO_CONTROLLER);
+	}
+
+	public function alterar($id)
+	{
+
+		$andamento = $this->buscarPorId($id);
+
+		$dados = array(
+			'titulo' => 'Alterar Tipo de Licitação',
+			'pagina' => 'andamento/alterar.php',
+			'sugestao' => $andamento,
+		);
+
+		$this->load->view('index', $dados);
+
+	}
+
 
 	public function listarPorProcesso($proceso_id)
 	{
@@ -255,32 +283,6 @@ class AndamentoController extends AbstractController
 	 * Banco de dados
 	 */
 
-	/**
-	 * @return void
-	 * @input STATUS_DO_ANDAMENTO
-	 * @input PROCESSO_ID
-	 * @input USUARIO_ID
-	 */
-	public function criar()
-	{
-		$this->load->library('DataHora');
-
-		$array =
-			[
-				ID => null,
-				STATUS_DO_ANDAMENTO => $this->input->post(STATUS_DO_ANDAMENTO),
-				DATA_HORA => $this->datahora->formatoDoMySQL(),
-				PROCESSO_ID => $this->input->post(PROCESSO_ID),
-				USUARIO_ID => $this->input->post(USUARIO_ID),
-				STATUS => true
-			];
-
-		$this->load->model('dao/AndamentoDAO');
-
-		$this->AndamentoDAO->criar($array);
-
-		redirect(self::ANDAMENTO_CONTROLLER);
-	}
 
 	/**
 	 * @return void
