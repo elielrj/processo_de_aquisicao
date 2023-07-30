@@ -164,7 +164,7 @@ class ProcessoController extends AbstractController
 			)
 		);
 	}
-//todo continuar daqui!!!
+
 	function listarPorSetorDemandanteAlmox($indice = 1)
 	{
 		$indice--;
@@ -179,26 +179,21 @@ class ProcessoController extends AbstractController
 
 		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos por demandante: Almox',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
+				$this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id) ?? []
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos por demandante: Almox',
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
+		);
 	}
 
 	function listarPorSetorDemandanteSalc($indice = 1)
@@ -215,26 +210,21 @@ class ProcessoController extends AbstractController
 
 		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSalc',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos por demandante: SALC',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
+				$this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id) ?? []
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos por demandante: Almox',
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
+		);
 	}
 
 	function listarPorSetorDemandanteAprov($indice = 1)
@@ -251,26 +241,21 @@ class ProcessoController extends AbstractController
 
 		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAprov',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos por demandante: Aprov',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
+				$this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id) ?? []
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos por demandante: Almox',
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
+		);
 	}
 
 	function listarPorSetorDemandanteSaude($indice = 1)
@@ -287,26 +272,21 @@ class ProcessoController extends AbstractController
 
 		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSaude',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos por demandante: Saúde',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
+				$this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id) ?? []
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos por demandante: Almox',
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
+		);
 	}
 
 	function listarPorSetorDemandanteInformatica($indice = 1)
@@ -323,26 +303,21 @@ class ProcessoController extends AbstractController
 
 		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteInformatica',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos por demandante: Infomática',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
+				$this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id) ?? []
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos por demandante: Almox',
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
+		);
 	}
 
 	function listarPorSetorDemandanteMntTransp($indice = 1)
@@ -359,101 +334,74 @@ class ProcessoController extends AbstractController
 
 		$where = array(DEPARTAMENTO_ID => $departamento_id, STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteMntTransp',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos por demandante: Mnt e Transp',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
+				$this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id) ?? []
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos por demandante: Almox',
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
+		);
 	}
 
 	public function exibir($id)
 	{
-		$processo = $this->ProcessoDAO->buscarPorId($id);
-
 		$this->load->view(
 			'index',
 			[
-				'titulo' => 'Processo: ' . $processo->tipo->nome,
-				'processo' => $processo,
+				'titulo' => 'Processo',
+				'processo' => $this->buscarPorId($id),
 				'pagina' => 'processo/exibir.php'
 			]);
 	}
 
-	public function exibirArtefatos($processoId)
+	public function exibirArtefatos($id)
 	{
-		$processo = $this->ProcessoDAO->buscarPorId($processoId);
-
 		$this->load->view(
 			'index',
 			[
-				'titulo' => 'Processo: ' . $processo->tipo->nome,
-				'processo' => $processo,
+				'titulo' => 'Processo',
+				'processo' => $this->buscarPorId($id),
 				'pagina' => 'processo/exibir_artefatos.php'
 			]);
 	}
 
 	public function enviarProcesso($processo_id)
 	{
-		$this->AndamentoDAO->processoEnviado($processo_id);
-
-		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(AndamentoController::ANDAMENTO_CONTROLLER . '/processoEnviado/' . $processo_id);
 	}
 
 	public function aprovarProcessoFiscAdm($processo_id)
 	{
-		$this->AndamentoDAO->processoAprovadoFiscAdm($processo_id);
-
-		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(AndamentoController::ANDAMENTO_CONTROLLER . '/processoAprovadoFiscAdm/' . $processo_id);
 	}
 
 
 	public function aprovarProcessoOd($processo_id)
 	{
-		$this->AndamentoDAO->processoAprovadoOd($processo_id);
-
-		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(AndamentoController::ANDAMENTO_CONTROLLER . '/processoAprovadoOd/' . $processo_id);
 	}
 
 	public function executarProcesso($processo_id)
 	{
-		$this->AndamentoDAO->processoExecutado($processo_id);
-
-		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(AndamentoController::ANDAMENTO_CONTROLLER . '/processoExecutado/' . $processo_id);
 	}
 
 	public function conformarProcesso($processo_id)
 	{
-		$this->AndamentoDAO->processoConformado($processo_id);
-
-		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(AndamentoController::ANDAMENTO_CONTROLLER . '/processoConformado/' . $processo_id);
 	}
 
 	public function arquivarProcesso($processo_id)
 	{
-		$this->AndamentoDAO->processoArquivar($processo_id);
-
-		$processo = $this->ProcessoDAO->buscarPorId($processo_id);
-
-		$processo->completo = true;
-
-		$this->ProcessoDAO->atualizar($processo);
-
-		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(AndamentoController::ANDAMENTO_CONTROLLER . '/processoArquivar/' . $processo_id);
 	}
 
 	public function visualizarProcesso($id)
@@ -472,88 +420,86 @@ class ProcessoController extends AbstractController
 
 	public function criar()
 	{
-
-		$data_post = $this->input->post();
-
 		$this->load->library('DataHora');
 
-		$processo = new Processo(
-			null,
-			ucfirst($data_post[OBJETO]),
-			$data_post[NUMERO],
-			$this->datahora->formatoDoMySQL(),
-			$data_post[CHAVE],
-			$this->DepartamentoDAO->buscarPorId($_SESSION[SESSION_DEPARTAMENTO_ID]),
-			$this->LeiDAO->buscarPorId($data_post[LEI_ID]),
-			$this->TipoDAO->buscarPorId($data_post[TIPO_ID]),
-			$data_post[COMPLETO],
-			true
-		);
+		$array = [
+			ID => null,
+			OBJETO => $this->input->post(OBJETO),
+			NUMERO => $this->input->post(NUMERO),
+			DATA_HORA => $this->datahora->formatoDoMySQL(),
+			CHAVE => uniqid('', true),
+			DEPARTAMENTO_ID => $_SESSION[SESSION_DEPARTAMENTO_ID],
+			LEI_ID => $this->input->post(LEI_ID),
+			TIPO_ID => $this->input->post(TIPO_ID),
+			COMPLETO => false,
+		];
 
-		$processo_id = $this->ProcessoDAO->criar($processo);
+		$this->load->model('dao/ProcesssoDAO');
 
-		redirect("ProcessoController/exibir/{$processo_id}");
+		$this->ProcessoDAO->criar($array);
+
+		$processo = $this->buscarAonde($array);
+
+		redirect("ProcessoController/exibir/" . $processo->id);
 	}
 
 	public function alterar($id)
 	{
-		$processo = $this->ProcessoDAO->buscarPorId($id);
+		$this->load->model('dao/TipoDAO');
+		$this->load->model('dao/DepartamentoDAO');
+		$this->load->model('dao/ModalidadeDAO');
+		$this->load->model('dao/LeiDAO');
 
-		$dados = array(
-			'titulo' => 'Alterar Processo',
-			'pagina' => 'processo/alterar.php',
-			'processo' => $processo,
-			'tipos_options' => $this->TipoDAO->options(),
-			'departamentos' => $this->DepartamentoDAO->options(),
-			'modalidades_options' => $this->ModalidadeDAO->options(),
-			'leis_options' => $this->LeiDAO->options($processo->lei->modalidade->id)
+		$processo = $this->buscarPorId($id);
+
+		$this->load->view('index',
+			[
+				'titulo' => 'Alterar Processo',
+				'pagina' => 'processo/alterar.php',
+				'processo' => $processo,
+				'tipos_options' => $this->TipoDAO->options(),
+				'departamentos' => $this->DepartamentoDAO->options(),
+				'modalidades_options' => $this->ModalidadeDAO->options(),
+				'leis_options' => $this->LeiDAO->options($processo->lei->modalidade->id)
+			]
 		);
-
-		$this->load->view('index', $dados);
-
 	}
 
 	public function atualizar()
 	{
+		$this->load->library('DataHora', $this->input->post(DATA_HORA));
 
-		$data_post = $this->input->post();
+		$array = [
+			ID => $this->input->post(ID),
+			OBJETO => $this->input->post(OBJETO),
+			NUMERO => $this->input->post(NUMERO),
+			DATA_HORA => $this->datahora->formatoDoMySQL(),
+			CHAVE => $this->input->post(CHAVE),
+			DEPARTAMENTO_ID => $this->input->post(DEPARTAMENTO_ID),
+			LEI_ID => $this->input->post(LEI_ID),
+			TIPO_ID => $this->input->post(TIPO_ID),
+			COMPLETO => $this->input->post(COMPLETO),
+		];
 
-		$this->load->library('DataHora', $data_post[DATA_HORA]);
+		$this->load->model('dao/ProcessoDAO');
 
-		$processo = new Processo(
-			$data_post[ID],
-			ucfirst($data_post[OBJETO]),
-			$data_post[NUMERO],
-			$this->datahora->formatoDoMySQL(),
-			$data_post[CHAVE],
-			$this->DepartamentoDAO->buscarPorId($data_post[DEPARTAMENTO_ID]),
-			$this->LeiDAO->buscarPorId($data_post[LEI_ID]),
-			$this->TipoDAO->buscarPorId($data_post[TIPO_ID]),
-			$data_post[COMPLETO],
-			$data_post[STATUS]
-		);
+		$this->ProcessoDAO->atualizar($array);
 
-		$this->ProcessoDAO->atualizar($processo);
-
-		redirect(self::PROCESSO_CONTROLLER);
-	}
-
-	public function deletar($id)
-	{
-		$this->ProcessoDAO->deletar($id);
-		redirect(self::PROCESSO_CONTROLLER . '/listar');
+		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $array[ID]);
 	}
 
 	public function recuperar($id)
 	{
+		$this->load->model('dao/ProcessoDAO');
+
 		$this->ProcessoDAO->recuperar($id);
-		redirect(self::PROCESSO_CONTROLLER . '/listarTodosExcluidos');
+
+		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $id);
 	}
 
-	public function imprimir($processoId)
+	public function imprimir($id)
 	{
-		$processo = $this->ProcessoDAO->buscarPorId($processoId);
-		$this->imprimirProcesso($processo);
+		$this->imprimirProcesso($this->buscarPorId($id));
 	}
 
 	private function imprimirProcesso($processo)
@@ -614,105 +560,134 @@ class ProcessoController extends AbstractController
 		$this->pdf->imprimir($listaDePath, $processo->toString());
 	}
 
-	private function toObject($arrayList)
+	public function toObject($listaDeArray)
 	{
-		$data_hora = $arrayList->data_hora ?? ($arrayList['data_hora'] ?? null);
+		$listaDeProcessos = [];
 
-		$this->load->library('DataHora', $data_hora);
+		foreach ($listaDeArray as $linha) {
+			$id = $linha->id ?? ($linha['id'] ?? null);
+			$status = $linha->status ?? $linha['status'] ?? null;
+			$objeto = $linha->objeto ?? $linha['objeto'] ?? null;
+			$numero = $linha->numero ?? $linha['numero'] ?? null;
+			$data_hora = $linha->data_hora ?? $linha['data_hora'] ?? null;
+			$chave = $linha->chave ?? $linha['chave'] ?? null;
+			$completo = $linha->completo ?? $linha['completo'] ?? null;
+			$lei_id = $linha->lei_id ?? $linha['lei_id'] ?? null;
+			$departamento_id = $linha->departamento_id ?? $linha['departamento_id'] ?? null;
+			$tipo_id = $linha->tipo_id ?? $linha['tipo_id'] ?? null;
 
-		$processo = new Processo(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->objeto ?? ($arrayList['objeto'] ?? null),
-			$arrayList->numero ?? ($arrayList['numero'] ?? null),
-			$this->datahora->formatoDoMySQL(),
-			$arrayList->chave ?? ($arrayList['chave'] ?? null),
-			isset($arrayList->departamento_id) ? $this->DepartamentoDAO->buscarPorId($arrayList->departamento_id) : (isset($arrayList['departamento_id']) ? $this->DepartamentoDAO->buscarPorId($arrayList['departamento_id']) : null),
-			isset($arrayList->lei_id) ? $this->LeiDAO->buscarPorId($arrayList->lei_id) : (isset($arrayList['lei_id']) ? $this->LeiDAO->buscarPorId($arrayList['lei_id']) : null),
-			isset($arrayList->tipo_id) ? $this->TipoDAO->buscarPorId($arrayList->tipo_id) : (isset($arrayList['tipo_id']) ? $this->TipoDAO->buscarPorId($arrayList['tipo_id']) : null),
-			$arrayList->completo ?? ($arrayList['completo'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null),
-			isset($arrayList->id)
-				? $this->AndamentoDAO->buscarAonde(['processo_id' => $arrayList->id])
-				: (isset($arrayList['id'])
-				? $this->AndamentoDAO->buscarAonde(['processo_id' => $arrayList->id])
-				: null)
+			$listaDeArtefatosId =
+				$this->db
+					->where([
+						TIPO_ID => $id,
+						LEI_ID => $lei_id])
+					->order_by(ID, DIRECTIONS_ASC)
+					->get('lei_tipo_artefato');
 
-		);
+			$this->load->library('DataHora', $data_hora);
 
-		/**
-		 * LeiTipoArtefatoDAO vai buscar na tabela lei_tipo_artefato todos os artefatos
-		 * (entre artefatos, tipos e lei), tem que ser passado os parâmetros lei_id e processo_id
-		 */
-		$processo->tipo->listaDeArtefatos =
-			$this->LeiTipoArtefatoDAO
-				->buscarListaDeArtefatos($processo->lei->id, $processo->tipo->id);
+			$listaDeArtefatos = [];
 
-		foreach ($processo->tipo->listaDeArtefatos as $artefato) {
+			foreach ($listaDeArtefatosId as $artefatoId) {
+				$listaDeArtefatos[] = $this->ArtefatoDAO->buscarPorId($artefatoId);
+			}
 
-			$artefato->arquivos = $this->ArquivoDAO
-				->buscarArquivoDoArtefato($processo->id, $artefato->id);
+			$this->load->model('dao/AndamentoDAO');
+			$listaDeAndamentos = $this->AndamentoDAO->buscarAonde([PROCESSO_ID => $id]);
+
+			$this->load->model('dao/LeiDAO');
+			$this->load->model('dao/DepartamentoDAO');
+			$this->load->model('dao/TipoDAO');
+
+			$processo = new Processo(
+				$id ?? null,
+				$status ?? null,
+				$objeto ?? null,
+				$numero ?? null,
+				$this->datahora ?? null,
+				$chave ?? null,
+				$completo ?? null,
+				$this->LeiDAO->buscarPorId($lei_id) ?? null,
+				$this->DepartamentoDAO->buscarPorId($departamento_id) ?? null,
+				$listaDeArtefatos ?? null,
+				$this->TipoDAO->buscarPorId($tipo_id) ?? null,
+				$listaDeAndamentos ?? null
+			);
+			$listaDeProcessos[] = $processo;
 		}
 
-		return $processo;
+		return $listaDeProcessos;
 	}
 
 	public function contarRegistrosAtivos()
 	{
-		// TODO: Implement contarRegistrosAtivos() method.
+		$this->load->model('dao/ProcessoDAO');
+		$this->ProcessoDAO->contarRegistrosAtivos();
 	}
 
 	public function contarRegistrosInativos()
 	{
-		// TODO: Implement contarRegistrosInativos() method.
+		$this->load->model('dao/ProcessoDAO');
+		$this->ProcessoDAO->contarRegistrosInativos();
 	}
 
 	public function contarTodosOsRegistros()
 	{
-		// TODO: Implement contarTodosOsRegistros() method.
+		$this->load->model('dao/ProcessoDAO');
+		$this->ProcessoDAO->contarTodosOsRegistros();
 	}
 
 	public function excluirDeFormaPermanente($id)
 	{
-		// TODO: Implement excluirDeFormaPermanente() method.
+		$this->load->model('dao/ProcessoDAO');
+		$this->ProcessoDAO->excluirDeFormaPermanente($id);
 	}
 
 	public function excluirDeFormaLogica($id)
 	{
-		// TODO: Implement excluirDeFormaLogica() method.
+		$this->load->model('dao/ProcessoDAO');
+		$this->ProcessoDAO->excluirDeFormaLogica($id);
 	}
 
 	public function options()
 	{
-		// TODO: Implement options() method.
+		$this->load->model('dao/ProcessoDAO');
+		return $this->ProcessoDAO->options();
 	}
 
 	public function buscarPorId($id)
 	{
-		// TODO: Implement buscarPorId() method.
+		$this->load->model('dao/ProcessoDAO');
+		return $this->ProcessoDAO->buscarPorId($id);
 	}
 
 	public function buscarTodosAtivos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosAtivos() method.
+		$this->load->model('dao/ProcessoDAO');
+		return $this->ProcessoDAO->buscarTodosAtivos($inicio, $fim);
 	}
 
 	public function buscarTodosInativos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosInativos() method.
+		$this->load->model('dao/ProcessoDAO');
+		return $this->ProcessoDAO->buscarTodosInativos($inicio, $fim);
 	}
 
 	public function buscarTodosStatus($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosStatus() method.
+		$this->load->model('dao/ProcessoDAO');
+		return $this->ProcessoDAO->buscarTodosStatus($inicio, $fim);
 	}
 
 	public function buscarAonde($inicio, $fim, $where)
 	{
-		// TODO: Implement buscarAonde() method.
+		$this->load->model('dao/ProcessoDAO');
+		return $this->ProcessoDAO->buscarAonde($inicio, $fim,$where);
 	}
 
 	public function contarTodosOsRegistrosAonde($where)
 	{
-		// TODO: Implement contarTodosOsRegistrosAonde() method.
+		$this->load->model('dao/ProcessoDAO');
+		return $this->ProcessoDAO->contarTodosOsRegistrosAonde($where);
 	}
 }
