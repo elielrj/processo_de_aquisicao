@@ -140,4 +140,9 @@ class FuncaoController extends AbstractController
 	{
 		// TODO: Implement contarTodosOsRegistrosAonde() method.
 	}
+
+	public function recuperar($id)
+	{
+		// TODO: Implement recuperar() method.
+	}
 }

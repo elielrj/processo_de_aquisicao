@@ -124,6 +124,8 @@ class AndamentoController extends AbstractController
 		$this->load->model('dao/AndamentoDAO');
 
 		$this->AndamentoDAO->criar($array);
+
+		redirect(ProcessoController::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function processoAprovadoFiscAdm($processo_id)
@@ -143,6 +145,8 @@ class AndamentoController extends AbstractController
 		$this->load->model('dao/AndamentoDAO');
 
 		$this->AndamentoDAO->criar($array);
+
+		redirect(ProcessoController::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function processoAprovadoOd($processo_id)
@@ -162,6 +166,8 @@ class AndamentoController extends AbstractController
 		$this->load->model('dao/AndamentoDAO');
 
 		$this->AndamentoDAO->criar($array);
+
+		redirect(ProcessoController::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function processoExecutado($processo_id)
@@ -181,6 +187,8 @@ class AndamentoController extends AbstractController
 		$this->load->model('dao/AndamentoDAO');
 
 		$this->AndamentoDAO->criar($array);
+
+		redirect(ProcessoController::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function processoConformado($processo_id)
@@ -200,6 +208,8 @@ class AndamentoController extends AbstractController
 		$this->load->model('dao/AndamentoDAO');
 
 		$this->AndamentoDAO->criar($array);
+
+		redirect(ProcessoController::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function processoArquivar($processo_id)
@@ -219,6 +229,8 @@ class AndamentoController extends AbstractController
 		$this->load->model('dao/AndamentoDAO');
 
 		$this->AndamentoDAO->criar($array);
+
+		redirect(ProcessoController::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	/**
@@ -242,11 +254,11 @@ class AndamentoController extends AbstractController
 
 			$andamento =
 				new Andamento(
-					$id,
-					$status,
-					$this->selecionarStatus($statusDoAndamento),
-					$this->datahora,
-					$this->UsuarioDAO->buscarPorId($usuario_id)
+					$id ?? null,
+					$status ?? null,
+					$this->selecionarStatus($statusDoAndamento) ?? null,
+					$this->datahora ?? null,
+					$this->UsuarioDAO->buscarPorId($usuario_id) ?? null
 				);
 			$listaDeAndamentos[] = $andamento;
 		}
@@ -376,11 +388,11 @@ class AndamentoController extends AbstractController
 	 * @param $fim
 	 * @return array
 	 */
-	public function buscarAonde($where)
+	public function buscarAonde($inicio, $fim, $where)
 	{
 		$this->load->model('dao/AndamentoDAO');
 
-		$array = $this->AndamentoDAO->buscarAonde($where);
+		$array = $this->AndamentoDAO->buscarAonde($inicio, $fim, $where);
 
 		return $this->toObject($array);
 	}
@@ -447,5 +459,20 @@ class AndamentoController extends AbstractController
 		$this->load->model('dao/AndamentoDAO');
 
 		return $this->AndamentoDAO->options();
+	}
+
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		$this->load->model('dao/AndamentoDAO');
+		return $this->AndamentoDAO->contarTodosOsRegistrosAonde($where);
+	}
+
+	public function recuperar($id)
+	{
+		$this->load->model('dao/AndamentoDAO');
+
+		$this->AndamentoDAO->recuperar($id);
+
+		redirect(self::ANDAMENTO_CONTROLLER . '/listar');
 	}
 }

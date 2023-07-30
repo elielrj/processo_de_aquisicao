@@ -23,25 +23,21 @@ class ArtefatoController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$artefatos = $this->ArtefatoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
-
-
 		$this->load->library('CriadorDeBotoes',
-			[
-				'controller' => ARTEFATO_CONTROLLER . '/listar',
-				'quantidade_de_registros_no_banco_de_dados' => $this->ArtefatoDAO->contar()
-			]);
-
-
-		$botoes = empty($artefatos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de Artefatos',
-			'tabela' => $artefatos,
-			'pagina' => 'artefato/index.php',
-			'botoes' => $botoes,
+			arrayToCriadorDeBotoes(
+				ARTEFATO_CONTROLLER . '/listar',
+				$this->contarRegistrosAtivos()
+			)
 		);
-		$this->load->view('index', $dados);
+
+		$this->load->view('index',
+			arrayToView(
+				'Lista de Artefatos',
+				$this->buscarTodosAtivos($qtd_de_itens_para_exibir, $indice_no_data_base),
+				'artefato/index.php',
+				$this->criadordebotoes->listar($indice) ?? 0
+			)
+		);
 	}
 
 	public function novo()
@@ -177,5 +173,10 @@ class ArtefatoController extends AbstractController
 	public function contarTodosOsRegistrosAonde($where)
 	{
 		// TODO: Implement contarTodosOsRegistrosAonde() method.
+	}
+
+	public function recuperar($id)
+	{
+		// TODO: Implement recuperar() method.
 	}
 }

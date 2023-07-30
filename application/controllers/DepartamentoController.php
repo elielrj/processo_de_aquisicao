@@ -23,25 +23,21 @@ class DepartamentoController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$departamentos = $this->DepartamentoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				DEPARTAMENTO_CONTROLLER . '/listar',
+				$this->contarRegistrosAtivos() ?? 0
+			));
 
-		$params = [
-			'controller' => DEPARTAMENTO_CONTROLLER . '/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->DepartamentoDAO->contar()
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($departamentos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de Departamentos',
-			'tabela' => $departamentos,
-			'pagina' => 'departamento/index.php',
-			'botoes' => $botoes,
-		);
-
-		$this->load->view('index', $dados);
+		$this->load->view('index',
+			[
+				arrayToView(
+					'Lista de Departamentos',
+					$this->buscarTodosAtivos($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+					'departamento/index.php',
+					$this->criadordebotoes->listar($indice) ?? 0
+				)
+			]);
 	}
 
 	public function novo()
@@ -187,5 +183,10 @@ class DepartamentoController extends AbstractController
 	public function contarTodosOsRegistrosAonde($where)
 	{
 		// TODO: Implement contarTodosOsRegistrosAonde() method.
+	}
+
+	public function recuperar($id)
+	{
+		// TODO: Implement recuperar() method.
 	}
 }
