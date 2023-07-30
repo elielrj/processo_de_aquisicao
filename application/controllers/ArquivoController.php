@@ -23,35 +23,31 @@ class ArquivoController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$arquivos = $this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base);
-
 		$this->load->library('CriadorDeBotoes',
-			[
-				'controller' => self::ARQUIVO_CONTROLLER . '/listar',
-				'quantidade_de_registros_no_banco_de_dados' => $this->contarTodosOsRegistros()
-			]);
-
-		$botoes = empty($arquivos) ? '' : $this->criadordebotoes->listar($indice);
+			arrayToCriadorDeBotoes(
+				self::ARQUIVO_CONTROLLER . '/listar',
+				$this->contarTodosOsRegistros() ?? 0
+			)
+		);
 
 		$this->load->view('index',
-			[
-				'titulo' => 'Lista de arquivos',
-				'tabela' => $arquivos,
-				'pagina' => 'arquivo/index.php',
-				'botoes' => $botoes,
-			]);
+			arrayToView(
+				'Lista de arquivos',
+				$this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				self::ARQUIVO_CONTROLLER . '/listar',
+				$this->criadordebotoes->listar($indice) ?? 0
+			)
+		);
 	}
 
 	public function novo()
 	{
-		$dados = array(
+		$this->load->view('index', [
 			'titulo' => 'Novo arquivo',
 			'pagina' => 'arquivo/novo.php',
 			'processos' => $this->ProcessoDAO->options(),
 			'artefatos' => $this->ArtefatoDAO->options()
-		);
-
-		$this->load->view('index', $dados);
+		]);
 	}
 
 	public function alterar($id)

@@ -16,6 +16,25 @@ class ProcessoController extends AbstractController
 		usuarioPossuiSessaoAberta() ? $this->listarPorSetorDemandante() : redirecionarParaPaginaInicial();
 	}
 
+	public function novo()
+	{
+		$lei_e_modalidade_pre_definido = 1;
+
+		$this->load->model('dao/DepartamentoDAO');
+		$this->load->model('dao/ModalidadeDAO');
+		$this->load->model('dao/TipoDAO');
+		$this->load->model('dao/LeiDAO');
+
+		$this->load->view('index', [
+			'titulo' => 'Novo Processo',
+			'pagina' => 'processo/novo.php',
+			'departamentos' => $this->DepartamentoDAO->options(),
+			'modalidades_options' => $this->ModalidadeDAO->options(),
+			'tipos_options' => $this->TipoDAO->options(),
+			'leis_options' => $this->LeiDAO->options($lei_e_modalidade_pre_definido),
+			'lei_e_modalidade_pre_definido' => $lei_e_modalidade_pre_definido
+		]);
+	}
 
 	function listar($indice = 1)
 	{
@@ -24,27 +43,23 @@ class ProcessoController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$whare = [STATUS => true];
-
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $whare);
-
 		$this->load->library(
 			'CriadorDeBotoes',
-			[
-				'controller' => PROCESSO_CONTROLLER . '/listar',
-				'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
-			]);
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listar',
+				$this->contarRegistrosAtivos() ?? 0
+			)
+		);
 
 		$this->load->view(
 			'index',
-			[
-				'titulo' => 'Processos',
-				'tabela' => $processos,
-				'pagina' => 'processo/index.php',
-				'botoes' => (empty($processos) ? '' : $this->criadordebotoes->listar($indice))
-			]
+			arrayToView(
+				'Processos',
+				$this->buscarTodosAtivos($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
 		);
-
 	}
 
 	function listarTodosExcluidos($indice = 1)
@@ -54,28 +69,21 @@ class ProcessoController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$whare = [STATUS => false];
-
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $whare);
-
-		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarTodosExcluidos',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($whare)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarTodosExcluidos',
+				$this->contarRegistrosInativos() ?? 0
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos',
+				$this->buscarTodosInativos($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? 0,
+			)
+		);
 	}
 
 	function listarTodosProcessosIncompleto($indice = 1)
@@ -87,25 +95,21 @@ class ProcessoController extends AbstractController
 
 		$where = array(COMPLETO => false, STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarTodosProcessosIncompleto',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarTodosProcessosIncompleto',
+				$this->contarTodosOsRegistrosAonde($where)
+			)
 		);
 
-		$this->load->view('index', $dados);
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos',
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? []
+			)
+		);
 
 	}
 
@@ -118,26 +122,21 @@ class ProcessoController extends AbstractController
 
 		$where = array(COMPLETO => true, STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarTodosProcessosCompleto',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contar($where)
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos',
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarTodosProcessosCompleto',
+				$this->contarTodosOsRegistrosAonde($where) ?? 0
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos',
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? 0
+			)
+		);
 	}
 
 	function listarPorSetorDemandante($indice = 1)
@@ -149,28 +148,23 @@ class ProcessoController extends AbstractController
 
 		$where = array(DEPARTAMENTO_ID => $_SESSION[DEPARTAMENTO_ID], STATUS => true);
 
-		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
-
-		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandante',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante()
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($processos) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de processos por demandante: ' . $_SESSION['departamento_nome'],
-			'tabela' => $processos,
-			'pagina' => 'processo/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::PROCESSO_CONTROLLER . '/listarPorSetorDemandante',
+				$this->contarTodosOsRegistrosAonde($where) ?? 0
+			)
 		);
 
-		$this->load->view('index', $dados);
-
+		$this->load->view('index',
+			arrayToView(
+				'Lista de processos por demandante: ' . $_SESSION['departamento_nome'],
+				$this->buscarAonde($qtd_de_itens_para_exibir, $indice_no_data_base, $where) ?? [],
+				'processo/index.php',
+				$this->criadordebotoes->listar($indice) ?? []
+			)
+		);
 	}
-
+//todo continuar daqui!!!
 	function listarPorSetorDemandanteAlmox($indice = 1)
 	{
 		$indice--;
@@ -188,7 +182,7 @@ class ProcessoController extends AbstractController
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
+			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAlmox',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -224,7 +218,7 @@ class ProcessoController extends AbstractController
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSalc',
+			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSalc',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -260,7 +254,7 @@ class ProcessoController extends AbstractController
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAprov',
+			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteAprov',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -296,7 +290,7 @@ class ProcessoController extends AbstractController
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSaude',
+			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteSaude',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -332,7 +326,7 @@ class ProcessoController extends AbstractController
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteInformatica',
+			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteInformatica',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -368,7 +362,7 @@ class ProcessoController extends AbstractController
 		$processos = $this->ProcessoDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base, $where);
 
 		$params = [
-			'controller' => PROCESSO_CONTROLLER . '/listarPorSetorDemandanteMntTransp',
+			'controller' => self::PROCESSO_CONTROLLER . '/listarPorSetorDemandanteMntTransp',
 			'quantidade_de_registros_no_banco_de_dados' => $this->ProcessoDAO->contarProcessosPorSetorDemandante($departamento_id)
 		];
 
@@ -417,14 +411,14 @@ class ProcessoController extends AbstractController
 	{
 		$this->AndamentoDAO->processoEnviado($processo_id);
 
-		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function aprovarProcessoFiscAdm($processo_id)
 	{
 		$this->AndamentoDAO->processoAprovadoFiscAdm($processo_id);
 
-		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 
@@ -432,21 +426,21 @@ class ProcessoController extends AbstractController
 	{
 		$this->AndamentoDAO->processoAprovadoOd($processo_id);
 
-		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function executarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoExecutado($processo_id);
 
-		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function conformarProcesso($processo_id)
 	{
 		$this->AndamentoDAO->processoConformado($processo_id);
 
-		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function arquivarProcesso($processo_id)
@@ -459,7 +453,7 @@ class ProcessoController extends AbstractController
 
 		$this->ProcessoDAO->atualizar($processo);
 
-		redirect(PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
+		redirect(self::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
 	public function visualizarProcesso($id)
@@ -475,23 +469,6 @@ class ProcessoController extends AbstractController
 		]);
 	}
 
-
-	public function novo()
-	{
-		$lei_e_modalidade_pre_definido = 1;
-
-		$dados = array(
-			'titulo' => 'Novo Processo',
-			'pagina' => 'processo/novo.php',
-			'departamentos' => $this->DepartamentoDAO->options(),
-			'modalidades_options' => $this->ModalidadeDAO->options(),
-			'tipos_options' => $this->TipoDAO->options(),
-			'leis_options' => $this->LeiDAO->options($lei_e_modalidade_pre_definido),
-			'lei_e_modalidade_pre_definido' => $lei_e_modalidade_pre_definido
-		);
-
-		$this->load->view('index', $dados);
-	}
 
 	public function criar()
 	{
@@ -558,19 +535,19 @@ class ProcessoController extends AbstractController
 
 		$this->ProcessoDAO->atualizar($processo);
 
-		redirect(PROCESSO_CONTROLLER);
+		redirect(self::PROCESSO_CONTROLLER);
 	}
 
 	public function deletar($id)
 	{
 		$this->ProcessoDAO->deletar($id);
-		redirect(PROCESSO_CONTROLLER . '/listar');
+		redirect(self::PROCESSO_CONTROLLER . '/listar');
 	}
 
 	public function recuperar($id)
 	{
 		$this->ProcessoDAO->recuperar($id);
-		redirect(PROCESSO_CONTROLLER . '/listarTodosExcluidos');
+		redirect(self::PROCESSO_CONTROLLER . '/listarTodosExcluidos');
 	}
 
 	public function imprimir($processoId)
@@ -679,4 +656,63 @@ class ProcessoController extends AbstractController
 		return $processo;
 	}
 
+	public function contarRegistrosAtivos()
+	{
+		// TODO: Implement contarRegistrosAtivos() method.
+	}
+
+	public function contarRegistrosInativos()
+	{
+		// TODO: Implement contarRegistrosInativos() method.
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		// TODO: Implement contarTodosOsRegistros() method.
+	}
+
+	public function excluirDeFormaPermanente($id)
+	{
+		// TODO: Implement excluirDeFormaPermanente() method.
+	}
+
+	public function excluirDeFormaLogica($id)
+	{
+		// TODO: Implement excluirDeFormaLogica() method.
+	}
+
+	public function options()
+	{
+		// TODO: Implement options() method.
+	}
+
+	public function buscarPorId($id)
+	{
+		// TODO: Implement buscarPorId() method.
+	}
+
+	public function buscarTodosAtivos($inicio, $fim)
+	{
+		// TODO: Implement buscarTodosAtivos() method.
+	}
+
+	public function buscarTodosInativos($inicio, $fim)
+	{
+		// TODO: Implement buscarTodosInativos() method.
+	}
+
+	public function buscarTodosStatus($inicio, $fim)
+	{
+		// TODO: Implement buscarTodosStatus() method.
+	}
+
+	public function buscarAonde($inicio, $fim, $where)
+	{
+		// TODO: Implement buscarAonde() method.
+	}
+
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		// TODO: Implement contarTodosOsRegistrosAonde() method.
+	}
 }

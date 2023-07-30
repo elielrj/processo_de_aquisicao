@@ -119,13 +119,63 @@ class ArtefatoController extends AbstractController
 		);
 	}
 
-	public function array(): array
+	public function contarRegistrosAtivos()
 	{
-		return array(
-			'id' => isset($this->id) ? $this->id : null,
-			'ordem' => $this->ordem,
-			'nome' => $this->nome,
-			'status' => $this->status,
-		);
+		// TODO: Implement contarRegistrosAtivos() method.
+	}
+
+	public function contarRegistrosInativos()
+	{
+		// TODO: Implement contarRegistrosInativos() method.
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		// TODO: Implement contarTodosOsRegistros() method.
+	}
+
+	public function excluirDeFormaPermanente($id)
+	{
+		// TODO: Implement excluirDeFormaPermanente() method.
+	}
+
+	public function excluirDeFormaLogica($id)
+	{
+		// TODO: Implement excluirDeFormaLogica() method.
+	}
+
+	public function options()
+	{
+		// TODO: Implement options() method.
+	}
+
+	public function buscarPorId($id)
+	{
+		// TODO: Implement buscarPorId() method.
+	}
+
+	public function buscarTodosAtivos($inicio, $fim)
+	{
+		// TODO: Implement buscarTodosAtivos() method.
+	}
+
+	public function buscarTodosInativos($inicio, $fim)
+	{
+		// TODO: Implement buscarTodosInativos() method.
+	}
+
+	public function buscarTodosStatus($inicio, $fim)
+	{
+		// TODO: Implement buscarTodosStatus() method.
+	}
+
+	public function buscarAonde($where)
+	{
+		// TODO: Implement buscarAonde() method.
+	}
+
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		// TODO: Implement contarTodosOsRegistrosAonde() method.
 	}
 }

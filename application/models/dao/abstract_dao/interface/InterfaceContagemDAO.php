@@ -7,4 +7,5 @@ interface InterfaceContagemDAO
 	public function contarRegistrosInativos();
 
 	public function contarTodosOsRegistros();
+	public function contarTodosOsRegistrosAonde($where);
 }
