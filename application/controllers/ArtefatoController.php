@@ -42,27 +42,32 @@ class ArtefatoController extends AbstractController
 
 	public function novo()
 	{
-		$this->load->view('index', [
-			'titulo' => 'Novo Artefato',
-			'pagina' => 'artefato/novo.php'
-		]);
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Novo Artefato',
+				'pagina' => 'artefato/novo.php'
+			]
+		);
 	}
 
 	public function criar()
 	{
+		$this->load->model('ArtefatoDAO');
 
-		$data_post = $this->input->post();
+		$array =
+			[
+				ID => null,
+				'ordem' => $this->input->post('ordem'),
+				'nome' => $this->input->post('nome'),
+				STATUS => true
+			];
 
-		$artefato = new Artefato(
-			null,
-			$data_post['ordem'],
-			$data_post['nome'],
-			$data_post['status']
-		);
+		$this->load->model('dao/ArtefatoDAO');
 
-		$this->ArtefatoDAO->create($artefato);
+		$this->ArtefatoDAO->criar($array);
 
-		redirect('ArtefatoController');
+		redirect(self::ARTEFATO_CONTROLLER);
 	}
 
 	public function alterar($id)

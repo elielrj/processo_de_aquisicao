@@ -42,6 +42,7 @@ class DepartamentoController extends AbstractController
 
 	public function novo()
 	{
+		$this->load->model('dao/UgDAO');
 
 		$dados = array(
 			'titulo' => 'Nova Seção',
@@ -54,21 +55,22 @@ class DepartamentoController extends AbstractController
 
 	public function criar()
 	{
-		$data_post = $this->input->post();
-
 		$this->load->model('UgDAO');
 
-		$departamento = new Departamento(
-			null,
-			$data_post['nome'],
-			$data_post['sigla'],
-			$this->UgDAO->buscarPorId($data_post['ug']),
-			true
-		);
+		$array =
+			[
+				ID => null,
+				'nome' => $this->input->post('nome'),
+				'sigla' => $this->input->post('sigla'),
+				'ug' => $this->input->post('ug'),
+				STATUS => true
+			];
 
-		$this->DepartamentoDAO->criar($departamento);
+		$this->load->model('dao/DepartamentoDAO');
 
-		redirect('DepartamentoController');
+		$this->DepartamentoDAO->criar($array);
+
+		redirect(self::DEPARTAMENTO_CONTROLLER);
 	}
 
 	public function alterar($id)

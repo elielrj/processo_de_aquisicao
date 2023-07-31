@@ -4,6 +4,8 @@ require_once 'abstract_controller/AbstractController.php';
 
 class HierarquiaController extends AbstractController
 {
+	const HIERARQUIA_CONTROLLER = 'HierarquiaController';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -16,17 +18,55 @@ class HierarquiaController extends AbstractController
 
 	public function listar($indice = 1)
 	{
+		$indice--;
+		$qtd_de_itens_para_exibir = 10;
+		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
+		$this->load->library(
+			'CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				HierarquiaController::HIERARQUIA_CONTROLLER . '/listar',
+				$this->contarTodosOsRegistros()
+			)
+		);
+
+		$this->load->view(
+			'index',
+			arrayToView(
+				'Lista de hierarquias',
+				$this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				'funcao/index.php',
+				$this->criadordebotoes->listar($indice)
+			)
+		);
 	}
 
 	public function novo()
 	{
-
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Nova Hierarquia',
+				'pagina' => 'hierarquia/novo.php',
+			]
+		);
 	}
 
 	public function criar()
 	{
+		$array =
+			[
+				ID => null,
+				'posto_ou_graducao' => $this->input->post('posto_ou_graducao'),
+				'sigla' => $this->input->post('sigla'),
+				STATUS => true
+			];
 
+		$this->load->model('dao/HierarquiaDAO');
+
+		$this->HierarquiaDAO->criar($array);
+
+		redirect(self::HIERARQUIA_CONTROLLER);
 	}
 
 	private function toObject($arrayList)

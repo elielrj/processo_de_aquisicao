@@ -22,35 +22,51 @@ class FuncaoController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$funcoes = $this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base);
-
 		$this->load->library(
 			'CriadorDeBotoes',
-			[
-				'controller' => FuncaoController::FUNCAO_CONTROLLER . '/listar',
-				'quantidade_de_registros_no_banco_de_dados' => $this->contarTodosOsRegistros()
-			]);
-
-		$botoes = empty($funcoes) ? '' : $this->criadordebotoes->listar($indice);
+			arrayToCriadorDeBotoes(
+				FuncaoController::FUNCAO_CONTROLLER . '/listar',
+				$this->contarTodosOsRegistros()
+			)
+		);
 
 		$this->load->view(
 			'index',
-			[
-				'titulo' => 'Lista de andamentos',
-				'tabela' => $funcoes,
-				'pagina' => 'funcao/index.php',
-				'botoes' => $botoes
-			]);
+			arrayToView(
+				'Lista de andamentos',
+				$this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				'funcao/index.php',
+				$this->criadordebotoes->listar($indice)
+			)
+		);
 	}
 
 	public function novo()
 	{
-
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Nova Função',
+				'pagina' => 'funcao/novo.php',
+			]
+		);
 	}
 
 	public function criar()
 	{
+		$array =
+			[
+				ID => null,
+				'descricao' => $this->input->post('descricao'),
+				'nivel_de_acesso' => $this->input->post('nivel_de_acesso'),
+				STATUS => true
+			];
 
+		$this->load->model('dao/FuncaoDAO');
+
+		$this->FuncaoDAO->criar($array);
+
+		redirect(self::FUNCAO_CONTROLLER);
 	}
 
 	private function toObject($arrayList)

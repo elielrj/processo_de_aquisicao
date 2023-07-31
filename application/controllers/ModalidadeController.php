@@ -23,49 +23,46 @@ class ModalidadeController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$modalidades = $this->ModalidadeDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
-
-		$params = [
-			'controller' => MODALIDADE_CONTROLLER . '/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->ModalidadeDAO->contar()
-		];
-
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($modalidades) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de modalidades',
-			'tabela' => $modalidades,
-			'pagina' => 'modalidade/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::MODALIDADE_CONTROLLER . '/listar',
+				$this->contarRegistrosAtivos()
+			)
 		);
-		$this->load->view('index', $dados);
+
+		$this->load->view('index',
+			arrayToView(
+				'Lista de modalidades',
+				$this->buscarTodosAtivos($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				'modalidade/index.php',
+				$this->criadordebotoes->listar($indice) ?? 0
+			)
+		);
 	}
 
 	public function novo()
 	{
-		$this->load->view('index', [
-			'titulo' => 'Novo Modalidade',
-			'pagina' => 'modalidade/novo.php'
-		]);
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Novo Modalidade',
+				'pagina' => 'modalidade/novo.php'
+			]
+		);
 	}
 
 	public function criar()
 	{
+		$array =
+			[
+				ID => true,
+				NOME => $this->input->post('nome'),
+				STATUS => $this->input->post('status')
+			];
 
-		$data_post = $this->input->post();
+		$this->ModalidadeDAO->criar($array);
 
-		$modalidade = new Modalidade(
-			null,
-			$data_post['nome'],
-			$data_post['status']
-		);
-
-		$this->ModalidadeDAO->criar($modalidade);
-
-		redirect('ModalidadeController');
+		redirect(self::MODALIDADE_CONTROLLER);
 	}
 
 	public function alterar($id)

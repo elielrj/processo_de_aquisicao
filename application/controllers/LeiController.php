@@ -5,6 +5,7 @@ require_once 'abstract_controller/AbstractController.php';
 class LeiController extends AbstractController
 {
 	const LEI_CONTROLLER = 'LeiController';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -22,60 +23,59 @@ class LeiController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$leis = $this->LeiDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
-
-		$params = [
-			'controller' => LEI_CONTROLLER . '/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->LeiDAO->contar()
-		];
-
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-		$botoes = empty($leis) ? '' : $this->criadordebotoes->listar($indice);
-
-		$dados = array(
-			'titulo' => 'Lista de leis',
-			'tabela' => $leis,
-			'pagina' => 'lei/index.php',
-			'botoes' => $botoes,
+		$this->load->library('CriadorDeBotoes',
+			arrayToCriadorDeBotoes(
+				self::LEI_CONTROLLER . '/listar',
+				$this->contarRegistrosAtivos() ?? 0
+			)
 		);
-		$this->load->view('index', $dados);
+
+		$this->load->view('index',
+			arrayToView(
+				'Lista de leis',
+				$this->buscarTodosAtivos($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				'lei/index.php',
+				$this->criadordebotoes->listar($indice) ?? 0
+			)
+		);
 	}
 
 	public function novo()
 	{
 		$this->load->model('dao/ModalidadeDAO');
 
-		$this->load->view('index', [
-			'titulo' => 'Nova lei',
-			'pagina' => 'lei/novo.php',
-			'options_modalidades' => $this->ModalidadeDAO->options()
-		]);
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Nova lei',
+				'pagina' => 'lei/novo.php',
+				'options_modalidades' => $this->ModalidadeDAO->options()
+			]
+		);
 	}
 
 	public function criar()
 	{
+		$this->load->library(
+			'Data',
+			$this->input->post('data'));
 
-		$data_post = $this->input->post();
+		$array =
+			[
+				ID => null,
+				NUMERO => $this->input->post('numero'),
+				ARTIGO => $this->input->post('artigo'),
+				INCISO => $this->input->post('inciso'),
+				DATA => $this->datahora->formatoDoMySQL(),
+				MODALIDADE => $this->input->post('modalidade_id'),
+				STATUS => true
+			];
 
-		$this->load->library('DataHora', $data_post['data']);
+		$this->load->model('dao/LeiDAO');
 
-		$this->load->model('dao/ModalidadeDAO');
+		$this->LeiDAO->criar($array);
 
-		$lei = new lei(
-			null,
-			$data_post['numero'],
-			$data_post['artigo'],
-			$data_post['inciso'],
-			$this->datahora->formatoDoMySQL(),
-			$this->ModalidadeDAO->buscarPorId($data_post['modalidade_id']),
-			$data_post['status']
-		);
-
-		$this->LeiDAO->criar($lei);
-
-		redirect('leiController');
+		redirect(self::LEI_CONTROLLER);
 	}
 
 	public function alterar($id)
