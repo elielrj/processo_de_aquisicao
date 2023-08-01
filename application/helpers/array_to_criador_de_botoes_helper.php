@@ -1,6 +1,6 @@
 <?php
 
-function arrayToCriadorDeBotoes($controller,$quantidadeNoDB)
+function array_to_criador_de_botoes_helper($controller,$quantidadeNoDB)
 {
 	return [
 		'controller' => $controller,

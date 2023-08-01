@@ -1,5 +1,5 @@
 <?php
-function arrayToView(
+function array_to_view_helper(
 	$titulo,
 	$tabela,
 	$pagina,
