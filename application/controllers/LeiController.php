@@ -80,48 +80,42 @@ class LeiController extends AbstractController
 
 	public function alterar($id)
 	{
-
-		$lei = $this->LeiDAO->buscarPorId($id);
-
 		$this->load->model('dao/ModalidadeDAO');
 
-		$dados = [
-			'titulo' => 'Alterar lei',
-			'pagina' => 'lei/alterar.php',
-			'lei' => $lei,
-			'options_modalidades' => $this->ModalidadeDAO->options(),
-		];
-
-		$this->load->view('index', $dados);
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Alterar lei',
+				'pagina' => 'lei/alterar.php',
+				'lei' => $this->buscarPorId($id),
+				'options_modalidades' => $this->ModalidadeDAO->options(),
+			]
+		);
 	}
 
 	public function atualizar()
 	{
+		$this->load->library('Data', $this->input->post('data'));
 
-		$data_post = $this->input->post();
 
-		$lei = new lei(
-			$data_post['id'],
-			$data_post['numero'],
-			$data_post['artigo'],
-			$data_post['inciso'],
-			$this->data->dataHoraBr($data_post['data']),
-			$data_post['modalidade_id'],
-			$data_post['status']
-		);
+		$array =
+			[
+				ID => $this->input->post('id'),
+				NUMERO => $this->input->post('numero'),
+				ARTIGO => $this->input->post('artigo'),
+				INCISO => $this->input->post('inciso'),
+				DATA => $this->data->formatoDoMySQL(),
+				MODALIDADE_ID => $this->input->post('modalidade_id'),
+				STATUS => $this->input->post('status')
+			];
 
-		$this->LeiDAO->update($lei);
+		$this->load->model('dao/LeiDAO');
 
-		redirect('leiController');
+		$this->LeiDAO->atualizar($array);
+
+		redirect(self::LEI_CONTROLLER);
 	}
 
-	public function deletar($id)
-	{
-
-		$this->LeiDAO->update($id);//todo atualizar método
-
-		redirect('leiController');
-	}
 
 	public function optionsPorModalidadeId()
 	{
@@ -144,20 +138,23 @@ class LeiController extends AbstractController
 
 	public function toObject($array)
 	{
-		$data = $array->data ?? ($array['data'] ?? null);
-		$this->load->library('Data', $data);
+		$this->load->library('Data',
+			$array->data ?? ($array['data'] ?? null));
 
-		return new Lei(
-			$array->id ?? ($array['id'] ?? null),
-			$array->numero ?? ($array['numero'] ?? null),
-			$array->artigo ?? ($array['artigo'] ?? null),
-			$array->inciso ?? ($array['inciso'] ?? null),
-			$this->data->formatoDoMySQL(),
-			isset($array->modalidade_id)
-				? $this->ModalidadeDAO->buscarPorId($array->modalidade_id)
-				: (isset($array['modalidade_id']) ? $this->ModalidadeDAO->buscarPorId($array['modalidade_id']) : null),
-			$array->status
-		);
+		$modalidade_id = $array->modalidade_id ?? $array['modalidade_id'] ?? null;
+
+		$this->load->model('dao/ModalidadeDAO');
+
+		return
+			new Lei(
+				$array->id ?? ($array['id'] ?? null),
+				$array->status ?? ($array['status'] ?? null),
+				$array->numero ?? ($array['numero'] ?? null),
+				$array->artigo ?? ($array['artigo'] ?? null),
+				$array->inciso ?? ($array['inciso'] ?? null),
+				$this->data->formatoDoMySQL() ?? null,
+				$this->ModalidadeDAO->buscarPorId($modalidade_id) ?? null
+			);
 	}
 
 	public function array()
@@ -178,66 +175,95 @@ class LeiController extends AbstractController
 
 	public function contarRegistrosAtivos()
 	{
-		// TODO: Implement contarRegistrosAtivos() method.
+		$this->load->model('dao/LeiDAO');
+
+		return $this->LeiDAO->contarRegistrosAtivos();
 	}
 
 	public function contarRegistrosInativos()
 	{
-		// TODO: Implement contarRegistrosInativos() method.
+		$this->load->model('dao/LeiDAO');
+
+		return $this->LeiDAO->contarRegistrosInativos();
 	}
 
 	public function contarTodosOsRegistros()
 	{
-		// TODO: Implement contarTodosOsRegistros() method.
+		$this->load->model('dao/LeiDAO');
+
+		return $this->LeiDAO->contarTodosOsRegistros();
 	}
 
 	public function excluirDeFormaPermanente($id)
 	{
-		// TODO: Implement excluirDeFormaPermanente() method.
+		$this->load->model('dao/LeiDAO');
+
+		$this->LeiDAO->excluirDeFormaPermanente($id);
 	}
 
 	public function excluirDeFormaLogica($id)
 	{
-		// TODO: Implement excluirDeFormaLogica() method.
-	}
+		$this->load->model('dao/LeiDAO');
+
+		$this->LeiDAO->excluirDeFormaLogica($id);	}
 
 	public function options()
 	{
-		// TODO: Implement options() method.
-	}
+		$this->load->model('dao/LeiDAO');
+
+		return $this->LeiDAO->options();	}
 
 	public function buscarPorId($id)
 	{
-		// TODO: Implement buscarPorId() method.
-	}
+		$this->load->model('dao/LeiDAO');
+
+		$array = $this->LeiDAO->BuscarPorId($id);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosAtivos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosAtivos() method.
-	}
+		$this->load->model('dao/LeiDAO');
+
+		$array = $this->LeiDAO->buscarTodosAtivos($inicio, $fim);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosInativos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosInativos() method.
-	}
+		$this->load->model('dao/LeiDAO');
+
+		$array = $this->LeiDAO->buscarTodosInativos($inicio, $fim);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosStatus($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosStatus() method.
-	}
+		$this->load->model('dao/LeiDAO');
 
-	public function buscarAonde($where)
+		$array = $this->LeiDAO->buscarTodosStatus($inicio, $fim);
+
+		return $this->toObject($array);	}
+
+	public function buscarAonde($inicio, $fim, $where)
 	{
-		// TODO: Implement buscarAonde() method.
+		$this->load->model('dao/LeiDAO');
+
+		$array = $this->LeiDAO->buscarAonde($inicio, $fim, $where);
+
+		return $this->toObject($array);
 	}
 
 	public function contarTodosOsRegistrosAonde($where)
 	{
-		// TODO: Implement contarTodosOsRegistrosAonde() method.
-	}
+		$this->load->model('dao/LeiDAO');
+		return $this->LeiDAO->contarTodosOsRegistrosAonde($where);	}
 
 	public function recuperar($id)
 	{
-		// TODO: Implement recuperar() method.
-	}
+		$this->load->model('dao/LeiDAO');
+
+		$this->LeiDAO->recuperar($id);
+
+		redirect(self::LEI_CONTROLLER . '/listar');	}
 }

@@ -69,96 +69,137 @@ class HierarquiaController extends AbstractController
 		redirect(self::HIERARQUIA_CONTROLLER);
 	}
 
-	private function toObject($arrayList)
-	{
-		return new Hierarquia(
-			isset($arrayList->id)
-				? $arrayList->id
-				: (isset($arrayList['id']) ? $arrayList['id'] : null),
-			isset($arrayList->posto_ou_graduacao)
-				? $arrayList->posto_ou_graduacao
-				: (isset($arrayList['posto_ou_graduacao']) ? $arrayList['posto_ou_graduacao'] : null),
-			isset($arrayList->sigla)
-				? $arrayList->sigla
-				: (isset($arrayList['sigla']) ? $arrayList['sigla'] : null),
-			isset($arrayList->status)
-				? $arrayList->status
-				: (isset($arrayList['status']) ? $arrayList['status'] : null)
-		);
-	}
-
-	public function contarRegistrosAtivos()
-	{
-		// TODO: Implement contarRegistrosAtivos() method.
-	}
-
-	public function contarRegistrosInativos()
-	{
-		// TODO: Implement contarRegistrosInativos() method.
-	}
-
-	public function contarTodosOsRegistros()
-	{
-		// TODO: Implement contarTodosOsRegistros() method.
-	}
-
-	public function excluirDeFormaPermanente($id)
-	{
-		// TODO: Implement excluirDeFormaPermanente() method.
-	}
-
-	public function excluirDeFormaLogica($id)
-	{
-		// TODO: Implement excluirDeFormaLogica() method.
-	}
-
-	public function options()
-	{
-		// TODO: Implement options() method.
-	}
-
-	public function buscarPorId($id)
-	{
-		// TODO: Implement buscarPorId() method.
-	}
-
-	public function buscarTodosAtivos($inicio, $fim)
-	{
-		// TODO: Implement buscarTodosAtivos() method.
-	}
-
-	public function buscarTodosInativos($inicio, $fim)
-	{
-		// TODO: Implement buscarTodosInativos() method.
-	}
-
-	public function buscarTodosStatus($inicio, $fim)
-	{
-		// TODO: Implement buscarTodosStatus() method.
-	}
-
-	public function buscarAonde($where)
-	{
-		// TODO: Implement buscarAonde() method.
-	}
-
 	public function alterar($id)
 	{
-		// TODO: Implement alterar() method.
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Alterar hierarquia',
+				'pagina' => 'hierarquia/alterar.php',
+				'modalidade' => $this->buscarPorId($id)
+			]
+		);
 	}
 
 	public function atualizar()
 	{
-		// TODO: Implement atualizar() method.
+		$array =
+			[
+				ID => $this->input->post(ID),
+				STATUS => $this->input->post(STATUS),
+				POSTO_OU_GRADUACAO => $this->input->post(POSTO_OU_GRADUACAO),
+				SIGLA => $this->input->post(SIGLA)
+			];
+
+		$this->load->model('dao/HierarquiaDAO');
+
+		$this->HierarquiaDAO->atualizar($array);
+
+		redirect(self::HIERARQUIA_CONTROLLER);
 	}
+
+	public function toObject($arrayList)
+	{
+		return
+			new Hierarquia(
+				$arrayList->id ?? $arrayList['id'] ?? null,
+				$arrayList->status ?? $arrayList['status'] ?? null,
+				$arrayList->posto_ou_graduacao ?? $arrayList['posto_ou_graduacao'] ?? null,
+				$arrayList->sigla ?? $arrayList['sigla'] ?? null
+			);
+	}
+
+	public function contarRegistrosAtivos()
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		return $this->HierarquiaDAO->contarRegistrosAtivos();
+	}
+
+	public function contarRegistrosInativos()
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		return $this->HierarquiaDAO->contarRegistrosInativos();
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		return $this->HierarquiaDAO->contarTodosOsRegistros();
+	}
+
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		$this->HierarquiaDAO->excluirDeFormaPermanente($id);	}
+
+	public function excluirDeFormaLogica($id)
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		$this->HierarquiaDAO->excluirDeFormaLogica($id);	}
+
+	public function options()
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		return $this->HierarquiaDAO->options();	}
+
+	public function buscarPorId($id)
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		$array = $this->HierarquiaDAO->BuscarPorId($id);
+
+		return $this->toObject($array);	}
+
+	public function buscarTodosAtivos($inicio, $fim)
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		$array = $this->HierarquiaDAO->buscarTodosAtivos($inicio, $fim);
+
+		return $this->toObject($array);	}
+
+	public function buscarTodosInativos($inicio, $fim)
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		$array = $this->HierarquiaDAO->buscarTodosInativos($inicio, $fim);
+
+		return $this->toObject($array);	}
+
+	public function buscarTodosStatus($inicio, $fim)
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		$array = $this->HierarquiaDAO->buscarTodosStatus($inicio, $fim);
+
+		return $this->toObject($array);	}
+
+	public function buscarAonde($inicio, $fim, $where)
+	{
+		$this->load->model('dao/HierarquiaDAO');
+
+		$array = $this->HierarquiaDAO->buscarAonde($inicio, $fim, $where);
+
+		return $this->toObject($array);
+	}
+
 
 	public function contarTodosOsRegistrosAonde($where)
 	{
-		// TODO: Implement contarTodosOsRegistrosAonde() method.
-	}
+		$this->load->model('dao/HierarquiaDAO');
+		return $this->HierarquiaDAO->contarTodosOsRegistrosAonde($where);	}
 
 	public function recuperar($id)
 	{
-		// TODO: Implement recuperar() method.
-	}
+		$this->load->model('dao/HierarquiaDAO');
+
+		$this->HierarquiaDAO->recuperar($id);
+
+		redirect(self::HIERARQUIA_CONTROLLER . '/listar');	}
 }

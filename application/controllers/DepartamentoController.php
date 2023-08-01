@@ -75,120 +75,152 @@ class DepartamentoController extends AbstractController
 
 	public function alterar($id)
 	{
+		$this->load->model('dao/UgDAO');
 
-		$departamento = $this->DepartamentoDAO->buscarPorId($id);
-
-
-		$dados = array(
-			'titulo' => 'Alterar Seção',
-			'pagina' => 'departamento/alterar.php',
-			'departamento' => $departamento,
-			'ugs' => $this->UgDAO->options()
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Alterar Seção',
+				'pagina' => 'departamento/alterar.php',
+				'departamento' => $this->buscarPorId($id),
+				'ugs' => $this->UgDAO->options()
+			]
 		);
-
-		$this->load->view('index', $dados);
 	}
 
 	public function atualizar()
 	{
+		$array = [
+			ID => $this->input->post(ID),
+			STATUS => $this->input->post(STATUS),
+			NOME => $this->input->post(NOME),
+			SIGLA => $this->input->post(SIGLA),
+			UG => $this->input->post(UG)
+		];
 
-		$data_post = $this->input->post();
+		$this->load->model('dao/DepartamentoDAO');
 
-		$departamento = new Departamento(
-			$data_post['id'],
-			$data_post['nome'],
-			$data_post['sigla'],
-			$this->UgDAO->buscarPorId($data_post['ug']),
-			$data_post['status']
-		);
+		$this->DepartamentoDAO->atualizar($array);
 
-		$this->DepartamentoDAO->atualizar($departamento);
-
-		redirect('DepartamentoController');
-	}
-
-	public function deletar($id)
-	{
-		$this->DepartamentoDAO->deletar($id);
-
-		redirect('DepartamentoController');
+		redirect(self::DEPARTAMENTO_CONTROLLER);
 	}
 
 	public function toObject($arrayList)
 	{
+		$ug_id = $arrayList->ug ?? ($arrayList['ug'] ?? null);
+
+		$this->load->model('dao/UgDAO');
+
+		$ug = $this->UgDAO->buscarPorId($ug_id);
+
 		return new Departamento(
 			$arrayList->id ?? ($arrayList['id'] ?? null),
+			$arrayList->status ?? ($arrayList['status'] ?? null),
 			$arrayList->nome ?? ($arrayList['nome'] ?? null),
 			$arrayList->sigla ?? ($arrayList['sigla'] ?? null),
-			isset($arrayList->ug_id)
-				? $this->UgDAO->buscarPorId($arrayList->ug_id)
-				: (isset($arrayList['ug_id']) ? $this->UgDAO->buscarPorId($arrayList['ug_id']) : null),
-			$arrayList->status ?? ($arrayList['status'] ?? null)
+			$ug ?? null
 		);
 	}
 
 	public function contarRegistrosAtivos()
 	{
-		// TODO: Implement contarRegistrosAtivos() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		return $this->DepartamentoDAO->contarRegistrosAtivos();
 	}
 
 	public function contarRegistrosInativos()
 	{
-		// TODO: Implement contarRegistrosInativos() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		return $this->DepartamentoDAO->contarRegistrosInativos();
 	}
 
 	public function contarTodosOsRegistros()
 	{
-		// TODO: Implement contarTodosOsRegistros() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		return $this->DepartamentoDAO->contarTodosOsRegistros();
 	}
 
 	public function excluirDeFormaPermanente($id)
 	{
-		// TODO: Implement excluirDeFormaPermanente() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		$this->DepartamentoDAO->excluirDeFormaPermanente($id);
 	}
 
 	public function excluirDeFormaLogica($id)
 	{
-		// TODO: Implement excluirDeFormaLogica() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		$this->DepartamentoDAO->excluirDeFormaLogica($id);
 	}
 
 	public function options()
 	{
-		// TODO: Implement options() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		return $this->DepartamentoDAO->options();
 	}
 
 	public function buscarPorId($id)
 	{
-		// TODO: Implement buscarPorId() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		$array = $this->DepartamentoDAO->BuscarPorId($id);
+
+		return $this->toObject($array);
 	}
 
 	public function buscarTodosAtivos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosAtivos() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		$array = $this->DepartamentoDAO->buscarTodosAtivos($inicio, $fim);
+
+		return $this->toObject($array);
 	}
 
 	public function buscarTodosInativos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosInativos() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		$array = $this->DepartamentoDAO->buscarTodosInativos($inicio, $fim);
+
+		return $this->toObject($array);
 	}
 
 	public function buscarTodosStatus($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosStatus() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		$array = $this->DepartamentoDAO->buscarTodosStatus($inicio, $fim);
+
+		return $this->toObject($array);
 	}
 
-	public function buscarAonde($where)
+	public function buscarAonde($inicio, $fim, $where)
 	{
-		// TODO: Implement buscarAonde() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		$array = $this->DepartamentoDAO->buscarAonde($inicio, $fim, $where);
+
+		return $this->toObject($array);
 	}
 
 	public function contarTodosOsRegistrosAonde($where)
 	{
-		// TODO: Implement contarTodosOsRegistrosAonde() method.
+		$this->load->model('dao/DepartamentoDAO');
+		return $this->DepartamentoDAO->contarTodosOsRegistrosAonde($where);
 	}
 
 	public function recuperar($id)
 	{
-		// TODO: Implement recuperar() method.
+		$this->load->model('dao/DepartamentoDAO');
+
+		$this->DepartamentoDAO->recuperar($id);
+
+		redirect(self::DEPARTAMENTO_CONTROLLER . '/listar');
 	}
 }

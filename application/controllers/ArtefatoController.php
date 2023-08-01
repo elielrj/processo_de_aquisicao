@@ -72,116 +72,143 @@ class ArtefatoController extends AbstractController
 
 	public function alterar($id)
 	{
-
-		$artefato = $this->ArtefatoDAO->buscarPorId($id);
-
-		$dados = [
-			'titulo' => 'Alterar Artefato',
-			'pagina' => 'artefato/alterar.php',
-			'artefato' => $artefato
-		];
-
-		$this->load->view('index', $dados);
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Alterar Artefato',
+				'pagina' => 'artefato/alterar.php',
+				'artefato' => $this->buscarPorId($id)
+			]
+		);
 	}
 
 	public function atualizar()
 	{
+		$array = [
+			ID => $this->input->post(ID),
+			STATUS => $this->input->post(STATUS),
+			NOME => $this->input->post(NOME),
+			ORDEM => $this->input->post(ORDEM),
+			UG => $this->input->post(UG)
+		];
 
-		$data_post = $this->input->post();
+		$this->load->model('dao/ArtefatoDAO');
 
-		$artefato = new Artefato(
-			$data_post['id'],
-			$data_post['ordem'],
-			$data_post['nome'],
-			$data_post['status']
-		);
+		$this->ArtefatoDAO->atualizar($array);
 
-		$this->ArtefatoDAO->atualizar($artefato);
-
-		redirect('ArtefatoController');
-	}
-
-	public function deletar($id)
-	{
-
-		$this->ArtefatoDAO->delete($id);
-
-		redirect('ArtefatoController');
+		redirect(self::ARTEFATO_CONTROLLER);
 	}
 
 	public function toObject($arrayList)
 	{
 		return new Artefato(
-			$arrayList->id,
-			$arrayList->ordem,
-			$arrayList->nome,
-			null,
-			$arrayList->status
+			$arrayList->id ?? $arrayList['id'] ?? null,
+			$arrayList->status?? $arrayList['status'] ?? null,
+			$arrayList->ordem?? $arrayList['ordem'] ?? null,
+			$arrayList->nome?? $arrayList['nome'] ?? null,
+			null		
 		);
 	}
 
 	public function contarRegistrosAtivos()
 	{
-		// TODO: Implement contarRegistrosAtivos() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		return $this->ArtefatoDAO->contarRegistrosAtivos();
 	}
 
 	public function contarRegistrosInativos()
 	{
-		// TODO: Implement contarRegistrosInativos() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		return $this->ArtefatoDAO->contarRegistrosInativos();
 	}
 
 	public function contarTodosOsRegistros()
 	{
-		// TODO: Implement contarTodosOsRegistros() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		return $this->ArtefatoDAO->contarTodosOsRegistros();
 	}
 
 	public function excluirDeFormaPermanente($id)
 	{
-		// TODO: Implement excluirDeFormaPermanente() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		$this->ArtefatoDAO->excluirDeFormaPermanente($id);
 	}
 
 	public function excluirDeFormaLogica($id)
 	{
-		// TODO: Implement excluirDeFormaLogica() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		$this->ArtefatoDAO->excluirDeFormaLogica($id);
 	}
 
 	public function options()
 	{
-		// TODO: Implement options() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		return $this->ArtefatoDAO->options();
 	}
 
 	public function buscarPorId($id)
 	{
-		// TODO: Implement buscarPorId() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		$array = $this->ArtefatoDAO->BuscarPorId($id);
+
+		return $this->toObject($array);
 	}
 
 	public function buscarTodosAtivos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosAtivos() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		$array = $this->ArtefatoDAO->buscarTodosAtivos($inicio, $fim);
+
+		return $this->toObject($array);
 	}
 
 	public function buscarTodosInativos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosInativos() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		$array = $this->ArtefatoDAO->buscarTodosInativos($inicio, $fim);
+
+		return $this->toObject($array);
 	}
 
 	public function buscarTodosStatus($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosStatus() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		$array = $this->ArtefatoDAO->buscarTodosStatus($inicio, $fim);
+
+		return $this->toObject($array);
 	}
 
-	public function buscarAonde($where)
+	public function buscarAonde($inicio, $fim, $where)
 	{
-		// TODO: Implement buscarAonde() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		$array = $this->ArtefatoDAO->buscarAonde($inicio, $fim, $where);
+
+		return $this->toObject($array);
 	}
 
 	public function contarTodosOsRegistrosAonde($where)
 	{
-		// TODO: Implement contarTodosOsRegistrosAonde() method.
+		$this->load->model('dao/ArtefatoDAO');
+		return $this->ArtefatoDAO->contarTodosOsRegistrosAonde($where);
 	}
 
 	public function recuperar($id)
 	{
-		// TODO: Implement recuperar() method.
+		$this->load->model('dao/ArtefatoDAO');
+
+		$this->ArtefatoDAO->recuperar($id);
+
+		redirect(self::ARTEFATO_CONTROLLER . '/listar');
 	}
 }

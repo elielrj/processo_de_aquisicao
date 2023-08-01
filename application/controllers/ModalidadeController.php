@@ -59,6 +59,7 @@ class ModalidadeController extends AbstractController
 				NOME => $this->input->post('nome'),
 				STATUS => $this->input->post('status')
 			];
+		$this->load->model('dao/ModalidadeDAO');
 
 		$this->ModalidadeDAO->criar($array);
 
@@ -67,113 +68,131 @@ class ModalidadeController extends AbstractController
 
 	public function alterar($id)
 	{
-
-		$modalidade = $this->ModalidadeDAO->buscarId($id);
-
-		$dados = [
-			'titulo' => 'Alterar modalidade',
-			'pagina' => 'modalidade/alterar.php',
-			'modalidade' => $modalidade
-		];
-
-		$this->load->view('index', $dados);
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Alterar modalidade',
+				'pagina' => 'modalidade/alterar.php',
+				'modalidade' => $this->buscarPorId($id)
+			]
+		);
 	}
 
 	public function atualizar()
 	{
+		$array =
+			[
+				ID => $this->input->post(ID),
+				NOME => $this->input->post(NOME),
+				STATUS => $this->input->post(STATUS)
+			];
 
-		$data_post = $this->input->post();
+		$this->ModalidadeDAO->atualizar($array);
 
-		$modalidade = new Modalidade(
-			$data_post['id'],
-			$data_post['nome'],
-			$data_post['status']
-		);
-
-		$this->ModalidadeDAO->atualizar($modalidade);
-
-		redirect('ModalidadeController');
+		redirect(self::MODALIDADE_CONTROLLER);
 	}
 
-	public function deletar($id)
+	public function toObject($arrayList)
 	{
-
-		$this->ModalidadeDAO->deletar($id);
-
-		redirect('ModalidadeController');
-	}
-
-	private function toObject($arrayList)
-	{
-		return new Modalidade(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->nome ?? ($arrayList['nome'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null)
-		);
+		return
+			new Modalidade(
+				$arrayList->id ?? ($arrayList['id'] ?? null),
+				$arrayList->nome ?? ($arrayList['nome'] ?? null),
+				$arrayList->status ?? ($arrayList['status'] ?? null)
+			);
 	}
 
 	public function contarRegistrosAtivos()
 	{
-		// TODO: Implement contarRegistrosAtivos() method.
+		$this->load->model('dao/ModalidadeDAO');
+
+		return $this->ModalidadeDAO->contarRegistrosAtivos();
 	}
 
 	public function contarRegistrosInativos()
 	{
-		// TODO: Implement contarRegistrosInativos() method.
+		$this->load->model('dao/ModalidadeDAO');
+
+		return $this->ModalidadeDAO->contarRegistrosInativos();
 	}
 
 	public function contarTodosOsRegistros()
 	{
-		// TODO: Implement contarTodosOsRegistros() method.
+		$this->load->model('dao/ModalidadeDAO');
+
+		return $this->ModalidadeDAO->contarTodosOsRegistros();
 	}
 
 	public function excluirDeFormaPermanente($id)
 	{
-		// TODO: Implement excluirDeFormaPermanente() method.
+		$this->load->model('dao/ModalidadeDAO');
+
+		$this->ModalidadeDAO->excluirDeFormaPermanente($id);
 	}
 
 	public function excluirDeFormaLogica($id)
 	{
-		// TODO: Implement excluirDeFormaLogica() method.
-	}
+		$this->load->model('dao/ModalidadeDAO');
+
+		$this->ModalidadeDAO->excluirDeFormaLogica($id);	}
 
 	public function options()
 	{
-		// TODO: Implement options() method.
-	}
+		$this->load->model('dao/ModalidadeDAO');
+
+		return $this->ModalidadeDAO->options();	}
 
 	public function buscarPorId($id)
 	{
-		// TODO: Implement buscarPorId() method.
-	}
+		$this->load->model('dao/ModalidadeDAO');
+
+		$array = $this->ModalidadeDAO->BuscarPorId($id);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosAtivos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosAtivos() method.
-	}
+		$this->load->model('dao/ModalidadeDAO');
+
+		$array = $this->ModalidadeDAO->buscarTodosAtivos($inicio, $fim);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosInativos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosInativos() method.
-	}
+		$this->load->model('dao/ModalidadeDAO');
+
+		$array = $this->ModalidadeDAO->buscarTodosInativos($inicio, $fim);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosStatus($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosStatus() method.
-	}
+		$this->load->model('dao/ModalidadeDAO');
 
-	public function buscarAonde($where)
+		$array = $this->ModalidadeDAO->buscarTodosStatus($inicio, $fim);
+
+		return $this->toObject($array);	}
+
+	public function buscarAonde($inicio, $fim, $where)
 	{
-		// TODO: Implement buscarAonde() method.
+		$this->load->model('dao/ModalidadeDAO');
+
+		$array = $this->ModalidadeDAO->buscarAonde($inicio, $fim, $where);
+
+		return $this->toObject($array);
 	}
 
 	public function contarTodosOsRegistrosAonde($where)
 	{
-		// TODO: Implement contarTodosOsRegistrosAonde() method.
-	}
+		$this->load->model('dao/ModalidadeDAO');
+		return $this->ModalidadeDAO->contarTodosOsRegistrosAonde($where);	}
 
 	public function recuperar($id)
 	{
-		// TODO: Implement recuperar() method.
-	}
+		$this->load->model('dao/ModalidadeDAO');
+
+		$this->ModalidadeDAO->recuperar($id);
+
+		redirect(self::MODALIDADE_CONTROLLER . '/listar');	}
 }

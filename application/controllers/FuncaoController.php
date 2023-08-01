@@ -69,96 +69,136 @@ class FuncaoController extends AbstractController
 		redirect(self::FUNCAO_CONTROLLER);
 	}
 
-	private function toObject($arrayList)
+	public function alterar($id)
+	{
+		$this->load->view(
+			'index',
+			[
+				'titulo' => 'Alterar função',
+				'pagina' => 'funcao/alterar.php',
+				'modalidade' => $this->buscarPorId($id)
+			]
+		);
+	}
+
+	public function atualizar()
+	{
+		$array =
+			[
+				ID => $this->input->post(ID),
+				STATUS => $this->input->post(STATUS),
+				DESCRICAO => $this->input->post(DESCRICAO),
+				NIVEL_DE_ACESSO => $this->input->post(NIVEL_DE_ACESSO)
+			];
+
+		$this->load->model('dao/FuncaoDAO');
+
+		$this->FuncaoDAO->atualizar($array);
+
+		redirect(self::FUNCAO_CONTROLLER);
+	}
+
+	public function toObject($arrayList)
 	{
 		return new Funcao(
-			isset($arrayList->id)
-				? $arrayList->id
-				: (isset($arrayList['id']) ? $arrayList['id'] : null),
-			isset($arrayList->nome)
-				? $arrayList->nome
-				: (isset($arrayList['nome']) ? $arrayList['nome'] : null),
-			isset($arrayList->nivel_de_acesso)
-				? Funcao::selecionarNivelDeAcesso($arrayList->nivel_de_acesso)
-				: (isset($arrayList['nivel_de_acesso']) ? Funcao::selecionarNivelDeAcesso($arrayList['nivel_de_acesso']) : null),
-			isset($arrayList->status)
-				? $arrayList->status
-				: (isset($arrayList['status']) ? $arrayList['status'] : null)
+			$arrayList->id ?? $arrayList['id'] ?? null,
+			$arrayList->status ?? $arrayList['status'] ?? null,
+			$arrayList->descricao ?? $arrayList['descricao'] ?? null,
+			$arrayList->id ?? $arrayList['id'] ?? null
 		);
 	}
 
 	public function contarRegistrosAtivos()
 	{
-		// TODO: Implement contarRegistrosAtivos() method.
+		$this->load->model('dao/FuncaoDAO');
+
+		return $this->FuncaoDAO->contarRegistrosAtivos();
 	}
 
 	public function contarRegistrosInativos()
 	{
-		// TODO: Implement contarRegistrosInativos() method.
+		$this->load->model('dao/FuncaoDAO');
+
+		return $this->FuncaoDAO->contarRegistrosInativos();
 	}
 
 	public function contarTodosOsRegistros()
 	{
-		// TODO: Implement contarTodosOsRegistros() method.
+		$this->load->model('dao/FuncaoDAO');
+
+		return $this->FuncaoDAO->contarTodosOsRegistros();
 	}
 
 	public function excluirDeFormaPermanente($id)
 	{
-		// TODO: Implement excluirDeFormaPermanente() method.
-	}
+		$this->load->model('dao/FuncaoDAO');
+
+		$this->FuncaoDAO->excluirDeFormaPermanente($id);	}
 
 	public function excluirDeFormaLogica($id)
 	{
-		// TODO: Implement excluirDeFormaLogica() method.
-	}
+		$this->load->model('dao/FuncaoDAO');
+
+		$this->FuncaoDAO->excluirDeFormaLogica($id);	}
 
 	public function options()
 	{
-		// TODO: Implement options() method.
-	}
+		$this->load->model('dao/FuncaoDAO');
+
+		return $this->FuncaoDAO->options();	}
 
 	public function buscarPorId($id)
 	{
-		// TODO: Implement buscarPorId() method.
-	}
+		$this->load->model('dao/FuncaoDAO');
+
+		$array = $this->FuncaoDAO->BuscarPorId($id);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosAtivos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosAtivos() method.
-	}
+		$this->load->model('dao/FuncaoDAO');
+
+		$array = $this->FuncaoDAO->buscarTodosAtivos($inicio, $fim);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosInativos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosInativos() method.
-	}
+		$this->load->model('dao/FuncaoDAO');
+
+		$array = $this->FuncaoDAO->buscarTodosInativos($inicio, $fim);
+
+		return $this->toObject($array);	}
 
 	public function buscarTodosStatus($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosStatus() method.
+		$this->load->model('dao/FuncaoDAO');
+
+		$array = $this->FuncaoDAO->buscarTodosStatus($inicio, $fim);
+
+		return $this->toObject($array);	}
+
+	public function buscarAonde($inicio, $fim, $where)
+	{
+		$this->load->model('dao/FuncaoDAO');
+
+		$array = $this->FuncaoDAO->buscarAonde($inicio, $fim, $where);
+
+		return $this->toObject($array);
 	}
 
-	public function buscarAonde($where)
-	{
-		// TODO: Implement buscarAonde() method.
-	}
-
-	public function alterar($id)
-	{
-		// TODO: Implement alterar() method.
-	}
-
-	public function atualizar()
-	{
-		// TODO: Implement atualizar() method.
-	}
 
 	public function contarTodosOsRegistrosAonde($where)
 	{
-		// TODO: Implement contarTodosOsRegistrosAonde() method.
-	}
+		$this->load->model('dao/FuncaoDAO');
+		return $this->FuncaoDAO->contarTodosOsRegistrosAonde($where);	}
 
 	public function recuperar($id)
 	{
-		// TODO: Implement recuperar() method.
-	}
+		$this->load->model('dao/FuncaoDAO');
+
+		$this->FuncaoDAO->recuperar($id);
+
+		redirect(self::FUNCAO_CONTROLLER . '/listar');	}
 }
