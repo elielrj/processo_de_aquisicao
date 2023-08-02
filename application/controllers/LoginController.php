@@ -3,6 +3,11 @@
 
 class LoginController extends CI_Controller
 {
+	const EMAIL = 'email';
+	const SENHA = 'senha';
+	const TABELA_USUARIO = 'usuario';
+	const EMAIL_VALIDO = 'email_valido';
+	const SENHA_VALIDA = 'senha_valida';
 
 	public function __construct()
 	{
@@ -11,93 +16,150 @@ class LoginController extends CI_Controller
 
 	public function index()
 	{
+		$this->isSessionEmail() ? $this->logarComSessao() : $this->loadViewLogin();
+	}
+
+	private function isSessionEmail()
+	{
+		return isset($_SESSION[SESSION_EMAIL]);
+	}
+
+	private function isSessionSenha()
+	{
+		return isset($_SESSION[SESSION_SENHA]);
+	}
+
+	private function redirectProcessoController()
+	{
+		redirect('ProcessoController');
+	}
+
+	private function loadViewLogin()
+	{
 		$this->load->view('login.php');
 	}
 
-	public function logar()
+	private function logarComSessao()
+	{
+		if ($this->isSessionSenha() && $this->isSessionEmail()) {
+
+			$this->login($_SESSION[self::EMAIL], $_SESSION[self::SENHA]);
+
+		} else {
+			$this->loadViewLogin();
+		}
+	}
+
+	function logar()
 	{
 		$this->limparValidacao();
 
-		$data_post = $this->input->post();
+		$email = $this->input->post(self::EMAIL);
+		$senha = $this->input->post(self::SENHA);
 
-		$email = $data_post['email'];
-		$senha = md5($data_post['senha']);
+		if ($this->emailExiste($email)) {
 
-		$this->emailExiste($email)
-			? ($this->senhaEstaCorreta($email, $senha)
-			? $this->login($email, $senha)
-			: redirect(base_url()))
-			: redirect(base_url());
+			if ($this->senhaEstaCorreta($email, $senha)) {
+				$this->redirectProcessoController();
+				//todo criar sessão
+			} else {
+				//todo informar o que a senha está errada
+				$this->loadViewLogin();
+			}
+		} else {
+			$
+			$this->loadViewLogin();
+		}
 	}
 
-	private function login($email, $senha)
+	private
+	function login($email, $senha)
 	{
-		$this->LoginDAO->buscarDadosDoUsuarioLogado($email, $senha);
+		$arrayLinha =
+			$this->db->get_where(
+				self::TABELA_USUARIO,
+				[
+					self::EMAIL => $email,
+					self::SENHA => md5($senha)
+				]
+			);
 
-		redirect('processo-listar');
+		$arrayLinha->num_rows() === 1
+			? $this->redirectProcessoController()
+			: $this->loadViewLogin();
 	}
 
 	private function emailExiste($email)
 	{
-		if ($this->LoginDAO->emailExiste($email)) {
-			$this->emailValido();
+		$arrayLinha =
+			$this->db->get_where(
+				self::TABELA_USUARIO,
+				[self::EMAIL => $email]
+			);
+
+		if ($arrayLinha->num_rows() === 1) {
+
+			$this->emailExiste(true);
+
 			return true;
+
 		} else {
-			$this->emailInvalido();
+
+			$this->emailExiste(false);
+
 			return false;
 		}
 	}
 
-	/**
-	 * Summary of senhaEstaCorreta
-	 * email é not null no banco de dados,
-	 * assim, tem que ser passado o email e a
-	 * senha para ser pesquisado a senha somente no email
-	 *
-	 * @param mixed $email
-	 * @param mixed $senha
-	 * @return bool
-	 */
 	private function senhaEstaCorreta($email, $senha)
 	{
-		if ($this->LoginDAO->senhaEstaCorreta($email, $senha)) {
-			$this->senhaValida();
+		$arrayLinha =
+			$this->db->get_where(
+				self::TABELA_USUARIO,
+				[
+					self::EMAIL => $email,
+					self::SENHA => md5($senha)
+				]
+			);
+
+		if ($arrayLinha->num_rows() === 1) {
+
+			$this->senhaEstaValida(true);
+
 			return true;
+
 		} else {
-			$this->senhaInvalida();
+
+			$this->senhaEstaValida(false);
+
 			return false;
 		}
 	}
 
-	private function emailValido()
+	private function emailEstaValido($validade)
 	{
-		$this->session->set_userdata('email_valido', true);
+		$this->session->set_userdata(self::EMAIL_VALIDO, $validade);
 	}
 
-	private function emailInvalido()
+	private function senhaEstaValida($validade)
 	{
-		$this->session->set_userdata('email_valido', false);
-	}
-
-	private function senhaValida()
-	{
-		$this->session->set_userdata('senha_valida', true);
-	}
-
-	private function senhaInvalida()
-	{
-		$this->session->set_userdata('senha_valida', false);
+		$this->session->set_userdata(self::SENHA_VALIDA, $validade);
 	}
 
 	public function sair()
 	{
 		session_destroy();
 
-		redirect(base_url());
+		$this->loadViewLogin();
 	}
 
 	private function limparValidacao()
 	{
-		$this->session->unset_userdata('email_valido', 'senha_valida', 'numero_valido', 'chave_valida');
+		$this->session->unset_userdata(
+			'email_valido',
+			'senha_valida',
+			'numero_valido',
+			'chave_valida'
+		);
 	}
 }
