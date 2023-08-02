@@ -21,7 +21,7 @@ class LoginController extends CI_Controller
 
 	private function isSessionEmail()
 	{
-		return isset($_SESSION[SESSION_EMAIL]);
+		return is_session_email_helper();
 	}
 
 	private function isSessionSenha()
@@ -29,9 +29,9 @@ class LoginController extends CI_Controller
 		return isset($_SESSION[SESSION_SENHA]);
 	}
 
-	private function redirectProcessoController()
+	private function redirectUsuarioController()
 	{
-		redirect('ProcessoController');
+		redirect('UsuarioController');
 	}
 
 	private function loadViewLogin()
@@ -57,17 +57,19 @@ class LoginController extends CI_Controller
 		$email = $this->input->post(self::EMAIL);
 		$senha = $this->input->post(self::SENHA);
 
+
 		if ($this->emailExiste($email)) {
 
-			if ($this->senhaEstaCorreta($email, $senha)) {
-				$this->redirectProcessoController();
-				//todo criar sessão
+			if ($this->senhaEstaCorreta($email, md5($senha))) {
+
+				$this->redirectUsuarioController();
+
 			} else {
-				//todo informar o que a senha está errada
+
 				$this->loadViewLogin();
 			}
 		} else {
-			$
+
 			$this->loadViewLogin();
 		}
 	}
@@ -75,27 +77,24 @@ class LoginController extends CI_Controller
 	private
 	function login($email, $senha)
 	{
-		$arrayLinha =
-			$this->db->get_where(
-				self::TABELA_USUARIO,
-				[
-					self::EMAIL => $email,
-					self::SENHA => md5($senha)
-				]
-			);
+		$this->load->model('dao/UsuarioDAO');
+
+		$where = [self::EMAIL => $email];
+
+		$arrayLinha = $this->UsuarioDAO->buscarAonde($where);
 
 		$arrayLinha->num_rows() === 1
-			? $this->redirectProcessoController()
+			? $this->redirectUsuarioController()
 			: $this->loadViewLogin();
 	}
 
 	private function emailExiste($email)
 	{
-		$arrayLinha =
-			$this->db->get_where(
-				self::TABELA_USUARIO,
-				[self::EMAIL => $email]
-			);
+		$this->load->model('dao/UsuarioDAO');
+
+		$where = [self::EMAIL => $email];
+
+		$arrayLinha = $this->UsuarioDAO->buscarAonde($where);
 
 		if ($arrayLinha->num_rows() === 1) {
 
@@ -113,14 +112,14 @@ class LoginController extends CI_Controller
 
 	private function senhaEstaCorreta($email, $senha)
 	{
-		$arrayLinha =
-			$this->db->get_where(
-				self::TABELA_USUARIO,
-				[
-					self::EMAIL => $email,
-					self::SENHA => md5($senha)
-				]
-			);
+		$this->load->model('dao/UsuarioDAO');
+
+		$where = [
+			self::EMAIL => $email,
+			self::SENHA => $senha
+		];
+
+		$arrayLinha = $this->UsuarioDAO->buscarAonde($where);
 
 		if ($arrayLinha->num_rows() === 1) {
 

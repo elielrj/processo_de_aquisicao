@@ -13,7 +13,7 @@ class ProcessoController extends AbstractController
 
 	public function index()
 	{
-		usuarioPossuiSessaoAberta() ? $this->listarPorSetorDemandante() : redirecionarParaPaginaInicial();
+		is_session_email_helper() ? $this->listarPorSetorDemandante() : redirecionarParaPaginaInicial();
 	}
 
 	public function novo()

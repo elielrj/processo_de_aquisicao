@@ -164,4 +164,7 @@ class UsuarioDAO extends AbstractDAO
 			);
 		}
 	}
+
+	public function contarTodosOsRegistrosAonde($where){}
+	public function recuperar($id){}
 }

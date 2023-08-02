@@ -10,6 +10,6 @@ interface InterfaceRetriveDAO
 
 	public function buscarTodosStatus($inicio, $fim);
 
-	public function buscarAonde($inicio, $fim, $whare);
+	public function buscarAonde($whare);
 
 }

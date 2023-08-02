@@ -119,5 +119,6 @@ class AndamentoDAO extends AbstractDAO
 			Arquivado::$NOME => Arquivado::$NOME
 		];
 	}
-
+	public function contarTodosOsRegistrosAonde($where){}
+	public function recuperar($id){}
 }

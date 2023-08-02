@@ -118,4 +118,7 @@ class SugestaoDAO  extends AbstractDAO
 		}
 		return $options;
 	}
+
+	public function contarTodosOsRegistrosAonde($where){}
+	public function recuperar($id){}
 }
