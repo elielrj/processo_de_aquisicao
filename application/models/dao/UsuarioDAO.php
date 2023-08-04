@@ -64,12 +64,12 @@ class UsuarioDAO extends AbstractDAO
 				->get(self::TABELA_USUARIO, $inicio, $fim);
 	}
 
-	public function buscarAonde($whare)
+	public function buscarAonde($where)
 	{
 		return
 			$this->db
-				->where($whare)
-				->get(TABELA_USUARIO);
+				->where($where)
+				->get(self::TABELA_USUARIO);
 	}
 
 	public function excluirDeFormaPermanente($id)
@@ -94,20 +94,20 @@ class UsuarioDAO extends AbstractDAO
 	{
 		return $this->db
 			->where([STATUS => true])
-			->count_all_results(TABELA_USUARIO);
+			->count_all_results(self::TABELA_USUARIO);
 	}
 
 	public function contarRegistrosInativos()
 	{
 		return $this->db
 			->where([STATUS => false])
-			->count_all_results(TABELA_USUARIO);
+			->count_all_results(self::TABELA_USUARIO);
 	}
 
 	public function contarTodosOsRegistros()
 	{
 		return $this->db
-			->count_all_results(TABELA_USUARIO);
+			->count_all_results(self::TABELA_USUARIO);
 	}
 
 	public function options()
@@ -125,14 +125,14 @@ class UsuarioDAO extends AbstractDAO
 	 */
 	public function emailExiste($email)
 	{
-		$array = $this->DAO->buscarOnde(UsuarioDAO::TABELA_USUARIO, array(EMAIL => $email));
+		$array = $this->DAO->buscarOnde(self::TABELA_USUARIO, array(EMAIL => $email));
 
 		return ($array->num_rows() == 1);
 	}
 
 	public function senhaEstaCorreta($email, $senha)
 	{
-		$array = $this->DAO->buscarOnde(UsuarioDAO::TABELA_USUARIO, array(EMAIL => $email, SENHA => $senha));
+		$array = $this->DAO->buscarOnde(self::TABELA_USUARIO, array(EMAIL => $email, SENHA => $senha));
 
 		return ($array->num_rows() == 1);
 	}
@@ -141,7 +141,7 @@ class UsuarioDAO extends AbstractDAO
 	{
 		$where = array(EMAIL => $email, SENHA => $senha);
 
-		$array = $this->DAO->buscarOnde(UsuarioDAO::TABELA_USUARIO, $where);
+		$array = $this->DAO->buscarOnde(self::TABELA_USUARIO, $where);
 
 		foreach ($array->result() as $linha) {
 
