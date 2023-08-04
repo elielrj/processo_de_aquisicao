@@ -23,23 +23,73 @@ class UsuarioController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$usuarios = $this->UsuarioDAO->buscarTodos($qtd_de_itens_para_exibir, $indice_no_data_base);
+		$this->load->library('CriadorDeBotoes',
+			array_to_criador_de_botoes_helper(
+				self::USUARIO_CONTROLLER . '/listar',
+				$this->contarTodosOsRegistros() ?? 0
+			)
+		);
 
-		$params = [
-			'controller' => USUARIO_CONTROLLER . '/listar',
-			'quantidade_de_registros_no_banco_de_dados' => $this->UsuarioDAO->contar()
-		];
+		$this->load->view('index',
+			array_to_view_helper(
+				'Lista de Usuários',
+				$this->buscarTodosStatus($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
+				'usuario/index.php',
+				$this->criadordebotoes->listar($indice) ?? ''
+			)
+		);
+	}
 
+	public function novo()
+	{
+		$dados = array(
+			'titulo' => 'Novo Usuário',
+			'pagina' => 'usuario/novo.php',
+			'departamentos' => $this->DepartamentoDAO->options(),
+			'hierarquias' => $this->HierarquiaDAO->options(),
+			'funcoes' => $this->FuncaoDAO->options()
+		);
 
-		$this->load->library('CriadorDeBotoes', $params);
+		$this->load->view('index', $dados);
+	}
 
-		$botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
+	public function criar()
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$array =
+			[
+				ID => null,
+				'nome_de_guerra' => $this->input->post('nome_de_guerra'),
+				'nome_completo' => $this->input->post('nome_completo'),
+				EMAIL => $this->input->post('email'),
+				CPF => $this->input->post('cpf'),
+				SENHA => md5($this->input->post('senha')),
+				DEPARTAMENTO_ID => $this->input->post('departamento_id'),
+				STATUS => $this->input->post('status'),
+				HIERARQUI_ID => $this->input->post('hierarquia_id'),
+				FUNCAO_ID => $this->input->post('funcao_id')
+			];
+
+		$this->UsuarioDAO->criar($array);
+
+		redirect(self::USUARIO_CONTROLLER);
+	}
+
+	public function alterar($id)
+	{
+
+		$usuario = $this->buscarPorId($id);
+
+		$this->removerSenha($usuario);
 
 		$dados = array(
-			'titulo' => 'Lista de Usuários',
-			'tabela' => $usuarios,
-			'pagina' => 'usuario/index.php',
-			'botoes' => $botoes,
+			'titulo' => 'Alterar Usuário',
+			'pagina' => 'usuario/alterar.php',
+			'usuario' => $usuario,
+			'departamentos' => $this->DepartamentoDAO->options(),
+			'hierarquias' => $this->HierarquiaDAO->options(),
+			'funcoes' => $this->FuncaoDAO->options()
 		);
 
 		$this->load->view('index', $dados);
@@ -97,68 +147,15 @@ class UsuarioController extends AbstractController
 		$this->load->view('index', $dados);
 	}
 
-	public function novo()
-	{
 
-		$dados = array(
-			'titulo' => 'Novo Usuário',
-			'pagina' => 'usuario/novo.php',
-			'departamentos' => $this->DepartamentoDAO->options(),
-			'hierarquias' => $this->HierarquiaDAO->options(),
-			'funcoes' => $this->FuncaoDAO->options()
-		);
 
-		$this->load->view('index', $dados);
-	}
-
-	public function criar()
-	{
-
-		$data_post = $this->input->post();
-
-		$usuario = new Usuario(
-			null,
-			$data_post['nome_de_guerra'],
-			$data_post['nome_completo'],
-			$data_post['email'],
-			$data_post['cpf'],
-			md5($data_post['senha']),
-			$this->DepartamentoDAO->buscarPorId($data_post['departamento_id']),
-			$data_post['status'],
-			$this->HierarquiaDAO->buscarPorId($data_post['hierarquia_id']),
-			$this->FuncaoDAO->buscarPorId($data_post['funcao_id'])
-		);
-
-		$this->UsuarioDAO->criar($usuario);
-
-		redirect('UsuarioController');
-	}
-
-	public function alterar($id)
-	{
-
-		$usuario = $this->UsuarioDAO->buscarPorId($id);
-
-		$this->removerSenha($usuario);
-
-		$dados = array(
-			'titulo' => 'Alterar Usuário',
-			'pagina' => 'usuario/alterar.php',
-			'usuario' => $usuario,
-			'departamentos' => $this->DepartamentoDAO->options(),
-			'hierarquias' => $this->HierarquiaDAO->options(),
-			'funcoes' => $this->FuncaoDAO->options()
-		);
-
-		$this->load->view('index', $dados);
-	}
 
 	public function alterarUsuario()
 	{
 
 		$usuario = $this->UsuarioDAO->buscarPorId($_SESSION['id']);
 
-		$this->removerSenha($usuario);
+		$usuario->senha = '';
 
 		$options = $this->HierarquiaDAO->options();
 
@@ -246,10 +243,6 @@ class UsuarioController extends AbstractController
 		redirect('UsuarioController');
 	}
 
-	private function removerSenha($usuario)
-	{
-		$usuario->senha = '';
-	}
 
 	public function toObject($arrayList)
 	{
