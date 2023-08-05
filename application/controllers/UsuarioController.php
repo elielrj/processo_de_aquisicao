@@ -102,23 +102,18 @@ class UsuarioController extends AbstractController
 		$qtd_de_itens_para_exibir = 10;
 		$indice_no_data_base = $indice * $qtd_de_itens_para_exibir;
 
-		$usuarios = $this->UsuarioDAO->buscarTodos($indice_no_data_base, $qtd_de_itens_para_exibir);
-
-		$params = [
-			'controller' => 'UsuarioController',
-			'quantidade_de_registros_no_banco_de_dados' => $this->UsuarioDAO->quantidadeAtivos()
-		];
-
-		$this->load->library('CriadorDeBotoes', $params);
-
-
-		$botoes = empty($usuarios) ? '' : $this->criadordebotoes->listar($indice);
+		$this->load->library('CriadorDeBotoes',
+			array_to_criador_de_botoes_helper(
+				self::USUARIO_CONTROLLER . '/listar',
+				$this->contarRegistrosAtivos() ?? 0
+			)
+		);
 
 		$dados = array(
 			'titulo' => 'Lista de Usuários',
-			'tabela' => $this->tabela->usuario($usuarios, $indice_no_data_base),
+			'tabela' => $this->buscarTodosAtivos($indice_no_data_base, $qtd_de_itens_para_exibir),
 			'pagina' => 'usuario/index.php',
-			'botoes' => $botoes,
+			'botoes' => $this->criadordebotoes->listar($indice),
 		);
 
 		$this->load->view('index', $dados);
@@ -146,8 +141,6 @@ class UsuarioController extends AbstractController
 
 		$this->load->view('index', $dados);
 	}
-
-
 
 
 	public function alterarUsuario()
@@ -304,4 +297,101 @@ class UsuarioController extends AbstractController
 		redirect('ProcessoController');
 	}
 
+	public function contarRegistrosAtivos()
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		return $this->UsuarioDAO->contarRegistrosAtivos();
+	}
+
+	public function contarRegistrosInativos()
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		return $this->UsuarioDAO->contarRegistrosInativos();
+	}
+
+	public function contarTodosOsRegistros()
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		return $this->UsuarioDAO->contarTodosOsRegistros();
+	}
+
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		$this->load->model('dao/UsuarioDAO');
+		return $this->UsuarioDAO->contarTodosOsRegistrosAonde($where);
+	}
+
+	public function excluirDeFormaPermanente($id)
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$this->UsuarioDAO->excluirDeFormaPermanente($id);
+	}
+
+	public function excluirDeFormaLogica($id)
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$this->UsuarioDAO->excluirDeFormaLogica($id);
+	}
+
+	public function options()
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		return $this->UsuarioDAO->options();
+	}
+
+	public function recuperar($id)
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$this->UsuarioDAO->recuperar($id);
+
+		redirect(self::USUARIO_CONTROLLER . '/listar');
+	}
+
+	public function buscarPorId($id)
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$array = $this->UsuarioDAO->buscarPorId($id);
+
+		return $this->toObject($array);
+	}
+
+	public function buscarTodosAtivos($inicio, $fim)
+	{
+		// TODO: Implement buscarTodosAtivos() method.
+	}
+
+	public function buscarTodosInativos($inicio, $fim)
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$array = $this->UsuarioDAO->buscarTodosInativos($inicio, $fim);
+
+		return $this->toObject($array);
+	}
+
+	public function buscarTodosStatus($inicio, $fim)
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$array = $this->UsuarioDAO->buscarTodosStatus($inicio, $fim);
+
+		return $this->toObject($array);
+	}
+
+	public function buscarAonde($inicio, $fim, $where)
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$array = $this->UsuarioDAO->buscarAonde($inicio, $fim, $where);
+
+		return $this->toObject($array);
+	}
 }

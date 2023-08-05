@@ -94,24 +94,43 @@ class ArquivoDAO extends AbstractDAO
 	{
 		return $this->db
 			->where([STATUS => true])
-			->count_all_results(TABLE_ANDAMENTO);
+			->count_all_results(self::TABELA_ARQUIVO);
 	}
 
 	public function contarRegistrosInativos()
 	{
 		return $this->db
 			->where([STATUS => false])
-			->count_all_results(TABLE_ANDAMENTO);
+			->count_all_results(self::TABELA_ARQUIVO);
 	}
 
 	public function contarTodosOsRegistros()
 	{
 		return $this->db
-			->count_all_results(TABLE_ANDAMENTO);
+			->count_all_results(self::TABELA_ARQUIVO);
 	}
 
 	public function options()
 	{
 		return [];
 	}
+
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		return $this->db
+			->where($where)
+			->count_all_results(self::TABELA_ARQUIVO);
+	}
+
+	public function recuperar($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = true;
+		}
+
+		$this->db->update($linhaArrayList);
+	}
+
 }

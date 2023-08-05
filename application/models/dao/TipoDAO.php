@@ -69,7 +69,7 @@ class TipoDAO  extends AbstractDAO
 		return
 			$this->db
 				->where($whare)
-				->get(TABELA_TIPO);
+				->get(self::TABELA_TIPO);
 	}
 
 	public function excluirDeFormaPermanente($id)
@@ -94,20 +94,20 @@ class TipoDAO  extends AbstractDAO
 	{
 		return $this->db
 			->where([STATUS => true])
-			->count_all_results(TABELA_TIPO);
+			->count_all_results(self::TABELA_TIPO);
 	}
 
 	public function contarRegistrosInativos()
 	{
 		return $this->db
 			->where([STATUS => false])
-			->count_all_results(TABELA_TIPO);
+			->count_all_results(self::TABELA_TIPO);
 	}
 
 	public function contarTodosOsRegistros()
 	{
 		return $this->db
-			->count_all_results(TABELA_TIPO);
+			->count_all_results(self::TABELA_TIPO);
 	}
 
 	public function options()
@@ -119,6 +119,21 @@ class TipoDAO  extends AbstractDAO
 		}
 		return $options;
 	}
-	public function contarTodosOsRegistrosAonde($where){}
-	public function recuperar($id){}
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		return $this->db
+			->where($where)
+			->count_all_results(self::TABELA_TIPO);
+	}
+
+	public function recuperar($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = true;
+		}
+
+		$this->db->update($linhaArrayList);
+	}
 }

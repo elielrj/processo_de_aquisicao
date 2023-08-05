@@ -165,6 +165,21 @@ class UsuarioDAO extends AbstractDAO
 		}
 	}
 
-	public function contarTodosOsRegistrosAonde($where){}
-	public function recuperar($id){}
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		return $this->db
+			->where($where)
+			->count_all_results((self::TABELA_USUARIO));
+	}
+
+	public function recuperar($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = true;
+		}
+
+		$this->db->update($linhaArrayList);
+	}
 }

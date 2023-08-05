@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AbstractDAO.php';
+require_once 'abstract_dao/AbstractDAO.php';
 class DepartamentoDAO  extends AbstractDAO
 {
 	const TABELA_DEPARTAMENTO = 'departamento';
@@ -117,5 +117,23 @@ class DepartamentoDAO  extends AbstractDAO
 			$options += [$departamento->id => $departamento->nome];
 		}
 		return $options;
+	}
+
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		return $this->db
+			->where($where)
+			->count_all_results(TABLE_ANDAMENTO);
+	}
+
+	public function recuperar($id)
+	{
+		$linhaArrayList = $this->buscarPorId($id);
+
+		foreach ($linhaArrayList as $linha) {
+			$linha->status = true;
+		}
+
+		$this->db->update($linhaArrayList);
 	}
 }

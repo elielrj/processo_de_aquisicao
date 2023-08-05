@@ -118,4 +118,14 @@ class FuncaoDAO  extends AbstractDAO
 		}
 		return $options;
 	}
+
+	public function contarTodosOsRegistrosAonde($where)
+	{
+		// TODO: Implement contarTodosOsRegistrosAonde() method.
+	}
+
+	public function recuperar($id)
+	{
+		// TODO: Implement recuperar() method.
+	}
 }

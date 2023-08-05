@@ -118,6 +118,7 @@ $autoload['helper'] = array(
 	'array_to_view_helper',
 	'array_to_criador_de_botoes_helper',
 	'is_session_email_helper',
+	'is_session_senha_helper',
 	'redirect_login_helper',
 );
 

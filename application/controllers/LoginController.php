@@ -51,7 +51,14 @@ class LoginController extends CI_Controller
 
 				$this->session->set_userdata(self::SENHA_VALIDA, true);
 
-				redirect('UsuarioController');
+				$this->session->set_userdata(
+					array(
+						self::EMAIL => $email,
+						self::SENHA => $senha
+					)
+				);
+
+				redirect('UsuarioController/buscarDadosDoUsuarioLogado');
 
 			} else {
 
