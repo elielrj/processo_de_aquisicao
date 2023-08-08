@@ -271,7 +271,7 @@ class UsuarioController extends AbstractController
 		$this->load->model('dao/HierarquiaDAO');
 		$this->load->model('dao/FuncaoDAO');
 
-		$array = $this->UsuarioDAO->buscarOnde(TABLE_USUARIO, $where);
+		$array = $this->UsuarioDAO->buscarAonde($where);
 
 		foreach ($array->result() as $linha) {
 
