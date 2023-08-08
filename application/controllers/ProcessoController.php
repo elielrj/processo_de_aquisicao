@@ -81,7 +81,7 @@ class ProcessoController extends AbstractController
 				'Lista de processos',
 				$this->buscarTodosInativos($qtd_de_itens_para_exibir, $indice_no_data_base) ?? [],
 				'processo/index.php',
-				$this->criadordebotoes->listar($indice) ?? 0,
+				$this->criadordebotoes->listar($indice) ?? 0
 			)
 		);
 	}
