@@ -54,7 +54,7 @@ class LoginController extends CI_Controller
 				$this->session->set_userdata(
 					array(
 						self::EMAIL => $email,
-						self::SENHA => $senha
+						self::SENHA => md5($senha)
 					)
 				);
 
