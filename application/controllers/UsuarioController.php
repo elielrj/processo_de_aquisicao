@@ -261,13 +261,16 @@ class UsuarioController extends AbstractController
 
 	public function buscarDadosDoUsuarioLogado()
 	{
-		$where = array(
-			EMAIL => $_SESSION[SESSION_EMAIL],
-			SENHA => $_SESSION[SESSION_SENHA]
-		);
 
-		$usuario = $this->buscarAonde(null,null,$where);
 
+		if(isset($_SESSION[SESSION_EMAIL],$_SESSION[SESSION_SENHA])){
+
+			$where = array(
+				EMAIL => $_SESSION[SESSION_EMAIL],
+				SENHA => $_SESSION[SESSION_SENHA]
+			);
+
+			$usuario = $this->buscarAonde(null,null,$where);
 
 			$this->session->set_userdata(
 				array(
@@ -287,7 +290,11 @@ class UsuarioController extends AbstractController
 				)
 			);
 
-		redirect('ProcessoController');
+			redirect(ProcessoController::PROCESSO_CONTROLLER);
+		}else{
+			redirect('LoginController');
+		}
+
 	}
 
 	public function contarRegistrosAtivos()
