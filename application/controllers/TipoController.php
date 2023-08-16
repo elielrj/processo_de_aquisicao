@@ -112,14 +112,6 @@ class TipoController extends AbstractController
 		redirect('TipoController');
 	}
 
-	private function toObject($arrayList)
-	{
-		return new Tipo(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->nome ?? ($arrayList['nome'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null)
-		);
-	}
 
 	public function contarRegistrosAtivos()
 	{

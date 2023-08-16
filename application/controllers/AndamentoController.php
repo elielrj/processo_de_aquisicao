@@ -233,38 +233,7 @@ class AndamentoController extends AbstractController
 		redirect(ProcessoController::PROCESSO_CONTROLLER . '/exibir/' . $processo_id);
 	}
 
-	/**
-	 * @param $listaDeArray
-	 * @return array
-	 */
-	public function toObject($listaDeArray)
-	{
-		$listaDeAndamentos = [];
 
-		foreach ($listaDeArray as $linha) {
-			$id = $linha->id ?? $linha[ID] ?? null;
-			$statusDoAndamento = $linha->status_do_andamento ?? $linha[STATUS_DO_ANDAMENTO] ?? null;
-			$data_hora = $linha->data_hora ?? $linha[DATA_HORA] ?? null;
-			$usuario_id = $linha->usuario_id ?? $linha[USUARIO_ID] ?? null;
-			$status = $linha->status ?? $linha[STATUS] ?? null;
-
-			$this->load->library('DataHora', $data_hora);
-
-			$this->load->model('dao/UsuarioDAO');
-
-			$andamento =
-				new Andamento(
-					$id ?? null,
-					$status ?? null,
-					$this->selecionarStatus($statusDoAndamento) ?? null,
-					$this->datahora ?? null,
-					$this->UsuarioDAO->buscarPorId($usuario_id) ?? null
-				);
-			$listaDeAndamentos[] = $andamento;
-		}
-
-		return $listaDeAndamentos;
-	}
 
 
 	/**

@@ -98,15 +98,7 @@ class FuncaoController extends AbstractController
 		redirect(self::FUNCAO_CONTROLLER);
 	}
 
-	public function toObject($arrayList)
-	{
-		return new Funcao(
-			$arrayList->id ?? $arrayList['id'] ?? null,
-			$arrayList->status ?? $arrayList['status'] ?? null,
-			$arrayList->descricao ?? $arrayList['descricao'] ?? null,
-			$arrayList->id ?? $arrayList['id'] ?? null
-		);
-	}
+
 
 	public function contarRegistrosAtivos()
 	{

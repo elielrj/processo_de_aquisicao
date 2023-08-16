@@ -105,22 +105,6 @@ class DepartamentoController extends AbstractController
 		redirect(self::DEPARTAMENTO_CONTROLLER);
 	}
 
-	public function toObject($arrayList)
-	{
-		$ug_id = $arrayList->ug ?? ($arrayList['ug'] ?? null);
-
-		$this->load->model('dao/UgDAO');
-
-		$ug = $this->UgDAO->buscarPorId($ug_id);
-
-		return new Departamento(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null),
-			$arrayList->nome ?? ($arrayList['nome'] ?? null),
-			$arrayList->sigla ?? ($arrayList['sigla'] ?? null),
-			$ug ?? null
-		);
-	}
 
 	public function contarRegistrosAtivos()
 	{
@@ -200,11 +184,11 @@ class DepartamentoController extends AbstractController
 		return $this->toObject($array);
 	}
 
-	public function buscarAonde($inicio, $fim, $where)
+	public function buscarAonde($where)
 	{
 		$this->load->model('dao/DepartamentoDAO');
 
-		$array = $this->DepartamentoDAO->buscarAonde($inicio, $fim, $where);
+		$array = $this->DepartamentoDAO->buscarAonde($where);
 
 		return $this->toObject($array);
 	}
@@ -222,5 +206,14 @@ class DepartamentoController extends AbstractController
 		$this->DepartamentoDAO->recuperar($id);
 
 		redirect(self::DEPARTAMENTO_CONTROLLER . '/listar');
+	}
+
+	public function buscarAondeComInicioEFim($whare, $inicio, $fim)
+	{
+		$this->load->model('dao/DepartamentoDAO');
+
+		$array = $this->DepartamentoDAO->buscarAondeComInicioEFim($whare, $inicio, $fim);
+
+		return $this->toObject($array->result()[0]);
 	}
 }

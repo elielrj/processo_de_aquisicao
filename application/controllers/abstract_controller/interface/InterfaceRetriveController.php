@@ -10,5 +10,7 @@ interface InterfaceRetriveController
 
 	public function buscarTodosStatus($inicio, $fim);
 
-	public function buscarAonde($inicio, $fim, $where);
+	public function buscarAonde($where);
+
+	public function buscarAondeComInicioEFim($whare,$inicio, $fim);
 }

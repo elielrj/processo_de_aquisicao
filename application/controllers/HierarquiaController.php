@@ -98,16 +98,7 @@ class HierarquiaController extends AbstractController
 		redirect(self::HIERARQUIA_CONTROLLER);
 	}
 
-	public function toObject($arrayList)
-	{
-		return
-			new Hierarquia(
-				$arrayList->id ?? $arrayList['id'] ?? null,
-				$arrayList->status ?? $arrayList['status'] ?? null,
-				$arrayList->posto_ou_graduacao ?? $arrayList['posto_ou_graduacao'] ?? null,
-				$arrayList->sigla ?? $arrayList['sigla'] ?? null
-			);
-	}
+
 
 	public function contarRegistrosAtivos()
 	{

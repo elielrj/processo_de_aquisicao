@@ -127,4 +127,12 @@ class ArtefatoDAO extends AbstractDAO
 	{
 		// TODO: Implement recuperar() method.
 	}
+
+	public function buscarAondeComInicioEFim($where, $inicio, $fim)
+	{
+		return
+			$this->db
+				->where($where)
+				->get(self::TABELA_ARTEFATO, $inicio, $fim);
+	}
 }

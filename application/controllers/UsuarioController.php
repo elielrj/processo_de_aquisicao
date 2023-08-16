@@ -1,6 +1,7 @@
 <?php
 
 require_once 'abstract_controller/AbstractController.php';
+include_once 'application/models/bo/Usuario.php';
 
 class UsuarioController extends AbstractController
 {
@@ -237,40 +238,21 @@ class UsuarioController extends AbstractController
 	}
 
 
-	public function toObject($arrayList)
-	{
-		return new Usuario(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->nome_de_guerra ?? ($arrayList['nome_de_guerra'] ?? null),
-			$arrayList->nome_completo ?? ($arrayList['nome_completo'] ?? null),
-			$arrayList->email ?? ($arrayList['email'] ?? null),
-			$arrayList->cpf ?? ($arrayList['cpf'] ?? null),
-			$arrayList->senha ?? ($arrayList['senha'] ?? null),
-			isset($arrayList->departamento_id)
-				? ($this->DepartamentoDAO->buscarPorId($arrayList->departamento_id))
-				: (isset($arrayList['departamento_id']) ? $this->DepartamentoDAO->buscarPorId($arrayList['departamento_id']) : null),
-			$arrayList->status ?? ($arrayList['status'] ?? null),
-			isset($arrayList->hierarquia_id)
-				? $this->HierarquiaDAO->buscarPorId($arrayList->hierarquia_id)
-				: (isset($arrayList['hierarquia_id']) ? $this->HierarquiaDAO->buscarPorId($arrayList['hierarquia_id']) : null),
-			isset($arrayList->funcao_id)
-				? $this->FuncaoDAO->buscarPorId($arrayList->funcao_id)
-				: (isset($arrayList['funcao_id']) ? $this->FuncaoDAO->buscarPorId($arrayList['funcao_id']) : null)
-		);
-	}
 
 	public function buscarDadosDoUsuarioLogado()
 	{
-
-
-		if(isset($_SESSION[SESSION_EMAIL],$_SESSION[SESSION_SENHA])){
+		if (isset($_SESSION[SESSION_EMAIL], $_SESSION[SESSION_SENHA])) {
 
 			$where = array(
 				EMAIL => $_SESSION[SESSION_EMAIL],
 				SENHA => $_SESSION[SESSION_SENHA]
 			);
 
-			$usuario = $this->buscarAonde(null,null,$where);
+			$this->load->model('dao/UsuarioDAO');
+
+			$array = $this->UsuarioDAO->buscarAonde($where);
+
+			$usuario = $this->toObject($array->result()[0]);
 
 			$this->session->set_userdata(
 				array(
@@ -289,9 +271,9 @@ class UsuarioController extends AbstractController
 					SESSION_FUNCAO_NIVEL_DE_ACESSO => ($this->funcao->nome()),
 				)
 			);
-
+var_dump($_SESSION);
 			redirect(ProcessoController::PROCESSO_CONTROLLER);
-		}else{
+		} else {
 			redirect('LoginController');
 		}
 
@@ -360,12 +342,16 @@ class UsuarioController extends AbstractController
 
 		$array = $this->UsuarioDAO->buscarPorId($id);
 
-		return $this->toObject($array);
+		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarTodosAtivos($inicio, $fim)
 	{
-		// TODO: Implement buscarTodosAtivos() method.
+		$this->load->model('dao/UsuarioDAO');
+
+		$array = $this->UsuarioDAO->buscarTodosAtivos($inicio, $fim);
+
+		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarTodosInativos($inicio, $fim)
@@ -374,7 +360,7 @@ class UsuarioController extends AbstractController
 
 		$array = $this->UsuarioDAO->buscarTodosInativos($inicio, $fim);
 
-		return $this->toObject($array);
+		return $this->toObject($array->result()[0]);
 	}
 
 	public function buscarTodosStatus($inicio, $fim)
@@ -383,15 +369,25 @@ class UsuarioController extends AbstractController
 
 		$array = $this->UsuarioDAO->buscarTodosStatus($inicio, $fim);
 
-		return $this->toObject($array);
+		return $this->toObject($array->result()[0]);
 	}
 
-	public function buscarAonde($inicio, $fim, $where)
+	public function buscarAonde($where)
 	{
 		$this->load->model('dao/UsuarioDAO');
 
-		$array = $this->UsuarioDAO->buscarAonde($inicio, $fim, $where);
+		$array = $this->UsuarioDAO->buscarAonde($where);
 
-		return $this->toObject($array);
+		return $this->toObject($array->result()[0]);
 	}
+
+	public function buscarAondeComInicioEFim($whare, $inicio, $fim)
+	{
+		$this->load->model('dao/UsuarioDAO');
+
+		$array = $this->UsuarioDAO->buscarAondeComInicioEFim($whare, $inicio, $fim);
+
+		return $this->toObject($array->result()[0]);
+	}
+
 }

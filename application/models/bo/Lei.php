@@ -27,7 +27,15 @@ class Lei extends AbstractBO
 		$this->data = $this->load->library('Data', $data);
 		$this->modalidade = $modalidade;
 	}
+	function __get($key)
+	{
+		return $this->$key;
+	}
 
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
 	public function toString()
 	{
 		return

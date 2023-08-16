@@ -1,7 +1,8 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
-class DepartamentoDAO  extends AbstractDAO
+
+class DepartamentoDAO extends AbstractDAO
 {
 	const TABELA_DEPARTAMENTO = 'departamento';
 
@@ -135,5 +136,13 @@ class DepartamentoDAO  extends AbstractDAO
 		}
 
 		$this->db->update($linhaArrayList);
+	}
+
+	public function buscarAondeComInicioEFim($where, $inicio, $fim)
+	{
+		return
+			$this->db
+				->where($where)
+				->get(self::TABELA_DEPARTAMENTO, $inicio, $fim);
 	}
 }

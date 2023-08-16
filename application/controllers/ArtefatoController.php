@@ -99,16 +99,6 @@ class ArtefatoController extends AbstractController
 		redirect(self::ARTEFATO_CONTROLLER);
 	}
 
-	public function toObject($arrayList)
-	{
-		return new Artefato(
-			$arrayList->id ?? $arrayList['id'] ?? null,
-			$arrayList->status?? $arrayList['status'] ?? null,
-			$arrayList->ordem?? $arrayList['ordem'] ?? null,
-			$arrayList->nome?? $arrayList['nome'] ?? null,
-			null		
-		);
-	}
 
 	public function contarRegistrosAtivos()
 	{

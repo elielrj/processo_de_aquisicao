@@ -560,64 +560,6 @@ class ProcessoController extends AbstractController
 		$this->pdf->imprimir($listaDePath, $processo->toString());
 	}
 
-	public function toObject($listaDeArray)
-	{
-		$listaDeProcessos = [];
-
-		foreach ($listaDeArray as $linha) {
-			$id = $linha->id ?? ($linha['id'] ?? null);
-			$status = $linha->status ?? $linha['status'] ?? null;
-			$objeto = $linha->objeto ?? $linha['objeto'] ?? null;
-			$numero = $linha->numero ?? $linha['numero'] ?? null;
-			$data_hora = $linha->data_hora ?? $linha['data_hora'] ?? null;
-			$chave = $linha->chave ?? $linha['chave'] ?? null;
-			$completo = $linha->completo ?? $linha['completo'] ?? null;
-			$lei_id = $linha->lei_id ?? $linha['lei_id'] ?? null;
-			$departamento_id = $linha->departamento_id ?? $linha['departamento_id'] ?? null;
-			$tipo_id = $linha->tipo_id ?? $linha['tipo_id'] ?? null;
-
-			$listaDeArtefatosId =
-				$this->db
-					->where([
-						TIPO_ID => $id,
-						LEI_ID => $lei_id])
-					->order_by(ID, DIRECTIONS_ASC)
-					->get('lei_tipo_artefato');
-
-			$this->load->library('DataHora', $data_hora);
-
-			$listaDeArtefatos = [];
-
-			foreach ($listaDeArtefatosId as $artefatoId) {
-				$listaDeArtefatos[] = $this->ArtefatoDAO->buscarPorId($artefatoId);
-			}
-
-			$this->load->model('dao/AndamentoDAO');
-			$listaDeAndamentos = $this->AndamentoDAO->buscarAonde([PROCESSO_ID => $id]);
-
-			$this->load->model('dao/LeiDAO');
-			$this->load->model('dao/DepartamentoDAO');
-			$this->load->model('dao/TipoDAO');
-
-			$processo = new Processo(
-				$id ?? null,
-				$status ?? null,
-				$objeto ?? null,
-				$numero ?? null,
-				$this->datahora ?? null,
-				$chave ?? null,
-				$completo ?? null,
-				$this->LeiDAO->buscarPorId($lei_id) ?? null,
-				$this->DepartamentoDAO->buscarPorId($departamento_id) ?? null,
-				$listaDeArtefatos ?? null,
-				$this->TipoDAO->buscarPorId($tipo_id) ?? null,
-				$listaDeAndamentos ?? null
-			);
-			$listaDeProcessos[] = $processo;
-		}
-
-		return $listaDeProcessos;
-	}
 
 	public function contarRegistrosAtivos()
 	{

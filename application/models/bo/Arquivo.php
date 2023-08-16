@@ -24,7 +24,15 @@ class Arquivo extends AbstractBO
 		$this->dataHora = $dataHora;
 		$this->usuario = $usuario;
 	}
+	function __get($key)
+	{
+		return $this->$key;
+	}
 
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
 	public function toString()
 	{
 		return

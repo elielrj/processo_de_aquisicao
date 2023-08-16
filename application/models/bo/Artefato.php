@@ -21,7 +21,15 @@ class Artefato extends AbstractBO
 		$this->nome = $nome;
 		$this->listaDeArquivos = $listaDeArquivos;
 	}
+	function __get($key)
+	{
+		return $this->$key;
+	}
 
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
 	public function toString()
 	{
 		return $this->nome;

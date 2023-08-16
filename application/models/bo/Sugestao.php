@@ -19,7 +19,15 @@ class Sugestao extends AbstractBO
 		$this->mensagem = $mensagem;
 		$this->usuario = $usuario;
 	}
+	function __get($key)
+	{
+		return $this->$key;
+	}
 
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
 	public function toString()
 	{
 		return

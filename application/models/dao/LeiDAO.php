@@ -136,4 +136,12 @@ class LeiDAO  extends AbstractDAO
 
 		$this->db->update($linhaArrayList);
 	}
+
+	public function buscarAondeComInicioEFim($where, $inicio, $fim)
+	{
+		return
+			$this->db
+				->where($where)
+				->get(self::TABELA_LEI, $inicio, $fim);
+	}
 }

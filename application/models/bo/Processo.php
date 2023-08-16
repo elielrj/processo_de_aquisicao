@@ -43,7 +43,15 @@ class Processo extends AbstractBO
 		$this->tipo = $tipo;
 		$this->listaDeAndamentos = $listaDeAndamentos;
 	}
+	function __get($key)
+	{
+		return $this->$key;
+	}
 
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
 	public function toString()
 	{
 		return

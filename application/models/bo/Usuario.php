@@ -38,6 +38,16 @@ class Usuario extends AbstractBO
 		$this->funcao = $funcao;
 	}
 
+	function __get($key)
+	{
+		return $this->$key;
+	}
+
+	function __set($key, $value)
+	{
+		$this->$key = $value;
+	}
+
 	public function toString()
 	{
 		return $this->hierarquia->sigla . ' ' . $this->nomeDeGuerra;

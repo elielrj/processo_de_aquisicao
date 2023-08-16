@@ -161,35 +161,7 @@ class ArquivoController extends AbstractController
 
 	}
 
-	/**
-	 * @param $listaDeArray
-	 * @return array
-	 */
-	public function toObject($listaDeArray)
-	{
-		$listaDeArquivos = [];
 
-		foreach ($listaDeArray as $linha) {
-			$data_hora = $listaDeArray->data_hora ?? ($listaDeArray['data_hora'] ?? null);
-
-			$artefato_id = $listaDeArray->artefato_id ?? ($listaDeArray['artefato_id'] ?? null);
-
-			$this->load->library('DataHora', $data_hora);
-
-			$arquivo =
-				new Arquivo(
-					$listaDeArray->id ?? ($listaDeArray['id'] ?? null),
-					$arrayList->status ?? ($arrayList['status'] ?? null),
-					$arrayList->nome ?? ($arrayList['nome'] ?? ''),
-					$listaDeArray->path ?? ($listaDeArray['path'] ?? null),
-					$this->datahora,
-					$listaDeArray->usuario_id ?? ($listaDeArray['usuario_id'] ?? null)
-				);
-			$listaDeArquivos[] = $arquivo;
-		}
-
-		return $listaDeArquivos;
-	}
 
 	/**
 	 * Banco de Dados

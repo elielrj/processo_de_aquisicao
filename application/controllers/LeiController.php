@@ -136,26 +136,6 @@ class LeiController extends AbstractController
 	}
 
 
-	public function toObject($array)
-	{
-		$this->load->library('Data',
-			$array->data ?? ($array['data'] ?? null));
-
-		$modalidade_id = $array->modalidade_id ?? $array['modalidade_id'] ?? null;
-
-		$this->load->model('dao/ModalidadeDAO');
-
-		return
-			new Lei(
-				$array->id ?? ($array['id'] ?? null),
-				$array->status ?? ($array['status'] ?? null),
-				$array->numero ?? ($array['numero'] ?? null),
-				$array->artigo ?? ($array['artigo'] ?? null),
-				$array->inciso ?? ($array['inciso'] ?? null),
-				$this->data->formatoDoMySQL() ?? null,
-				$this->ModalidadeDAO->buscarPorId($modalidade_id) ?? null
-			);
-	}
 
 	public function array()
 	{

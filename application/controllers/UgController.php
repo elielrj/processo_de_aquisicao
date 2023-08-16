@@ -70,16 +70,7 @@ class UgController extends AbstractController
 		redirect('UgController');
 	}
 
-	public function toObject($arrayList)
-	{
-		return new Ug(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->numero ?? ($arrayList['numero'] ?? null),
-			$arrayList->nome ?? ($arrayList['nome'] ?? null),
-			$arrayList->sigla ?? ($arrayList['sigla'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null)
-		);
-	}
+
 
 	public function contarRegistrosAtivos()
 	{

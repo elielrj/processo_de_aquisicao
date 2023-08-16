@@ -114,15 +114,6 @@ class SugestaoController extends AbstractController
 		redirect(SugestaoController::$controller);
 	}
 
-	private function toObject($arrayList)
-	{
-		return new Sugestao(
-			$arrayList->id ?? ($arrayList['id'] ?? null),
-			$arrayList->nome ?? ($arrayList['mensagem'] ?? null),
-			$arrayList->status ?? ($arrayList['status'] ?? null),
-			$arrayList->usuario_id ?? ($arrayList['usuario_id'] ?? null)
-		);
-	}
 
 
 	public function contarRegistrosAtivos()

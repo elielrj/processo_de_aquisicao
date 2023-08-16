@@ -13,7 +13,6 @@ require_once 'interface/InterfaceRecuperarController.php';
 abstract class AbstractController
 	extends CI_Controller
 	implements
-	InterfaceToObjectController,
 	InterfaceCreateController,
 	InterfaceUpdateController,
 	InterfaceRetriveController,
