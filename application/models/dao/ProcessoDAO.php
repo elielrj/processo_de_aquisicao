@@ -1,7 +1,9 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
-class ProcessoDAO  extends AbstractDAO
+require_once 'application/models/bo/Processo.php';
+
+class ProcessoDAO extends AbstractDAO
 {
 	const TABELA_PROCESSO = 'processo';
 
@@ -29,10 +31,54 @@ class ProcessoDAO  extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_PROCESSO,
+			[ID => $id]
+		);
+
+		$this->load->model('dao/LeiDAO');
+		$lei = $this->LeiDAO->buscarPorId($array->result('lei_id'));
+
+		$this->load->model('dao/DepartamentoDAO');
+		$departamento = $this->DepartamentoDAO->buscarPorId($array->result('departamento_id'));
+
+		$array_lei_tipo_artefato =
+			$this->db
+				->order_by('ordem', DIRECTIONS_ASC)
+				->where([
+					STATUS => true,
+					'lei_id' => $array->result('lei_id'),
+					'tipo_id' => $array->result('tipo_id')
+				])
+				->get('lei_tipo_artefato');
+
+		$listaDeArtefatos = [];
+
+		foreach ($array_lei_tipo_artefato->result() as $linha) {
+			$this->load->model('dao/ArtefatoDAO');
+			$listaDeArtefatos[] = $this->ArtefatoDAO->buscarPorId($linha->artefato_id);
+		}
+
+		$this->load->model('dao/TipoDAO');
+		$tipo = $this->TipoDAO->buscarPorId($array->result('tipo_id'));
+
+		$this->load->model('dao/AndamentoDAO');
+		$listaDeAndamento = $this->AndamentoDAO->buscarAonde(['processo_id'=>$array->result('id')]);
+
 		return
-			$this->db->get_where(
-				self::TABELA_PROCESSO,
-				[ID => $id]
+			new Processo(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('objeto') ?? null,
+				$array->result('numero') ?? null,
+				$array->result('data_hora') ?? null,
+				$array->result('chave') ?? null,
+				$array->result('completo') ?? null,
+				$lei ?? null,
+				$departamento ?? null,
+				$listaDeArtefatos?? null,
+				$tipo ?? null,
+				$listaDeAndamento ?? null
 			);
 	}
 
@@ -118,6 +164,7 @@ class ProcessoDAO  extends AbstractDAO
 		}
 		return $options;
 	}
+
 	public function contarTodosOsRegistrosAonde($where)
 	{
 		return $this->db

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'AbstractDAO.php';
+require_once 'application/models/bo/Arquivo.php';
 
 class ArquivoDAO extends AbstractDAO
 {
@@ -30,10 +31,22 @@ class ArquivoDAO extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_ARQUIVO,
+			[ID => $id]
+		);
+
+		$this->load->model('dao/UsuarioDAO');
+		$usuario = $this->UsuarioDAO->buscarPorId($array->result('usuario_id'));
+
 		return
-			$this->db->get_where(
-				self::TABELA_ARQUIVO,
-				[ID => $id]
+			new Arquivo(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('nome') ?? null,
+				$array->result('path') ?? null,
+				$array->result('data_hora') ?? null,
+				$usuario ?? null
 			);
 	}
 

@@ -1,6 +1,8 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
+require_once 'application/models/bo/andamento/Andamento.php';
+require_once 'application/models/bo/Usuario.php';
 
 class AndamentoDAO extends AbstractDAO
 {
@@ -30,10 +32,22 @@ class AndamentoDAO extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
-		return $this->db->get_where(
+		$array = $this->db->get_where(
 			self::TABELA_ANDAMENTO,
 			[ID => $id]
 		);
+
+		$this->load->model('dao/UsuarioDAO');
+		$usuario = $this->UsuarioDAO->buscarPorId($array->result('usuario_id'));
+
+		return
+			new Andamento(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('status_do_andamento') ?? null,
+				$array->result('data_hora') ?? null,
+				$usuario ?? null
+			);
 	}
 
 	public function buscarTodosAtivos($inicio, $fim)
@@ -119,6 +133,7 @@ class AndamentoDAO extends AbstractDAO
 			Arquivado::$NOME => Arquivado::$NOME
 		];
 	}
+
 	public function contarTodosOsRegistrosAonde($where)
 	{
 		return $this->db

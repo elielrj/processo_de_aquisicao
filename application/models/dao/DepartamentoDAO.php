@@ -1,6 +1,7 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
+require_once 'application/models/bo/Departamento.php';
 
 class DepartamentoDAO extends AbstractDAO
 {
@@ -30,10 +31,21 @@ class DepartamentoDAO extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_DEPARTAMENTO,
+			[ID => $id]
+		);
+
+		$this->load->model('dao/UgDAO');
+		$ug = $this->UgDAO->buscarPorId($array->result('ug_id'));
+
 		return
-			$this->db->get_where(
-				self::TABELA_DEPARTAMENTO,
-				[ID => $id]
+			new Departamento(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('nome') ?? null,
+				$array->result('sigla') ?? null,
+				$ug ?? null,
 			);
 	}
 

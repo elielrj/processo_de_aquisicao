@@ -1,6 +1,7 @@
 <?php
 
 require_once 'AbstractDAO.php';
+require_once 'application/models/bo/Artefato.php';
 
 class ArtefatoDAO extends AbstractDAO
 {
@@ -30,10 +31,19 @@ class ArtefatoDAO extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
-		return $this->db->get_where(
+		$array = $this->db->get_where(
 			self::TABELA_ARTEFATO,
 			[ID => $id]
 		);
+
+		return
+			new Artefato(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('ordem') ?? null,
+				$array->result('nome') ?? null,
+				array()
+			);
 	}
 
 	public function buscarTodosAtivos($inicio, $fim)

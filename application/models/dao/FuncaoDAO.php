@@ -1,7 +1,9 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
-class FuncaoDAO  extends AbstractDAO
+require_once 'application/models/bo/funcao/Funcao.php';
+
+class FuncaoDAO extends AbstractDAO
 {
 	const TABELA_FUNCAO = 'funcao';
 
@@ -29,10 +31,17 @@ class FuncaoDAO  extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_FUNCAO,
+			[ID => $id]
+		);
+
 		return
-			$this->db->get_where(
-				self::TABELA_FUNCAO,
-				[ID => $id]
+			new Funcao(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('descricao') ?? null,
+				$array->result('nivel_de_acesso') ?? null
 			);
 	}
 

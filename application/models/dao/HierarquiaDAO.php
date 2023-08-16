@@ -1,6 +1,7 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
+require_once 'application/models/bo/Hierarquia.php';
 
 class HierarquiaDAO extends AbstractDAO
 {
@@ -30,10 +31,17 @@ class HierarquiaDAO extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_HIERARQUIA,
+			[ID => $id]
+		);
+
 		return
-			$this->db->get_where(
-				self::TABELA_HIERARQUIA,
-				[ID => $id]
+			new Hierarquia(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('posto_ou_graducao') ?? null,
+				$array->result('sigla') ?? null
 			);
 	}
 
@@ -137,6 +145,7 @@ class HierarquiaDAO extends AbstractDAO
 
 		$this->db->update($linhaArrayList);
 	}
+
 	public function buscarAondeComInicioEFim($where, $inicio, $fim)
 	{
 		return

@@ -1,8 +1,9 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
+require_once 'application/models/bo/Modalidade.php';
 
-class ModalidadeDAO  extends AbstractDAO
+class ModalidadeDAO extends AbstractDAO
 {
 
 	const TABELA_MODALIDADE = 'modalidade';
@@ -31,10 +32,16 @@ class ModalidadeDAO  extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_MODALIDADE,
+			[ID => $id]
+		);
+
 		return
-			$this->db->get_where(
-				self::TABELA_MODALIDADE,
-				[ID => $id]
+			new Modalidade(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('nome') ?? null
 			);
 	}
 

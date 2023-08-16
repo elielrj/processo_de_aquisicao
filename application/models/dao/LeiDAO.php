@@ -1,7 +1,9 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
-class LeiDAO  extends AbstractDAO
+require_once 'application/models/bo/Lei.php';
+
+class LeiDAO extends AbstractDAO
 {
 	const TABELA_LEI = 'lei';
 
@@ -29,10 +31,25 @@ class LeiDAO  extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_LEI,
+			[ID => $id]
+		);
+
+		$this->load->model('dao/ModalidadeDAO');
+		$modalidade = $this->ModalidadeDAO->buscarPorId($array->result('modalidade_id'));
+
+		$this->load->library('data',$array->result('data'));
+
 		return
-			$this->db->get_where(
-				self::TABELA_LEI,
-				[ID => $id]
+			new Lei(
+				$array->result('id') ?? null,
+					$array->result('status') ?? null,
+					$array->result('numero') ?? null,
+					$array->result('artigo') ?? null,
+					$array->result('inicio') ?? null,
+					$this->data ?? null,
+					$modalidade ?? null,
 			);
 	}
 

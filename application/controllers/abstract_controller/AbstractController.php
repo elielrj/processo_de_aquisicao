@@ -1,6 +1,5 @@
 <?php
 
-require_once 'interface/InterfaceToObjectController.php';
 require_once 'interface/InterfaceCreateController.php';
 require_once 'interface/InterfaceUpdateController.php';
 require_once 'interface/InterfaceRetriveController.php';
