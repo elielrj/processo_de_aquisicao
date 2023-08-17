@@ -1,7 +1,8 @@
 <?php
 
 require_once 'abstract_dao/AbstractDAO.php';
-class SugestaoDAO  extends AbstractDAO
+
+class SugestaoDAO extends AbstractDAO
 {
 	const TABELA_SUGESTAO = 'sugestao';
 
@@ -29,10 +30,20 @@ class SugestaoDAO  extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_SUGESTAO,
+			[ID => $id]
+		);
+
+		$this->load->model('dao/SugestaoDAO');
+		$usuario = $this->SugestaoDAO->buscarPorId($array->result('usuario_id'));
+
 		return
-			$this->db->get_where(
-				self::TABELA_SUGESTAO,
-				[ID => $id]
+			new Sugestao(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('mensagem') ?? null,
+				$usuario ?? null,
 			);
 	}
 
