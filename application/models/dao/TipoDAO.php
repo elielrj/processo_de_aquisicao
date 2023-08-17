@@ -2,7 +2,7 @@
 
 require_once 'abstract_dao/AbstractDAO.php';
 
-class TipoDAO  extends AbstractDAO
+class TipoDAO extends AbstractDAO
 {
 	const TABELA_TIPO = 'tipo';
 
@@ -30,10 +30,16 @@ class TipoDAO  extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_TIPO,
+			[ID => $id]
+		);
+
 		return
-			$this->db->get_where(
-				self::TABELA_TIPO,
-				[ID => $id]
+			new Tipo(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('nome') ?? null
 			);
 	}
 
@@ -119,6 +125,7 @@ class TipoDAO  extends AbstractDAO
 		}
 		return $options;
 	}
+
 	public function contarTodosOsRegistrosAonde($where)
 	{
 		return $this->db
