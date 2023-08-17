@@ -30,10 +30,33 @@ class UsuarioDAO extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_USUARIO,
+			[ID => $id]
+		);
+
+		$this->load->model('dao/FuncaoDAO');
+		$funcao = $this->FuncaoDAO->buscarPorId($array->result('funcao'));
+
+		$this->load->model('dao/HierarquiaDAO');
+		$hierarquia = $this->HierarquiaDAO->buscarPorId($array->result('hierarquia'));
+
+
+		$this->load->model('dao/DepartamentoDAO');
+		$departamento = $this->DepartamentoDAO->buscarPorId($array->result('departamento'));
+
 		return
-			$this->db->get_where(
-				self::TABELA_USUARIO,
-				[ID => $id]
+			new Usuario(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('nome_de_guerra') ?? null,
+				$array->result('nome_completo') ?? null,
+				$array->result('email') ?? null,
+				$array->result('cpf') ?? null,
+				$array->result('senha') ?? null,
+				$departamento ?? null,
+				$hierarquia ?? null,
+				$funcao ?? null
 			);
 	}
 
