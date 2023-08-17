@@ -2,7 +2,7 @@
 
 require_once 'abstract_dao/AbstractDAO.php';
 
-class UgDAO  extends AbstractDAO
+class UgDAO extends AbstractDAO
 {
 	const TABELA_UG = 'ug';
 
@@ -30,10 +30,18 @@ class UgDAO  extends AbstractDAO
 
 	public function buscarPorId($id)
 	{
+		$array = $this->db->get_where(
+			self::TABELA_UG,
+			[ID => $id]
+		);
+
 		return
-			$this->db->get_where(
-				self::TABELA_UG,
-				[ID => $id]
+			new Ug(
+				$array->result('id') ?? null,
+				$array->result('status') ?? null,
+				$array->result('numero') ?? null,
+				$array->result('nome') ?? null,
+				$array->result('sigla') ?? null
 			);
 	}
 
@@ -119,6 +127,7 @@ class UgDAO  extends AbstractDAO
 		}
 		return $options;
 	}
+
 	public function contarTodosOsRegistrosAonde($where)
 	{
 		return $this->db
