@@ -1,0 +1,42 @@
+
+volumes:
+  db_processo_de_aquisicao:
+
+networks:
+  rede_processo_de_aquisicao:
+    driver: bridge
+    
+services:  
+  web:
+    image: my-php-pa
+    ports:
+      - 80:80
+    networks: 
+      - rede_processo_de_aquisicao  
+    depends_on:
+      - mysql
+  
+  mysql:
+    image: mysql:8.3.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: processo_de_aquisicao
+      MYSQL_USER: teste
+      MYSQL_PASSWORD: teste
+    ports:
+      - 3306:3306
+    volumes:
+      - db_processo_de_aquisicao:/var/lib/mysql
+    networks: 
+      - rede_processo_de_aquisicao
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+    networks:
+      - rede_processo_de_aquisicao
+
