@@ -8,10 +8,11 @@ networks:
 services:  
 
   app:
-    image: php:7.3.21-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: app
     working_dir: /var/www/html/
-    command: bash ./app.sh
     volumes:
       - ./:/var/www/html/
     ports:
@@ -19,6 +20,9 @@ services:
     networks:
       - web
     restart: always
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: mysql:8.4.2
@@ -38,6 +42,11 @@ services:
       - ./db:/docker-entrypoint-initdb.d
     networks: 
       - web
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
 
   phpmyadmin:
     image: phpmyadmin
